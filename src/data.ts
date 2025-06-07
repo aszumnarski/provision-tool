@@ -403,7 +403,20 @@ export const data: IData = {
                 }]}
 
           ]
-              },*/
+              },
+
+              conditionalDisabled: {
+              logic: "or",
+              
+              consirions:[{
+              when: "name9",
+              is: "ddddd"
+              
+              }]},
+              
+              
+              
+              */
               options: [
                 {
                   label: "Opcja 1",
