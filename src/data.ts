@@ -1,0 +1,419 @@
+import type { IRow } from "./components/Row/Row";
+
+export interface IData {
+  rows: IRow[];
+}
+
+export const data: IData = {
+  rows: [
+    {
+      columns: [
+        {
+          fields: [
+            {
+              name: "name1",
+              label: "label",
+              initValue: "opt1",
+              type: "input",
+              disabled: false,
+              hidden: true,
+              patterns: [
+                {
+                  reg: "required",
+                  message: "This field is required",
+                },
+              ],
+              options: [
+                {
+                  label: "Opcja 1",
+                  value: "opt1",
+                },
+              ],
+            },
+            {
+              name: "name2",
+              label: "label",
+              initValue: "opt1",
+              type: "input",
+              disabled: false,
+              hidden: true,
+              patterns: [
+                {
+                  reg: "required",
+                  message: "This field is required",
+                },
+              ],
+              options: [
+                {
+                  label: "Opcja 1",
+                  value: "opt1",
+                },
+              ],
+            },
+            {
+              name: "name3",
+              label: "label",
+              initValue: "opt1",
+              type: "input",
+              disabled: false,
+              hidden: true,
+              patterns: [
+                {
+                  reg: "required",
+                  message: "This field is required",
+                },
+              ],
+              options: [
+                {
+                  label: "Opcja 1",
+                  value: "opt1",
+                },
+              ],
+            },
+          ],
+        },
+        {
+          fields: [
+            {
+              name: "name4",
+              label: "label",
+              initValue: "opt1",
+              type: "input",
+              disabled: false,
+              hidden: true,
+              patterns: [
+                {
+                  reg: "required",
+                  message: "This field is required",
+                },
+              ],
+              options: [
+                {
+                  label: "Opcja 1",
+                  value: "opt1",
+                },
+              ],
+            },
+            {
+              name: "name5",
+              label: "label",
+              initValue: "opt1",
+              type: "input",
+              disabled: false,
+              hidden: true,
+              patterns: [
+                {
+                  reg: "required",
+                  message: "This field is required",
+                },
+              ],
+              options: [
+                {
+                  label: "Opcja 1",
+                  value: "opt1",
+                },
+              ],
+            },
+            {
+              name: "name6",
+              label: "label",
+              initValue: "opt1",
+              type: "input",
+              disabled: false,
+              hidden: true,
+              patterns: [
+                {
+                  reg: "required",
+                  message: "This field is required",
+                },
+              ],
+              options: [
+                {
+                  label: "Opcja 1",
+                  value: "opt1",
+                },
+              ],
+            },
+          ],
+        },
+        {
+          fields: [
+            {
+              name: "name7",
+              label: "label",
+              initValue: "opt1",
+              type: "input",
+              disabled: false,
+              hidden: true,
+              patterns: [
+                {
+                  reg: "required",
+                  message: "This field is required",
+                },
+              ],
+              options: [
+                {
+                  label: "Opcja 1",
+                  value: "opt1",
+                },
+              ],
+            },
+            {
+              name: "name8",
+              label: "label",
+              initValue: "opt1",
+              type: "input",
+              disabled: false,
+              hidden: true,
+              patterns: [
+                {
+                  reg: "required",
+                  message: "This field is required",
+                },
+              ],
+              options: [
+                {
+                  label: "Opcja 1",
+                  value: "opt1",
+                },
+              ],
+            },
+            {
+              name: "name9",
+              label: "label",
+              initValue: "opt1",
+              type: "input",
+              disabled: false,
+              hidden: true,
+              patterns: [
+                {
+                  reg: "required",
+                  message: "This field is required",
+                },
+              ],
+              options: [
+                {
+                  label: "Opcja 1",
+                  value: "opt1",
+                },
+              ],
+            },
+          ],
+        },
+      ],
+    },
+    {
+      columns: [
+        {
+          header: "pierwsza kolumna",
+          fields: [
+            {
+              name: "name1b",
+              label: "label",
+              initValue: "opt1",
+              type: "input",
+              disabled: false,
+              hidden: true,
+              patterns: [
+                {
+                  reg: "required",
+                  message: "This field is required",
+                },
+              ],
+              options: [
+                {
+                  label: "Opcja 1",
+                  value: "opt1",
+                },
+              ],
+            },
+            {
+              name: "name2b",
+              label: "label",
+              initValue: "opt1",
+              type: "input",
+              disabled: false,
+              hidden: true,
+              patterns: [
+                {
+                  reg: "required",
+                  message: "This field is required",
+                },
+              ],
+              options: [
+                {
+                  label: "Opcja 1",
+                  value: "opt1",
+                },
+              ],
+            },
+            {
+              name: "name3b",
+              label: "label",
+              initValue: "opt1",
+              type: "input",
+              disabled: false,
+              hidden: true,
+              patterns: [
+                {
+                  reg: "required",
+                  message: "This field is required",
+                },
+              ],
+              options: [
+                {
+                  label: "Opcja 1",
+                  value: "opt1",
+                },
+              ],
+            },
+          ],
+        },
+        {
+          header: "druga kolumna",
+          fields: [
+            {
+              name: "name4b",
+              label: "label",
+              initValue: "opt1",
+              type: "input",
+              disabled: false,
+              hidden: true,
+              patterns: [
+                {
+                  reg: "required",
+                  message: "This field is required",
+                },
+              ],
+              options: [
+                {
+                  label: "Opcja 1",
+                  value: "opt1",
+                },
+              ],
+            },
+            {
+              name: "name5b",
+              label: "label",
+              initValue: "opt1",
+              type: "input",
+              disabled: false,
+              hidden: true,
+              patterns: [
+                {
+                  reg: "required",
+                  message: "This field is required",
+                },
+              ],
+              options: [
+                {
+                  label: "Opcja 1",
+                  value: "opt1",
+                },
+              ],
+            },
+            {
+              name: "name6b",
+              label: "label",
+              initValue: "opt1",
+              type: "input",
+              disabled: false,
+              hidden: true,
+              patterns: [
+                {
+                  reg: "required",
+                  message: "This field is required",
+                },
+              ],
+              options: [
+                {
+                  label: "Opcja 1",
+                  value: "opt1",
+                },
+              ],
+            },
+          ],
+        },
+        {
+          header: "trzecia kolumna",
+          fields: [
+            {
+              name: "name7b",
+              label: "label",
+              initValue: "opt1",
+              type: "input",
+              disabled: false,
+              hidden: true,
+              patterns: [
+                {
+                  reg: "required",
+                  message: "This field is required",
+                },
+              ],
+              options: [
+                {
+                  label: "Opcja 1",
+                  value: "opt1",
+                },
+              ],
+            },
+            {
+              name: "name8b",
+              label: "label",
+              initValue: "opt1",
+              type: "input",
+              disabled: false,
+              hidden: true,
+              patterns: [
+                {
+                  reg: "required",
+                  message: "This field is required",
+                },
+              ],
+              options: [
+                {
+                  label: "Opcja 1",
+                  value: "opt1",
+                },
+              ],
+            },
+            {
+              name: "name9b",
+              label: "label",
+              initValue: "opt1",
+              type: "input",
+              disabled: false,
+              hidden: true,
+              patterns: [
+                {
+                  reg: "required",
+                  message: "This field is required",
+                },
+              ],
+              /*
+              dependentOptions:{
+                dependency: "name2",
+                values:[
+                 { keys: ["fdsf", "df"], options:[{                
+                  label: "Opcja 1",
+                  value: "opt1",
+                },{                
+                  label: "Opcja 1",
+                  value: "opt1",
+                }]}
+
+          ]
+              },*/
+              options: [
+                {
+                  label: "Opcja 1",
+                  value: "opt1",
+                },
+              ],
+            },
+          ],
+        },
+      ],
+    },
+  ],
+};

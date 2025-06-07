@@ -1,0 +1,28 @@
+#root {
+  max-width: 90vw;
+  margin: 0 auto;
+  padding: 2rem;
+  text-align: center;
+}
+
+
+.row-wrapper{
+  display:flex;
+  flex-direction:column ;
+  gap: 50px;
+  background-color: aqua;
+  width: 90vw;
+}
+
+.row{
+  display:flex;
+  background-color: yellow;
+  gap: 20px;
+}
+
+.column{
+  display:flex;
+  flex-direction:column ;
+  background-color: orange;
+  gap: 10px;
+}
