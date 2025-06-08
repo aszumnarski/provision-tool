@@ -1,7 +1,7 @@
 // import { atom, useAtom } from "jotai";
 // import { formValues } from "../../atoms";
 import { useContext, useEffect, useState } from "react";
-import { CurrentUserContext } from "../../context";
+import { FormValuesContext } from "../../context";
 import "./Form.css";
 import type { IRow } from "../Row/Row";
 import { Row } from "../Row/Row";
@@ -11,9 +11,9 @@ export interface IForm {
 }
 
 export function Form({ rows }: IForm) {
-  const { currentUser, setCurrentUser } = useContext(CurrentUserContext);
+  const { formValues, setFormValues } = useContext(FormValuesContext);
   useEffect(() => {
-    setCurrentUser(createFormState(rows));
+    setFormValues(createFormState(rows));
   }, []);
   // const [formState, setFormState] = useState(createFormState(rows));
   // const [form, setForm] = useAtom(formValues);
@@ -37,7 +37,7 @@ export function Form({ rows }: IForm) {
           <Row key={i} columns={r.columns} />
         ))}
       </div>
-      <pre>{JSON.stringify(currentUser, null, 2)}</pre>
+      <pre>{JSON.stringify(formValues, null, 2)}</pre>
       <hr />
       <pre>{JSON.stringify(18, null, 2)}</pre>
     </form>

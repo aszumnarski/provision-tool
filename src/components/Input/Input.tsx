@@ -1,7 +1,7 @@
 import "./Input.css";
 
 import { useContext, useEffect } from "react";
-import { CurrentUserContext } from "../../context";
+import { FormValuesContext } from "../../context";
 import { useState, type ChangeEvent } from "react";
 
 export interface IField {
@@ -28,11 +28,11 @@ export interface IPattern {
 export const Input = (props: IField) => {
   // const [value, setValue] = useState(props.initValue)
 
-  const { currentUser, setCurrentUser } = useContext(CurrentUserContext);
+  const { formValues, setFormValues } = useContext(FormValuesContext);
   const onChange = (e: ChangeEvent) => {
     const input = e.target as HTMLInputElement;
     // setValue(input.value);
-    setCurrentUser({ ...currentUser, [props.name]: input.value });
+    setFormValues({ ...formValues, [props.name]: input.value });
   };
 
   return (
@@ -42,7 +42,7 @@ export const Input = (props: IField) => {
         type="text"
         name={props.name}
         onChange={onChange}
-        value={currentUser?currentUser[props.name]:""}
+        value={formValues ? formValues[props.name] : ""}
       />
     </label>
   );
