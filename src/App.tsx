@@ -2,11 +2,7 @@ import { useEffect, useState } from "react";
 import "./App.css";
 import { data } from "./data";
 import { Form } from "./components/Form/Form";
-
-const obj = {
-  name1: "sdsds",
-  name2: "ddd",
-};
+import { CurrentUserContext } from "./context";
 
 async function postData(url: string, body: Record<string, any>) {
   var formData = new FormData();
@@ -30,12 +26,22 @@ async function postData(url: string, body: Record<string, any>) {
 }
 
 function App() {
+  const [currentUser, setCurrentUser] = useState<Record<string, string> | null>(
+    null,
+  );
   //const [d, setD] = useState(data);
 
   return (
-    <div className="app">
-      <Form rows={data.rows} />
-    </div>
+    <CurrentUserContext
+      value={{
+        currentUser,
+        setCurrentUser,
+      }}
+    >
+      <div className="app">
+        <Form rows={data.rows} />
+      </div>
+    </CurrentUserContext>
   );
 }
 
