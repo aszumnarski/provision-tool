@@ -8,11 +8,13 @@ export interface IField {
   name: string;
   label: string;
   initValue: string;
-  type?: "input" | "select";
+  type?: "input" | "select" | "date" | "button";
   disabled?: boolean;
   hidden?: boolean;
   patterns: IPattern[];
   options?: IOption[];
+  onChange?: (e: ChangeEvent) => void;
+  value: string;
 }
 
 export interface IOption {
@@ -28,12 +30,12 @@ export interface IPattern {
 export const Input = (props: IField) => {
   // const [value, setValue] = useState(props.initValue)
 
-  const { formValues, setFormValues } = useContext(FormValuesContext);
-  const onChange = (e: ChangeEvent) => {
-    const input = e.target as HTMLInputElement;
-    // setValue(input.value);
-    setFormValues({ ...formValues, [props.name]: input.value });
-  };
+  // const { formValues, setFormValues } = useContext(FormValuesContext);
+  // const onChange = (e: ChangeEvent) => {
+  //   const input = e.target as HTMLInputElement;
+  //   // setValue(input.value);
+  //   setFormValues({ ...formValues, [props.name]: input.value });
+  // };
 
   return (
     <label>
@@ -41,8 +43,8 @@ export const Input = (props: IField) => {
       <input
         type="text"
         name={props.name}
-        onChange={onChange}
-        value={formValues ? formValues[props.name] : ""}
+        onChange={props.onChange}
+        value={props.value}
       />
     </label>
   );
