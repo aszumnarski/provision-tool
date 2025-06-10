@@ -1,3 +1,9 @@
 import { createContext } from "react";
 
-export const FormValuesContext = createContext<any>(null);
+export type TFormContext = {
+  formValues: any;
+  setFormValues: (v: any) => void;
+  formErrors: any;
+  setFormErrors: (e: any) => void;
+} | null;
+export const FormContext = createContext<TFormContext>(null);

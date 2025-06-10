@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import "./App.css";
 import { data } from "./data";
 import { Form } from "./components/Form/Form";
-import { FormValuesContext } from "./context";
+import { FormContext } from "./context";
 
 async function postData(url: string, body: Record<string, any>) {
   var formData = new FormData();
@@ -26,22 +26,22 @@ async function postData(url: string, body: Record<string, any>) {
 }
 
 function App() {
-  const [formValues, setFormValues] = useState<Record<string, string> | null>(
-    null,
-  );
-  //const [d, setD] = useState(data);
+  const [formValues, setFormValues] = useState<Record<string, string> | null>(null);
+  const [formErrors, setFormErrors] = useState<Record<string, string> | null>(null);
 
   return (
-    <FormValuesContext
+    <FormContext
       value={{
         formValues,
         setFormValues,
+        formErrors,
+        setFormErrors,
       }}
     >
       <div className="app">
         <Form rows={data.rows} />
       </div>
-    </FormValuesContext>
+    </FormContext>
   );
 }
 

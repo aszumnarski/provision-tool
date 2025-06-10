@@ -1,7 +1,7 @@
 import "./Field.css";
 
 import { useContext, useEffect } from "react";
-import { FormValuesContext } from "../../context";
+import { FormContext } from "../../context";
 import { useState, type ChangeEvent } from "react";
 import { Input } from "../Input/Input";
 
@@ -29,7 +29,7 @@ export interface IPattern {
 }
 
 export const Field = (props: IField) => {
-  const { formValues, setFormValues } = useContext(FormValuesContext);
+  const { formValues, setFormValues } = useContext(FormContext);
   const onChange = (e: ChangeEvent) => {
     const input = e.target as HTMLInputElement;
     setFormValues({ ...formValues, [props.name]: input.value });

@@ -1,7 +1,7 @@
 import "./Input.css";
 
 import { useContext, useEffect } from "react";
-import { FormValuesContext } from "../../context";
+import { FormContext } from "../../context";
 import { useState, type ChangeEvent } from "react";
 
 export interface IField {
