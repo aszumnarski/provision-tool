@@ -9,13 +9,12 @@ export interface IField {
   name: string;
   label: string;
   initValue: string;
-  type?: "input" | "select" | "date" | "button";
+  type: "input" | "select" | "date" | "button";
   disabled?: boolean;
   hidden?: boolean;
   patterns: IPattern[];
   options?: IOption[];
   onChange?: (e: ChangeEvent) => void;
-  value: string;
 }
 
 export interface IOption {
@@ -36,6 +35,7 @@ export const Field = (props: IField) => {
   };
   const value = formValues ? formValues[props.name] : "";
   const enhancedProps = { ...props, onChange, value };
+  console.log({ enhancedProps });
 
   const typeMap = {
     input: Input(enhancedProps),
@@ -43,5 +43,10 @@ export const Field = (props: IField) => {
     date: <div>date</div>,
     button: <div>button</div>,
   };
+	console.log({
+		type:props.type,
+		map: typeMap[props.type]
+
+	})
   return props.type ? typeMap[props.type] : "";
 };

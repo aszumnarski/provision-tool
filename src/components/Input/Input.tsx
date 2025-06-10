@@ -14,7 +14,7 @@ export interface IField {
   patterns: IPattern[];
   options?: IOption[];
   onChange?: (e: ChangeEvent) => void;
-  value: string;
+  value?: string;
 }
 
 export interface IOption {
@@ -28,6 +28,7 @@ export interface IPattern {
 }
 
 export const Input = (props: IField) => {
+	console.log({props})
   // const [value, setValue] = useState(props.initValue)
 
   // const { formValues, setFormValues } = useContext(FormValuesContext);

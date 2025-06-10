@@ -1,6 +1,5 @@
 import "./Column.css";
-import type { IField } from "../Input/Input";
-import { Input } from "../Input/Input";
+import { Field , type IField} from "../Field/Field";
 
 export interface IColumn {
   fields: IField[];
@@ -14,8 +13,9 @@ export const Column = (column: IColumn) => {
     <div className="column">
       {header ? <h3 className="column-header">{header}</h3> : ""}
       {fields.map((f) => (
-        <Input
+        <Field
           name={f.name}
+					type={f.type}
           key={f.name}
           label={f.label}
           initValue={f.initValue}
