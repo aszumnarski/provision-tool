@@ -5,34 +5,57 @@ import { FormContext } from "../../context";
 import "./Form.css";
 import type { IRow } from "../Row/Row";
 import { Row } from "../Row/Row";
+import type { IField, IPattern } from "../Field/Field";
 
 export interface IForm {
   rows: IRow[];
 }
 
 export function Form({ rows }: IForm) {
+  //@ts-ignore
   const { formValues, setFormValues, formErrors, setFormErrors } =
     useContext(FormContext);
+
+  const [patterns, setPatterns] = useState<Record<string, IPattern[]>>();
   useEffect(() => {
-    setFormValues(createFormState(rows));
+    setFormValues(createFormState(rows, "initValue"));
+    setPatterns(createFormState(rows, "patterns"));
   }, []);
-  // const [formState, setFormState] = useState(createFormState(rows));
-  // const [form, setForm] = useAtom(formValues);
-  function createFormState(rows: IRow[]) {
-    let values: Record<string, string> = {};
+
+  function validateForm() {
+    Object.keys(formValues).forEach((k) => {
+      setFormErrors({ ...formErrors, [k]: validateField(k) });
+    });
+  }
+
+  function validateField(k: keyof typeof formValues) {
+    const arr = patterns[k]
+      .map((p: IPattern) => validatePattern(formValues[k], p))
+      .filter(Boolean);
+    return arr.length ? arr[0] : undefined;
+  }
+
+  function validatePattern(value: any, pattern: IPattern) {
+    if (pattern.reg === "required" && !value) return pattern.message;
+    return undefined;
+  }
+
+  function createFormState(rows: IRow[], key: keyof IField) {
+    let values: Record<string, string | IPattern[]> = {};
     rows.forEach((r) =>
       r.columns.forEach((c) =>
         c.fields.forEach((f) => {
-          values[f.name] = f.initValue;
+          //@ts-ignore
+          values[f.name] = f[key as keyof typeof f];
         }),
       ),
     );
     return values;
   }
-
   const onSubmit: FormEventHandler<HTMLFormElement> = (e) => {
     e.preventDefault();
-    setFormErrors({ name1: "Jakiś błąd" });
+    // setFormErrors({ name1: "Jakiś błąd" });
+    validateForm();
   };
   return (
     <form onSubmit={onSubmit} className="form">
@@ -47,7 +70,7 @@ export function Form({ rows }: IForm) {
       <hr />
       <pre>{JSON.stringify(formErrors, null, 2)}</pre>
       <hr />
-      <pre>{JSON.stringify(18, null, 2)}</pre>
+      <pre>{JSON.stringify(patterns, null, 2)}</pre>
     </form>
   );
 }
