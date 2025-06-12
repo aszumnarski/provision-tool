@@ -16,7 +16,7 @@ export function Form({ rows }: IForm) {
   const { formValues, setFormValues, formErrors, setFormErrors } =
     useContext(FormContext);
 
-  const [patterns, setPatterns] = useState<Record<string, IPattern[]>>();
+  const [patterns, setPatterns] = useState<any>();
   useEffect(() => {
     setFormValues(createFormState(rows, "initValue"));
     setPatterns(createFormState(rows, "patterns"));
@@ -24,21 +24,40 @@ export function Form({ rows }: IForm) {
 
   function validateForm() {
     Object.keys(formValues).forEach((k) => {
-      setFormErrors({ ...formErrors, [k]: validateField(k) });
+      const errMsg = validateField(patterns[k], formValues[k]);
+      console.log({ k, errMsg, p: patterns[k], v: formValues[k] });
+      if (true) {
+        setFormErrors({
+          ...formErrors,
+          [k]: errMsg,
+        });
+      }
     });
   }
 
-  function validateField(k: keyof typeof formValues) {
-    const arr = patterns[k]
-      .map((p: IPattern) => validatePattern(formValues[k], p))
-      .filter(Boolean);
-    return arr.length ? arr[0] : undefined;
+  function validatePattern(pattern: string, value?: string) {
+    const tokens = {
+      required: () => !value,
+      min: () => {
+        const minimum = Number(pattern.split("_")[1]);
+        return value && value?.length < minimum;
+      },
+    };
+    const patternFromToken =
+      tokens[pattern.split("_")[0] as keyof typeof tokens];
+    const regex = new RegExp(pattern);
+    return patternFromToken
+      ? patternFromToken()
+      : value && !regex.test(value || "");
   }
 
-  function validatePattern(value: any, pattern: IPattern) {
-    if (pattern.reg === "required" && !value) return pattern.message;
-    return undefined;
-  }
+  const validateField = (patterns: IPattern[], value?: string | boolean) => {
+    if (typeof value !== "string") return undefined;
+    const messages = patterns
+      .map((p) => validatePattern(p.reg, value) && p.message)
+      .filter(Boolean);
+    return messages.length ? messages[0] : undefined;
+  };
 
   function createFormState(rows: IRow[], key: keyof IField) {
     let values: Record<string, string | IPattern[]> = {};
