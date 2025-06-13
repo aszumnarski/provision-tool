@@ -26,12 +26,9 @@ export function Form({ rows }: IForm) {
     Object.keys(formValues).forEach((k) => {
       const errMsg = validateField(patterns[k], formValues[k]);
       console.log({ k, errMsg, p: patterns[k], v: formValues[k] });
-      if (true) {
-        setFormErrors({
-          ...formErrors,
-          [k]: errMsg,
-        });
-      }
+      setFormErrors((formErrors: any) => {
+        return { ...formErrors, [k]: errMsg };
+      });
     });
   }
 
