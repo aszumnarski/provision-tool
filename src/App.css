@@ -5,24 +5,23 @@
   text-align: center;
 }
 
-
-.row-wrapper{
-  display:flex;
-  flex-direction:column ;
+.row-wrapper {
+  display: flex;
+  flex-direction: column;
   gap: 50px;
   background-color: aqua;
   width: 90vw;
 }
 
-.row{
-  display:flex;
+.row {
+  display: flex;
   background-color: yellow;
   gap: 20px;
 }
 
-.column{
-  display:flex;
-  flex-direction:column ;
+.column {
+  display: flex;
+  flex-direction: column;
   background-color: orange;
   gap: 10px;
 }

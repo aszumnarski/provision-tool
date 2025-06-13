@@ -6,17 +6,28 @@ import "./Form.css";
 import type { IRow } from "../Row/Row";
 import { Row } from "../Row/Row";
 import type { IField, IPattern } from "../Field/Field";
+import { validateField } from "../../utils/validators";
 
 export interface IForm {
   rows: IRow[];
 }
 
 export function Form({ rows }: IForm) {
+  const {
   //@ts-ignore
-  const { formValues, setFormValues, formErrors, setFormErrors } =
-    useContext(FormContext);
+    formValues,
+  //@ts-ignore
+    setFormValues,
+  //@ts-ignore
+    formErrors,
+  //@ts-ignore
+    setFormErrors,
+  //@ts-ignore
+    patterns,
+  //@ts-ignore
+    setPatterns,
+  } = useContext(FormContext);
 
-  const [patterns, setPatterns] = useState<any>();
   useEffect(() => {
     setFormValues(createFormState(rows, "initValue"));
     setPatterns(createFormState(rows, "patterns"));
@@ -31,31 +42,6 @@ export function Form({ rows }: IForm) {
       });
     });
   }
-
-  function validatePattern(pattern: string, value?: string) {
-    const tokens = {
-      required: () => !value,
-      min: () => {
-        const minimum = Number(pattern.split("_")[1]);
-        return value && value?.length < minimum;
-      },
-    };
-    const patternFromToken =
-      tokens[pattern.split("_")[0] as keyof typeof tokens];
-    const regex = new RegExp(pattern);
-    return patternFromToken
-      ? patternFromToken()
-      : value && !regex.test(value || "");
-  }
-
-  const validateField = (patterns: IPattern[], value?: string | boolean) => {
-    if (typeof value !== "string") return undefined;
-    const messages = patterns
-      .map((p) => validatePattern(p.reg, value) && p.message)
-      .filter(Boolean);
-    return messages.length ? messages[0] : undefined;
-  };
-
   function createFormState(rows: IRow[], key: keyof IField) {
     let values: Record<string, string | IPattern[]> = {};
     rows.forEach((r) =>

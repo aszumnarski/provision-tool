@@ -66,3 +66,15 @@ button:focus-visible {
     background-color: #f9f9f9;
   }
 }
+
+.field-input--error > * {
+  color: brown;
+}
+.field-input--error > * > input {
+  border-color: red;
+}
+
+input.field-input--error {
+  color: brown;
+  border-color: red;
+}

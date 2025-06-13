@@ -1,0 +1,6 @@
+.field-input--error > * {
+  color: red;
+}
+.field-input--error > * > input {
+  border-color: red;
+}
