@@ -5,13 +5,17 @@
 .field > label {
   font-weight: 700;
   display: flex;
+  flex-direction: column;
   align-items: center;
   gap: 6px;
+}
+.field > label > * {
+	width: 100%;
 }
 .field--error > * {
   color: red;
 }
-.field--error > * > input {
+.field--error > * > .field-input {
   border-color: red;
   border-width: 2px;
   color: red;

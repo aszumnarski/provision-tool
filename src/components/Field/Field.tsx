@@ -3,8 +3,10 @@ import "./Field.css";
 import { useContext, useEffect } from "react";
 import { FormContext } from "../../context";
 import { useState, type ChangeEvent } from "react";
+import { Select } from "../Select/Select";
 import { Input } from "../Input/Input";
 import { validateField } from "../../utils/validators";
+import { DateInput } from "../Date/Date";
 
 export interface IField {
   name: string;
@@ -65,8 +67,8 @@ export const Field = (props: IField) => {
 
   const typeMap = {
     input: Input(enhancedProps),
-    select: <div>select</div>,
-    date: <div>date</div>,
+    select: Select(enhancedProps),
+    date: DateInput(enhancedProps),
     button: <div>button</div>,
   };
   return props.type ? typeMap[props.type] : "";
