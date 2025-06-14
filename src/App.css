@@ -22,6 +22,6 @@
 .column {
   display: flex;
   flex-direction: column;
-  background-color: orange;
+  background-color: #cddc39;
   gap: 10px;
 }

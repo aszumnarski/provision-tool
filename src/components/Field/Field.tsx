@@ -48,8 +48,7 @@ export const Field = (props: IField) => {
     setPatterns,
   } = useContext(FormContext);
 
-  const onBlur = (e: ChangeEvent) => {
-    const input = e.target as HTMLInputElement;
+  const onBlur = () => {
     const errMsg = validateField(patterns[props.name], formValues[props.name]);
     setFormErrors((formErrors: any) => {
       return { ...formErrors, [props.name]: errMsg };
