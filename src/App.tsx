@@ -26,8 +26,9 @@ async function postData(url: string, body: Record<string, any>) {
 }
 
 function App() {
-  const [formValues, setFormValues] = useState<Record<string, string> | null>(null);
-  const [formErrors, setFormErrors] = useState<Record<string, string> | null>(null);
+  const [formValues, setFormValues] = useState<Record<string, string> | {}>({});
+  const [formErrors, setFormErrors] = useState<Record<string, string> | {}>({});
+  const [patterns, setPatterns] = useState<Record<string, string> | {}>({});
 
   return (
     <FormContext
@@ -36,6 +37,8 @@ function App() {
         setFormValues,
         formErrors,
         setFormErrors,
+        patterns,
+        setPatterns,
       }}
     >
       <div className="app">

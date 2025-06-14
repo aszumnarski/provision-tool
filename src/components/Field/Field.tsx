@@ -4,6 +4,7 @@ import { useContext, useEffect } from "react";
 import { FormContext } from "../../context";
 import { useState, type ChangeEvent } from "react";
 import { Input } from "../Input/Input";
+import { validateField } from "../../utils/validators";
 
 export interface IField {
   name: string;
@@ -14,7 +15,10 @@ export interface IField {
   hidden?: boolean;
   patterns: IPattern[];
   options?: IOption[];
+  value?: string;
+  error?: string;
   onChange?: (e: ChangeEvent) => void;
+  onBlur?: (e: ChangeEvent) => void;
 }
 
 export interface IOption {
@@ -28,14 +32,36 @@ export interface IPattern {
 }
 
 export const Field = (props: IField) => {
-  const { formValues, setFormValues } = useContext(FormContext);
+  //@ts-ignore
+  const {
+    //@ts-ignore
+    formValues,
+    //@ts-ignore
+    setFormValues,
+    //@ts-ignore
+    formErrors,
+    //@ts-ignore
+    setFormErrors,
+    //@ts-ignore
+    patterns,
+    //@ts-ignore
+    setPatterns,
+  } = useContext(FormContext);
+
+  const onBlur = () => {
+    const errMsg = validateField(patterns[props.name], formValues[props.name]);
+    setFormErrors((formErrors: any) => {
+      return { ...formErrors, [props.name]: errMsg };
+    });
+  };
+
   const onChange = (e: ChangeEvent) => {
     const input = e.target as HTMLInputElement;
     setFormValues({ ...formValues, [props.name]: input.value });
   };
   const value = formValues ? formValues[props.name] : "";
-  const enhancedProps = { ...props, onChange, value };
-  console.log({ enhancedProps });
+  const error = formErrors[props.name];
+  const enhancedProps = { ...props, onChange, error, onBlur, value };
 
   const typeMap = {
     input: Input(enhancedProps),
@@ -43,10 +69,5 @@ export const Field = (props: IField) => {
     date: <div>date</div>,
     button: <div>button</div>,
   };
-	console.log({
-		type:props.type,
-		map: typeMap[props.type]
-
-	})
   return props.type ? typeMap[props.type] : "";
 };

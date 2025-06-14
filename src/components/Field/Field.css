@@ -1,0 +1,23 @@
+.field {
+  display: flex;
+  flex-direction: column;
+}
+.field > label {
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.field--error > * {
+  color: red;
+}
+.field--error > * > input {
+  border-color: red;
+  border-width: 2px;
+  color: red;
+}
+.error-message {
+  font-size: 12px;
+  text-align: left;
+  margin: 0;
+}

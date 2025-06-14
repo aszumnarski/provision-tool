@@ -1,21 +1,5 @@
 import "./Input.css";
-
-import { useContext, useEffect } from "react";
-import { FormContext } from "../../context";
-import { useState, type ChangeEvent } from "react";
-
-export interface IField {
-  name: string;
-  label: string;
-  initValue: string;
-  type?: "input" | "select" | "date" | "button";
-  disabled?: boolean;
-  hidden?: boolean;
-  patterns: IPattern[];
-  options?: IOption[];
-  onChange?: (e: ChangeEvent) => void;
-  value?: string;
-}
+import { type IField } from "../Field/Field";
 
 export interface IOption {
   label: string;
@@ -28,25 +12,22 @@ export interface IPattern {
 }
 
 export const Input = (props: IField) => {
-	console.log({props})
-  // const [value, setValue] = useState(props.initValue)
-
-  // const { formValues, setFormValues } = useContext(FormValuesContext);
-  // const onChange = (e: ChangeEvent) => {
-  //   const input = e.target as HTMLInputElement;
-  //   // setValue(input.value);
-  //   setFormValues({ ...formValues, [props.name]: input.value });
-  // };
+  const className = `field ${props.error ? "field--error" : ""}`;
 
   return (
-    <label>
-      <span>{props.label}</span>
-      <input
-        type="text"
-        name={props.name}
-        onChange={props.onChange}
-        value={props.value}
-      />
-    </label>
+    <div className={className}>
+      <label>
+        <span>{props.label}</span>
+        <input
+          type="text"
+          className="field-input"
+          name={props.name}
+          onChange={props.onChange}
+          onBlur={props.onBlur}
+          value={props.value}
+        />
+      </label>
+      {props.error ? <p className="error-message">{props.error}</p> : ""}
+    </div>
   );
 };

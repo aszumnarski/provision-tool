@@ -12,7 +12,7 @@ export const data: IData = {
           fields: [
             {
               name: "name1",
-              label: "label",
+              label: "data and required",
               initValue: "opt1",
               type: "input",
               disabled: false,
@@ -32,8 +32,8 @@ export const data: IData = {
             },
             {
               name: "name2",
-              label: "label",
-              initValue: "opt1",
+              label: "no data and required",
+              initValue: "",
               type: "input",
               disabled: false,
               hidden: true,
@@ -52,17 +52,12 @@ export const data: IData = {
             },
             {
               name: "name3",
-              label: "label",
-              initValue: "opt1",
+              label: "no data and no required",
+              initValue: "",
               type: "input",
               disabled: false,
               hidden: true,
-              patterns: [
-                {
-                  reg: "required",
-                  message: "This field is required",
-                },
-              ],
+              patterns: [],
               options: [
                 {
                   label: "Opcja 1",
@@ -76,17 +71,12 @@ export const data: IData = {
           fields: [
             {
               name: "name4",
-              label: "label",
+              label: "data no required",
               initValue: "opt1",
               type: "input",
               disabled: false,
               hidden: true,
-              patterns: [
-                {
-                  reg: "required",
-                  message: "This field is required",
-                },
-              ],
+              patterns: [],
               options: [
                 {
                   label: "Opcja 1",
@@ -96,7 +86,7 @@ export const data: IData = {
             },
             {
               name: "name5",
-              label: "label",
+              label: "data required min_6",
               initValue: "opt1",
               type: "input",
               disabled: false,
@@ -105,6 +95,11 @@ export const data: IData = {
                 {
                   reg: "required",
                   message: "This field is required",
+                },
+                {
+                  reg: "min_6",
+                  message:
+                    "The phrase is too short - minimum 6 characters are required",
                 },
               ],
               options: [
@@ -116,8 +111,8 @@ export const data: IData = {
             },
             {
               name: "name6",
-              label: "label",
-              initValue: "opt1",
+              label: "no data required min_6",
+              initValue: "",
               type: "input",
               disabled: false,
               hidden: true,
@@ -125,6 +120,11 @@ export const data: IData = {
                 {
                   reg: "required",
                   message: "This field is required",
+                },
+                {
+                  reg: "min_6",
+                  message:
+                    "The phrase is too short - minimum 6 characters are required",
                 },
               ],
               options: [
@@ -140,15 +140,16 @@ export const data: IData = {
           fields: [
             {
               name: "name7",
-              label: "label",
-              initValue: "opt1",
+              label: "no data no required min_6",
+              initValue: "",
               type: "input",
               disabled: false,
               hidden: true,
               patterns: [
                 {
-                  reg: "required",
-                  message: "This field is required",
+                  reg: "min_6",
+                  message:
+                    "The phrase is too short - minimum 6 characters are required",
                 },
               ],
               options: [
@@ -160,15 +161,16 @@ export const data: IData = {
             },
             {
               name: "name8",
-              label: "label",
+              label: "data no required min_6",
               initValue: "opt1",
               type: "input",
               disabled: false,
               hidden: true,
               patterns: [
                 {
-                  reg: "required",
-                  message: "This field is required",
+                  reg: "min_6",
+                  message:
+                    "The phrase is too short - minimum 6 characters are required",
                 },
               ],
               options: [
