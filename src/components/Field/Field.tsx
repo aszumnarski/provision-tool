@@ -7,6 +7,7 @@ import { Select } from "../Select/Select";
 import { Input } from "../Input/Input";
 import { validateField } from "../../utils/validators";
 import { DateInput } from "../Date/Date";
+import { Button } from "../Button/Button";
 
 export interface IField {
   name: string;
@@ -69,7 +70,7 @@ export const Field = (props: IField) => {
     input: Input(enhancedProps),
     select: Select(enhancedProps),
     date: DateInput(enhancedProps),
-    button: <div>button</div>,
+    button: Button(enhancedProps),
   };
   return props.type ? typeMap[props.type] : "";
 };
