@@ -33,7 +33,7 @@ export const DateInput = (props: IField) => {
           value={toDashed(props.value)}
         />
       </label>
-      {props.error ? <p className="error-message">{props.error}</p> : ""}
+      <p className="error-message">{props.error}</p>
     </div>
   );
 };

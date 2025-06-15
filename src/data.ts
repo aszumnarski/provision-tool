@@ -11,6 +11,87 @@ export const data: IData = {
         {
           fields: [
             {
+              name: "appMode",
+              label: "Mode",
+              initValue: "create",
+              type: "select",
+              disabled: false,
+              hidden: true,
+              patterns: [
+                {
+                  reg: "required",
+                  message: "This field is required",
+                },
+              ],
+              options: [
+                {
+                  label: "create",
+                  value: "create",
+                },
+                {
+                  label: "modify",
+                  value: "modify",
+                },
+              ],
+            },
+          ],
+        },
+        {
+          fields: [
+            {
+              name: "costamId",
+              label: "Cośtam ID",
+              initValue: "opt1",
+              type: "input",
+              disabled: false,
+              hidden: true,
+              patterns: [
+                {
+                  reg: "required",
+                  message: "This field is required",
+                },
+              ],
+              options: [
+                {
+                  label: "Opcja 1",
+                  value: "opt1",
+                },
+              ],
+            },
+          ],
+        },
+        {
+          fields: [
+            {
+              name: "magicButton",
+              label: "DYNAMIC",
+              initValue: "opt1",
+              type: "button",
+              disabled: false,
+              hidden: true,
+              patterns: [
+                {
+                  reg: "required",
+                  message: "This field is required",
+                },
+              ],
+              options: [
+                {
+                  label: "Opcja 1",
+                  value: "opt1",
+                },
+              ],
+            },
+          ],
+        },
+      ],
+    },
+
+    {
+      columns: [
+        {
+          fields: [
+            {
               name: "name1",
               label: "data and required",
               initValue: "opt1",

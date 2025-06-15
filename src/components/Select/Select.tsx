@@ -8,10 +8,7 @@ export const Select = (props: IField) => {
     return !props.options
       ? ""
       : props.options.map((o) => (
-          <option
-            key={o.value}
-            value={o.value}
-          >
+          <option key={o.value} value={o.value}>
             {o.label}
           </option>
         ));
@@ -30,7 +27,7 @@ export const Select = (props: IField) => {
           {renderOptions()}
         </select>
       </label>
-      {props.error ? <p className="error-message">{props.error}</p> : ""}
+      <p className="error-message">{props.error}</p>
     </div>
   );
 };

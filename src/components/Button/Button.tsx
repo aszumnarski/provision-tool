@@ -23,6 +23,7 @@ export const Button = (props: IField) => {
   return (
     <div className={className}>
       <button>{props.label}</button>
+      <p className="error-message">{props.error}</p>
     </div>
   );
 };

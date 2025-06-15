@@ -17,7 +17,7 @@ export const Input = (props: IField) => {
           value={props.value}
         />
       </label>
-      {props.error ? <p className="error-message">{props.error}</p> : ""}
+      <p className="error-message">{props.error}</p>
     </div>
   );
 };
