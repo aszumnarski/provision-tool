@@ -15,12 +15,9 @@ async function postData(url: string, body: Record<string, any>) {
     if (!response.ok) {
       throw new Error(`Response status: ${response.status}`);
     }
-    console.log(response);
     const data = await response.json();
     return data;
   } catch (error: any) {
-    console.error(error.message);
-    //console.log(response)
     return { error };
   }
 }
