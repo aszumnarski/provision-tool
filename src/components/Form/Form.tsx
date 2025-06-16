@@ -14,17 +14,17 @@ export interface IForm {
 
 export function Form({ rows }: IForm) {
   const {
-  //@ts-ignore
+    //@ts-ignore
     formValues,
-  //@ts-ignore
+    //@ts-ignore
     setFormValues,
-  //@ts-ignore
+    //@ts-ignore
     formErrors,
-  //@ts-ignore
+    //@ts-ignore
     setFormErrors,
-  //@ts-ignore
+    //@ts-ignore
     patterns,
-  //@ts-ignore
+    //@ts-ignore
     setPatterns,
   } = useContext(FormContext);
 
@@ -33,15 +33,6 @@ export function Form({ rows }: IForm) {
     setPatterns(createFormState(rows, "patterns"));
   }, []);
 
-  function validateForm() {
-    Object.keys(formValues).forEach((k) => {
-      const errMsg = validateField(patterns[k], formValues[k]);
-      console.log({ k, errMsg, p: patterns[k], v: formValues[k] });
-      setFormErrors((formErrors: any) => {
-        return { ...formErrors, [k]: errMsg };
-      });
-    });
-  }
   function createFormState(rows: IRow[], key: keyof IField) {
     let values: Record<string, string | IPattern[]> = {};
     rows.forEach((r) =>
@@ -57,12 +48,10 @@ export function Form({ rows }: IForm) {
   const onSubmit: FormEventHandler<HTMLFormElement> = (e) => {
     e.preventDefault();
     // setFormErrors({ name1: "Jakiś błąd" });
-    validateForm();
+    // validateForm();
   };
   return (
     <form onSubmit={onSubmit} className="form">
-      <button type="submit">Submit</button>
-
       <div className="row-wrapper">
         {rows.map((r, i) => (
           <Row key={i} columns={r.columns} />

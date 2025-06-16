@@ -1,5 +1,5 @@
 import "./Column.css";
-import { Field , type IField} from "../Field/Field";
+import { Field, type IField } from "../Field/Field";
 
 export interface IColumn {
   fields: IField[];
@@ -15,11 +15,13 @@ export const Column = (column: IColumn) => {
       {fields.map((f) => (
         <Field
           name={f.name}
-					type={f.type}
+          type={f.type}
           key={f.name}
           label={f.label}
           initValue={f.initValue}
           patterns={f.patterns}
+          disabled={f.disabled}
+          options={f.options}
         />
       ))}
     </div>

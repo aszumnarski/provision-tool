@@ -11,6 +11,87 @@ export const data: IData = {
         {
           fields: [
             {
+              name: "appMode",
+              label: "Mode",
+              initValue: "create",
+              type: "select",
+              disabled: false,
+              hidden: true,
+              patterns: [
+                {
+                  reg: "required",
+                  message: "This field is required",
+                },
+              ],
+              options: [
+                {
+                  label: "create",
+                  value: "create",
+                },
+                {
+                  label: "modify",
+                  value: "modify",
+                },
+              ],
+            },
+          ],
+        },
+        {
+          fields: [
+            {
+              name: "costamId",
+              label: "Cośtam ID",
+              initValue: "opt1",
+              type: "input",
+              disabled: false,
+              hidden: true,
+              patterns: [
+                {
+                  reg: "required",
+                  message: "This field is required",
+                },
+              ],
+              options: [
+                {
+                  label: "Opcja 1",
+                  value: "opt1",
+                },
+              ],
+            },
+          ],
+        },
+        {
+          fields: [
+            {
+              name: "magicButton",
+              label: "DYNAMIC",
+              initValue: "opt1",
+              type: "button",
+              disabled: false,
+              hidden: true,
+              patterns: [
+                {
+                  reg: "required",
+                  message: "This field is required",
+                },
+              ],
+              options: [
+                {
+                  label: "Opcja 1",
+                  value: "opt1",
+                },
+              ],
+            },
+          ],
+        },
+      ],
+    },
+
+    {
+      columns: [
+        {
+          fields: [
+            {
               name: "name1",
               label: "data and required",
               initValue: "opt1",
@@ -318,7 +399,7 @@ export const data: IData = {
               name: "name6b",
               label: "label",
               initValue: "opt1",
-              type: "input",
+              type: "select",
               disabled: false,
               hidden: true,
               patterns: [
@@ -332,6 +413,14 @@ export const data: IData = {
                   label: "Opcja 1",
                   value: "opt1",
                 },
+                {
+                  label: "Opcja 2",
+                  value: "opt2",
+                },
+                {
+                  label: "Opcja 3",
+                  value: "opt3",
+                },
               ],
             },
           ],
@@ -341,15 +430,19 @@ export const data: IData = {
           fields: [
             {
               name: "name7b",
-              label: "label",
-              initValue: "opt1",
-              type: "input",
+              label: "label data",
+              initValue: "",
+              type: "date",
               disabled: false,
               hidden: true,
               patterns: [
                 {
                   reg: "required",
                   message: "This field is required",
+                },
+                {
+                  reg: "future",
+                  message: "Dates in the past are not allowed",
                 },
               ],
               options: [

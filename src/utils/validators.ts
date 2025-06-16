@@ -3,6 +3,10 @@ import { type IPattern } from "../components/Field/Field";
 function validatePattern(pattern: string, value?: string) {
   const tokens = {
     required: () => !value,
+    future: () =>
+      value &&
+      value.split(".").reverse().join("-") <
+        new Date().toISOString().substring(0, 10),
     min: () => {
       const minimum = Number(pattern.split("_")[1]);
       return value && value?.length < minimum;
