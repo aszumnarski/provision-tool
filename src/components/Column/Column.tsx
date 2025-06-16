@@ -20,6 +20,7 @@ export const Column = (column: IColumn) => {
           label={f.label}
           initValue={f.initValue}
           patterns={f.patterns}
+          disabled={f.disabled}
           options={f.options}
         />
       ))}

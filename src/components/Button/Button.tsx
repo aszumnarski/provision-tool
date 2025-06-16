@@ -2,27 +2,50 @@ import "./Button.css";
 import { useContext, useEffect } from "react";
 import { FormContext } from "../../context";
 import { type IField } from "../Field/Field";
-import type { ChangeEvent } from "react";
+import { validateField } from "../../utils/validators";
+import type { ChangeEvent, MouseEventHandler } from "react";
+
+const CREATE = "Create";
+const GET = "Get";
+const UPDATE = "Update";
 
 export const Button = (props: IField) => {
   //@ts-ignore
-  const { formValues, setFormValues } = useContext(FormContext);
+  const {
+    //@ts-ignore
+    formValues,
+    //@ts-ignore
+    setFormValues,
+    //@ts-ignore
+    formErrors,
+    //@ts-ignore
+    setFormErrors,
+    //@ts-ignore
+    patterns,
+    //@ts-ignore
+    setPatterns,
+  } = useContext(FormContext);
   const className = `field ${props.error ? "field--error" : ""}`;
 
-  const toDashed = (dottedDate?: string) =>
-    dottedDate ? dottedDate.split(".").reverse().join("-") : "";
-  const toDotted = (dashedDate: string) =>
-    dashedDate ? dashedDate.split("-").reverse().join(".") : "";
-
-  const handleChange = (e: ChangeEvent) => {
-    const input = e.target as HTMLInputElement;
-
-    setFormValues({ ...formValues, [props.name]: toDotted(input.value) });
+  const onClick: MouseEventHandler<HTMLButtonElement> = (e) => {
+    e.preventDefault();
+    validateForm();
   };
+
+  function validateForm() {
+    Object.keys(formValues).forEach((k) => {
+      const errMsg = validateField(patterns[k], formValues[k]);
+      setFormErrors((formErrors: any) => {
+        return { ...formErrors, [k]: errMsg };
+      });
+    });
+  }
 
   return (
     <div className={className}>
-      <button>{props.label}</button>
+      <button disabled={props.disabled} onClick={onClick}>
+        {props.label}
+      </button>
       <p className="error-message">{props.error}</p>
     </div>
   );

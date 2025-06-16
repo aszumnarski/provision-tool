@@ -22,6 +22,7 @@ export const Select = (props: IField) => {
           className="field-input"
           name={props.name}
           onChange={props.onChange}
+          disabled={props.disabled}
           onBlur={props.onBlur}
         >
           {renderOptions()}

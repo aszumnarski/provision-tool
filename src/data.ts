@@ -431,7 +431,7 @@ export const data: IData = {
             {
               name: "name7b",
               label: "label data",
-              initValue: "18.07.1979",
+              initValue: "",
               type: "date",
               disabled: false,
               hidden: true,
@@ -439,6 +439,10 @@ export const data: IData = {
                 {
                   reg: "required",
                   message: "This field is required",
+                },
+                {
+                  reg: "future",
+                  message: "Dates in the past are not allowed",
                 },
               ],
               options: [
