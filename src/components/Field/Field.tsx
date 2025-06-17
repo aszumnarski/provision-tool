@@ -15,13 +15,49 @@ export interface IField {
   initValue: string;
   type: "input" | "select" | "date" | "button";
   disabled?: boolean;
+  conditionalDisabled?: IConditionalDisabled;
   hidden?: boolean;
   patterns: IPattern[];
   options?: IOption[];
   value?: string;
   error?: string;
+  dependentOptions?: IDependentOptions;
+  calculatedValue?: string[];
   onChange?: (e: ChangeEvent) => void;
   onBlur?: (e: ChangeEvent) => void;
+}
+
+export interface IConditionalDisabled {
+  conditions: (
+    | {
+        when: string;
+        is: string;
+      }
+    | {
+        when: string;
+        is: boolean;
+      }
+  )[];
+}
+
+export interface IDependentOptions {
+  dependency: string;
+  values: (
+    | {
+        keys: string[];
+        options: {
+          label: string;
+          value: string;
+        }[];
+      }
+    | {
+        keys: boolean;
+        options: {
+          label: string;
+          value: string;
+        }[];
+      }
+  )[];
 }
 
 export interface IOption {

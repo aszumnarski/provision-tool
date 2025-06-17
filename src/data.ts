@@ -11,7 +11,7 @@ export const data: IData = {
         {
           fields: [
             {
-              name: "appMode",
+              name: "mode",
               label: "Mode",
               initValue: "create",
               type: "select",
@@ -293,7 +293,7 @@ export const data: IData = {
             {
               name: "name1b",
               label: "label",
-              initValue: "opt1",
+              initValue: "9.2",
               type: "input",
               disabled: false,
               hidden: true,
@@ -313,7 +313,7 @@ export const data: IData = {
             {
               name: "name2b",
               label: "label",
-              initValue: "opt1",
+              initValue: "15.1",
               type: "input",
               disabled: false,
               hidden: true,
@@ -332,8 +332,9 @@ export const data: IData = {
             },
             {
               name: "name3b",
-              label: "label",
-              initValue: "opt1",
+              label: "Calculated Value",
+              initValue: "",
+              calculatedValue: ["name1b", "name2b"],
               type: "input",
               disabled: false,
               hidden: true,
@@ -357,10 +358,22 @@ export const data: IData = {
           fields: [
             {
               name: "name4b",
-              label: "label",
+              label: "Conditional Disabled if modify and wrestler",
               initValue: "opt1",
               type: "input",
               disabled: false,
+              conditionalDisabled: {
+                conditions: [
+                  {
+                    when: "mode",
+                    is: "modify",
+                  },
+                  {
+                    when: "wrestler",
+                    is: true,
+                  },
+                ],
+              },
               hidden: true,
               patterns: [
                 {
@@ -376,9 +389,9 @@ export const data: IData = {
               ],
             },
             {
-              name: "name5b",
-              label: "label",
-              initValue: "opt1",
+              name: "wrestler",
+              label: "Wrestler",
+              initValue: "",
               type: "input",
               disabled: false,
               hidden: true,
@@ -474,8 +487,8 @@ export const data: IData = {
             },
             {
               name: "name9b",
-              label: "label",
-              initValue: "opt1",
+              label: "Dependent Options",
+              initValue: "józek",
               type: "input",
               disabled: false,
               hidden: true,
@@ -485,33 +498,53 @@ export const data: IData = {
                   message: "This field is required",
                 },
               ],
-              /*
-              dependentOptions:{
+              dependentOptions: {
                 dependency: "name2",
-                values:[
-                 { keys: ["fdsf", "df"], options:[{                
-                  label: "Opcja 1",
-                  value: "opt1",
-                },{                
-                  label: "Opcja 1",
-                  value: "opt1",
-                }]}
-
-          ]
+                values: [
+                  {
+                    keys: ["fdsf", "df"],
+                    options: [
+                      {
+                        label: "Opcja 1",
+                        value: "opt1",
+                      },
+                      {
+                        label: "Opcja 1",
+                        value: "opt1",
+                      },
+                    ],
+                  },
+                  {
+                    keys: ["fdsf", "df"],
+                    options: [
+                      {
+                        label: "Opcja 1",
+                        value: "opt1",
+                      },
+                      {
+                        label: "Opcja 1",
+                        value: "józek",
+                      },
+                    ],
+                  },
+                  {
+                    keys: true,
+                    options: [
+                      {
+                        label: "Opcja 1",
+                        value: "opt1",
+                      },
+                      {
+                        label: "Opcja 1",
+                        value: "opt1",
+                      },
+                    ],
+                  },
+                ],
               },
 
-              conditionalDisabled: {
-              logic: "or",
-              
-              consirions:[{
-              when: "name9",
-              is: "ddddd"
-              
-              }]},
-              
-              
-              
-              */
+
+
               options: [
                 {
                   label: "Opcja 1",
