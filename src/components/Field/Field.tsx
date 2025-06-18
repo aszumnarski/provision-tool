@@ -100,7 +100,7 @@ export const Field = (props: IField) => {
   };
   const sum = props.calculatedValue?.length
     ? props.calculatedValue
-        .map((v) => parseFloat(formValues[v]))
+        .map((v) => parseFloat(formValues[v] || 0))
         .reduce((accumulator, currentValue) => accumulator + currentValue, 0)
         .toLocaleString("en-US")
         .replace(/\,/g, "")
