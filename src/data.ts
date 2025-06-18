@@ -42,7 +42,7 @@ export const data: IData = {
               name: "costamId",
               label: "Cośtam ID",
               initValue: "opt1",
-              type: "input",
+              type: "text",
               disabled: false,
               hidden: true,
               patterns: [
@@ -95,7 +95,7 @@ export const data: IData = {
               name: "name1",
               label: "data and required",
               initValue: "opt1",
-              type: "input",
+              type: "text",
               disabled: false,
               hidden: true,
               patterns: [
@@ -115,7 +115,7 @@ export const data: IData = {
               name: "name2",
               label: "no data and required",
               initValue: "",
-              type: "input",
+              type: "text",
               disabled: false,
               hidden: true,
               patterns: [
@@ -135,7 +135,7 @@ export const data: IData = {
               name: "name3",
               label: "no data and no required",
               initValue: "",
-              type: "input",
+              type: "text",
               disabled: false,
               hidden: true,
               patterns: [],
@@ -154,7 +154,7 @@ export const data: IData = {
               name: "name4",
               label: "data no required",
               initValue: "opt1",
-              type: "input",
+              type: "text",
               disabled: false,
               hidden: true,
               patterns: [],
@@ -169,7 +169,7 @@ export const data: IData = {
               name: "name5",
               label: "data required min_6",
               initValue: "opt1",
-              type: "input",
+              type: "text",
               disabled: false,
               hidden: true,
               patterns: [
@@ -194,7 +194,7 @@ export const data: IData = {
               name: "name6",
               label: "no data required min_6",
               initValue: "",
-              type: "input",
+              type: "text",
               disabled: false,
               hidden: true,
               patterns: [
@@ -223,7 +223,7 @@ export const data: IData = {
               name: "name7",
               label: "no data no required min_6",
               initValue: "",
-              type: "input",
+              type: "text",
               disabled: false,
               hidden: true,
               patterns: [
@@ -244,7 +244,7 @@ export const data: IData = {
               name: "name8",
               label: "data no required min_6",
               initValue: "opt1",
-              type: "input",
+              type: "text",
               disabled: false,
               hidden: true,
               patterns: [
@@ -265,7 +265,7 @@ export const data: IData = {
               name: "name9",
               label: "label",
               initValue: "opt1",
-              type: "input",
+              type: "text",
               disabled: false,
               hidden: true,
               patterns: [
@@ -294,7 +294,7 @@ export const data: IData = {
               name: "name1b",
               label: "label",
               initValue: "9.2",
-              type: "input",
+              type: "number",
               disabled: false,
               hidden: true,
               patterns: [
@@ -314,7 +314,7 @@ export const data: IData = {
               name: "name2b",
               label: "label",
               initValue: "15.1",
-              type: "input",
+              type: "number",
               disabled: false,
               hidden: true,
               patterns: [
@@ -335,8 +335,8 @@ export const data: IData = {
               label: "Calculated Value",
               initValue: "",
               calculatedValue: ["name1b", "name2b"],
-              type: "input",
-              disabled: false,
+              type: "text",
+              disabled: true,
               hidden: true,
               patterns: [
                 {
@@ -360,7 +360,7 @@ export const data: IData = {
               name: "name4b",
               label: "Conditional Disabled if modify and wrestler",
               initValue: "opt1",
-              type: "input",
+              type: "text",
               disabled: false,
               conditionalDisabled: {
                 conditions: [
@@ -392,7 +392,7 @@ export const data: IData = {
               name: "wrestler",
               label: "Wrestler",
               initValue: "",
-              type: "input",
+              type: "text",
               disabled: false,
               hidden: true,
               patterns: [
@@ -409,9 +409,9 @@ export const data: IData = {
               ],
             },
             {
-              name: "name6b",
-              label: "label",
-              initValue: "opt1",
+              name: "machineActor",
+              label: "Actor or Machine",
+              initValue: "car",
               type: "select",
               disabled: false,
               hidden: true,
@@ -423,16 +423,20 @@ export const data: IData = {
               ],
               options: [
                 {
-                  label: "Opcja 1",
-                  value: "opt1",
+                  label: "Samochód",
+                  value: "car",
                 },
                 {
-                  label: "Opcja 2",
-                  value: "opt2",
+                  label: "Motór",
+                  value: "bike",
                 },
                 {
-                  label: "Opcja 3",
-                  value: "opt3",
+                  label: "Schwarzenegger",
+                  value: "schwarzenegger",
+                },
+                {
+                  label: "Stallone",
+                  value: "sly",
                 },
               ],
             },
@@ -469,7 +473,7 @@ export const data: IData = {
               name: "name8b",
               label: "label",
               initValue: "opt1",
-              type: "input",
+              type: "text",
               disabled: false,
               hidden: true,
               patterns: [
@@ -486,10 +490,10 @@ export const data: IData = {
               ],
             },
             {
-              name: "name9b",
+              name: "details",
               label: "Dependent Options",
-              initValue: "józek",
-              type: "input",
+              initValue: "",
+              type: "select",
               disabled: false,
               hidden: true,
               patterns: [
@@ -549,6 +553,10 @@ export const data: IData = {
                 {
                   label: "Opcja 1",
                   value: "opt1",
+                },
+                {
+                  label: "Opcja 2",
+                  value: "rpt2",
                 },
               ],
             },

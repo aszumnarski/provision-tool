@@ -9,7 +9,7 @@ export const Input = (props: IField) => {
       <label>
         <span>{props.label}</span>
         <input
-          type="text"
+          type={props.type}
           className="field-input"
           name={props.name}
           onChange={props.onChange}

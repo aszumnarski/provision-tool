@@ -22,6 +22,7 @@ export const Column = (column: IColumn) => {
           patterns={f.patterns}
           disabled={f.disabled}
           options={f.options}
+          calculatedValue={f.calculatedValue}
         />
       ))}
     </div>

@@ -13,7 +13,7 @@ export interface IField {
   name: string;
   label: string;
   initValue: string;
-  type: "input" | "select" | "date" | "button";
+  type: "text" | "select" | "number" | "date" | "button";
   disabled?: boolean;
   conditionalDisabled?: IConditionalDisabled;
   hidden?: boolean;
@@ -98,12 +98,20 @@ export const Field = (props: IField) => {
     const input = e.target as HTMLInputElement;
     setFormValues({ ...formValues, [props.name]: input.value });
   };
-  const value = formValues ? formValues[props.name] : "";
+  const sum = props.calculatedValue?.length
+    ? props.calculatedValue
+        .map((v) => parseFloat(formValues[v]))
+        .reduce((accumulator, currentValue) => accumulator + currentValue, 0)
+        .toLocaleString("en-US")
+        .replace(/\,/g, "")
+    : "";
+  const value = sum ? sum : formValues ? formValues[props.name] : "";
   const error = formErrors[props.name];
   const enhancedProps = { ...props, onChange, error, onBlur, value };
 
   const typeMap = {
-    input: Input(enhancedProps),
+    text: Input(enhancedProps),
+    number: Input(enhancedProps),
     select: Select(enhancedProps),
     date: DateInput(enhancedProps),
     button: Button(enhancedProps),
