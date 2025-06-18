@@ -105,9 +105,20 @@ export const Field = (props: IField) => {
         .toLocaleString("en-US")
         .replace(/\,/g, "")
     : "";
+
+  const disabled = props.conditionalDisabled?.conditions.length
+    ? props.conditionalDisabled.conditions
+        .map(
+          (c) =>
+            formValues[c.when] == c.is ||
+            (typeof c.is === "boolean" && !!formValues[c.when]),
+        )
+        .filter(Boolean).length === props.conditionalDisabled.conditions.length
+    : props.disabled;
+
   const value = sum ? sum : formValues ? formValues[props.name] : "";
   const error = formErrors[props.name];
-  const enhancedProps = { ...props, onChange, error, onBlur, value };
+  const enhancedProps = { ...props, onChange, error, onBlur, disabled, value };
 
   const typeMap = {
     text: Input(enhancedProps),
