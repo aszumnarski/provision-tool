@@ -39,22 +39,21 @@ export const data: IData = {
         {
           fields: [
             {
-              name: "costamId",
+              name: "getAppNumber",
               label: "Cośtam ID",
-              initValue: "opt1",
+              initValue: "",
               type: "text",
               disabled: false,
               hidden: true,
-              patterns: [
+              patterns: [],
+              conditionalDisabled: [
                 {
-                  reg: "required",
-                  message: "This field is required",
-                },
-              ],
-              options: [
-                {
-                  label: "Opcja 1",
-                  value: "opt1",
+                  conditions: [
+                    {
+                      when: "mode",
+                      is: "create",
+                    },
+                  ],
                 },
               ],
             },
@@ -281,6 +280,130 @@ export const data: IData = {
                 },
               ],
             },
+            {
+              name: "costCenter",
+              label: "Cost Center",
+              initValue: "",
+              type: "text",
+              disabled: false,
+              hidden: true,
+              patterns: [],
+              conditionalDisabled: [
+                {
+                  conditions: [
+                    {
+                      when: "WBS",
+                      is: true,
+                    },
+                  ],
+                },
+                {
+                  conditions: [
+                    {
+                      when: "salesOrder",
+                      is: true,
+                    },
+                  ],
+                },
+                {
+                  conditions: [
+                    {
+                      when: "salesOrderItem",
+                      is: true,
+                    },
+                  ],
+                },
+              ],
+            },
+            {
+              name: "WBS",
+              label: "WBS Element",
+              initValue: "",
+              type: "text",
+              disabled: false,
+              hidden: true,
+              patterns: [],
+              conditionalDisabled: [
+                {
+                  conditions: [
+                    {
+                      when: "costCenter",
+                      is: true,
+                    },
+                  ],
+                },
+                {
+                  conditions: [
+                    {
+                      when: "salesOrder",
+                      is: true,
+                    },
+                  ],
+                },
+                {
+                  conditions: [
+                    {
+                      when: "salesOrderItem",
+                      is: true,
+                    },
+                  ],
+                },
+              ],
+            },
+            {
+              name: "salesOrder",
+              label: "Sales Order",
+              initValue: "",
+              type: "text",
+              disabled: false,
+              hidden: true,
+              patterns: [],
+              conditionalDisabled: [
+                {
+                  conditions: [
+                    {
+                      when: "WBS",
+                      is: true,
+                    },
+                  ],
+                },
+                {
+                  conditions: [
+                    {
+                      when: "costCenter",
+                      is: true,
+                    },
+                  ],
+                },
+              ],
+            },
+            {
+              name: "salesOrderItem",
+              label: "Sales Order Item",
+              initValue: "",
+              type: "text",
+              disabled: false,
+              hidden: true,
+              patterns: [],
+              conditionalDisabled: [
+                {
+                  conditions: [
+                    {
+                      when: "WBS",
+                      is: true,
+                    },
+                  ],
+                },
+                {
+                  conditions: [
+                    {
+                      when: "costCenter",
+                      is: true,
+                    },
+                  ],
+                },
+              ],
+            },
           ],
         },
       ],
@@ -362,18 +485,20 @@ export const data: IData = {
               initValue: "opt1",
               type: "text",
               disabled: false,
-              conditionalDisabled: {
-                conditions: [
-                  {
-                    when: "mode",
-                    is: "modify",
-                  },
-                  {
-                    when: "wrestler",
-                    is: true,
-                  },
-                ],
-              },
+              conditionalDisabled: [
+                {
+                  conditions: [
+                    {
+                      when: "mode",
+                      is: "modify",
+                    },
+                    {
+                      when: "wrestler",
+                      is: true,
+                    },
+                  ],
+                },
+              ],
               hidden: true,
               patterns: [
                 {
@@ -503,60 +628,45 @@ export const data: IData = {
                 },
               ],
               dependentOptions: {
-                dependency: "name2",
+                dependency: "machineActor",
                 values: [
                   {
-                    keys: ["fdsf", "df"],
+                    keys: ["car", "bike"],
                     options: [
                       {
-                        label: "Opcja 1",
-                        value: "opt1",
+                        label: "Honda",
+                        value: "honda",
                       },
                       {
-                        label: "Opcja 1",
-                        value: "opt1",
+                        label: "Dalsim",
+                        value: "dalsim",
                       },
                     ],
                   },
                   {
-                    keys: ["fdsf", "df"],
+                    keys: ["schwarzenegger"],
                     options: [
                       {
-                        label: "Opcja 1",
-                        value: "opt1",
+                        label: "Terminator",
+                        value: "t800",
                       },
                       {
-                        label: "Opcja 1",
+                        label: "Predator",
                         value: "józek",
-                      },
-                    ],
-                  },
-                  {
-                    keys: true,
-                    options: [
-                      {
-                        label: "Opcja 1",
-                        value: "opt1",
-                      },
-                      {
-                        label: "Opcja 1",
-                        value: "opt1",
                       },
                     ],
                   },
                 ],
               },
 
-
-
               options: [
                 {
-                  label: "Opcja 1",
-                  value: "opt1",
+                  label: "Film",
+                  value: "film",
                 },
                 {
-                  label: "Opcja 2",
-                  value: "rpt2",
+                  label: "Komiks",
+                  value: "kokosz",
                 },
               ],
             },

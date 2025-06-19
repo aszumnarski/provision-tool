@@ -15,7 +15,7 @@ export interface IField {
   initValue: string;
   type: "text" | "select" | "number" | "date" | "button";
   disabled?: boolean;
-  conditionalDisabled?: IConditionalDisabled;
+  conditionalDisabled?: IConditionalDisabled[];
   hidden?: boolean;
   patterns: IPattern[];
   options?: IOption[];
@@ -100,25 +100,33 @@ export const Field = (props: IField) => {
   };
   const sum = props.calculatedValue?.length
     ? props.calculatedValue
-        .map((v) => parseFloat(formValues[v] || 0))
+        .map((v) => parseFloat(formValues[v]) || 0)
         .reduce((accumulator, currentValue) => accumulator + currentValue, 0)
         .toLocaleString("en-US")
         .replace(/\,/g, "")
     : "";
 
-  const disabled = props.conditionalDisabled?.conditions.length
-    ? props.conditionalDisabled.conditions
-        .map(
-          (c) =>
-            formValues[c.when] == c.is ||
-            (typeof c.is === "boolean" && !!formValues[c.when]),
+  const disabled = props.conditionalDisabled
+    ? props.conditionalDisabled
+        ?.map(
+          (or) =>
+            or.conditions
+              .map(
+                (c) =>
+                  formValues[c.when] == c.is || !!formValues[c.when] == c.is
+              )
+              .filter(Boolean).length === or.conditions.length
         )
-        .filter(Boolean).length === props.conditionalDisabled.conditions.length
+        .filter(Boolean).length > 0
     : props.disabled;
 
   const value = sum ? sum : formValues ? formValues[props.name] : "";
   const error = formErrors[props.name];
   const enhancedProps = { ...props, onChange, error, onBlur, disabled, value };
+
+  useEffect(() => {
+    setFormValues({ ...formValues, [props.name]: value });
+  }, [value]);
 
   const typeMap = {
     text: Input(enhancedProps),
