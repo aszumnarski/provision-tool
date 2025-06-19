@@ -1,7 +1,11 @@
 import "./Select.css";
 import { type IField } from "../Field/Field";
+import { useContext, useEffect } from "react";
+import { FormContext } from "../../context";
 
 export const Select = (props: IField) => {
+  //@ts-ignore
+  const { formValues, setFormValues, patterns } = useContext(FormContext);
   const className = `field ${props.error ? "field--error" : ""}`;
 
   const renderOptions = () => {
@@ -13,6 +17,17 @@ export const Select = (props: IField) => {
           </option>
         ));
   };
+
+  useEffect(() => {
+    if (props.type === "select" && !formValues[props.name] && props.options) {
+      setFormValues((formValues: any) => {
+        return {
+          ...formValues,
+          [props.name]: props.options && props.options[0].value,
+        };
+      });
+    }
+  }, [formValues[props.name], props.options && props.options[0].value]);
 
   return (
     <div className={className}>

@@ -42,22 +42,15 @@ export interface IConditionalDisabled {
 
 export interface IDependentOptions {
   dependency: string;
-  values: (
-    | {
-        keys: string[];
-        options: {
-          label: string;
-          value: string;
-        }[];
-      }
-    | {
-        keys: boolean;
-        options: {
-          label: string;
-          value: string;
-        }[];
-      }
-  )[];
+  values: IDependentOptionsValue[];
+}
+
+export interface IDependentOptionsValue {
+  keys: string[];
+  options: {
+    label: string;
+    value: string;
+  }[];
 }
 
 export interface IOption {
@@ -98,6 +91,13 @@ export const Field = (props: IField) => {
     const input = e.target as HTMLInputElement;
     setFormValues({ ...formValues, [props.name]: input.value });
   };
+
+  const options = props.dependentOptions?.dependency
+    ? props.dependentOptions.values.find((v) =>
+        v.keys.includes(formValues[props.dependentOptions?.dependency]),
+      )?.options || props.options
+    : props.options;
+
   const sum = props.calculatedValue?.length
     ? props.calculatedValue
         .map((v) => parseFloat(formValues[v]) || 0)
@@ -113,16 +113,23 @@ export const Field = (props: IField) => {
             or.conditions
               .map(
                 (c) =>
-                  formValues[c.when] == c.is || !!formValues[c.when] == c.is
+                  formValues[c.when] == c.is || !!formValues[c.when] == c.is,
               )
-              .filter(Boolean).length === or.conditions.length
+              .filter(Boolean).length === or.conditions.length,
         )
         .filter(Boolean).length > 0
     : props.disabled;
-
   const value = sum ? sum : formValues ? formValues[props.name] : "";
   const error = formErrors[props.name];
-  const enhancedProps = { ...props, onChange, error, onBlur, disabled, value };
+  const enhancedProps = {
+    ...props,
+    onChange,
+    error,
+    onBlur,
+    disabled,
+    options,
+    value,
+  };
 
   useEffect(() => {
     setFormValues({ ...formValues, [props.name]: value });

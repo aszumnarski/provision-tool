@@ -24,6 +24,7 @@ export const Column = (column: IColumn) => {
           options={f.options}
           calculatedValue={f.calculatedValue}
           conditionalDisabled={f.conditionalDisabled}
+          dependentOptions={f.dependentOptions}
         />
       ))}
     </div>
