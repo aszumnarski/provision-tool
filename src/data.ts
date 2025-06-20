@@ -68,12 +68,7 @@ export const data: IData = {
               type: "button",
               disabled: false,
               hidden: true,
-              patterns: [
-                {
-                  reg: "required",
-                  message: "This field is required",
-                },
-              ],
+              patterns: [],
               options: [
                 {
                   label: "Opcja 1",
@@ -287,7 +282,12 @@ export const data: IData = {
               type: "text",
               disabled: false,
               hidden: true,
-              patterns: [],
+              patterns: [
+                {
+                  reg: "required",
+                  message: "This field is required",
+                },
+              ],
               conditionalDisabled: [
                 {
                   conditions: [
@@ -322,7 +322,12 @@ export const data: IData = {
               type: "text",
               disabled: false,
               hidden: true,
-              patterns: [],
+              patterns: [
+                {
+                  reg: "required",
+                  message: "This field is required",
+                },
+              ],
               conditionalDisabled: [
                 {
                   conditions: [
@@ -357,7 +362,12 @@ export const data: IData = {
               type: "text",
               disabled: false,
               hidden: true,
-              patterns: [],
+              patterns: [
+                {
+                  reg: "required",
+                  message: "This field is required",
+                },
+              ],
               conditionalDisabled: [
                 {
                   conditions: [
@@ -384,7 +394,12 @@ export const data: IData = {
               type: "text",
               disabled: false,
               hidden: true,
-              patterns: [],
+              patterns: [
+                {
+                  reg: "required",
+                  message: "This field is required",
+                },
+              ],
               conditionalDisabled: [
                 {
                   conditions: [

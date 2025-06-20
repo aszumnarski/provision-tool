@@ -29,21 +29,24 @@ export const Button = (props: IField) => {
 
   const onClick: MouseEventHandler<HTMLButtonElement> = (e) => {
     e.preventDefault();
-    validateForm();
+    // validateForm();
+
+    window.dispatchEvent(new Event("validate"));
+    console.log("send form", { formErrors });
   };
 
-  function validateForm() {
-    Object.keys(formValues).forEach((k) => {
-      const errMsg = validateField(patterns[k], formValues[k]);
-      setFormErrors((formErrors: any) => {
-        return { ...formErrors, [k]: errMsg };
-      });
-    });
-  }
+  // function validateForm() {
+  //   Object.keys(formValues).forEach((k) => {
+  //     const errMsg = validateField(patterns[k], formValues[k]);
+  //     setFormErrors((formErrors: any) => {
+  //       return { ...formErrors, [k]: errMsg };
+  //     });
+  //   });
+  // }
 
   return (
     <div className={className}>
-      <button disabled={props.disabled} onClick={onClick}>
+      <button className="magic-btn" disabled={props.disabled} onClick={onClick}>
         {props.label}
       </button>
       <p className="error-message">{props.error}</p>

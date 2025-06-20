@@ -81,11 +81,10 @@ export const Field = (props: IField) => {
   } = useContext(FormContext);
 
   const onBlur = () => {
-    const errMsg = validateField(patterns[props.name], formValues[props.name]);
-    setFormErrors((formErrors: any) => {
-      return { ...formErrors, [props.name]: errMsg };
-    });
+    validate();
   };
+
+  const [shouldValidate, setShouldValidate] = useState(false);
 
   const onChange = (e: ChangeEvent) => {
     const input = e.target as HTMLInputElement;
@@ -131,16 +130,51 @@ export const Field = (props: IField) => {
     value,
   };
 
+  const validate = async () => {
+    const errMsg = validateField(patterns[props.name], formValues[props.name]);
+    await setFormErrors((formErrors: any) => {
+      return { ...formErrors, [props.name]: disabled ? undefined : errMsg };
+    });
+  };
+
+  const today = new Date().toISOString().substring(0, 10);
+  const triggerValidate = () => {
+    setShouldValidate(true);
+    setTimeout(() => setShouldValidate(false), 1000);
+  };
+
   useEffect(() => {
-    setFormValues({ ...formValues, [props.name]: value });
+    setFormValues({
+      ...formValues,
+      [props.name]: value ,
+    });
   }, [value]);
 
+  useEffect(() => {
+    window.addEventListener("validate", triggerValidate);
+    return () => {
+      window.removeEventListener("validate", triggerValidate);
+    };
+  }, []);
+
+  useEffect(() => {
+    if (disabled) {
+      validate();
+    }
+  }, [disabled]);
+
+  useEffect(() => {
+    if (shouldValidate) {
+      validate();
+    }
+  }, [shouldValidate]);
+
   const typeMap = {
-    text: Input(enhancedProps),
-    number: Input(enhancedProps),
-    select: Select(enhancedProps),
-    date: DateInput(enhancedProps),
-    button: Button(enhancedProps),
+    text: Input,
+    number: Input,
+    select: Select,
+    date: DateInput,
+    button: Button,
   };
-  return props.type ? typeMap[props.type] : "";
+  return props.type ? typeMap[props.type](enhancedProps) : "";
 };

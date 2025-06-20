@@ -1,0 +1,10 @@
+.row-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 50px;
+}
+
+.row {
+  display: flex;
+  gap: 20px;
+}

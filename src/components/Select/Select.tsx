@@ -19,7 +19,7 @@ export const Select = (props: IField) => {
   };
 
   useEffect(() => {
-    if (props.type === "select" && !formValues[props.name] && props.options) {
+    if (props.type === "select" && props.options) {
       setFormValues((formValues: any) => {
         return {
           ...formValues,
@@ -27,7 +27,7 @@ export const Select = (props: IField) => {
         };
       });
     }
-  }, [formValues[props.name], props.options && props.options[0].value]);
+  }, [props.options && props.options[0].value]);
 
   return (
     <div className={className}>

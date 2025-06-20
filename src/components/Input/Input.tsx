@@ -15,7 +15,7 @@ export const Input = (props: IField) => {
           onChange={props.onChange}
           disabled={props.disabled}
           onBlur={props.onBlur}
-          value={props.value}
+          value={props.value || ""}
         />
       </label>
       <p className="error-message">{props.error}</p>

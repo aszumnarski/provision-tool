@@ -28,7 +28,7 @@ function App() {
   const [patterns, setPatterns] = useState<Record<string, string> | {}>({});
 
   return (
-    <FormContext
+    <FormContext.Provider
       value={{
         formValues,
         setFormValues,
@@ -41,7 +41,7 @@ function App() {
       <div className="app">
         <Form rows={data.rows} />
       </div>
-    </FormContext>
+    </FormContext.Provider>
   );
 }
 
