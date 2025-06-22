@@ -11,7 +11,7 @@ export const data: IData = {
         {
           fields: [
             {
-              name: "appMode",
+              name: "mode",
               label: "Mode",
               initValue: "create",
               type: "select",
@@ -39,22 +39,21 @@ export const data: IData = {
         {
           fields: [
             {
-              name: "costamId",
+              name: "getAppNumber",
               label: "Cośtam ID",
-              initValue: "opt1",
-              type: "input",
+              initValue: "",
+              type: "text",
               disabled: false,
               hidden: true,
-              patterns: [
+              patterns: [],
+              conditionalDisabled: [
                 {
-                  reg: "required",
-                  message: "This field is required",
-                },
-              ],
-              options: [
-                {
-                  label: "Opcja 1",
-                  value: "opt1",
+                  conditions: [
+                    {
+                      when: "mode",
+                      is: "create",
+                    },
+                  ],
                 },
               ],
             },
@@ -69,12 +68,7 @@ export const data: IData = {
               type: "button",
               disabled: false,
               hidden: true,
-              patterns: [
-                {
-                  reg: "required",
-                  message: "This field is required",
-                },
-              ],
+              patterns: [],
               options: [
                 {
                   label: "Opcja 1",
@@ -94,8 +88,9 @@ export const data: IData = {
             {
               name: "name1",
               label: "data and required",
+              maxlength: "5",
               initValue: "opt1",
-              type: "input",
+              type: "text",
               disabled: false,
               hidden: true,
               patterns: [
@@ -115,7 +110,7 @@ export const data: IData = {
               name: "name2",
               label: "no data and required",
               initValue: "",
-              type: "input",
+              type: "text",
               disabled: false,
               hidden: true,
               patterns: [
@@ -135,7 +130,7 @@ export const data: IData = {
               name: "name3",
               label: "no data and no required",
               initValue: "",
-              type: "input",
+              type: "text",
               disabled: false,
               hidden: true,
               patterns: [],
@@ -154,7 +149,7 @@ export const data: IData = {
               name: "name4",
               label: "data no required",
               initValue: "opt1",
-              type: "input",
+              type: "text",
               disabled: false,
               hidden: true,
               patterns: [],
@@ -169,7 +164,7 @@ export const data: IData = {
               name: "name5",
               label: "data required min_6",
               initValue: "opt1",
-              type: "input",
+              type: "text",
               disabled: false,
               hidden: true,
               patterns: [
@@ -194,7 +189,7 @@ export const data: IData = {
               name: "name6",
               label: "no data required min_6",
               initValue: "",
-              type: "input",
+              type: "text",
               disabled: false,
               hidden: true,
               patterns: [
@@ -223,7 +218,7 @@ export const data: IData = {
               name: "name7",
               label: "no data no required min_6",
               initValue: "",
-              type: "input",
+              type: "text",
               disabled: false,
               hidden: true,
               patterns: [
@@ -244,7 +239,7 @@ export const data: IData = {
               name: "name8",
               label: "data no required min_6",
               initValue: "opt1",
-              type: "input",
+              type: "text",
               disabled: false,
               hidden: true,
               patterns: [
@@ -265,7 +260,7 @@ export const data: IData = {
               name: "name9",
               label: "label",
               initValue: "opt1",
-              type: "input",
+              type: "text",
               disabled: false,
               hidden: true,
               patterns: [
@@ -281,6 +276,150 @@ export const data: IData = {
                 },
               ],
             },
+            {
+              name: "costCenter",
+              label: "Cost Center",
+              initValue: "",
+              type: "text",
+              disabled: false,
+              hidden: true,
+              patterns: [
+                {
+                  reg: "required",
+                  message: "This field is required when WBS Element or Sales Order or Sales Order Item are empty",
+                },
+              ],
+              conditionalDisabled: [
+                {
+                  conditions: [
+                    {
+                      when: "WBS",
+                      is: true,
+                    },
+                  ],
+                },
+                {
+                  conditions: [
+                    {
+                      when: "salesOrder",
+                      is: true,
+                    },
+                  ],
+                },
+                {
+                  conditions: [
+                    {
+                      when: "salesOrderItem",
+                      is: true,
+                    },
+                  ],
+                },
+              ],
+            },
+            {
+              name: "WBS",
+              label: "WBS Element",
+              initValue: "",
+              type: "text",
+              disabled: false,
+              hidden: true,
+              patterns: [
+                {
+                  reg: "required",
+                  message: "This field is required when Cost Center or Sales Order or Sales Order Item are empty",
+                },
+              ],
+              conditionalDisabled: [
+                {
+                  conditions: [
+                    {
+                      when: "costCenter",
+                      is: true,
+                    },
+                  ],
+                },
+                {
+                  conditions: [
+                    {
+                      when: "salesOrder",
+                      is: true,
+                    },
+                  ],
+                },
+                {
+                  conditions: [
+                    {
+                      when: "salesOrderItem",
+                      is: true,
+                    },
+                  ],
+                },
+              ],
+            },
+            {
+              name: "salesOrder",
+              label: "Sales Order",
+              initValue: "",
+              type: "text",
+              disabled: false,
+              hidden: true,
+              patterns: [
+                {
+                  reg: "required",
+                  message: "This field is required when Cost Center or WBS Element are empty",
+                },
+              ],
+              conditionalDisabled: [
+                {
+                  conditions: [
+                    {
+                      when: "WBS",
+                      is: true,
+                    },
+                  ],
+                },
+                {
+                  conditions: [
+                    {
+                      when: "costCenter",
+                      is: true,
+                    },
+                  ],
+                },
+              ],
+            },
+            {
+              name: "salesOrderItem",
+              label: "Sales Order Item",
+              initValue: "",
+              type: "text",
+              disabled: false,
+              hidden: true,
+              patterns: [
+                {
+                  reg: "required",
+                  message: "This field is required when Cost Center or WBS Element are empty",
+                },
+              ],
+              conditionalDisabled: [
+                {
+                  conditions: [
+                    {
+                      when: "WBS",
+                      is: true,
+                    },
+                  ],
+                },
+                {
+                  conditions: [
+                    {
+                      when: "costCenter",
+                      is: true,
+                    },
+                  ],
+                },
+              ],
+            },
           ],
         },
       ],
@@ -293,8 +432,8 @@ export const data: IData = {
             {
               name: "name1b",
               label: "label",
-              initValue: "opt1",
-              type: "input",
+              initValue: "9.2",
+              type: "number",
               disabled: false,
               hidden: true,
               patterns: [
@@ -313,8 +452,8 @@ export const data: IData = {
             {
               name: "name2b",
               label: "label",
-              initValue: "opt1",
-              type: "input",
+              initValue: "15.1",
+              type: "number",
               disabled: false,
               hidden: true,
               patterns: [
@@ -332,10 +471,11 @@ export const data: IData = {
             },
             {
               name: "name3b",
-              label: "label",
-              initValue: "opt1",
-              type: "input",
-              disabled: false,
+              label: "Calculated Value",
+              initValue: "",
+              calculatedValue: ["name1b", "name2b"],
+              type: "text",
+              disabled: true,
               hidden: true,
               patterns: [
                 {
@@ -357,9 +497,43 @@ export const data: IData = {
           fields: [
             {
               name: "name4b",
-              label: "label",
+              label: "Conditional Disabled if modify and wrestler",
               initValue: "opt1",
-              type: "input",
+              type: "text",
+              disabled: false,
+              conditionalDisabled: [
+                {
+                  conditions: [
+                    {
+                      when: "mode",
+                      is: "modify",
+                    },
+                    {
+                      when: "wrestler",
+                      is: true,
+                    },
+                  ],
+                },
+              ],
+              hidden: true,
+              patterns: [
+                {
+                  reg: "required",
+                  message: "This field is required",
+                },
+              ],
+              options: [
+                {
+                  label: "Opcja 1",
+                  value: "opt1",
+                },
+              ],
+            },
+            {
+              name: "wrestler",
+              label: "Wrestler",
+              initValue: "",
+              type: "text",
               disabled: false,
               hidden: true,
               patterns: [
@@ -376,29 +550,9 @@ export const data: IData = {
               ],
             },
             {
-              name: "name5b",
-              label: "label",
-              initValue: "opt1",
-              type: "input",
-              disabled: false,
-              hidden: true,
-              patterns: [
-                {
-                  reg: "required",
-                  message: "This field is required",
-                },
-              ],
-              options: [
-                {
-                  label: "Opcja 1",
-                  value: "opt1",
-                },
-              ],
-            },
-            {
-              name: "name6b",
-              label: "label",
-              initValue: "opt1",
+              name: "machineActor",
+              label: "Actor or Machine",
+              initValue: "car",
               type: "select",
               disabled: false,
               hidden: true,
@@ -410,16 +564,20 @@ export const data: IData = {
               ],
               options: [
                 {
-                  label: "Opcja 1",
-                  value: "opt1",
+                  label: "Samochód",
+                  value: "car",
                 },
                 {
-                  label: "Opcja 2",
-                  value: "opt2",
+                  label: "Motór",
+                  value: "bike",
                 },
                 {
-                  label: "Opcja 3",
-                  value: "opt3",
+                  label: "Schwarzenegger",
+                  value: "schwarzenegger",
+                },
+                {
+                  label: "Stallone",
+                  value: "sly",
                 },
               ],
             },
@@ -456,7 +614,7 @@ export const data: IData = {
               name: "name8b",
               label: "label",
               initValue: "opt1",
-              type: "input",
+              type: "text",
               disabled: false,
               hidden: true,
               patterns: [
@@ -473,10 +631,10 @@ export const data: IData = {
               ],
             },
             {
-              name: "name9b",
-              label: "label",
-              initValue: "opt1",
-              type: "input",
+              name: "details",
+              label: "Dependent Options",
+              initValue: "",
+              type: "select",
               disabled: false,
               hidden: true,
               patterns: [
@@ -485,37 +643,46 @@ export const data: IData = {
                   message: "This field is required",
                 },
               ],
-              /*
-              dependentOptions:{
-                dependency: "name2",
-                values:[
-                 { keys: ["fdsf", "df"], options:[{                
-                  label: "Opcja 1",
-                  value: "opt1",
-                },{                
-                  label: "Opcja 1",
-                  value: "opt1",
-                }]}
-
-          ]
+              dependentOptions: {
+                dependency: "machineActor",
+                values: [
+                  {
+                    keys: ["car", "bike"],
+                    options: [
+                      {
+                        label: "Honda",
+                        value: "honda",
+                      },
+                      {
+                        label: "Dalsim",
+                        value: "dalsim",
+                      },
+                    ],
+                  },
+                  {
+                    keys: ["schwarzenegger"],
+                    options: [
+                      {
+                        label: "Terminator",
+                        value: "t800",
+                      },
+                      {
+                        label: "Predator",
+                        value: "józek",
+                      },
+                    ],
+                  },
+                ],
               },
 
-              conditionalDisabled: {
-              logic: "or",
-              
-              consirions:[{
-              when: "name9",
-              is: "ddddd"
-              
-              }]},
-              
-              
-              
-              */
               options: [
                 {
-                  label: "Opcja 1",
-                  value: "opt1",
+                  label: "Film",
+                  value: "film",
+                },
+                {
+                  label: "Komiks",
+                  value: "kokosz",
                 },
               ],
             },

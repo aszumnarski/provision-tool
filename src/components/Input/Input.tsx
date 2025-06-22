@@ -9,13 +9,14 @@ export const Input = (props: IField) => {
       <label>
         <span>{props.label}</span>
         <input
-          type="text"
+          type={props.type}
           className="field-input"
           name={props.name}
           onChange={props.onChange}
           disabled={props.disabled}
           onBlur={props.onBlur}
-          value={props.value}
+          maxLength={Number(props.maxlength) || undefined}
+          value={props.value || ""}
         />
       </label>
       <p className="error-message">{props.error}</p>

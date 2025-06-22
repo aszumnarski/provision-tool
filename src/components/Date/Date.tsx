@@ -13,16 +13,31 @@ export const DateInput = (props: IField) => {
   const toDotted = (dashedDate: string) =>
     dashedDate ? dashedDate.split("-").reverse().join(".") : "";
 
+  const today = new Date().toISOString().substring(0, 10);
   const isFuture =
     patterns &&
     patterns[props.name]?.map((p: IPattern) => p.reg).includes("future");
-  const min = isFuture ? new Date().toISOString().substring(0, 10) : "";
+  const min = isFuture ? today : "";
 
   const handleChange = (e: ChangeEvent) => {
     const input = e.target as HTMLInputElement;
 
-    setFormValues({ ...formValues, [props.name]: toDotted(input.value) });
+    setFormValues({
+      ...formValues,
+      [props.name]: toDotted(input.value || today),
+    });
   };
+
+  useEffect(() => {
+    setTimeout(() => {
+      setFormValues((formValues: any) => {
+        return {
+          ...formValues,
+          [props.name]: toDotted(today),
+        };
+      });
+    }, 50);
+  }, []);
 
   return (
     <div className={className}>
@@ -34,7 +49,7 @@ export const DateInput = (props: IField) => {
           name={props.name}
           onChange={handleChange}
           onBlur={props.onBlur}
-          value={toDashed(props.value)}
+          value={toDashed(props.value) || today}
           min={min}
           disabled={props.disabled}
         />
