@@ -35,15 +35,6 @@ export const Button = (props: IField) => {
     console.log("send form", { formErrors });
   };
 
-  // function validateForm() {
-  //   Object.keys(formValues).forEach((k) => {
-  //     const errMsg = validateField(patterns[k], formValues[k]);
-  //     setFormErrors((formErrors: any) => {
-  //       return { ...formErrors, [k]: errMsg };
-  //     });
-  //   });
-  // }
-
   return (
     <div className={className}>
       <button className="magic-btn" disabled={props.disabled} onClick={onClick}>

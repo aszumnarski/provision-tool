@@ -88,6 +88,7 @@ export const data: IData = {
             {
               name: "name1",
               label: "data and required",
+              maxlength: "5",
               initValue: "opt1",
               type: "text",
               disabled: false,
@@ -285,7 +286,7 @@ export const data: IData = {
               patterns: [
                 {
                   reg: "required",
-                  message: "This field is required",
+                  message: "This field is required when WBS Element or Sales Order or Sales Order Item are empty",
                 },
               ],
               conditionalDisabled: [
@@ -325,7 +326,7 @@ export const data: IData = {
               patterns: [
                 {
                   reg: "required",
-                  message: "This field is required",
+                  message: "This field is required when Cost Center or Sales Order or Sales Order Item are empty",
                 },
               ],
               conditionalDisabled: [
@@ -365,7 +366,7 @@ export const data: IData = {
               patterns: [
                 {
                   reg: "required",
-                  message: "This field is required",
+                  message: "This field is required when Cost Center or WBS Element are empty",
                 },
               ],
               conditionalDisabled: [
@@ -397,7 +398,7 @@ export const data: IData = {
               patterns: [
                 {
                   reg: "required",
-                  message: "This field is required",
+                  message: "This field is required when Cost Center or WBS Element are empty",
                 },
               ],
               conditionalDisabled: [

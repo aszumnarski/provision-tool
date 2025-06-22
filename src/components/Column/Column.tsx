@@ -18,6 +18,7 @@ export const Column = (column: IColumn) => {
           type={f.type}
           key={f.name}
           label={f.label}
+          maxlength={f.maxlength}
           initValue={f.initValue}
           patterns={f.patterns}
           disabled={f.disabled}

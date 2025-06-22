@@ -19,6 +19,7 @@ export interface IField {
   hidden?: boolean;
   patterns: IPattern[];
   options?: IOption[];
+  maxlength?: string;
   value?: string;
   error?: string;
   dependentOptions?: IDependentOptions;
@@ -88,7 +89,9 @@ export const Field = (props: IField) => {
 
   const onChange = (e: ChangeEvent) => {
     const input = e.target as HTMLInputElement;
-    setFormValues({ ...formValues, [props.name]: input.value });
+    const val =
+      props.type === "number" ? input.value.replace("-", "") : input.value;
+    setFormValues({ ...formValues, [props.name]: val });
   };
 
   const options = props.dependentOptions?.dependency
@@ -137,7 +140,6 @@ export const Field = (props: IField) => {
     });
   };
 
-  const today = new Date().toISOString().substring(0, 10);
   const triggerValidate = () => {
     setShouldValidate(true);
     setTimeout(() => setShouldValidate(false), 1000);
@@ -146,7 +148,7 @@ export const Field = (props: IField) => {
   useEffect(() => {
     setFormValues({
       ...formValues,
-      [props.name]: value ,
+      [props.name]: value,
     });
   }, [value]);
 

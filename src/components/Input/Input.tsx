@@ -15,6 +15,7 @@ export const Input = (props: IField) => {
           onChange={props.onChange}
           disabled={props.disabled}
           onBlur={props.onBlur}
+          maxLength={Number(props.maxlength) || undefined}
           value={props.value || ""}
         />
       </label>
