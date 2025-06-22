@@ -1,29 +1,47 @@
 import express from "express";
 import fs from "fs";
 import cors from "cors";
-// const glData = JSON.parse(fs.readFileSync("./demo_v2.json", "utf-8"));
-// const data = () => {
-//   return {
-//     changes: JSON.parse(fs.readFileSync("./changes.json", "utf-8")),
-//     lookup: JSON.parse(fs.readFileSync("./lookup.json", "utf-8")),
-//     tabs: JSON.parse(fs.readFileSync("./tabs.json", "utf-8")),
-//     types: JSON.parse(fs.readFileSync("./types.json", "utf-8")),
-//   };
-// };
+const data = () => {
+  return {
+    config: JSON.parse(fs.readFileSync("./config.json", "utf-8")),
+    db: JSON.parse(fs.readFileSync("./db.json", "utf-8")),
+  };
+};
 const app = express();
 const port = 6060;
 app.use(cors());
 app.use(express.json());
 
 app.get("/", (req, res) => {
-  console.log({ req });
-  res.json({
-    data: {
-      name1: "aaaaa",
-      name2: "bbbbbb",
-    },
-  });
+  if (req.query.q) {
+    res.json(data()[req.query.q]);
+  } else if (req.query.appno) {
+    res.json({
+      data: {
+        appNumber: req.query.appno,
+      },
+    });
+  } else {
+    console.log({ req });
+    res.json({
+      data: {
+        name1: "aaaaa",
+        name2: "bbbbbb",
+      },
+    });
+  }
 });
+
+function readDb() {
+  if (fs.existsSync("./db.json")) {
+    return data()[db];
+  } else {
+    return [];
+  }
+}
+function getAppNumber() {
+  return readDb().length + 1;
+}
 
 // app.get("/gl", (req, res) => {
 //   if (req.query.d) {
