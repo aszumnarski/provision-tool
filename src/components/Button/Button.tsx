@@ -8,6 +8,7 @@ import type { ChangeEvent, MouseEventHandler } from "react";
 const CREATE = "Create";
 const GET = "Get";
 const UPDATE = "Update";
+const url = "http://localhost:6060/";
 
 export const Button = (props: IField) => {
   //@ts-ignore
@@ -27,12 +28,19 @@ export const Button = (props: IField) => {
   } = useContext(FormContext);
   const className = `field ${props.error ? "field--error" : ""}`;
 
-  const onClick: MouseEventHandler<HTMLButtonElement> = (e) => {
+  const onClick: MouseEventHandler<HTMLButtonElement> = async (e) => {
     e.preventDefault();
     // validateForm();
 
     window.dispatchEvent(new Event("validate"));
+    await loadData();
     console.log("send form", { formErrors });
+  };
+
+  const loadData = async () => {
+    const res = await getData(url);
+
+    setFormValues(res.data);
   };
 
   return (
@@ -44,3 +52,17 @@ export const Button = (props: IField) => {
     </div>
   );
 };
+
+export async function getData(url: string) {
+  try {
+    const response = await fetch(url);
+    if (!response.ok) {
+      throw new Error(`Response status: ${response.status}`);
+    }
+
+    const data = await response.json();
+    return data;
+  } catch (error: any) {
+    console.error(error.message);
+  }
+}
