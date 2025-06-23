@@ -5,6 +5,7 @@ const data = () => {
   return {
     config: JSON.parse(fs.readFileSync("./config.json", "utf-8")),
     db: JSON.parse(fs.readFileSync("./db.json", "utf-8")),
+    user: { data: { userName: "123456" } },
   };
 };
 const app = express();
@@ -12,7 +13,7 @@ const port = 6060;
 app.use(cors());
 app.use(express.json());
 
-app.get("/", (req, res) => {
+app.get("/protool", (req, res) => {
   if (req.query.q) {
     res.json(data()[req.query.q]);
   } else if (req.query.appno) {

@@ -8,7 +8,7 @@ import type { ChangeEvent, MouseEventHandler } from "react";
 const CREATE = "Create";
 const GET = "Get";
 const UPDATE = "Update";
-const url = "http://localhost:6060/";
+const url = "http://localhost:6060/protool";
 
 export const Button = (props: IField) => {
   //@ts-ignore
@@ -42,7 +42,10 @@ export const Button = (props: IField) => {
 
     setFormValues(res.data);
   };
-
+  useEffect(() => {
+    console.log("useEffect rerender");
+        loadData()
+  }, []);
   return (
     <div className={className}>
       <button className="magic-btn" disabled={props.disabled} onClick={onClick}>
