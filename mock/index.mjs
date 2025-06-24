@@ -3,9 +3,8 @@ import fs from "fs";
 import cors from "cors";
 const data = () => {
   return {
-    config: JSON.parse(fs.readFileSync("./config.json", "utf-8")),
-    db: JSON.parse(fs.readFileSync("./db.json", "utf-8")),
-    user: { data: { userName: "123456" } },
+    db: () => JSON.parse(fs.readFileSync("./db.json", "utf-8")),
+    init: { data: getUser() },
   };
 };
 const app = express();
@@ -14,36 +13,42 @@ app.use(cors());
 app.use(express.json());
 
 app.get("/protool", (req, res) => {
-  if (req.query.q) {
-    res.json(data()[req.query.q]);
-  } else if (req.query.appno) {
-    res.json({
-      data: {
-        appNumber: req.query.appno,
-      },
-    });
-  } else {
-    console.log({ req });
-    res.json({
-      data: {
-        name1: "aaaaa",
-        name2: "bbbbbb",
-      },
-    });
-  }
+  const { appno } = req.query;
+  if (!appno) return res.json({ errors: { error: "Wrong query string!" } });
+
+  if (appno === "init") return res.json(data()[appno]);
+
+  const record = getRecordFor(appno);
+  const response = record
+    ? { data: record }
+    : {
+        error: {
+          editableAppNumber: `Application number ${appno} does not exist!`,
+        },
+      };
+  res.json(response);
 });
+
+function getUser() {
+  const user = Math.random() < 0.5 ? "123456" : "987654";
+  return { user };
+}
 
 function readDb() {
   if (fs.existsSync("./db.json")) {
-    return data()[db];
+    return data()[db]();
   } else {
     return [];
   }
 }
+
 function getAppNumber() {
   return readDb().length + 1;
 }
 
+function getRecordFor(appNumber) {
+  return readDb().find((r) => r.appNumber === appNumber);
+}
 // app.get("/gl", (req, res) => {
 //   if (req.query.d) {
 //     req.query.d === "perm"
