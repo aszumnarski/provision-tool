@@ -42,13 +42,30 @@ function readDb() {
   }
 }
 
-function getAppNumber() {
-  return readDb().length + 1;
-}
+// function getAppNumber() {
+//   return readDb().length + 1;
+// }
 
 function getRecordFor(appNumber) {
   return readDb().find((r) => r.appNumber === appNumber);
 }
+
+function getRecordIndexFor(appNumber) {
+  return readDb().indexOf((r) => r.appNumber === appNumber);
+}
+
+function addNewRecordToDb(record) {
+  let db = readDb();
+
+  db.push({ ...record, creatorUser: record.user, appNumber: db.length + 1 });
+
+  try {
+    fs.writeFileSync("./db.json", db);
+  } catch (error) {
+    console.error(error);
+  }
+}
+
 // app.get("/gl", (req, res) => {
 //   if (req.query.d) {
 //     req.query.d === "perm"
