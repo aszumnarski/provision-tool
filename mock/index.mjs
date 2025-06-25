@@ -68,7 +68,7 @@ function mutateDb(data) {
   if (!appNumber) return e;
 
   try {
-    fs.writeFileSync("./db.json", db);
+    fs.writeFileSync("./db.json", JSON.stringify(db));
     return { data: { appNumber } };
   } catch (error) {
     console.error(error);

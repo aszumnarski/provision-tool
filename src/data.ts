@@ -39,8 +39,8 @@ export const data: IData = {
         {
           fields: [
             {
-              name: "getAppNumber",
-              label: "Cośtam ID",
+              name: "editableAppNumber",
+              label: "Editable App Number",
               initValue: "",
               type: "text",
               disabled: false,
@@ -146,11 +146,11 @@ export const data: IData = {
         {
           fields: [
             {
-              name: "name4",
-              label: "data no required",
-              initValue: "opt1",
+              name: "creatorUser",
+              label: "Creator User",
+              initValue: "",
               type: "text",
-              disabled: false,
+              disabled: true,
               hidden: true,
               patterns: [],
               options: [
@@ -257,11 +257,11 @@ export const data: IData = {
               ],
             },
             {
-              name: "name9",
-              label: "label",
-              initValue: "opt1",
+              name: "user",
+              label: "Current User",
+              initValue: "",
               type: "text",
-              disabled: false,
+              disabled: true,
               hidden: true,
               patterns: [
                 {
@@ -611,11 +611,11 @@ export const data: IData = {
               ],
             },
             {
-              name: "name8b",
-              label: "label",
-              initValue: "opt1",
+              name: "appNumber",
+              label: "Application Number",
+              initValue: "",
               type: "text",
-              disabled: false,
+              disabled: true,
               hidden: true,
               patterns: [
                 {

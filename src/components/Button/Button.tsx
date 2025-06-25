@@ -8,7 +8,8 @@ import type { ChangeEvent, MouseEventHandler } from "react";
 const CREATE = "Create";
 const GET = "Get";
 const UPDATE = "Update";
-const url = "http://localhost:6060/protool";
+const url = "http://localhost:6060/protool?appno=init";
+const url1 = "http://localhost:6060/protool";
 
 export const Button = (props: IField) => {
   //@ts-ignore
@@ -32,19 +33,24 @@ export const Button = (props: IField) => {
     e.preventDefault();
     // validateForm();
 
-    window.dispatchEvent(new Event("validate"));
-    await loadData();
+    // window.dispatchEvent(new Event("validate"));
+    // await loadData();
+    await postData(url1, formValues);
     console.log("send form", { formErrors });
   };
 
   const loadData = async () => {
     const res = await getData(url);
 
-    setFormValues(res.data);
+    console.log(res.data);
+    setFormValues((formValues: any) => {
+      return { ...formValues, user: res.data.user };
+    });
+    // setFormValues(res.data);
   };
   useEffect(() => {
     console.log("useEffect rerender");
-        loadData()
+    setTimeout(loadData, 1000);
   }, []);
   return (
     <div className={className}>
@@ -67,5 +73,23 @@ export async function getData(url: string) {
     return data;
   } catch (error: any) {
     console.error(error.message);
+  }
+}
+
+async function postData(url: string, body: Record<string, any>) {
+  var formData = new FormData();
+  formData.append("json", JSON.stringify(body));
+  try {
+    const response = await fetch(url, {
+      method: "POST",
+      body: formData,
+    });
+    if (!response.ok) {
+      throw new Error(`Response status: ${response.status}`);
+    }
+    const data = await response.json();
+    return data;
+  } catch (error: any) {
+    return { error };
   }
 }
