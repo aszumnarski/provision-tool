@@ -42,73 +42,57 @@ function readDb() {
   }
 }
 
-// function getAppNumber() {
-//   return readDb().length + 1;
-// }
-
 function getRecordFor(appNumber) {
   return readDb().find((r) => r.appNumber === appNumber);
 }
 
-function getRecordIndexFor(appNumber) {
-  return readDb().indexOf((r) => r.appNumber === appNumber);
+function addNewRecordToDb(db, data) {
+  const appNumber = db.length + 1;
+  db.push({ ...data, creatorUser: data.user, appNumber });
+  return appNumber;
 }
 
-function addNewRecordToDb(record) {
-  let db = readDb();
+function updateRecordInDb(db, data) {
+  const idx = db.indexOf((r) => r.appNumber === data.appNumber);
+  if (idx < 0) return null;
+  db[idx] = data;
+  return data.appNumber;
+}
 
-  db.push({ ...record, creatorUser: record.user, appNumber: db.length + 1 });
+function mutateDb(data) {
+  let db = readDb();
+  const appNumber = !!data.appNumber
+    ? updateRecordInDb(db, data)
+    : addNewRecordToDb(db, data);
+  const e = { errors: { error: "Database error!" } };
+  if (!appNumber) return e;
 
   try {
     fs.writeFileSync("./db.json", db);
+    return { data: { appNumber } };
   } catch (error) {
     console.error(error);
+    return e;
   }
 }
 
-// app.get("/gl", (req, res) => {
-//   if (req.query.d) {
-//     req.query.d === "perm"
-//       ? handlePermissions(req, res)
-//       : res.json(data()[req.query.d]);
-//   } else res.json(glData);
-// });
-// app.post("/gl", (req, res) => {
-//   const content = JSON.stringify(req.body);
-//   try {
-//     fs.writeFileSync("./changes.json", content);
-//   } catch (error) {
-//     console.error(error);
-//   }
-//   res.json(req.body);
-// });
+function validate(data) {
+  const copy = { ...data };
+  Object.keys(copy).forEach((k) => {
+    copy[k] = copy[k] === "bird" ? "Bird is a word!" : undefined;
+  });
+  return JSON.parse(JSON.stringify(copy));
+}
+
+app.post("/protool", (req, res) => {
+  console.log(req.body);
+  const data = JSON.stringify(req.body);
+  const errors = validate(data);
+  if (Object.keys(errors).length) return res.json({ errors });
+  const response = mutateDb(data);
+  res.json(response);
+});
 
 app.listen(port, () => {
   console.log(`Listening on port: ${port}`);
 });
-
-// const handlePermissions = (req, res) => {
-//   if (!req.query.user) return res.json({ canEdit: false, editor: null });
-//
-//   const valid = JSON.parse(fs.readFileSync("./perm.json", "utf-8"));
-//
-//   const { user } = req.query;
-//   const timestamp = Date.now();
-//
-//   const requesting = {
-//     user,
-//     timestamp,
-//   };
-//
-//   if (requesting.timestamp - valid.timestamp < 10000) {
-//     if (requesting.user !== valid.user)
-//       return res.json({ canEdit: false, editor: valid.user });
-//   }
-//
-//   try {
-//     fs.writeFileSync("./perm.json", JSON.stringify(requesting));
-//   } catch (error) {
-//     console.error(error);
-//   }
-//   res.json({ canEdit: false, editor: requesting.user, message:"Turlaj pyzy Kmieciu!!!" });
-// };
