@@ -1,16 +1,23 @@
 import express from "express";
+import multer from "multer";
 import fs from "fs";
 import cors from "cors";
 const data = () => {
   return {
-    db: () => JSON.parse(fs.readFileSync("./db.json", "utf-8")),
+    db: JSON.parse(fs.readFileSync("./db.json", "utf-8")),
     init: { data: getUser() },
   };
 };
 const app = express();
 const port = 6060;
 app.use(cors());
-app.use(express.json());
+//app.use(express.json());
+//app.use(express.urlencoded({
+//   extended: false, // Whether to use algorithm that can handle non-flat data strutures
+//   limit: 100000, // Limit payload size in bytes
+//   parameterLimit: 200, // Limit number of form items on payload
+//}));
+app.use(express.urlencoded());
 
 app.get("/protool", (req, res) => {
   const { appno } = req.query;
@@ -36,7 +43,9 @@ function getUser() {
 
 function readDb() {
   if (fs.existsSync("./db.json")) {
-    return data()[db]();
+    const xxx = fs.readFileSync("./db.json", "utf-8");
+    console.log({ xxx });
+    return JSON.parse(xxx);
   } else {
     return [];
   }
@@ -84,12 +93,13 @@ function validate(data) {
   return JSON.parse(JSON.stringify(copy));
 }
 
-app.post("/protool", (req, res) => {
-  console.log(req.body);
-  const data = JSON.stringify(req.body);
+app.post("/protool", multer().none(), (req, res) => {
+  console.log("REQUEST", req);
+  const data = JSON.parse(req.body.json);
   const errors = validate(data);
   if (Object.keys(errors).length) return res.json({ errors });
   const response = mutateDb(data);
+  console.log({ data });
   res.json(response);
 });
 
