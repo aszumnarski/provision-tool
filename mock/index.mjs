@@ -4,7 +4,6 @@ import fs from "fs";
 import cors from "cors";
 const data = () => {
   return {
-    db: JSON.parse(fs.readFileSync("./db.json", "utf-8")),
     init: { data: getUser() },
   };
 };
@@ -26,10 +25,11 @@ app.get("/protool", (req, res) => {
   if (appno === "init") return res.json(data()[appno]);
 
   const record = getRecordFor(appno);
+  // console.log({ record });
   const response = record
     ? { data: record }
     : {
-        error: {
+        errors: {
           editableAppNumber: `Application number ${appno} does not exist!`,
         },
       };
@@ -44,7 +44,7 @@ function getUser() {
 function readDb() {
   if (fs.existsSync("./db.json")) {
     const xxx = fs.readFileSync("./db.json", "utf-8");
-    console.log({ xxx });
+    // console.log({ xxx });
     return JSON.parse(xxx);
   } else {
     return [];
@@ -52,19 +52,23 @@ function readDb() {
 }
 
 function getRecordFor(appNumber) {
+  // console.log({ appNumber });
   return readDb().find((r) => r.appNumber === appNumber);
 }
 
 function addNewRecordToDb(db, data) {
-  const appNumber = db.length + 1;
+  const appNumber = `${db.length + 1}`;
   db.push({ ...data, creatorUser: data.user, appNumber });
   return appNumber;
 }
 
 function updateRecordInDb(db, data) {
-  const idx = db.indexOf((r) => r.appNumber === data.appNumber);
+    // console.log({db,data})
+  const idx = db.findIndex((r) => r.appNumber === data.appNumber);
+    console.log({idx, db, pn: data.appNumber})
   if (idx < 0) return null;
   db[idx] = data;
+    console.log({AN:data.appNumber})
   return data.appNumber;
 }
 
@@ -74,10 +78,11 @@ function mutateDb(data) {
     ? updateRecordInDb(db, data)
     : addNewRecordToDb(db, data);
   const e = { errors: { error: "Database error!" } };
+    console.log("Czy jest?", {appNumber})
   if (!appNumber) return e;
 
   try {
-    fs.writeFileSync("./db.json", JSON.stringify(db));
+    fs.writeFileSync("./db.json", JSON.stringify(db, null, 2));
     return { data: { appNumber } };
   } catch (error) {
     console.error(error);
@@ -99,7 +104,7 @@ app.post("/protool", multer().none(), (req, res) => {
   const errors = validate(data);
   if (Object.keys(errors).length) return res.json({ errors });
   const response = mutateDb(data);
-  console.log({ data });
+  // console.log({ data });
   res.json(response);
 });
 
