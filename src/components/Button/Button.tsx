@@ -10,7 +10,7 @@ const GET = "Get";
 const UPDATE = "Update";
 const url = "http://localhost:6060/protool?appno=init";
 const url1 = "http://localhost:6060/protool";
-const url2 = "http://localhost:6060/protool?appno=2";
+const url2 = "http://localhost:6060/protool?appno=200";
 
 export const Button = (props: IField) => {
   //@ts-ignore
@@ -36,11 +36,11 @@ export const Button = (props: IField) => {
 
     // window.dispatchEvent(new Event("validate"));
     // await loadData();
-    const res = await postData(url1, formValues);
-    // const res = await getData(url2);
-    // setFormValues((formValues: any) => {
-      // return { ...formValues, ...res.data };
-    // });
+    // const res = await postData(url1, formValues);
+    const res = await getData(url2);
+    setFormValues((formValues: any) => {
+      return { ...formValues, ...res.data };
+    });
     console.log("data", res.data, "errors", res.errors, { res });
     // console.log("send form", { formErrors });
   };

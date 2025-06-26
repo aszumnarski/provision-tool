@@ -10,12 +10,6 @@ const data = () => {
 const app = express();
 const port = 6060;
 app.use(cors());
-//app.use(express.json());
-//app.use(express.urlencoded({
-//   extended: false, // Whether to use algorithm that can handle non-flat data strutures
-//   limit: 100000, // Limit payload size in bytes
-//   parameterLimit: 200, // Limit number of form items on payload
-//}));
 app.use(express.urlencoded());
 
 app.get("/protool", (req, res) => {
@@ -25,7 +19,6 @@ app.get("/protool", (req, res) => {
   if (appno === "init") return res.json(data()[appno]);
 
   const record = getRecordFor(appno);
-  // console.log({ record });
   const response = record
     ? { data: record }
     : {
@@ -43,16 +36,14 @@ function getUser() {
 
 function readDb() {
   if (fs.existsSync("./db.json")) {
-    const xxx = fs.readFileSync("./db.json", "utf-8");
-    // console.log({ xxx });
-    return JSON.parse(xxx);
+    const db = fs.readFileSync("./db.json", "utf-8");
+    return JSON.parse(db);
   } else {
     return [];
   }
 }
 
 function getRecordFor(appNumber) {
-  // console.log({ appNumber });
   return readDb().find((r) => r.appNumber === appNumber);
 }
 
@@ -63,12 +54,9 @@ function addNewRecordToDb(db, data) {
 }
 
 function updateRecordInDb(db, data) {
-    // console.log({db,data})
   const idx = db.findIndex((r) => r.appNumber === data.appNumber);
-    console.log({idx, db, pn: data.appNumber})
   if (idx < 0) return null;
   db[idx] = data;
-    console.log({AN:data.appNumber})
   return data.appNumber;
 }
 
@@ -78,7 +66,6 @@ function mutateDb(data) {
     ? updateRecordInDb(db, data)
     : addNewRecordToDb(db, data);
   const e = { errors: { error: "Database error!" } };
-    console.log("Czy jest?", {appNumber})
   if (!appNumber) return e;
 
   try {
@@ -99,12 +86,10 @@ function validate(data) {
 }
 
 app.post("/protool", multer().none(), (req, res) => {
-  console.log("REQUEST", req);
   const data = JSON.parse(req.body.json);
   const errors = validate(data);
   if (Object.keys(errors).length) return res.json({ errors });
   const response = mutateDb(data);
-  // console.log({ data });
   res.json(response);
 });
 
