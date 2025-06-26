@@ -96,7 +96,7 @@ export const Field = (props: IField) => {
 
   const options = props.dependentOptions?.dependency
     ? props.dependentOptions.values.find((v) =>
-        v.keys.includes(formValues[props.dependentOptions?.dependency]),
+        v.keys.includes(formValues[props.dependentOptions?.dependency])
       )?.options || props.options
     : props.options;
 
@@ -115,9 +115,9 @@ export const Field = (props: IField) => {
             or.conditions
               .map(
                 (c) =>
-                  formValues[c.when] == c.is || !!formValues[c.when] == c.is,
+                  formValues[c.when] == c.is || !!formValues[c.when] == c.is
               )
-              .filter(Boolean).length === or.conditions.length,
+              .filter(Boolean).length === or.conditions.length
         )
         .filter(Boolean).length > 0
     : props.disabled;
