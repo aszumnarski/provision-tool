@@ -12,7 +12,7 @@ export const data: IData = {
           fields: [
             {
               name: "mode",
-              label: "Mode",
+              label: "Application mode",
               initValue: "create",
               type: "select",
               disabled: false,
@@ -39,8 +39,8 @@ export const data: IData = {
         {
           fields: [
             {
-              name: "getAppNumber",
-              label: "Cośtam ID",
+              name: "appNumberImport",
+              label: "Application Number to Import",
               initValue: "",
               type: "text",
               disabled: false,
@@ -62,9 +62,9 @@ export const data: IData = {
         {
           fields: [
             {
-              name: "magicButton",
-              label: "DYNAMIC",
-              initValue: "opt1",
+              name: "submitButton",
+              label: "Create",
+              initValue: "create",
               type: "button",
               disabled: false,
               hidden: true,
@@ -76,8 +76,16 @@ export const data: IData = {
               ],
               options: [
                 {
-                  label: "Opcja 1",
-                  value: "opt1",
+                  label: "Create",
+                  value: "create",
+                },
+                {
+                  label: "Import",
+                  value: "import",
+                },
+                {
+                  label: "Update",
+                  value: "update",
                 },
               ],
             },
@@ -91,10 +99,10 @@ export const data: IData = {
         {
           fields: [
             {
-              name: "name1",
-              label: "data and required",
-              initValue: "opt1",
-              type: "text",
+              name: "companyCode",
+              label: "Company Code",
+              initValue: "",
+              type: "select",
               disabled: false,
               hidden: true,
               patterns: [
@@ -105,8 +113,30 @@ export const data: IData = {
               ],
               options: [
                 {
-                  label: "Opcja 1",
-                  value: "opt1",
+                  label: "DE10",
+                  value: "de10",
+                },
+                {
+                  label: "PL10",
+                  value: "pl10",
+                },
+                {
+                  label: "UK10",
+                  value: "uk10",
+                },
+                {
+                  label: "NL10",
+                  value: "nl10",
+                },
+              ],
+              conditionalDisabled: [
+                {
+                  conditions: [
+                    {
+                      when: "mode",
+                      is: "modify",
+                    },
+                  ],
                 },
               ],
             },
