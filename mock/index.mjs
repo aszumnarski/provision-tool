@@ -49,7 +49,7 @@ function getRecordFor(appNumber) {
 
 function addNewRecordToDb(db, data) {
   const appNumber = `${db.length + 1}`;
-  db.push({ ...data, creatorUser: data.user, appNumber });
+  db.push({ ...data, creatorUser: data.user, appNumber, mode: "modify" });
   return appNumber;
 }
 

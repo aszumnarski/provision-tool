@@ -1,5 +1,5 @@
 import "./Button.css";
-import { useContext, useEffect } from "react";
+import { useContext, useEffect, useState } from "react";
 import { FormContext } from "../../context";
 import { type IField } from "../Field/Field";
 import { validateField } from "../../utils/validators";
@@ -25,7 +25,34 @@ export const Button = (props: IField) => {
     setPatterns,
   } = useContext(FormContext);
   const className = `field ${props.error ? "field--error" : ""}`;
+  const [shouldValidate, setShouldValudate] = useState(false);
+  const [shouldPost, setShouldPost] = useState(false);
 
+  const e = JSON.parse(JSON.stringify(formErrors));
+  const f = () => JSON.parse(JSON.stringify(formErrors));
+  function g() {
+    return JSON.parse(JSON.stringify(formErrors));
+  }
+  const post = async () => {
+    const res = await postData(url1, formValues);
+    console.log({ res });
+    if (res.errors) {
+      setFormErrors(res.errors);
+    }
+  };
+  useEffect(() => {
+    if (shouldValidate) {
+      console.log("VALIDATE", { formErrors, e, f: f(), g: g() });
+      if (!Object.keys(g()).length) {
+        post();
+      }
+
+      setTimeout(() => {
+        console.log("VALIDATE2", { formErrors, e, f: f(), g: g() });
+        setShouldValudate(false);
+      }, 500);
+    }
+  }, [shouldValidate]);
   const handleGet: MouseEventHandler<HTMLButtonElement> = async (e) => {
     e.preventDefault();
     // validateForm();
@@ -40,20 +67,20 @@ export const Button = (props: IField) => {
     console.log("data", res.data, "errors", res.errors, { res });
     // console.log("send form", { formErrors });
   };
-
+  async function fetchData() {
+    return new Promise((resolve, reject) => {
+      setTimeout(() => {
+        resolve(g());
+      }, 200);
+    });
+  }
   const handlePost: MouseEventHandler<HTMLButtonElement> = async (e) => {
     e.preventDefault();
-    // validateForm();
 
-    // window.dispatchEvent(new Event("validate"));
-    // await loadData();
-    const res = await postData(url1, formValues);
-    // const res = await getData(url2);
-    // setFormValues((formValues: any) => {
-    // return { ...formValues, ...res.data };
-    // });
-    console.log("data", res.data, "errors", res.errors, { res });
-    // console.log("send form", { formErrors });
+    window.dispatchEvent(new Event("validate"));
+    const xxx = await fetchData();
+    console.log({ xxx });
+    setShouldValudate(true);
   };
 
   const loadData = async () => {
@@ -88,7 +115,7 @@ export const Button = (props: IField) => {
 
     return states.GET;
   };
-
+  console.log({ formErrors, formValues });
   return (
     <div className={className}>
       <button
