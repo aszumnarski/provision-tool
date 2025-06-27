@@ -5,12 +5,8 @@ import { type IField } from "../Field/Field";
 import { validateField } from "../../utils/validators";
 import type { ChangeEvent, MouseEventHandler } from "react";
 
-const CREATE = "Create";
-const GET = "Get";
-const UPDATE = "Update";
 const url = "http://localhost:6060/protool?appno=init";
 const url1 = "http://localhost:6060/protool";
-const url2 = "http://localhost:6060/protool?appno=200";
 
 export const Button = (props: IField) => {
   //@ts-ignore
@@ -30,17 +26,32 @@ export const Button = (props: IField) => {
   } = useContext(FormContext);
   const className = `field ${props.error ? "field--error" : ""}`;
 
-  const onClick: MouseEventHandler<HTMLButtonElement> = async (e) => {
+  const handleGet: MouseEventHandler<HTMLButtonElement> = async (e) => {
     e.preventDefault();
     // validateForm();
 
     // window.dispatchEvent(new Event("validate"));
     // await loadData();
     // const res = await postData(url1, formValues);
-    const res = await getData(url2);
+    const res = await getData(`${url1}?appno=${formValues.editableAppNumber}`);
     setFormValues((formValues: any) => {
       return { ...formValues, ...res.data };
     });
+    console.log("data", res.data, "errors", res.errors, { res });
+    // console.log("send form", { formErrors });
+  };
+
+  const handlePost: MouseEventHandler<HTMLButtonElement> = async (e) => {
+    e.preventDefault();
+    // validateForm();
+
+    // window.dispatchEvent(new Event("validate"));
+    // await loadData();
+    const res = await postData(url1, formValues);
+    // const res = await getData(url2);
+    // setFormValues((formValues: any) => {
+    // return { ...formValues, ...res.data };
+    // });
     console.log("data", res.data, "errors", res.errors, { res });
     // console.log("send form", { formErrors });
   };
@@ -58,10 +69,34 @@ export const Button = (props: IField) => {
     console.log("useEffect rerender");
     setTimeout(loadData, 1000);
   }, []);
+
+  const states = {
+    CREATE: { label: "CREATE", onClick: handlePost },
+    UPDATE: { label: "UPDATE", onClick: handlePost },
+    GET: { label: "GET", onClick: handleGet },
+  };
+
+  const getState = () => {
+    if (formValues.mode === "create") return states.CREATE;
+
+    if (
+      formValues.mode === "modify" &&
+      !formValues.editableAppNumber &&
+      formValues.appNumber
+    )
+      return states.UPDATE;
+
+    return states.GET;
+  };
+
   return (
     <div className={className}>
-      <button className="magic-btn" disabled={props.disabled} onClick={onClick}>
-        {props.label}
+      <button
+        className="magic-btn"
+        disabled={props.disabled}
+        onClick={getState().onClick}
+      >
+        {getState().label}
       </button>
       <p className="error-message">{props.error}</p>
     </div>
