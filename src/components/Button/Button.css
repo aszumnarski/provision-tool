@@ -1,3 +1,6 @@
 button.magic-btn {
   height: 58px;
+  background-color: #009688;
+  color: white;
+  font-weight: bold;
 }
