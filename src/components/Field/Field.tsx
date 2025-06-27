@@ -42,16 +42,13 @@ export interface IConditionalDisabled {
 }
 
 export interface IDependentOptions {
-  dependency: string;
+  dependencies: string[];
   values: IDependentOptionsValue[];
 }
 
 export interface IDependentOptionsValue {
   keys: string[];
-  options: {
-    label: string;
-    value: string;
-  }[];
+  options: IOption[];
 }
 
 export interface IOption {
@@ -94,10 +91,38 @@ export const Field = (props: IField) => {
     setFormValues({ ...formValues, [props.name]: val });
   };
 
-  const options = props.dependentOptions?.dependency
-    ? props.dependentOptions.values.find((v) =>
-        v.keys.includes(formValues[props.dependentOptions?.dependency]),
-      )?.options || props.options
+  const options = props.dependentOptions?.dependencies
+    ? (() => {
+        const dependencyValues = props.dependentOptions.dependencies.map(
+          (dep) => {
+            const val = formValues[dep] || "";
+            console.log(
+              `[Field: ${props.name}] Dependency "${dep}" = "${val}"`
+            );
+            return val;
+          }
+        );
+
+        const key = dependencyValues.join("|");
+        console.log(`[Field: ${props.name}] Generated key: "${key}"`);
+
+        const matched = props.dependentOptions.values.find((v) =>
+          v.keys.includes(key)
+        );
+
+        if (matched) {
+          console.log(
+            `[Field: ${props.name}] Matched options:`,
+            matched.options
+          );
+        } else {
+          console.log(
+            `[Field: ${props.name}] No match found. Using fallback options.`
+          );
+        }
+
+        return matched?.options || props.options;
+      })()
     : props.options;
 
   const sum = props.calculatedValue?.length
@@ -115,9 +140,9 @@ export const Field = (props: IField) => {
             or.conditions
               .map(
                 (c) =>
-                  formValues[c.when] == c.is || !!formValues[c.when] == c.is,
+                  formValues[c.when] == c.is || !!formValues[c.when] == c.is
               )
-              .filter(Boolean).length === or.conditions.length,
+              .filter(Boolean).length === or.conditions.length
         )
         .filter(Boolean).length > 0
     : props.disabled;
