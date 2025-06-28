@@ -2,11 +2,10 @@ import "./Button.css";
 import { useContext, useEffect, useState } from "react";
 import { FormContext } from "../../context";
 import { type IField } from "../Field/Field";
-import { validateField } from "../../utils/validators";
-import type { ChangeEvent, MouseEventHandler } from "react";
+import type { MouseEventHandler } from "react";
 
-const url = "http://localhost:6060/protool?appno=init";
-const url1 = "http://localhost:6060/protool";
+// const url = "http://localhost:6060/protool?appno=init";
+// const url1 = "http://localhost:6060/protool";
 
 export const Button = (props: IField) => {
   //@ts-ignore
@@ -27,12 +26,18 @@ export const Button = (props: IField) => {
   const className = `field ${props.error ? "field--error" : ""}`;
   const [shouldValidate, setShouldValudate] = useState(false);
   const [defaultValues, setDefaultValues] = useState(null);
+  const { dataset } = document.querySelector("body") || {
+    dataset: { url: "/", query: "appno", init: "init" },
+  };
+
+  console.log({ dataset });
+  const { url, query, init } = dataset;
 
   function errors() {
     return JSON.parse(JSON.stringify(formErrors));
   }
   const post = async () => {
-    const res = await postData(url1, formValues);
+    const res = await postData(url || "/protool", formValues);
     if (res.errors) {
       return setFormErrors(res.errors);
     }
@@ -54,7 +59,9 @@ export const Button = (props: IField) => {
   const handleGet: MouseEventHandler<HTMLButtonElement> = async (e) => {
     e.preventDefault();
 
-    const res = await getData(`${url1}?appno=${formValues.editableAppNumber}`);
+    const res = await getData(
+      `${url}&${query}=${formValues.editableAppNumber}`,
+    );
     if (res.data) {
       setFormValues((formValues: any) => {
         return { ...formValues, ...res.data };
@@ -82,7 +89,7 @@ export const Button = (props: IField) => {
   };
 
   const loadData = async () => {
-    const res = await getData(url);
+    const res = await getData(`${url}&${query}=${init}`);
     setFormValues((formValues: any) => {
       return { ...formValues, user: res.data.user };
     });
