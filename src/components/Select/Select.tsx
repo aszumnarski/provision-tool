@@ -12,11 +12,26 @@ export const Select = (props: IField) => {
     return !props.options
       ? ""
       : props.options.map((o) => (
-          <option key={o.value} value={o.value}>
+          <option
+            key={o.value}
+            value={o.value}
+            selected={o.value === props.value}
+          >
             {o.label}
           </option>
         ));
   };
+
+  useEffect(() => {
+    if (props.type === "select" && props.value) {
+      setFormValues((formValues: any) => {
+        return {
+          ...formValues,
+          [props.name]: props.value,
+        };
+      });
+    }
+  }, [props.value]);
 
   useEffect(() => {
     if (props.type === "select" && props.options) {

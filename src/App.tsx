@@ -4,24 +4,6 @@ import { data } from "./data";
 import { Form } from "./components/Form/Form";
 import { FormContext } from "./context";
 
-async function postData(url: string, body: Record<string, any>) {
-  var formData = new FormData();
-  formData.append("json", JSON.stringify(body));
-  try {
-    const response = await fetch(url, {
-      method: "POST",
-      body: formData,
-    });
-    if (!response.ok) {
-      throw new Error(`Response status: ${response.status}`);
-    }
-    const data = await response.json();
-    return data;
-  } catch (error: any) {
-    return { error };
-  }
-}
-
 function App() {
   const [formValues, setFormValues] = useState<Record<string, string> | {}>({});
   const [formErrors, setFormErrors] = useState<Record<string, string> | {}>({});

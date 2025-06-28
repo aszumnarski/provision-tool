@@ -1,0 +1,10 @@
+select:disabled {
+  -moz-appearance: none; /* Firefox */
+  -webkit-appearance: none; /* Chrome, Safari, Edge */
+  appearance: none; /* Standard */
+  background-image: none;
+  background-color: #f0f0f0;
+  color: #888;
+  font-weight: bold;
+  border-color: #999;
+}
