@@ -26,5 +26,8 @@ export const mode = {
 export const modes = { fields: [mode] };
 
 export const controls = { columns: [modes] };
+export const appInfo = { columns: [modes] };
+export const appValueppInfo = { columns: [modes] };
+export const attachements = { columns: [modes] };
 
 export const config = { rows: [controls] };
