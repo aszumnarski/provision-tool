@@ -30,7 +30,6 @@ export const Button = (props: IField) => {
     dataset: { url: "/", query: "appno", init: "init" },
   };
 
-  console.log({ dataset });
   const { url, query, init } = dataset;
 
   function errors() {

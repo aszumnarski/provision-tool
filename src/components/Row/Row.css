@@ -1,7 +1,7 @@
 .row-wrapper {
   display: flex;
   flex-direction: column;
-  gap: 50px;
+  gap: 30px;
 }
 
 .row {

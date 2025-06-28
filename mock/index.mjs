@@ -10,7 +10,7 @@ const data = () => {
 const app = express();
 const port = 6060;
 app.use(cors());
-app.use(express.urlencoded());
+app.use(express.urlencoded({ extended: true }));
 
 app.get("/protool", (req, res) => {
   const { appno } = req.query;
@@ -20,7 +20,7 @@ app.get("/protool", (req, res) => {
 
   const record = getRecordFor(appno);
   const response = record
-    ? { data: record }
+    ? { data: { ...record, attachement: undefined } }
     : {
         errors: {
           editableAppNumber: `Application number ${appno} does not exist!`,
