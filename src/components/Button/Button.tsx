@@ -26,51 +26,50 @@ export const Button = (props: IField) => {
   } = useContext(FormContext);
   const className = `field ${props.error ? "field--error" : ""}`;
   const [shouldValidate, setShouldValudate] = useState(false);
-  const [shouldPost, setShouldPost] = useState(false);
+  const [defaultValues, setDefaultValues] = useState(null);
 
-  const e = JSON.parse(JSON.stringify(formErrors));
-  const f = () => JSON.parse(JSON.stringify(formErrors));
-  function g() {
+  function errors() {
     return JSON.parse(JSON.stringify(formErrors));
   }
   const post = async () => {
     const res = await postData(url1, formValues);
-    console.log({ res });
     if (res.errors) {
-      setFormErrors(res.errors);
+      return setFormErrors(res.errors);
+    }
+    if (res.data) {
+      resetForm();
     }
   };
   useEffect(() => {
     if (shouldValidate) {
-      console.log("VALIDATE", { formErrors, e, f: f(), g: g() });
-      if (!Object.keys(g()).length) {
+      if (!Object.keys(errors()).length) {
         post();
       }
 
       setTimeout(() => {
-        console.log("VALIDATE2", { formErrors, e, f: f(), g: g() });
         setShouldValudate(false);
       }, 500);
     }
   }, [shouldValidate]);
   const handleGet: MouseEventHandler<HTMLButtonElement> = async (e) => {
     e.preventDefault();
-    // validateForm();
 
-    // window.dispatchEvent(new Event("validate"));
-    // await loadData();
-    // const res = await postData(url1, formValues);
     const res = await getData(`${url1}?appno=${formValues.editableAppNumber}`);
-    setFormValues((formValues: any) => {
-      return { ...formValues, ...res.data };
-    });
-    console.log("data", res.data, "errors", res.errors, { res });
-    // console.log("send form", { formErrors });
+    if (res.data) {
+      setFormValues((formValues: any) => {
+        return { ...formValues, ...res.data };
+      });
+      setFormErrors({});
+    } else {
+      setFormErrors((formErrors: any) => {
+        return { ...formErrors, ...res.errors };
+      });
+    }
   };
-  async function fetchData() {
-    return new Promise((resolve, reject) => {
+  async function fetchErrors() {
+    return new Promise((resolve, _) => {
       setTimeout(() => {
-        resolve(g());
+        resolve(errors());
       }, 200);
     });
   }
@@ -78,24 +77,35 @@ export const Button = (props: IField) => {
     e.preventDefault();
 
     window.dispatchEvent(new Event("validate"));
-    const xxx = await fetchData();
-    console.log({ xxx });
+    await fetchErrors();
     setShouldValudate(true);
   };
 
   const loadData = async () => {
     const res = await getData(url);
-
-    console.log(res.data);
     setFormValues((formValues: any) => {
       return { ...formValues, user: res.data.user };
     });
-    // setFormValues(res.data);
   };
+
+  const resetForm = () => {
+    setFormValues(defaultValues);
+    setFormErrors({});
+  };
+
   useEffect(() => {
-    console.log("useEffect rerender");
-    setTimeout(loadData, 1000);
+    if (formValues.mode === "create") resetForm();
+  }, [formValues.mode]);
+
+  useEffect(() => {
+    setTimeout(loadData, 100);
   }, []);
+
+  useEffect(() => {
+    if (formValues.user && !defaultValues) {
+      setDefaultValues(formValues);
+    }
+  }, [formValues.user]);
 
   const states = {
     CREATE: { label: "CREATE", onClick: handlePost },
@@ -115,7 +125,6 @@ export const Button = (props: IField) => {
 
     return states.GET;
   };
-  console.log({ formErrors, formValues });
   return (
     <div className={className}>
       <button
