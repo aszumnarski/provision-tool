@@ -7,7 +7,7 @@ export const mode: IField = {
   initValue: "create",
   type: "select",
   disabled: false,
-  ...h.required(),
+  patterns: [h.required()],
   options: [
     {
       label: "create",
@@ -28,16 +28,7 @@ export const editableAppNumber: IField = {
   disabled: false,
   hidden: true,
   patterns: [],
-  conditionalDisabled: [
-    {
-      conditions: [
-        {
-          when: "mode",
-          is: "create",
-        },
-      ],
-    },
-  ],
+  conditionalDisabled: h.inCreateState,
 };
 
 export const magicButton: IField = {
@@ -64,38 +55,8 @@ export const name1: IField = {
   type: "text",
   disabled: false,
   hidden: true,
-  conditionalDisabled: [
-    {
-      conditions: [
-        {
-          when: "mode",
-          is: "modify",
-        },
-        {
-          when: "editableAppNumber",
-          is: true,
-        },
-      ],
-    },
-    {
-      conditions: [
-        {
-          when: "mode",
-          is: "modify",
-        },
-        {
-          when: "appNumber",
-          is: "",
-        },
-      ],
-    },
-  ],
-  patterns: [
-    {
-      reg: "required",
-      message: "This field is required",
-    },
-  ],
+  conditionalDisabled: h.inGetState,
+  patterns: [h.required()],
   options: [
     {
       label: "Opcja 1",
@@ -111,12 +72,7 @@ export const name2: IField = {
   type: "text",
   disabled: false,
   hidden: true,
-  patterns: [
-    {
-      reg: "required",
-      message: "This field is required",
-    },
-  ],
+  patterns: [h.required()],
   options: [
     {
       label: "Opcja 1",
@@ -124,6 +80,7 @@ export const name2: IField = {
     },
   ],
 };
+
 export const name3: IField = {
   name: "name3",
   label: "no data and no required",
@@ -163,16 +120,7 @@ export const name7b: IField = {
   type: "date",
   disabled: false,
   hidden: true,
-  patterns: [
-    {
-      reg: "required",
-      message: "This field is required",
-    },
-    {
-      reg: "future",
-      message: "Dates in the past are not allowed",
-    },
-  ],
+  patterns: [h.required(), h.future],
   options: [
     {
       label: "Opcja 1",
@@ -188,12 +136,7 @@ export const appNumber: IField = {
   type: "text",
   disabled: true,
   hidden: true,
-  patterns: [
-    {
-      reg: "required",
-      message: "This field is required",
-    },
-  ],
+  patterns: [],
   options: [
     {
       label: "Opcja 1",
@@ -209,12 +152,7 @@ export const details: IField = {
   type: "select",
   disabled: false,
   hidden: true,
-  patterns: [
-    {
-      reg: "required",
-      message: "This field is required",
-    },
-  ],
+  patterns: [h.required()],
   dependentOptions: {
     dependency: "machineActor",
     values: [
@@ -280,12 +218,7 @@ export const name4b: IField = {
     },
   ],
   hidden: true,
-  patterns: [
-    {
-      reg: "required",
-      message: "This field is required",
-    },
-  ],
+  patterns: [h.required()],
   options: [
     {
       label: "Opcja 1",
@@ -301,12 +234,7 @@ export const wrestler: IField = {
   type: "text",
   disabled: false,
   hidden: true,
-  patterns: [
-    {
-      reg: "required",
-      message: "This field is required",
-    },
-  ],
+  patterns: [h.required()],
   options: [
     {
       label: "Opcja 1",
@@ -322,12 +250,7 @@ export const machineActor: IField = {
   type: "select",
   disabled: false,
   hidden: true,
-  patterns: [
-    {
-      reg: "required",
-      message: "This field is required",
-    },
-  ],
+  patterns: [h.required()],
   options: [
     {
       label: "Samochód",
@@ -355,12 +278,7 @@ export const name1b: IField = {
   type: "number",
   disabled: false,
   hidden: true,
-  patterns: [
-    {
-      reg: "required",
-      message: "This field is required",
-    },
-  ],
+  patterns: [h.required()],
   options: [
     {
       label: "Opcja 1",
@@ -376,12 +294,7 @@ export const name2b: IField = {
   type: "number",
   disabled: false,
   hidden: true,
-  patterns: [
-    {
-      reg: "required",
-      message: "This field is required",
-    },
-  ],
+  patterns: [h.required()],
   options: [
     {
       label: "Opcja 1",
@@ -398,12 +311,7 @@ export const name3b: IField = {
   type: "text",
   disabled: true,
   hidden: true,
-  patterns: [
-    {
-      reg: "required",
-      message: "This field is required",
-    },
-  ],
+  patterns: [h.required()],
   options: [
     {
       label: "Opcja 1",
@@ -419,12 +327,7 @@ export const name7: IField = {
   type: "text",
   disabled: false,
   hidden: true,
-  patterns: [
-    {
-      reg: "min_6",
-      message: "The phrase is too short - minimum 6 characters are required",
-    },
-  ],
+  patterns: [h.min(6)],
   options: [
     {
       label: "Opcja 1",
@@ -440,12 +343,7 @@ export const name8: IField = {
   type: "text",
   disabled: false,
   hidden: true,
-  patterns: [
-    {
-      reg: "min_6",
-      message: "The phrase is too short - minimum 6 characters are required",
-    },
-  ],
+  patterns: [h.min(6)],
   options: [
     {
       label: "Opcja 1",
@@ -461,12 +359,7 @@ export const user: IField = {
   type: "text",
   disabled: true,
   hidden: true,
-  patterns: [
-    {
-      reg: "required",
-      message: "This field is required",
-    },
-  ],
+  patterns: [h.required()],
   options: [
     {
       label: "Opcja 1",
@@ -483,11 +376,9 @@ export const costCenter: IField = {
   disabled: false,
   hidden: true,
   patterns: [
-    {
-      reg: "required",
-      message:
-        "This field is required when WBS Element or Sales Order or Sales Order Item are empty",
-    },
+    h.required(
+      "This field is required when WBS Element or Sales Order or Sales Order Item are empty",
+    ),
   ],
   conditionalDisabled: [
     {
@@ -525,11 +416,9 @@ export const WBS: IField = {
   disabled: false,
   hidden: true,
   patterns: [
-    {
-      reg: "required",
-      message:
-        "This field is required when Cost Center or Sales Order or Sales Order Item are empty",
-    },
+    h.required(
+      "This field is required when Cost Center or Sales Order or Sales Order Item are empty",
+    ),
   ],
   conditionalDisabled: [
     {
@@ -567,11 +456,9 @@ export const salesOrder: IField = {
   disabled: false,
   hidden: true,
   patterns: [
-    {
-      reg: "required",
-      message:
-        "This field is required when Cost Center or WBS Element are empty",
-    },
+    h.required(
+      "This field is required when Cost Center or WBS Element are empty",
+    ),
   ],
   conditionalDisabled: [
     {
@@ -601,11 +488,9 @@ export const salesOrderItem: IField = {
   disabled: false,
   hidden: true,
   patterns: [
-    {
-      reg: "required",
-      message:
-        "This field is required when Cost Center or WBS Element are empty",
-    },
+    h.required(
+      "This field is required when Cost Center or WBS Element are empty",
+    ),
   ],
   conditionalDisabled: [
     {
@@ -650,16 +535,7 @@ export const name5: IField = {
   type: "text",
   disabled: false,
   hidden: true,
-  patterns: [
-    {
-      reg: "required",
-      message: "This field is required",
-    },
-    {
-      reg: "min_6",
-      message: "The phrase is too short - minimum 6 characters are required",
-    },
-  ],
+  patterns: [h.required(), h.min(6)],
   options: [
     {
       label: "Opcja 1",
@@ -675,16 +551,7 @@ export const name6: IField = {
   type: "text",
   disabled: false,
   hidden: true,
-  patterns: [
-    {
-      reg: "required",
-      message: "This field is required",
-    },
-    {
-      reg: "min_6",
-      message: "The phrase is too short - minimum 6 characters are required",
-    },
-  ],
+  patterns: [h.required(), h.min(6)],
   options: [
     {
       label: "Opcja 1",
