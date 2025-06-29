@@ -20,22 +20,6 @@ export const mode: IField = {
   ],
 };
 
-export const magicButton: IField = {
-  name: "magicButton",
-  label: "DYNAMIC",
-  initValue: "opt1",
-  type: "button",
-  disabled: false,
-  hidden: true,
-  patterns: [],
-  options: [
-    {
-      label: "Opcja 1",
-      value: "opt1",
-    },
-  ],
-};
-
 export const editableAppNumber: IField = {
   name: "editableAppNumber",
   label: "Editable App Number",
@@ -56,6 +40,22 @@ export const editableAppNumber: IField = {
   ],
 };
 
+export const magicButton: IField = {
+  name: "magicButton",
+  label: "DYNAMIC",
+  initValue: "opt1",
+  type: "button",
+  disabled: false,
+  hidden: true,
+  patterns: [],
+  options: [
+    {
+      label: "Opcja 1",
+      value: "opt1",
+    },
+  ],
+};
+
 export const name1: IField = {
   name: "name1",
   label: "data and required",
@@ -64,6 +64,32 @@ export const name1: IField = {
   type: "text",
   disabled: false,
   hidden: true,
+  conditionalDisabled: [
+    {
+      conditions: [
+        {
+          when: "mode",
+          is: "modify",
+        },
+        {
+          when: "editableAppNumber",
+          is: true,
+        },
+      ],
+    },
+    {
+      conditions: [
+        {
+          when: "mode",
+          is: "modify",
+        },
+        {
+          when: "appNumber",
+          is: "",
+        },
+      ],
+    },
+  ],
   patterns: [
     {
       reg: "required",

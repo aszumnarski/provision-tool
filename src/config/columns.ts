@@ -2,7 +2,7 @@ import * as f from "./fields";
 
 export const modes = { fields: [f.mode] };
 
-export const appNumber = { fields: [f.appNumber] };
+export const appNumbers = { fields: [f.editableAppNumber] };
 
 export const stateControllerButton = { fields: [f.magicButton] };
 
