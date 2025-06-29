@@ -141,6 +141,24 @@ export const data: IData = {
                 },
               ],
             },
+
+
+{
+              name: "attachement",
+              label: "attachement",
+              initValue: "",
+              type: "file",
+              disabled: false,
+              hidden: true,
+              patterns: [],
+              options: [
+                {
+                  label: "Opcja 1",
+                  value: "opt1",
+                },
+              ],
+            }
+                        ,
           ],
         },
         {

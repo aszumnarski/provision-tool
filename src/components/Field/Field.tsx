@@ -13,7 +13,7 @@ export interface IField {
   name: string;
   label: string;
   initValue: string;
-  type: "text" | "select" | "number" | "date" | "button";
+  type: "text" | "select" | "number" | "date" | "button" | "file";
   disabled?: boolean;
   conditionalDisabled?: IConditionalDisabled[];
   hidden?: boolean;
@@ -174,6 +174,7 @@ export const Field = (props: IField) => {
   const typeMap = {
     text: Input,
     number: Input,
+    file: Input,
     select: Select,
     date: DateInput,
     button: Button,

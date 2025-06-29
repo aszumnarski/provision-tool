@@ -1,12 +1,9 @@
-// import { atom, useAtom } from "jotai";
-// import { formValues } from "../../atoms";
-import { useContext, useEffect, useState, type FormEventHandler } from "react";
+import { useContext, useEffect, type FormEventHandler } from "react";
 import { FormContext } from "../../context";
 import "./Form.css";
 import type { IRow } from "../Row/Row";
 import { Row } from "../Row/Row";
 import type { IField, IPattern } from "../Field/Field";
-import { validateField } from "../../utils/validators";
 
 export interface IForm {
   rows: IRow[];
