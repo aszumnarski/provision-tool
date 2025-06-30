@@ -161,7 +161,6 @@ export const wrestler: IField = {
 export const machineActor: IField = {
   name: "machineActor",
   label: "Actor or Machine",
-  initValue: "car",
   type: "select",
   patterns: [h.required()],
   conditionalDisabled: h.inGetState,

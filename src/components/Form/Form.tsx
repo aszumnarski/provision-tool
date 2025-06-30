@@ -35,8 +35,16 @@ export function Form({ rows }: IForm) {
     rows.forEach((r) =>
       r.columns.forEach((c) =>
         c.fields.forEach((f) => {
+          const defaultVal =
+            key === "patterns"
+              ? []
+              : f.type === "number"
+                ? 0
+                : f.type === "select"
+                  ? f.options && f.options[0].value
+                  : "";
           //@ts-ignore
-          values[f.name] = f[key as keyof typeof f];
+          values[f.name] = f[key as keyof typeof f] || defaultVal;
         }),
       ),
     );

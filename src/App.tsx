@@ -1,6 +1,7 @@
 import { useState } from "react";
 import "./App.css";
 import { data } from "./data";
+import { data2 } from "./data2";
 import { config } from "./config";
 import { Form } from "./components/Form/Form";
 import { FormContext } from "./context";

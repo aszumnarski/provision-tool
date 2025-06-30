@@ -15,7 +15,10 @@ export const Select = (props: IField) => {
           <option
             key={o.value}
             value={o.value}
-            selected={o.value === props.value}
+            selected={
+              o.value ===
+              (props.value || (props.options && props.options[0].value))
+            }
           >
             {o.label}
           </option>
@@ -51,6 +54,7 @@ export const Select = (props: IField) => {
         <select
           className="field-input"
           name={props.name}
+          value={props.value || (props.options && props.options[0].value)}
           onChange={props.onChange}
           disabled={props.disabled}
           onBlur={props.onBlur}
