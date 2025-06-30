@@ -11,21 +11,21 @@ import { Button } from "../Button/Button";
 
 export interface IField {
   name: string;
-  label: string;
-  initValue: string;
   type: "text" | "select" | "number" | "date" | "button" | "file";
-  disabled?: boolean;
-  conditionalDisabled?: IConditionalDisabled[];
-  hidden?: boolean;
-  patterns: IPattern[];
-  options?: IOption[];
-  maxlength?: string;
-  value?: string;
-  error?: string;
-  dependentOptions?: IDependentOptions;
   calculatedValue?: string[];
-  onChange?: (e: ChangeEvent) => void;
+  conditionalDisabled?: IConditionalDisabled[];
+  dependentOptions?: IDependentOptions;
+  disabled?: boolean;
+  error?: string;
+  hidden?: boolean;
+  initValue?: string;
+  label?: string;
+  maxlength?: string;
   onBlur?: (e: ChangeEvent) => void;
+  onChange?: (e: ChangeEvent) => void;
+  options?: IOption[];
+  patterns?: IPattern[];
+  value?: string;
 }
 
 export interface IConditionalDisabled {
