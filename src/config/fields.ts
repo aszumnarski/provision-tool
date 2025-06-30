@@ -39,12 +39,6 @@ export const magicButton: IField = {
   disabled: false,
   hidden: true,
   patterns: [],
-  options: [
-    {
-      label: "Opcja 1",
-      value: "opt1",
-    },
-  ],
 };
 
 export const name1: IField = {
@@ -57,12 +51,6 @@ export const name1: IField = {
   hidden: true,
   conditionalDisabled: h.inGetState,
   patterns: [h.required()],
-  options: [
-    {
-      label: "Opcja 1",
-      value: "opt1",
-    },
-  ],
 };
 
 export const name2: IField = {

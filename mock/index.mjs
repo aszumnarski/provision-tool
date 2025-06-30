@@ -11,6 +11,10 @@ const app = express();
 const port = 6060;
 app.use(cors());
 app.use(express.urlencoded({ extended: true }));
+app.use((req, res, next) => {
+  const delay = 0 * 1000; // 0-second delay
+  setTimeout(() => next(), delay);
+});
 
 app.get("/protool", (req, res) => {
   const { appno } = req.query;
