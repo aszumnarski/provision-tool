@@ -15,6 +15,7 @@ export interface IField {
   calculatedValue?: string[];
   conditionalDisabled?: IConditionalDisabled[];
   dependentOptions?: IDependentOptions;
+  dependentOptions2?: IDependentOptions2[];
   disabled?: boolean;
   error?: string;
   hidden?: boolean;
@@ -28,17 +29,18 @@ export interface IField {
   value?: string;
 }
 
+export interface ICondition {
+  when: string;
+  is: string | boolean;
+}
+
+export interface IDependentOptions2 {
+  conditions: ICondition[];
+  options: IOption[];
+}
+
 export interface IConditionalDisabled {
-  conditions: (
-    | {
-        when: string;
-        is: string;
-      }
-    | {
-        when: string;
-        is: boolean;
-      }
-  )[];
+  conditions: ICondition[];
 }
 
 export interface IDependentOptions {
@@ -48,10 +50,7 @@ export interface IDependentOptions {
 
 export interface IDependentOptionsValue {
   keys: string[];
-  options: {
-    label: string;
-    value: string;
-  }[];
+  options: IOption[];
 }
 
 export interface IOption {
@@ -99,6 +98,18 @@ export const Field = (props: IField) => {
         v.keys.includes(formValues[props.dependentOptions?.dependency]),
       )?.options || props.options
     : props.options;
+
+  const options2 = () => {
+    if (!props.dependentOptions2) return props.options;
+    props.dependentOptions2.map(
+      (or) =>
+        or.conditions
+          .map(
+            (c) => formValues[c.when] == c.is || !!formValues[c.when] == c.is,
+          )
+          .filter(Boolean).length === or.conditions.length,
+    );
+  };
 
   const sum = props.calculatedValue?.length
     ? props.calculatedValue
