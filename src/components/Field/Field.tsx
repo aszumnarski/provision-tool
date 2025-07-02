@@ -33,13 +33,13 @@ export interface ICondition {
   is: string | boolean;
 }
 
-export interface ICondition2 {
+export interface IConditionMulti {
   when: string;
   is: (string | boolean)[];
 }
 
 export interface IDependentOptions {
-  conditions: ICondition2[];
+  conditions: IConditionMulti[];
   options: IOption[];
 }
 
