@@ -14,8 +14,7 @@ export interface IField {
   type: "text" | "select" | "number" | "date" | "button" | "file";
   calculatedValue?: string[];
   conditionalDisabled?: IConditionalDisabled[];
-  dependentOptions?: IDependentOptions;
-  dependentOptions2?: IDependentOptions2[];
+  dependentOptions?: IDependentOptions[];
   disabled?: boolean;
   error?: string;
   hidden?: boolean;
@@ -34,23 +33,18 @@ export interface ICondition {
   is: string | boolean;
 }
 
-export interface IDependentOptions2 {
-  conditions: ICondition[];
+export interface ICondition2 {
+  when: string;
+  is: (string | boolean)[];
+}
+
+export interface IDependentOptions {
+  conditions: ICondition2[];
   options: IOption[];
 }
 
 export interface IConditionalDisabled {
   conditions: ICondition[];
-}
-
-export interface IDependentOptions {
-  dependency: string;
-  values: IDependentOptionsValue[];
-}
-
-export interface IDependentOptionsValue {
-  keys: string[];
-  options: IOption[];
 }
 
 export interface IOption {
@@ -93,24 +87,26 @@ export const Field = (props: IField) => {
     setFormValues({ ...formValues, [props.name]: val });
   };
 
-  const options = props.dependentOptions?.dependency
-    ? props.dependentOptions.values.find((v) =>
-        v.keys.includes(formValues[props.dependentOptions?.dependency]),
-      )?.options || props.options
-    : props.options;
+  const options = (): IOption[] => {
+    if (!props.dependentOptions) return props.options || [];
 
-  const options2 = () => {
-    if (!props.dependentOptions2) return props.options;
-    props.dependentOptions2.map(
-      (or) =>
-        or.conditions
-          .map(
-            (c) => formValues[c.when] == c.is || !!formValues[c.when] == c.is,
-          )
-          .filter(Boolean).length === or.conditions.length,
-    );
+    const result: IOption[] =
+      props.dependentOptions
+        .map(
+          (scenario) =>
+            scenario.conditions
+              .map(
+                (c) =>
+                  c.is.includes(formValues[c.when]) ||
+                  c.is.includes(!!formValues[c.when]),
+              )
+              .filter(Boolean).length === scenario.conditions.length &&
+            scenario.options,
+        )
+        .filter(Boolean)[0] || [];
+
+    return result.length ? result : props.options || [];
   };
-
   const sum = props.calculatedValue?.length
     ? props.calculatedValue
         .map((v) => parseFloat(formValues[v]) || 0)
@@ -140,7 +136,7 @@ export const Field = (props: IField) => {
     error,
     onBlur,
     disabled,
-    options,
+    options: options(),
     value,
   };
 

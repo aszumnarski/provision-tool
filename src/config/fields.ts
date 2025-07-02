@@ -19,6 +19,142 @@ export const mode: IField = {
   ],
 };
 
+const test2 = {
+  name: "subType",
+  label: "Subtype",
+  initValue: "09",
+  type: "select",
+  dependentOptions2: [
+    {
+      conditions: [{ when: "machineActor", is: ["car", "bike"] }],
+      options: [
+        {
+          label: "Honda",
+          value: "honda",
+        },
+        {
+          label: "Dalsim",
+          value: "dalsim",
+        },
+      ],
+    },
+    {
+      conditions: [{ when: "machineActor", is: ["schwarzenegger"] }],
+      options: [
+        {
+          label: "Terminator",
+          value: "t800",
+        },
+        {
+          label: "Predator",
+          value: "józek",
+        },
+      ],
+    },
+  ],
+  dependentOptions: [
+    {
+      conditions: [
+        { when: "mode", is: ["modify"] },
+        {
+          when: "provisionType",
+          is: ["j50", "j55"],
+        },
+      ],
+      options: [
+        {
+          label: "Creation/Addition of other provisions/accruals (09)",
+          value: "09",
+        },
+        {
+          label:
+            "Correction - Creation/Addition of other provisions/accruals (09)",
+          value: "09c",
+        },
+      ],
+    },
+    {
+      conditions: [
+        { when: "mode", is: ["create"] },
+        {
+          when: "provisionType",
+          is: ["c83", "c84", "j50", "j55", "o25", "o30", "o70", "o71", "r10"],
+        },
+      ],
+      options: [
+        {
+          label: "Creation/Addition of other provisions/accruals (09)",
+          value: "09",
+        },
+      ],
+    },
+  ],
+  options: [
+    {
+      label: "Usage of other provisions/accruals - previous year (07)",
+      value: "07",
+    },
+    {
+      label:
+        "Correction - Usage of other provisions/accruals - previous year (07)",
+      value: "07c",
+    },
+    {
+      label:
+        "Release, no longer needed of other provisions/accruals - previous year (08)",
+      value: "08",
+    },
+    {
+      label:
+        "Correction - Release, no longer needed of other provisions/accruals - previous year (08)	",
+      value: "08c",
+    },
+    {
+      label: "Creation/Addition of other provisions/accruals (09)",
+      value: "09",
+    },
+    {
+      label: "Correction - Creation/Addition of other provisions/accruals (09)",
+      value: "09c",
+    },
+    {
+      label: "Usage of other provisions/accruals - current year (27)",
+      value: "27",
+    },
+    {
+      label:
+        "Correction - Usage of other provisions/accruals - current year (27)",
+      value: "27c",
+    },
+    {
+      label:
+        "Release, no longer needed of other provisions/accruals - current year (28)",
+      value: "28",
+    },
+    {
+      label:
+        "Correction - Release, no longer needed of other provisions/accruals - current year (28)",
+      value: "28c",
+    },
+    {
+      label: "Change in Application End Date",
+      value: "aed",
+    },
+    {
+      label: "Change in Cost Center",
+      value: "ccc",
+    },
+    {
+      label: "Change in Order Number",
+      value: "con",
+    },
+    {
+      label: "Change in WBS Element",
+      value: "cwe",
+    },
+  ],
+};
+
 export const test = {
   name: "subType",
   label: "Subtype",
@@ -193,37 +329,34 @@ export const details: IField = {
   type: "select",
   conditionalDisabled: h.inGetState,
   patterns: [h.required()],
-  dependentOptions: {
-    dependency: "machineActor",
-    values: [
-      {
-        keys: ["car", "bike"],
-        options: [
-          {
-            label: "Honda",
-            value: "honda",
-          },
-          {
-            label: "Dalsim",
-            value: "dalsim",
-          },
-        ],
-      },
-      {
-        keys: ["schwarzenegger"],
-        options: [
-          {
-            label: "Terminator",
-            value: "t800",
-          },
-          {
-            label: "Predator",
-            value: "józek",
-          },
-        ],
-      },
-    ],
-  },
+  dependentOptions: [
+    {
+      conditions: [{ when: "machineActor", is: ["car", "bike"] }],
+      options: [
+        {
+          label: "Honda",
+          value: "honda",
+        },
+        {
+          label: "Dalsim",
+          value: "dalsim",
+        },
+      ],
+    },
+    {
+      conditions: [{ when: "machineActor", is: ["schwarzenegger"] }],
+      options: [
+        {
+          label: "Terminator",
+          value: "t800",
+        },
+        {
+          label: "Predator",
+          value: "józek",
+        },
+      ],
+    },
+  ],
   options: [
     {
       label: "Film",
