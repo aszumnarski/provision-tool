@@ -2,14 +2,14 @@ import * as f from "./fields";
 
 export const modes = { fields: [f.mode] };
 
-export const appNumbers = { fields: [f.editableAppNumber] };
+export const appNumbers = { fields: [f.appNumberImport] };
 
 export const stateControllerButton = { fields: [f.magicButton] };
 
 export const one = { fields: [f.name1, f.name2, f.name3] };
 
 export const two = {
-  fields: [f.creatorUser, f.name5, f.name6, f.provisionType, f.subType],
+  fields: [f.appCreator, f.name5, f.name6, f.provisionType, f.subType],
 };
 
 export const three = {

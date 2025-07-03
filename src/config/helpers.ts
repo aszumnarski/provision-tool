@@ -27,7 +27,7 @@ export const inGetState = [
         is: "modify",
       },
       {
-        when: "editableAppNumber",
+        when: "appNumberImport",
         is: true,
       },
     ],
@@ -54,7 +54,7 @@ export const inUpdateState = [
         is: "modify",
       },
       {
-        when: "editableAppNumber",
+        when: "appNumberImport",
         is: "",
       },
       {

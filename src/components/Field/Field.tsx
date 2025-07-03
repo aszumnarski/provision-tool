@@ -72,6 +72,8 @@ export const Field = (props: IField) => {
     patterns,
     //@ts-ignore
     setPatterns,
+    //@ts-ignore
+    setAtt,
   } = useContext(FormContext);
 
   const onBlur = () => {
@@ -82,6 +84,9 @@ export const Field = (props: IField) => {
 
   const onChange = (e: ChangeEvent) => {
     const input = e.target as HTMLInputElement;
+    if (input.files){
+      setAtt({fileName:input.files[0].name,fileData:input.files[0]})
+    }
     const val =
       props.type === "number" ? input.value.replace("-", "") : input.value;
     setFormValues({ ...formValues, [props.name]: val });

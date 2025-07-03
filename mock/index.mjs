@@ -27,7 +27,7 @@ app.get("/protool", (req, res) => {
     ? { data: { ...record, attachement: undefined } }
     : {
         errors: {
-          editableAppNumber: `Application number ${appno} does not exist!`,
+          appNumberImport: `Application number ${appno} does not exist!`,
         },
       };
   res.json(response);
@@ -53,7 +53,7 @@ function getRecordFor(appNumber) {
 
 function addNewRecordToDb(db, data) {
   const appNumber = `${db.length + 1}`;
-  db.push({ ...data, creatorUser: data.user, appNumber, mode: "modify" });
+  db.push({ ...data, appCreator: data.user, appNumber, mode: "modify" });
   return appNumber;
 }
 

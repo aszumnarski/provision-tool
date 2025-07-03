@@ -178,117 +178,8 @@ export const subType: IField = {
   ],
 };
 
-export const test = {
-  name: "subType",
-  label: "Subtype",
-  initValue: "09",
-  type: "select",
-  dependentOptions: {
-    dependencies: ["provisionType", "mode"],
-    values: [
-      {
-        keys: ["j50|modify", "j55|modify"],
-        options: [
-          {
-            label: "Creation/Addition of other provisions/accruals (09)",
-            value: "09",
-          },
-          {
-            label:
-              "Correction - Creation/Addition of other provisions/accruals (09)",
-            value: "09c",
-          },
-        ],
-      },
-      {
-        keys: [
-          "c83|create",
-          "c84|create",
-          "j50|create",
-          "j55|create",
-          "o25|create",
-          "o30|create",
-          "o70|create",
-          "o71|create",
-          "r10|create",
-        ],
-        options: [
-          {
-            label: "Creation/Addition of other provisions/accruals (09)",
-            value: "09",
-          },
-        ],
-      },
-    ],
-  },
-  options: [
-    {
-      label: "Usage of other provisions/accruals - previous year (07)",
-      value: "07",
-    },
-    {
-      label:
-        "Correction - Usage of other provisions/accruals - previous year (07)",
-      value: "07c",
-    },
-    {
-      label:
-        "Release, no longer needed of other provisions/accruals - previous year (08)",
-      value: "08",
-    },
-    {
-      label:
-        "Correction - Release, no longer needed of other provisions/accruals - previous year (08)	",
-      value: "08c",
-    },
-    {
-      label: "Creation/Addition of other provisions/accruals (09)",
-      value: "09",
-    },
-    {
-      label: "Correction - Creation/Addition of other provisions/accruals (09)",
-      value: "09c",
-    },
-    {
-      label: "Usage of other provisions/accruals - current year (27)",
-      value: "27",
-    },
-    {
-      label:
-        "Correction - Usage of other provisions/accruals - current year (27)",
-      value: "27c",
-    },
-    {
-      label:
-        "Release, no longer needed of other provisions/accruals - current year (28)",
-      value: "28",
-    },
-    {
-      label:
-        "Correction - Release, no longer needed of other provisions/accruals - current year (28)",
-      value: "28c",
-    },
-    {
-      label: "Change in Application End Date",
-      value: "aed",
-    },
-    {
-      label: "Change in Cost Center",
-      value: "ccc",
-    },
-    {
-      label: "Change in Order Number",
-      value: "con",
-    },
-    {
-      label: "Change in WBS Element",
-      value: "cwe",
-    },
-  ],
-};
-
-export const editableAppNumber: IField = {
-  name: "editableAppNumber",
+export const appNumberImport: IField = {
+  name: "appNumberImport",
   label: "Editable App Number",
   type: "text",
   conditionalDisabled: h.inCreateState,
@@ -630,8 +521,8 @@ export const salesOrderItem: IField = {
   ],
 };
 
-export const creatorUser: IField = {
-  name: "creatorUser",
+export const appCreator: IField = {
+  name: "appCreator",
   label: "Creator User",
   type: "text",
   disabled: true,

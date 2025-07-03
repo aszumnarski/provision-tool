@@ -10,9 +10,9 @@ export default defineConfig({
   build: {
     rollupOptions: {
       output: {
-        entryFileNames: `assets/[name]-${process.env.npm_package_version}.js`,
-        chunkFileNames: `assets/[name]-${process.env.npm_package_version}.js`,
-        assetFileNames: `assets/[name]-${process.env.npm_package_version}.[ext]`,
+        entryFileNames: `provision-tool-${process.env.npm_package_version}.js`,
+        chunkFileNames: `provision-tool-${process.env.npm_package_version}.js`,
+        assetFileNames: `provision-tool-${process.env.npm_package_version}.[ext]`,
       },
     },
   },

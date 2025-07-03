@@ -4,7 +4,7 @@ export interface IData {
   rows: IRow[];
 }
 
-export const data2: IData = {
+export const data2 = {
   rows: [
     {
       columns: [

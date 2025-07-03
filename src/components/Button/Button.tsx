@@ -22,6 +22,8 @@ export const Button = (props: IField) => {
     patterns,
     //@ts-ignore
     setPatterns,
+    //@ts-ignore
+    att,
   } = useContext(FormContext);
   const className = `field ${props.error ? "field--error" : ""}`;
   const [shouldValidate, setShouldValudate] = useState(false);
@@ -59,7 +61,7 @@ export const Button = (props: IField) => {
     e.preventDefault();
 
     const res = await getData(
-      `${url}&${query}=${formValues.editableAppNumber}`,
+      `${url}&${query}=${formValues.appNumberImport}`,
     );
     if (res.data) {
       setFormValues((formValues: any) => {
@@ -124,18 +126,53 @@ export const Button = (props: IField) => {
 
     if (
       formValues.mode === "modify" &&
-      !formValues.editableAppNumber &&
+      !formValues.appNumberImport &&
       formValues.appNumber
     )
       return states.UPDATE;
 
     return states.GET;
   };
+
+  async function getData(url: string) {
+    try {
+      const response = await fetch(url);
+      if (!response.ok) {
+        throw new Error(`Response status: ${response.status}`);
+      }
+  
+      const data = await response.json();
+      return data;
+    } catch (error: any) {
+      console.error(error.message);
+    }
+  }
+  
+  async function postData(url: string, body: Record<string, any>) {
+    var formData = new FormData();
+    formData.append("json", JSON.stringify(body));
+    formData.append(att.fileName,att.fileData);
+    try {
+      const response = await fetch(url, {
+        method: "POST",
+        body: formData,
+      });
+      if (!response.ok) {
+        throw new Error(`Response status: ${response.status}`);
+      }
+      const data = await response.json();
+      return data;
+    } catch (error: any) {
+      return { error };
+    }
+  }
+  
+
   return (
     <div className={className}>
       <button
         className="magic-btn"
-        disabled={props.disabled}
+       
         onClick={getState().onClick}
       >
         {getState().label}
@@ -145,34 +182,4 @@ export const Button = (props: IField) => {
   );
 };
 
-export async function getData(url: string) {
-  try {
-    const response = await fetch(url);
-    if (!response.ok) {
-      throw new Error(`Response status: ${response.status}`);
-    }
 
-    const data = await response.json();
-    return data;
-  } catch (error: any) {
-    console.error(error.message);
-  }
-}
-
-async function postData(url: string, body: Record<string, any>) {
-  var formData = new FormData();
-  formData.append("json", JSON.stringify(body));
-  try {
-    const response = await fetch(url, {
-      method: "POST",
-      body: formData,
-    });
-    if (!response.ok) {
-      throw new Error(`Response status: ${response.status}`);
-    }
-    const data = await response.json();
-    return data;
-  } catch (error: any) {
-    return { error };
-  }
-}
