@@ -6,9 +6,11 @@ export const appNumbers = { fields: [f.editableAppNumber] };
 
 export const stateControllerButton = { fields: [f.magicButton] };
 
-export const one = { fields: [f.name1, f.name2, f.name3, f.attachement] };
+export const one = { fields: [f.name1, f.name2, f.name3] };
 
-export const two = { fields: [f.creatorUser, f.name5, f.name6] };
+export const two = {
+  fields: [f.creatorUser, f.name5, f.name6, f.provisionType, f.subType],
+};
 
 export const three = {
   fields: [
@@ -36,3 +38,7 @@ export const six = {
   fields: [f.name7b, f.appNumber, f.details],
   header: "trzecia kolumna",
 };
+
+export const attach = { fields: [f.attachement] };
+
+export const empty = { fields: [] };

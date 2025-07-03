@@ -19,39 +19,62 @@ export const mode: IField = {
   ],
 };
 
-const test2 = {
+export const provisionType: IField = {
+  name: "provisionType",
+  label: "Prov. Type",
+  initValue: "c83",
+  type: "select",
+  patterns: [h.required()],
+  options: [
+    {
+      label: "C83 Accrual for outstanding expenses",
+      value: "c83",
+    },
+    {
+      label: "C84 OUTST. EXPENSES TRADE ACC., AUTOM. REV.-BASED",
+      value: "c84",
+    },
+    {
+      label:
+        "J50 Adjustments on trade accounts receivable for other unearned revenue",
+      value: "j50",
+    },
+    {
+      label: "J55 Refund liabilities for price and quantity discounts",
+      value: "j55",
+    },
+    {
+      label: "O25 Warranty provisions",
+      value: "o25",
+    },
+    {
+      label: "O30 Provisions for losses on onerous sales contracts",
+      value: "o30",
+    },
+    {
+      label:
+        "O70 Other miscellaneous accruals for operating expenses of account class 6",
+      value: "o70",
+    },
+    {
+      label:
+        "O71 Other miscellaneous provisions for related to operating expenses of account class 6",
+      value: "o71",
+    },
+    {
+      label:
+        "R10 Refund liabilities for penalties for default or delay (cost side)",
+      value: "r10",
+    },
+  ],
+  conditionalDisabled: h.inModifyState,
+};
+
+export const subType: IField = {
   name: "subType",
   label: "Subtype",
   initValue: "09",
   type: "select",
-  dependentOptions2: [
-    {
-      conditions: [{ when: "machineActor", is: ["car", "bike"] }],
-      options: [
-        {
-          label: "Honda",
-          value: "honda",
-        },
-        {
-          label: "Dalsim",
-          value: "dalsim",
-        },
-      ],
-    },
-    {
-      conditions: [{ when: "machineActor", is: ["schwarzenegger"] }],
-      options: [
-        {
-          label: "Terminator",
-          value: "t800",
-        },
-        {
-          label: "Predator",
-          value: "józek",
-        },
-      ],
-    },
-  ],
   dependentOptions: [
     {
       conditions: [
