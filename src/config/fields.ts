@@ -180,7 +180,7 @@ export const subType: IField = {
 
 export const appNumberImport: IField = {
   name: "appNumberImport",
-  label: "Editable App Number",
+  label: "Application Number to Import",
   type: "text",
   conditionalDisabled: h.inCreateState,
 };
@@ -1238,31 +1238,6 @@ export const description1: IField = {
   ],
 };
 
-export const appNumber: IField = {
-  name: "appNumber",
-  label: "Application Number",
-  initValue: "",
-  type: "text",
-  disabled: false,
-  hidden: true,
-  patterns: [
-    {
-      reg: "required",
-      message: "This field is required",
-    },
-    {
-      reg: "min_6",
-      message: "The phrase is too short - minimum 6 characters are required",
-    },
-  ],
-  options: [
-    {
-      label: "Opcja 1",
-      value: "opt1",
-    },
-  ],
-};
-
 export const localCurrency: IField = {
   name: "localCurrency",
   label: "Local Currency",
@@ -1437,42 +1412,6 @@ export const wbs: IField = {
   ],
 };
 
-export const costCenter: IField = {
-  name: "costCenter",
-  label: "Cost Center",
-  initValue: "",
-  type: "text",
-  disabled: false,
-  hidden: true,
-  patterns: [],
-  conditionalDisabled: [
-    {
-      conditions: [
-        {
-          when: "wbs",
-          is: true,
-        },
-      ],
-    },
-    {
-      conditions: [
-        {
-          when: "salesDocument",
-          is: true,
-        },
-      ],
-    },
-    {
-      conditions: [
-        {
-          when: "salesDocumentItem",
-          is: true,
-        },
-      ],
-    },
-  ],
-};
-
 export const appEndDate: IField = {
   name: "appEndDate",
   label: "Appl. End Date",
@@ -1530,38 +1469,36 @@ export const glDebitAccount: IField = {
   hidden: true,
   patterns: [],
   options: [],
-  dependentOptions: {
-    dependencies: ["provisionType", "subtype"],
-    values: [
-      {
-        keys: [
-          "c83|07",
-          "c83|08",
-          "c83|09c",
-          "c83|27",
-          "c83|28",
-          "c84|07",
-          "c84|08",
-          "c84|09c",
-          "c84|27",
-          "c84|28",
-        ],
-        options: [
-          {
-            label: "38610000",
-            value: "38610000",
-          },
-        ],
-      },
-      {
-        keys: ["c83|07c", "c84|07c"],
-        options: [
-          {
-            label: "60900007",
-            value: "60900007",
-          },
-        ],
-      },
+  dependentOptions: [
+    {
+      conditions: [
+        { when: "provisionType", is: ["c83", "c84"] },
+        { when: "subType", is: ["07", "08", "09c", "27", "28"] },
+      ],
+      options: [
+        {
+          label: "38610000",
+          value: "38610000",
+        },
+      ],
+    },
+    {
+      conditions: [
+        { when: "provisionType", is: ["c83", "c84"] },
+        { when: "subType", is: ["07c"] },
+      ],
+      options: [
+        {
+          label: "60900007",
+          value: "60900007",
+        },
+      ],
+    },
+  ],
+
+  /*
+
+
       {
         keys: ["c83|08c", "c84|08c"],
         options: [
@@ -1856,6 +1793,10 @@ export const glDebitAccount: IField = {
       },
     ],
   },
+
+
+
+*/
 };
 
 export const ledgerGroup: IField = {
@@ -1994,26 +1935,6 @@ export const submitButton: IField = {
     {
       label: "Update",
       value: "update",
-    },
-  ],
-};
-
-export const appNumberImport: IField = {
-  name: "appNumberImport",
-  label: "Application Number to Import",
-  initValue: "",
-  type: "text",
-  disabled: false,
-  hidden: true,
-  patterns: [],
-  conditionalDisabled: [
-    {
-      conditions: [
-        {
-          when: "mode",
-          is: "create",
-        },
-      ],
     },
   ],
 };
