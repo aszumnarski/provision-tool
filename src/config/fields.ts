@@ -1494,309 +1494,346 @@ export const glDebitAccount: IField = {
         },
       ],
     },
+    {
+      conditions: [
+        { when: "provisionType", is: ["c83", "c84"] },
+        { when: "subType", is: ["08c", "08c"] },
+      ],
+      options: [
+        {
+          label: "60900008",
+          value: "60900008",
+        },
+      ],
+    },
+    {
+      conditions: [
+        { when: "provisionType", is: ["c83", "c84"] },
+        { when: "subType", is: ["09"] },
+      ],
+      options: [
+        {
+          label: "60900009",
+          value: "60900009",
+        },
+      ],
+    },
+    {
+      conditions: [
+        { when: "provisionType", is: ["c83", "c84"] },
+        { when: "subType", is: ["27c"] },
+      ],
+      options: [
+        {
+          label: "60900027",
+          value: "60900027",
+        },
+      ],
+    },
+    {
+      conditions: [
+        { when: "provisionType", is: ["c83", "c84"] },
+        { when: "subType", is: ["28c"] },
+      ],
+      options: [
+        {
+          label: "60900028",
+          value: "60900028",
+        },
+      ],
+    },
+    {
+      conditions: [
+        {
+          when: "provisionType",
+          is: ["c83", "c84", "o25", "o30", "o70", "o71", "r10"],
+        },
+        { when: "subType", is: ["aed", "ccc", "con", "cwe"] },
+      ],
+      options: [
+        {
+          label: "n/a",
+          value: "n/a",
+        },
+      ],
+    },
+    {
+      conditions: [
+        { when: "provisionType", is: ["j50"] },
+        { when: "subType", is: ["09"] },
+      ],
+      options: [
+        {
+          label: "54890000",
+          value: "54890000",
+        },
+      ],
+    },
+    {
+      conditions: [
+        { when: "provisionType", is: ["j50"] },
+        { when: "subType", is: ["09c"] },
+      ],
+      options: [
+        {
+          label: "24189100",
+          value: "24189100",
+        },
+      ],
+    },
+    {
+      conditions: [
+        { when: "provisionType", is: ["j55"] },
+        { when: "subType", is: ["09"] },
+      ],
+      options: [
+        {
+          label: "54100000",
+          value: "54100000",
+        },
+      ],
+    },
+    {
+      conditions: [
+        { when: "provisionType", is: ["j55"] },
+        { when: "subType", is: ["09c"] },
+      ],
+      options: [
+        {
+          label: "24182000",
+          value: "24182000",
+        },
+      ],
+    },
+    {
+      conditions: [
+        { when: "provisionType", is: ["o25"] },
+        { when: "subType", is: ["07", "08", "09c", "27", "28"] },
+      ],
+      options: [
+        {
+          label: "24182000",
+          value: "24182000",
+        },
+      ],
+    },
+    {
+      conditions: [
+        { when: "provisionType", is: ["o25"] },
+        { when: "subType", is: ["07c"] },
+      ],
+      options: [
+        {
+          label: "68930007",
+          value: "68930007",
+        },
+      ],
+    },
+    {
+      conditions: [
+        { when: "provisionType", is: ["o25"] },
+        { when: "subType", is: ["08c"] },
+      ],
+      options: [
+        {
+          label: "68930008",
+          value: "68930008",
+        },
+      ],
+    },
+    {
+      conditions: [
+        { when: "provisionType", is: ["o25"] },
+        { when: "subType", is: ["09"] },
+      ],
+      options: [
+        {
+          label: "68930009",
+          value: "68930009",
+        },
+      ],
+    },
+    {
+      conditions: [
+        { when: "provisionType", is: ["o25"] },
+        { when: "subType", is: ["27c"] },
+      ],
+      options: [
+        {
+          label: "68930027",
+          value: "68930027",
+        },
+      ],
+    },
+    {
+      conditions: [
+        { when: "provisionType", is: ["o25"] },
+        { when: "subType", is: ["28c"] },
+      ],
+      options: [
+        {
+          label: "68930028",
+          value: "68930028",
+        },
+      ],
+    },
+    {
+      conditions: [
+        { when: "provisionType", is: ["o30"] },
+        { when: "subType", is: ["07", "08", "09c", "27", "28"] },
+      ],
+      options: [
+        {
+          label: "39410000",
+          value: "39410000",
+        },
+      ],
+    },
+    {
+      conditions: [
+        { when: "provisionType", is: ["o30"] },
+        { when: "subType", is: ["07c"] },
+      ],
+      options: [
+        {
+          label: "68810007",
+          value: "68810007",
+        },
+      ],
+    },
+    {
+      conditions: [
+        { when: "provisionType", is: ["o30"] },
+        { when: "subType", is: ["08c"] },
+      ],
+      options: [
+        {
+          label: "68810008",
+          value: "68810008",
+        },
+      ],
+    },
+    {
+      conditions: [
+        { when: "provisionType", is: ["o30"] },
+        { when: "subType", is: ["09"] },
+      ],
+      options: [
+        {
+          label: "68810009",
+          value: "68810009",
+        },
+      ],
+    },
+    {
+      conditions: [
+        { when: "provisionType", is: ["o30"] },
+        { when: "subType", is: ["27c"] },
+      ],
+      options: [
+        {
+          label: "68810027",
+          value: "68810027",
+        },
+      ],
+    },
+    {
+      conditions: [
+        { when: "provisionType", is: ["o30"] },
+        { when: "subType", is: ["28c"] },
+      ],
+      options: [
+        {
+          label: "68810028",
+          value: "68810028",
+        },
+      ],
+    },
+    {
+      conditions: [
+        { when: "provisionType", is: ["o70", "o71"] },
+        { when: "subType", is: ["07", "08", "09c", "27", "28"] },
+      ],
+      options: [
+        {
+          label: "39710000",
+          value: "39710000",
+        },
+      ],
+    },
+    {
+      conditions: [
+        { when: "provisionType", is: ["o70"] },
+        { when: "subType", is: ["07c"] },
+      ],
+      options: [
+        {
+          label: "68890007",
+          value: "68890007",
+        },
+      ],
+    },
+    {
+      conditions: [
+        { when: "provisionType", is: ["o70"] },
+        { when: "subType", is: ["08c"] },
+      ],
+      options: [
+        {
+          label: "68890008",
+          value: "68890008",
+        },
+      ],
+    },
+    {
+      conditions: [
+        { when: "provisionType", is: ["o70"] },
+        { when: "subType", is: ["09"] },
+      ],
+      options: [
+        {
+          label: "68890009",
+          value: "68890009",
+        },
+      ],
+    },
+    {
+      conditions: [
+        { when: "provisionType", is: ["o70"] },
+        { when: "subType", is: ["27c"] },
+      ],
+      options: [
+        {
+          label: "68890027",
+          value: "68890027",
+        },
+      ],
+    },
+    {
+      conditions: [
+        { when: "provisionType", is: ["o70"] },
+        { when: "subType", is: ["28"] },
+      ],
+      options: [
+        {
+          label: "68890028",
+          value: "68890028",
+        },
+      ],
+    },
+    {
+      conditions: [
+        { when: "provisionType", is: ["o71"] },
+        { when: "subType", is: ["07c"] },
+      ],
+      options: [
+        {
+          label: "68990007",
+          value: "68990007",
+        },
+      ],
+    },
   ],
-
-  /*
-
-
-      {
-        keys: ["c83|08c", "c84|08c"],
-        options: [
-          {
-            label: "60900008",
-            value: "60900008",
-          },
-        ],
-      },
-      {
-        keys: ["c83|09", "c84|09"],
-        options: [
-          {
-            label: "60900009",
-            value: "60900009",
-          },
-        ],
-      },
-      {
-        keys: ["c83|27c", "c84|27c"],
-        options: [
-          {
-            label: "60900027",
-            value: "60900027",
-          },
-        ],
-      },
-      {
-        keys: ["c83|28c", "c84|28c"],
-        options: [
-          {
-            label: "60900028",
-            value: "60900028",
-          },
-        ],
-      },
-      {
-        keys: [
-          "c83|aed",
-          "c83|ccc",
-          "c83|con",
-          "c83|cwe",
-          "c84|aed",
-          "c84|ccc",
-          "c84|con",
-          "c84|cwe",
-          "o25|aed",
-          "o25|ccc",
-          "o25|con",
-          "o25|cwe",
-          "o30|aed",
-          "o30|ccc",
-          "o30|con",
-          "o30|cwe",
-          "o70|aed",
-          "o70|ccc",
-          "o70|con",
-          "o70|cwe",
-          "o71|aed",
-          "o71|ccc",
-          "o71|con",
-          "o71|cwe",
-          "r10|aed",
-          "r10|ccc",
-          "r10|con",
-          "r10|cwe",
-        ],
-        options: [
-          {
-            label: "n/a",
-            value: "n/a",
-          },
-        ],
-      },
-      {
-        keys: ["j50|09"],
-        options: [
-          {
-            label: "54890000",
-            value: "54890000",
-          },
-        ],
-      },
-      {
-        keys: ["j50|09c"],
-        options: [
-          {
-            label: "24189100",
-            value: "24189100",
-          },
-        ],
-      },
-      {
-        keys: ["j55|09"],
-        options: [
-          {
-            label: "54100000",
-            value: "54100000",
-          },
-        ],
-      },
-      {
-        keys: ["j55|09c"],
-        options: [
-          {
-            label: "24182000",
-            value: "24182000",
-          },
-        ],
-      },
-      {
-        keys: ["o25|07", "o25|08", "o25|09c", "o25|27", "o25|28"],
-        options: [
-          {
-            label: "24182000",
-            value: "24182000",
-          },
-        ],
-      },
-      {
-        keys: ["o25|07c"],
-        options: [
-          {
-            label: "68930007",
-            value: "68930007",
-          },
-        ],
-      },
-      {
-        keys: ["o25|08c"],
-        options: [
-          {
-            label: "68930008",
-            value: "68930008",
-          },
-        ],
-      },
-      {
-        keys: ["o25|09"],
-        options: [
-          {
-            label: "68930009",
-            value: "68930009",
-          },
-        ],
-      },
-      {
-        keys: ["o25|27c"],
-        options: [
-          {
-            label: "68930027",
-            value: "68930027",
-          },
-        ],
-      },
-      {
-        keys: ["o25|28c"],
-        options: [
-          {
-            label: "68930028",
-            value: "68930028",
-          },
-        ],
-      },
-      {
-        keys: ["o30|07", "o30|08", "o30|09c", "o30|27", "o30|28"],
-        options: [
-          {
-            label: "39410000",
-            value: "39410000",
-          },
-        ],
-      },
-      {
-        keys: ["o30|07c"],
-        options: [
-          {
-            label: "68810007",
-            value: "68810007",
-          },
-        ],
-      },
-      {
-        keys: ["o30|08c"],
-        options: [
-          {
-            label: "68810008",
-            value: "68810008",
-          },
-        ],
-      },
-      {
-        keys: ["o30|09"],
-        options: [
-          {
-            label: "68810009",
-            value: "68810009",
-          },
-        ],
-      },
-      {
-        keys: ["o30|27c"],
-        options: [
-          {
-            label: "68810027",
-            value: "68810027",
-          },
-        ],
-      },
-      {
-        keys: ["o30|28c"],
-        options: [
-          {
-            label: "68810028",
-            value: "68810028",
-          },
-        ],
-      },
-      {
-        keys: [
-          "o70|07",
-          "o70|08",
-          "o70|09c",
-          "o70|27",
-          "o70|28",
-          "o71|07",
-          "o71|08",
-          "o71|09c",
-          "o71|27",
-          "o71|28",
-        ],
-        options: [
-          {
-            label: "39710000",
-            value: "39710000",
-          },
-        ],
-      },
-      {
-        keys: ["o70|07c"],
-        options: [
-          {
-            label: "68890007",
-            value: "68890007",
-          },
-        ],
-      },
-      {
-        keys: ["o70|08c"],
-        options: [
-          {
-            label: "68890008",
-            value: "68890008",
-          },
-        ],
-      },
-      {
-        keys: ["o70|09"],
-        options: [
-          {
-            label: "68890009",
-            value: "68890009",
-          },
-        ],
-      },
-      {
-        keys: ["o70|27c"],
-        options: [
-          {
-            label: "68890027",
-            value: "68890027",
-          },
-        ],
-      },
-      {
-        keys: ["o70|28"],
-        options: [
-          {
-            label: "68890028",
-            value: "68890028",
-          },
-        ],
-      },
-      {
-        keys: ["o71|07c"],
-        options: [
-          {
-            label: "68990007",
-            value: "68990007",
-          },
-        ],
-      },
-    ],
-  },
-
-
-
-*/
 };
 
 export const ledgerGroup: IField = {
@@ -1807,28 +1844,25 @@ export const ledgerGroup: IField = {
   disabled: false,
   hidden: true,
   patterns: [],
-  dependentOptions: {
-    dependencies: ["companyCode"],
-    values: [
-      {
-        keys: ["pl10"],
-        options: [
-          {
-            label: "0L",
-            value: "0l",
-          },
-          {
-            label: "2L",
-            value: "2l",
-          },
-          {
-            label: "IL",
-            value: "il",
-          },
-        ],
-      },
-    ],
-  },
+  dependentOptions: [
+    {
+      conditions: [{ when: "companyCode", is: ["pl10"] }],
+      options: [
+        {
+          label: "0L",
+          value: "0l",
+        },
+        {
+          label: "2L",
+          value: "2l",
+        },
+        {
+          label: "IL",
+          value: "il",
+        },
+      ],
+    },
+  ],
   options: [
     {
       label: "AL",
@@ -1884,20 +1918,20 @@ export const companyCode: IField = {
       value: "nl10",
     },
   ],
-  dependentOptions: {
-    dependencies: ["mode"],
-    values: [
-      {
-        keys: ["modify"],
-        options: [
-          {
-            label: "",
-            value: "",
-          },
-        ],
-      },
-    ],
-  },
+  // dependentOptions: {
+  //   dependencies: ["mode"],
+  //   values: [
+  //     {
+  //       keys: ["modify"],
+  //       options: [
+  //         {
+  //           label: "",
+  //           value: "",
+  //         },
+  //       ],
+  //     },
+  //   ],
+  // },
   conditionalDisabled: [
     {
       conditions: [
