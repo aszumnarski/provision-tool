@@ -185,50 +185,50 @@ export const appNumberImport: IField = {
   conditionalDisabled: h.inCreateState,
 };
 
-export const magicButton: IField = {
-  name: "magicButton",
+export const submitButton: IField = {
+  name: "submitButton",
   type: "button",
 };
 
-export const name1: IField = {
-  name: "name1",
-  label: "data and required",
-  maxlength: "5",
-  initValue: "opt1",
-  type: "text",
-  conditionalDisabled: h.inGetState,
-  patterns: [h.required()],
-};
-
-export const name2: IField = {
-  name: "name2",
-  label: "no data and required",
-  type: "text",
-  patterns: [h.required()],
-  conditionalDisabled: h.inGetState,
-};
-
-export const name3: IField = {
-  name: "name3",
-  label: "no data and no required",
-  type: "text",
-  conditionalDisabled: h.inGetState,
-};
-
-export const attachement: IField = {
-  name: "attachement",
-  label: "attachement",
-  type: "file",
-  conditionalDisabled: h.inGetState,
-};
-
-export const name7b: IField = {
-  name: "name7b",
-  label: "label data",
-  type: "date",
-  patterns: [h.required(), h.future],
-  conditionalDisabled: h.inGetState,
-};
+// export const name1: IField = {
+//   name: "name1",
+//   label: "data and required",
+//   maxlength: "5",
+//   initValue: "opt1",
+//   type: "text",
+//   conditionalDisabled: h.inGetState,
+//   patterns: [h.required()],
+// };
+//
+// export const name2: IField = {
+//   name: "name2",
+//   label: "no data and required",
+//   type: "text",
+//   patterns: [h.required()],
+//   conditionalDisabled: h.inGetState,
+// };
+//
+// export const name3: IField = {
+//   name: "name3",
+//   label: "no data and no required",
+//   type: "text",
+//   conditionalDisabled: h.inGetState,
+// };
+//
+// export const attachement: IField = {
+//   name: "attachement",
+//   label: "attachement",
+//   type: "file",
+//   conditionalDisabled: h.inGetState,
+// };
+//
+// export const name7b: IField = {
+//   name: "name7b",
+//   label: "label data",
+//   type: "date",
+//   patterns: [h.required(), h.future],
+//   conditionalDisabled: h.inGetState,
+// };
 
 export const appNumber: IField = {
   name: "appNumber",
@@ -237,157 +237,157 @@ export const appNumber: IField = {
   disabled: true,
 };
 
-export const details: IField = {
-  name: "details",
-  label: "Dependent Options",
-  type: "select",
-  conditionalDisabled: h.inGetState,
-  patterns: [h.required()],
-  dependentOptions: [
-    {
-      conditions: [{ when: "machineActor", is: ["car", "bike"] }],
-      options: [
-        {
-          label: "Honda",
-          value: "honda",
-        },
-        {
-          label: "Dalsim",
-          value: "dalsim",
-        },
-      ],
-    },
-    {
-      conditions: [{ when: "machineActor", is: ["schwarzenegger"] }],
-      options: [
-        {
-          label: "Terminator",
-          value: "t800",
-        },
-        {
-          label: "Predator",
-          value: "józek",
-        },
-      ],
-    },
-  ],
-  options: [
-    {
-      label: "Film",
-      value: "film",
-    },
-    {
-      label: "Komiks",
-      value: "kokosz",
-    },
-  ],
-};
-
-export const name4b: IField = {
-  name: "name4b",
-  label: "Conditional Disabled if modify and wrestler",
-  initValue: "opt1",
-  type: "text",
-  conditionalDisabled: [
-    ...h.inGetState,
-    {
-      conditions: [
-        {
-          when: "mode",
-          is: "modify",
-        },
-        {
-          when: "wrestler",
-          is: true,
-        },
-      ],
-    },
-  ],
-  patterns: [h.required()],
-};
-
-export const wrestler: IField = {
-  name: "wrestler",
-  label: "Wrestler",
-  type: "text",
-  patterns: [h.required()],
-  conditionalDisabled: h.inGetState,
-};
-
-export const machineActor: IField = {
-  name: "machineActor",
-  label: "Actor or Machine",
-  type: "select",
-  patterns: [h.required()],
-  conditionalDisabled: h.inGetState,
-  options: [
-    {
-      label: "Samochód",
-      value: "car",
-    },
-    {
-      label: "Motór",
-      value: "bike",
-    },
-    {
-      label: "Schwarzenegger",
-      value: "schwarzenegger",
-    },
-    {
-      label: "Stallone",
-      value: "sly",
-    },
-  ],
-};
-
-export const name1b: IField = {
-  name: "name1b",
-  label: "label",
-  initValue: "9.2",
-  type: "number",
-  conditionalDisabled: h.inGetState,
-  patterns: [h.required()],
-};
-
-export const name2b: IField = {
-  name: "name2b",
-  label: "label",
-  initValue: "15.1",
-  type: "number",
-  patterns: [h.required()],
-};
-
-export const name3b: IField = {
-  name: "name3b",
-  label: "Calculated Value",
-  calculatedValue: ["name1b", "name2b"],
-  type: "text",
-  disabled: true,
-  patterns: [h.required()],
-};
-
-export const name7: IField = {
-  name: "name7",
-  label: "no data no required min_6",
-  type: "text",
-  patterns: [h.min(6)],
-};
-
-export const name8: IField = {
-  name: "name8",
-  label: "data no required min_6",
-  initValue: "opt1",
-  type: "text",
-  patterns: [h.min(6)],
-};
-
-export const user: IField = {
-  name: "user",
-  label: "Current User",
-  type: "text",
-  disabled: true,
-  patterns: [h.required()],
-};
+// export const details: IField = {
+//   name: "details",
+//   label: "Dependent Options",
+//   type: "select",
+//   conditionalDisabled: h.inGetState,
+//   patterns: [h.required()],
+//   dependentOptions: [
+//     {
+//       conditions: [{ when: "machineActor", is: ["car", "bike"] }],
+//       options: [
+//         {
+//           label: "Honda",
+//           value: "honda",
+//         },
+//         {
+//           label: "Dalsim",
+//           value: "dalsim",
+//         },
+//       ],
+//     },
+//     {
+//       conditions: [{ when: "machineActor", is: ["schwarzenegger"] }],
+//       options: [
+//         {
+//           label: "Terminator",
+//           value: "t800",
+//         },
+//         {
+//           label: "Predator",
+//           value: "józek",
+//         },
+//       ],
+//     },
+//   ],
+//   options: [
+//     {
+//       label: "Film",
+//       value: "film",
+//     },
+//     {
+//       label: "Komiks",
+//       value: "kokosz",
+//     },
+//   ],
+// };
+//
+// export const name4b: IField = {
+//   name: "name4b",
+//   label: "Conditional Disabled if modify and wrestler",
+//   initValue: "opt1",
+//   type: "text",
+//   conditionalDisabled: [
+//     ...h.inGetState,
+//     {
+//       conditions: [
+//         {
+//           when: "mode",
+//           is: "modify",
+//         },
+//         {
+//           when: "wrestler",
+//           is: true,
+//         },
+//       ],
+//     },
+//   ],
+//   patterns: [h.required()],
+// };
+//
+// export const wrestler: IField = {
+//   name: "wrestler",
+//   label: "Wrestler",
+//   type: "text",
+//   patterns: [h.required()],
+//   conditionalDisabled: h.inGetState,
+// };
+//
+// export const machineActor: IField = {
+//   name: "machineActor",
+//   label: "Actor or Machine",
+//   type: "select",
+//   patterns: [h.required()],
+//   conditionalDisabled: h.inGetState,
+//   options: [
+//     {
+//       label: "Samochód",
+//       value: "car",
+//     },
+//     {
+//       label: "Motór",
+//       value: "bike",
+//     },
+//     {
+//       label: "Schwarzenegger",
+//       value: "schwarzenegger",
+//     },
+//     {
+//       label: "Stallone",
+//       value: "sly",
+//     },
+//   ],
+// };
+//
+// export const name1b: IField = {
+//   name: "name1b",
+//   label: "label",
+//   initValue: "9.2",
+//   type: "number",
+//   conditionalDisabled: h.inGetState,
+//   patterns: [h.required()],
+// };
+//
+// export const name2b: IField = {
+//   name: "name2b",
+//   label: "label",
+//   initValue: "15.1",
+//   type: "number",
+//   patterns: [h.required()],
+// };
+//
+// export const name3b: IField = {
+//   name: "name3b",
+//   label: "Calculated Value",
+//   calculatedValue: ["name1b", "name2b"],
+//   type: "text",
+//   disabled: true,
+//   patterns: [h.required()],
+// };
+//
+// export const name7: IField = {
+//   name: "name7",
+//   label: "no data no required min_6",
+//   type: "text",
+//   patterns: [h.min(6)],
+// };
+//
+// export const name8: IField = {
+//   name: "name8",
+//   label: "data no required min_6",
+//   initValue: "opt1",
+//   type: "text",
+//   patterns: [h.min(6)],
+// };
+//
+// export const user: IField = {
+//   name: "user",
+//   label: "Current User",
+//   type: "text",
+//   disabled: true,
+//   patterns: [h.required()],
+// };
 
 export const costCenter: IField = {
   name: "costCenter",
@@ -521,27 +521,27 @@ export const salesOrderItem: IField = {
   ],
 };
 
-export const appCreator: IField = {
-  name: "appCreator",
-  label: "Appl Creator",
-  type: "text",
-  disabled: true,
-};
-
-export const name5: IField = {
-  name: "name5",
-  label: "data required min_6",
-  initValue: "opt1",
-  type: "text",
-  patterns: [h.required(), h.min(6)],
-};
-
-export const name6: IField = {
-  name: "name6",
-  label: "no data required min_6",
-  type: "text",
-  patterns: [h.required(), h.min(6)],
-};
+// export const appCreator: IField = {
+//   name: "appCreator",
+//   label: "Appl Creator",
+//   type: "text",
+//   disabled: true,
+// };
+//
+// export const name5: IField = {
+//   name: "name5",
+//   label: "data required min_6",
+//   initValue: "opt1",
+//   type: "text",
+//   patterns: [h.required(), h.min(6)],
+// };
+//
+// export const name6: IField = {
+//   name: "name6",
+//   label: "no data required min_6",
+//   type: "text",
+//   patterns: [h.required(), h.min(6)],
+// };
 
 ///////////
 ///////
@@ -556,20 +556,7 @@ export const TlClosingBalanceUpdate: IField = {
   label: "TL-Closing Balance - Update",
   initValue: "9.2",
   type: "number",
-  disabled: false,
-  hidden: true,
-  patterns: [
-    {
-      reg: "required",
-      message: "This field is required",
-    },
-  ],
-  options: [
-    {
-      label: "Opcja 1",
-      value: "opt1",
-    },
-  ],
+  patterns: [h.required()],
 };
 
 export const TlClosingBalance: IField = {
@@ -577,20 +564,7 @@ export const TlClosingBalance: IField = {
   label: "TL-Closing Balance - Posted & Booked",
   initValue: "9.2",
   type: "number",
-  disabled: false,
-  hidden: true,
-  patterns: [
-    {
-      reg: "required",
-      message: "This field is required",
-    },
-  ],
-  options: [
-    {
-      label: "Opcja 1",
-      value: "opt1",
-    },
-  ],
+  patterns: [h.required()],
 };
 
 export const TlReleaseUpdate: IField = {
@@ -598,20 +572,7 @@ export const TlReleaseUpdate: IField = {
   label: "TL-Release - Update",
   initValue: "9.2",
   type: "number",
-  disabled: false,
-  hidden: true,
-  patterns: [
-    {
-      reg: "required",
-      message: "This field is required",
-    },
-  ],
-  options: [
-    {
-      label: "Opcja 1",
-      value: "opt1",
-    },
-  ],
+  patterns: [h.required()],
 };
 
 export const TlRelease: IField = {
@@ -619,20 +580,7 @@ export const TlRelease: IField = {
   label: "TL-Release - Posted & Booked",
   initValue: "9.2",
   type: "number",
-  disabled: false,
-  hidden: true,
-  patterns: [
-    {
-      reg: "required",
-      message: "This field is required",
-    },
-  ],
-  options: [
-    {
-      label: "Opcja 1",
-      value: "opt1",
-    },
-  ],
+  patterns: [h.required()],
 };
 
 export const TlUsageUpdate: IField = {
@@ -1940,35 +1888,6 @@ export const companyCode: IField = {
           is: "modify",
         },
       ],
-    },
-  ],
-};
-
-export const submitButton: IField = {
-  name: "submitButton",
-  label: "Create",
-  initValue: "create",
-  type: "button",
-  disabled: false,
-  hidden: true,
-  patterns: [
-    {
-      reg: "required",
-      message: "This field is required",
-    },
-  ],
-  options: [
-    {
-      label: "Create",
-      value: "create",
-    },
-    {
-      label: "Import",
-      value: "Import",
-    },
-    {
-      label: "Update",
-      value: "update",
     },
   ],
 };

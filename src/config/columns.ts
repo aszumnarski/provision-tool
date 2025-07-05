@@ -4,7 +4,7 @@ export const modes = { fields: [f.mode] };
 
 export const appNumbers = { fields: [f.appNumberImport] };
 
-export const stateControllerButton = { fields: [f.magicButton] };
+export const stateControllerButton = { fields: [f.submitButton] };
 
 export const one = { fields: [f.name1, f.name2, f.name3] };
 
