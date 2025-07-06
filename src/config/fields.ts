@@ -75,6 +75,7 @@ export const subType: IField = {
   label: "Subtype",
   initValue: "09",
   type: "select",
+  conditionalDisabled: h.inGetState,
   dependentOptions: [
     {
       conditions: [
@@ -190,45 +191,12 @@ export const submitButton: IField = {
   type: "button",
 };
 
-// export const name1: IField = {
-//   name: "name1",
-//   label: "data and required",
-//   maxlength: "5",
-//   initValue: "opt1",
-//   type: "text",
-//   conditionalDisabled: h.inGetState,
-//   patterns: [h.required()],
-// };
-//
-// export const name2: IField = {
-//   name: "name2",
-//   label: "no data and required",
-//   type: "text",
-//   patterns: [h.required()],
-//   conditionalDisabled: h.inGetState,
-// };
-//
-// export const name3: IField = {
-//   name: "name3",
-//   label: "no data and no required",
-//   type: "text",
-//   conditionalDisabled: h.inGetState,
-// };
-//
-// export const attachement: IField = {
-//   name: "attachement",
-//   label: "attachement",
-//   type: "file",
-//   conditionalDisabled: h.inGetState,
-// };
-//
-// export const name7b: IField = {
-//   name: "name7b",
-//   label: "label data",
-//   type: "date",
-//   patterns: [h.required(), h.future],
-//   conditionalDisabled: h.inGetState,
-// };
+export const attachement: IField = {
+  name: "attachement",
+  label: "attachement",
+  type: "file",
+  conditionalDisabled: h.inGetState,
+};
 
 export const appNumber: IField = {
   name: "appNumber",
@@ -236,158 +204,6 @@ export const appNumber: IField = {
   type: "text",
   disabled: true,
 };
-
-// export const details: IField = {
-//   name: "details",
-//   label: "Dependent Options",
-//   type: "select",
-//   conditionalDisabled: h.inGetState,
-//   patterns: [h.required()],
-//   dependentOptions: [
-//     {
-//       conditions: [{ when: "machineActor", is: ["car", "bike"] }],
-//       options: [
-//         {
-//           label: "Honda",
-//           value: "honda",
-//         },
-//         {
-//           label: "Dalsim",
-//           value: "dalsim",
-//         },
-//       ],
-//     },
-//     {
-//       conditions: [{ when: "machineActor", is: ["schwarzenegger"] }],
-//       options: [
-//         {
-//           label: "Terminator",
-//           value: "t800",
-//         },
-//         {
-//           label: "Predator",
-//           value: "józek",
-//         },
-//       ],
-//     },
-//   ],
-//   options: [
-//     {
-//       label: "Film",
-//       value: "film",
-//     },
-//     {
-//       label: "Komiks",
-//       value: "kokosz",
-//     },
-//   ],
-// };
-//
-// export const name4b: IField = {
-//   name: "name4b",
-//   label: "Conditional Disabled if modify and wrestler",
-//   initValue: "opt1",
-//   type: "text",
-//   conditionalDisabled: [
-//     ...h.inGetState,
-//     {
-//       conditions: [
-//         {
-//           when: "mode",
-//           is: "modify",
-//         },
-//         {
-//           when: "wrestler",
-//           is: true,
-//         },
-//       ],
-//     },
-//   ],
-//   patterns: [h.required()],
-// };
-//
-// export const wrestler: IField = {
-//   name: "wrestler",
-//   label: "Wrestler",
-//   type: "text",
-//   patterns: [h.required()],
-//   conditionalDisabled: h.inGetState,
-// };
-//
-// export const machineActor: IField = {
-//   name: "machineActor",
-//   label: "Actor or Machine",
-//   type: "select",
-//   patterns: [h.required()],
-//   conditionalDisabled: h.inGetState,
-//   options: [
-//     {
-//       label: "Samochód",
-//       value: "car",
-//     },
-//     {
-//       label: "Motór",
-//       value: "bike",
-//     },
-//     {
-//       label: "Schwarzenegger",
-//       value: "schwarzenegger",
-//     },
-//     {
-//       label: "Stallone",
-//       value: "sly",
-//     },
-//   ],
-// };
-//
-// export const name1b: IField = {
-//   name: "name1b",
-//   label: "label",
-//   initValue: "9.2",
-//   type: "number",
-//   conditionalDisabled: h.inGetState,
-//   patterns: [h.required()],
-// };
-//
-// export const name2b: IField = {
-//   name: "name2b",
-//   label: "label",
-//   initValue: "15.1",
-//   type: "number",
-//   patterns: [h.required()],
-// };
-//
-// export const name3b: IField = {
-//   name: "name3b",
-//   label: "Calculated Value",
-//   calculatedValue: ["name1b", "name2b"],
-//   type: "text",
-//   disabled: true,
-//   patterns: [h.required()],
-// };
-//
-// export const name7: IField = {
-//   name: "name7",
-//   label: "no data no required min_6",
-//   type: "text",
-//   patterns: [h.min(6)],
-// };
-//
-// export const name8: IField = {
-//   name: "name8",
-//   label: "data no required min_6",
-//   initValue: "opt1",
-//   type: "text",
-//   patterns: [h.min(6)],
-// };
-//
-// export const user: IField = {
-//   name: "user",
-//   label: "Current User",
-//   type: "text",
-//   disabled: true,
-//   patterns: [h.required()],
-// };
 
 export const costCenter: IField = {
   name: "costCenter",
@@ -402,7 +218,7 @@ export const costCenter: IField = {
     {
       conditions: [
         {
-          when: "WBS",
+          when: "wbs",
           is: true,
         },
       ],
@@ -426,9 +242,9 @@ export const costCenter: IField = {
   ],
 };
 
-export const WBS: IField = {
-  name: "WBS",
-  label: "WBS Element",
+export const wbs: IField = {
+  name: "wbs",
+  label: "Project Definition (WBS)",
   type: "text",
   patterns: [
     h.required(
@@ -476,7 +292,7 @@ export const salesOrder: IField = {
     {
       conditions: [
         {
-          when: "WBS",
+          when: "wbs",
           is: true,
         },
       ],
@@ -505,7 +321,7 @@ export const salesOrderItem: IField = {
     {
       conditions: [
         {
-          when: "WBS",
+          when: "wbs",
           is: true,
         },
       ],
@@ -521,35 +337,12 @@ export const salesOrderItem: IField = {
   ],
 };
 
-// export const appCreator: IField = {
-//   name: "appCreator",
-//   label: "Appl Creator",
-//   type: "text",
-//   disabled: true,
-// };
-//
-// export const name5: IField = {
-//   name: "name5",
-//   label: "data required min_6",
-//   initValue: "opt1",
-//   type: "text",
-//   patterns: [h.required(), h.min(6)],
-// };
-//
-// export const name6: IField = {
-//   name: "name6",
-//   label: "no data required min_6",
-//   type: "text",
-//   patterns: [h.required(), h.min(6)],
-// };
-
-///////////
-///////
-//......
-//.....
-///////
-//////////
-//
+export const appCreator: IField = {
+  name: "appCreator",
+  label: "Appl Creator",
+  type: "text",
+  disabled: true,
+};
 
 export const TlClosingBalanceUpdate: IField = {
   name: "TlClosingBalanceUpdate",
@@ -557,6 +350,7 @@ export const TlClosingBalanceUpdate: IField = {
   initValue: "9.2",
   type: "number",
   patterns: [h.required()],
+  conditionalDisabled: h.inGetState,
 };
 
 export const TlClosingBalance: IField = {
@@ -565,6 +359,7 @@ export const TlClosingBalance: IField = {
   initValue: "9.2",
   type: "number",
   patterns: [h.required()],
+  conditionalDisabled: h.inGetState,
 };
 
 export const TlReleaseUpdate: IField = {
@@ -573,6 +368,7 @@ export const TlReleaseUpdate: IField = {
   initValue: "9.2",
   type: "number",
   patterns: [h.required()],
+  conditionalDisabled: h.inGetState,
 };
 
 export const TlRelease: IField = {
@@ -581,6 +377,7 @@ export const TlRelease: IField = {
   initValue: "9.2",
   type: "number",
   patterns: [h.required()],
+  conditionalDisabled: h.inGetState,
 };
 
 export const TlUsageUpdate: IField = {
@@ -588,20 +385,8 @@ export const TlUsageUpdate: IField = {
   label: "TL-Usage - Update",
   initValue: "9.2",
   type: "number",
-  disabled: false,
-  hidden: true,
-  patterns: [
-    {
-      reg: "required",
-      message: "This field is required",
-    },
-  ],
-  options: [
-    {
-      label: "Opcja 1",
-      value: "opt1",
-    },
-  ],
+  patterns: [h.required()],
+  conditionalDisabled: h.inGetState,
 };
 
 export const TlUsage: IField = {
@@ -609,20 +394,8 @@ export const TlUsage: IField = {
   label: "TL-Usage - Posted & Booked",
   initValue: "9.2",
   type: "number",
-  disabled: false,
-  hidden: true,
-  patterns: [
-    {
-      reg: "required",
-      message: "This field is required",
-    },
-  ],
-  options: [
-    {
-      label: "Opcja 1",
-      value: "opt1",
-    },
-  ],
+  patterns: [h.required()],
+  conditionalDisabled: h.inGetState,
 };
 
 export const TlCreationAdditionUpdate: IField = {
@@ -630,20 +403,8 @@ export const TlCreationAdditionUpdate: IField = {
   label: "TL-Creation/Addition - Update",
   initValue: "9.2",
   type: "number",
-  disabled: false,
-  hidden: true,
-  patterns: [
-    {
-      reg: "required",
-      message: "This field is required",
-    },
-  ],
-  options: [
-    {
-      label: "Opcja 1",
-      value: "opt1",
-    },
-  ],
+  patterns: [h.required()],
+  conditionalDisabled: h.inGetState,
 };
 
 export const TlCreationAddition: IField = {
@@ -651,20 +412,8 @@ export const TlCreationAddition: IField = {
   label: "TL-Creation/Addition - Posted & Booked",
   initValue: "9.2",
   type: "number",
-  disabled: false,
-  hidden: true,
-  patterns: [
-    {
-      reg: "required",
-      message: "This field is required",
-    },
-  ],
-  options: [
-    {
-      label: "Opcja 1",
-      value: "opt1",
-    },
-  ],
+  patterns: [h.required()],
+  conditionalDisabled: h.inGetState,
 };
 
 export const TlCarryFwd: IField = {
@@ -672,20 +421,8 @@ export const TlCarryFwd: IField = {
   label: "TL-Carry Fwd from Last Year",
   initValue: "9.2",
   type: "number",
-  disabled: false,
-  hidden: true,
-  patterns: [
-    {
-      reg: "required",
-      message: "This field is required",
-    },
-  ],
-  options: [
-    {
-      label: "Opcja 1",
-      value: "opt1",
-    },
-  ],
+  patterns: [h.required()],
+  conditionalDisabled: h.inGetState,
 };
 
 export const _2lClosingBalanceUpdate: IField = {
@@ -693,20 +430,8 @@ export const _2lClosingBalanceUpdate: IField = {
   label: "2L-Closing Balance - Update",
   initValue: "9.2",
   type: "number",
-  disabled: false,
-  hidden: true,
-  patterns: [
-    {
-      reg: "required",
-      message: "This field is required",
-    },
-  ],
-  options: [
-    {
-      label: "Opcja 1",
-      value: "opt1",
-    },
-  ],
+  patterns: [h.required()],
+  conditionalDisabled: h.inGetState,
 };
 
 export const _2lClosingBalance: IField = {
@@ -714,20 +439,8 @@ export const _2lClosingBalance: IField = {
   label: "2L-Closing Balance - Posted & Booked",
   initValue: "9.2",
   type: "number",
-  disabled: false,
-  hidden: true,
-  patterns: [
-    {
-      reg: "required",
-      message: "This field is required",
-    },
-  ],
-  options: [
-    {
-      label: "Opcja 1",
-      value: "opt1",
-    },
-  ],
+  patterns: [h.required()],
+  conditionalDisabled: h.inGetState,
 };
 
 export const _2lReleaseUpdate: IField = {
@@ -735,20 +448,8 @@ export const _2lReleaseUpdate: IField = {
   label: "2L-Release - Update",
   initValue: "9.2",
   type: "number",
-  disabled: false,
-  hidden: true,
-  patterns: [
-    {
-      reg: "required",
-      message: "This field is required",
-    },
-  ],
-  options: [
-    {
-      label: "Opcja 1",
-      value: "opt1",
-    },
-  ],
+  patterns: [h.required()],
+  conditionalDisabled: h.inGetState,
 };
 
 export const _2lRelease: IField = {
@@ -756,20 +457,8 @@ export const _2lRelease: IField = {
   label: "2L-Release - Posted & Booked",
   initValue: "9.2",
   type: "number",
-  disabled: false,
-  hidden: true,
-  patterns: [
-    {
-      reg: "required",
-      message: "This field is required",
-    },
-  ],
-  options: [
-    {
-      label: "Opcja 1",
-      value: "opt1",
-    },
-  ],
+  patterns: [h.required()],
+  conditionalDisabled: h.inGetState,
 };
 
 export const _2lUsageUpdate: IField = {
@@ -777,20 +466,8 @@ export const _2lUsageUpdate: IField = {
   label: "2L-Usage - Update",
   initValue: "9.2",
   type: "number",
-  disabled: false,
-  hidden: true,
-  patterns: [
-    {
-      reg: "required",
-      message: "This field is required",
-    },
-  ],
-  options: [
-    {
-      label: "Opcja 1",
-      value: "opt1",
-    },
-  ],
+  patterns: [h.required()],
+  conditionalDisabled: h.inGetState,
 };
 
 export const _2lUsage: IField = {
@@ -798,20 +475,8 @@ export const _2lUsage: IField = {
   label: "2L-Usage - Posted & Booked",
   initValue: "9.2",
   type: "number",
-  disabled: false,
-  hidden: true,
-  patterns: [
-    {
-      reg: "required",
-      message: "This field is required",
-    },
-  ],
-  options: [
-    {
-      label: "Opcja 1",
-      value: "opt1",
-    },
-  ],
+  patterns: [h.required()],
+  conditionalDisabled: h.inGetState,
 };
 
 export const _2lCreationAdditionUpdate: IField = {
@@ -819,20 +484,8 @@ export const _2lCreationAdditionUpdate: IField = {
   label: "2L-Creation/Addition - Update",
   initValue: "9.2",
   type: "number",
-  disabled: false,
-  hidden: true,
-  patterns: [
-    {
-      reg: "required",
-      message: "This field is required",
-    },
-  ],
-  options: [
-    {
-      label: "Opcja 1",
-      value: "opt1",
-    },
-  ],
+  patterns: [h.required()],
+  conditionalDisabled: h.inGetState,
 };
 
 export const _2lCreationAddition: IField = {
@@ -840,20 +493,8 @@ export const _2lCreationAddition: IField = {
   label: "2L-Creation/Addition - Posted & Booked",
   initValue: "9.2",
   type: "number",
-  disabled: false,
-  hidden: true,
-  patterns: [
-    {
-      reg: "required",
-      message: "This field is required",
-    },
-  ],
-  options: [
-    {
-      label: "Opcja 1",
-      value: "opt1",
-    },
-  ],
+  patterns: [h.required()],
+  conditionalDisabled: h.inGetState,
 };
 
 export const _2lCarryFwd: IField = {
@@ -861,20 +502,8 @@ export const _2lCarryFwd: IField = {
   label: "2L-Carry Fwd from Last Year",
   initValue: "9.2",
   type: "number",
-  disabled: false,
-  hidden: true,
-  patterns: [
-    {
-      reg: "required",
-      message: "This field is required",
-    },
-  ],
-  options: [
-    {
-      label: "Opcja 1",
-      value: "opt1",
-    },
-  ],
+  patterns: [h.required()],
+  conditionalDisabled: h.inGetState,
 };
 
 export const _0lClosingBalanceUpdate: IField = {
@@ -882,20 +511,8 @@ export const _0lClosingBalanceUpdate: IField = {
   label: "0L-Closing Balance - Update",
   initValue: "9.2",
   type: "number",
-  disabled: false,
-  hidden: true,
-  patterns: [
-    {
-      reg: "required",
-      message: "This field is required",
-    },
-  ],
-  options: [
-    {
-      label: "Opcja 1",
-      value: "opt1",
-    },
-  ],
+  patterns: [h.required()],
+  conditionalDisabled: h.inGetState,
 };
 
 export const _0lClosingBalance: IField = {
@@ -903,20 +520,8 @@ export const _0lClosingBalance: IField = {
   label: "0L-Closing Balance - Posted & Booked",
   initValue: "9.2",
   type: "number",
-  disabled: false,
-  hidden: true,
-  patterns: [
-    {
-      reg: "required",
-      message: "This field is required",
-    },
-  ],
-  options: [
-    {
-      label: "Opcja 1",
-      value: "opt1",
-    },
-  ],
+  patterns: [h.required()],
+  conditionalDisabled: h.inGetState,
 };
 
 export const _0lReleaseUpdate: IField = {
@@ -924,20 +529,8 @@ export const _0lReleaseUpdate: IField = {
   label: "0L-Release - Update",
   initValue: "9.2",
   type: "number",
-  disabled: false,
-  hidden: true,
-  patterns: [
-    {
-      reg: "required",
-      message: "This field is required",
-    },
-  ],
-  options: [
-    {
-      label: "Opcja 1",
-      value: "opt1",
-    },
-  ],
+  patterns: [h.required()],
+  conditionalDisabled: h.inGetState,
 };
 
 export const _0lRelease: IField = {
@@ -945,20 +538,8 @@ export const _0lRelease: IField = {
   label: "0L-Release - Posted & Booked",
   initValue: "9.2",
   type: "number",
-  disabled: false,
-  hidden: true,
-  patterns: [
-    {
-      reg: "required",
-      message: "This field is required",
-    },
-  ],
-  options: [
-    {
-      label: "Opcja 1",
-      value: "opt1",
-    },
-  ],
+  patterns: [h.required()],
+  conditionalDisabled: h.inGetState,
 };
 
 export const _0lUsageUpdate: IField = {
@@ -966,20 +547,8 @@ export const _0lUsageUpdate: IField = {
   label: "0L-Usage - Update",
   initValue: "9.2",
   type: "number",
-  disabled: false,
-  hidden: true,
-  patterns: [
-    {
-      reg: "required",
-      message: "This field is required",
-    },
-  ],
-  options: [
-    {
-      label: "Opcja 1",
-      value: "opt1",
-    },
-  ],
+  patterns: [h.required()],
+  conditionalDisabled: h.inGetState,
 };
 
 export const _0lUsage: IField = {
@@ -987,20 +556,8 @@ export const _0lUsage: IField = {
   label: "0L-Usage - Posted & Booked",
   initValue: "9.2",
   type: "number",
-  disabled: false,
-  hidden: true,
-  patterns: [
-    {
-      reg: "required",
-      message: "This field is required",
-    },
-  ],
-  options: [
-    {
-      label: "Opcja 1",
-      value: "opt1",
-    },
-  ],
+  patterns: [h.required()],
+  conditionalDisabled: h.inGetState,
 };
 
 export const _0lCreationAdditionUpdate: IField = {
@@ -1008,20 +565,8 @@ export const _0lCreationAdditionUpdate: IField = {
   label: "0L-Creation/Addition - Update",
   initValue: "9.2",
   type: "number",
-  disabled: false,
-  hidden: true,
-  patterns: [
-    {
-      reg: "required",
-      message: "This field is required",
-    },
-  ],
-  options: [
-    {
-      label: "Opcja 1",
-      value: "opt1",
-    },
-  ],
+  patterns: [h.required()],
+  conditionalDisabled: h.inGetState,
 };
 
 export const _0lCreationAddition: IField = {
@@ -1029,20 +574,8 @@ export const _0lCreationAddition: IField = {
   label: "0L-Creation/Addition - Posted & Booked",
   initValue: "9.2",
   type: "number",
-  disabled: false,
-  hidden: true,
-  patterns: [
-    {
-      reg: "required",
-      message: "This field is required",
-    },
-  ],
-  options: [
-    {
-      label: "Opcja 1",
-      value: "opt1",
-    },
-  ],
+  patterns: [h.required()],
+  conditionalDisabled: h.inGetState,
 };
 
 export const _0lCarryFwd: IField = {
@@ -1050,373 +583,202 @@ export const _0lCarryFwd: IField = {
   label: "0L-Carry Fwd from Last Year",
   initValue: "9.2",
   type: "number",
-  disabled: false,
-  hidden: true,
-  patterns: [
-    {
-      reg: "required",
-      message: "This field is required",
-    },
-  ],
-  options: [
-    {
-      label: "Opcja 1",
-      value: "opt1",
-    },
-  ],
+  patterns: [h.required()],
+  conditionalDisabled: h.inGetState,
 };
 
-export const username: IField = {
-  name: "username",
+export const user: IField = {
+  name: "user",
   label: "User Name",
-  initValue: "opt1",
   type: "text",
-  disabled: false,
-  hidden: true,
-  patterns: [
-    {
-      reg: "required",
-      message: "This field is required",
-    },
-  ],
-  options: [
-    {
-      label: "Opcja 1",
-      value: "opt1",
-    },
-  ],
+  conditionalDisabled: h.inGetState,
 };
 
 export const appNumberOld: IField = {
   name: "appNumberOld",
   label: "Application Number (Old System)",
-  initValue: "",
   type: "text",
-  disabled: false,
-  hidden: true,
-  patterns: [
-    {
-      reg: "required",
-      message: "This field is required",
-    },
-    {
-      reg: "min_6",
-      message: "The phrase is too short - minimum 6 characters are required",
-    },
-  ],
-  options: [
-    {
-      label: "Opcja 1",
-      value: "opt1",
-    },
-  ],
+  patterns: [h.required(), h.min(6)],
+  conditionalDisabled: h.inGetState,
 };
 
 export const changedOn: IField = {
   name: "changedOn",
   label: "Changed On",
-  initValue: "",
   type: "date",
-  disabled: false,
-  hidden: true,
-  patterns: [],
-  options: [
-    {
-      label: "Opcja 1",
-      value: "opt1",
-    },
-  ],
+  conditionalDisabled: h.inGetState,
 };
 
 export const appCreationDate: IField = {
   name: "appCreationDate",
   label: "Appl Creation Date",
-  initValue: "",
   type: "date",
-  disabled: false,
-  hidden: true,
-  patterns: [],
-  options: [
-    {
-      label: "Opcja 1",
-      value: "opt1",
-    },
-  ],
+  conditionalDisabled: h.inGetState,
 };
 
 export const description2: IField = {
   name: "description2",
   label: "Description 2 (Free Text)",
-  initValue: "opt1",
   type: "text",
-  disabled: false,
-  hidden: true,
-  patterns: [
-    {
-      reg: "min_6",
-      message: "The phrase is too short - minimum 6 characters are required",
-    },
-  ],
-  options: [
-    {
-      label: "Opcja 1",
-      value: "opt1",
-    },
-  ],
+  patterns: [h.required(), h.min(6)],
+  conditionalDisabled: h.inGetState,
 };
 
 export const description1: IField = {
   name: "description1",
   label: "Description 1 (Fixed Text)",
-  initValue: "",
   type: "text",
-  disabled: false,
-  hidden: true,
-  patterns: [
-    {
-      reg: "min_6",
-      message: "The phrase is too short - minimum 6 characters are required",
-    },
-  ],
-  options: [
-    {
-      label: "Opcja 1",
-      value: "opt1",
-    },
-  ],
+  patterns: [h.required(), h.min(6)],
+  conditionalDisabled: h.inGetState,
 };
 
 export const localCurrency: IField = {
   name: "localCurrency",
   label: "Local Currency",
-  initValue: "",
   type: "text",
-  disabled: false,
-  hidden: true,
-  patterns: [
-    {
-      reg: "required",
-      message: "This field is required",
-    },
-    {
-      reg: "min_6",
-      message: "The phrase is too short - minimum 6 characters are required",
-    },
-  ],
-  options: [
-    {
-      label: "Opcja 1",
-      value: "opt1",
-    },
-  ],
+  patterns: [h.required(), h.min(6)],
+  conditionalDisabled: h.inGetState,
 };
 
 export const documentDate: IField = {
   name: "documentDate",
   label: "Document Date",
-  initValue: "",
   type: "date",
-  disabled: false,
-  hidden: true,
-  patterns: [],
-  options: [
-    {
-      label: "Opcja 1",
-      value: "opt1",
-    },
-  ],
+  conditionalDisabled: h.inGetState,
 };
 
 export const postingPeriod: IField = {
   name: "postingPeriod",
   label: "Posting Period",
-  initValue: "opt1",
   type: "text",
-  disabled: false,
-  hidden: true,
-  patterns: [
-    {
-      reg: "required",
-      message: "This field is required",
-    },
-    {
-      reg: "min_6",
-      message: "The phrase is too short - minimum 6 characters are required",
-    },
-  ],
-  options: [
-    {
-      label: "Opcja 1",
-      value: "opt1",
-    },
-  ],
+  patterns: [h.required(), h.min(6)],
+  conditionalDisabled: h.inGetState,
 };
 
 export const postingDate: IField = {
   name: "postingDate",
   label: "Posting Date",
-  initValue: "",
   type: "date",
-  disabled: false,
-  hidden: true,
-  patterns: [],
-  options: [
-    {
-      label: "Opcja 1",
-      value: "opt1",
-    },
-  ],
+  conditionalDisabled: h.inGetState,
 };
 
-export const salesDocumentItem: IField = {
-  name: "salesDocumentItem",
-  label: "Sales Document Item",
-  initValue: "",
-  type: "text",
-  disabled: false,
-  hidden: true,
-  patterns: [],
-  conditionalDisabled: [
-    {
-      conditions: [
-        {
-          when: "wbs",
-          is: true,
-        },
-      ],
-    },
-    {
-      conditions: [
-        {
-          when: "costCenter",
-          is: true,
-        },
-      ],
-    },
-  ],
-};
+// export const salesDocumentItem: IField = {
+//   name: "salesDocumentItem",
+//   label: "Sales Document Item",
+//   type: "text",
+//   disabled: false,
+//   hidden: true,
+//   patterns: [],
+//   conditionalDisabled: [
+//     {
+//       conditions: [
+//         {
+//           when: "wbs",
+//           is: true,
+//         },
+//       ],
+//     },
+//     {
+//       conditions: [
+//         {
+//           when: "costCenter",
+//           is: true,
+//         },
+//       ],
+//     },
+//   ],
+// };
+//
+// export const salesDocument: IField = {
+//   name: "salesDocument",
+//   label: "Sales Document",
+//   type: "text",
+//   disabled: false,
+//   hidden: true,
+//   patterns: [],
+//   conditionalDisabled: [
+//     {
+//       conditions: [
+//         {
+//           when: "wbs",
+//           is: true,
+//         },
+//       ],
+//     },
+//     {
+//       conditions: [
+//         {
+//           when: "costCenter",
+//           is: true,
+//         },
+//       ],
+//     },
+//   ],
+// };
 
-export const salesDocument: IField = {
-  name: "salesDocument",
-  label: "Sales Document",
-  initValue: "",
-  type: "text",
-  disabled: false,
-  hidden: true,
-  patterns: [],
-  conditionalDisabled: [
-    {
-      conditions: [
-        {
-          when: "wbs",
-          is: true,
-        },
-      ],
-    },
-    {
-      conditions: [
-        {
-          when: "costCenter",
-          is: true,
-        },
-      ],
-    },
-  ],
-};
-
-export const wbs: IField = {
-  name: "wbs",
-  label: "Project Definition (WBS)",
-  initValue: "",
-  type: "text",
-  disabled: false,
-  hidden: true,
-  patterns: [],
-  conditionalDisabled: [
-    {
-      conditions: [
-        {
-          when: "costCenter",
-          is: true,
-        },
-      ],
-    },
-    {
-      conditions: [
-        {
-          when: "salesDocument",
-          is: true,
-        },
-      ],
-    },
-    {
-      conditions: [
-        {
-          when: "salesDocumentItem",
-          is: true,
-        },
-      ],
-    },
-  ],
-};
+// export const wbs: IField = {
+//   name: "wbs",
+//   label: "Project Definition (WBS)",
+//   type: "text",
+//   patterns: [
+//     h.required(
+//       "This field is required when Cost Center or Sales Order or Sales Order Item are empty",
+//     ),
+//   ],
+//   conditionalDisabled: [
+//     {
+//       conditions: [
+//         {
+//           when: "costCenter",
+//           is: true,
+//         },
+//       ],
+//     },
+//     {
+//       conditions: [
+//         {
+//           when: "salesDocument",
+//           is: true,
+//         },
+//       ],
+//     },
+//     {
+//       conditions: [
+//         {
+//           when: "salesDocumentItem",
+//           is: true,
+//         },
+//       ],
+//     },
+//   ],
+// };
 
 export const appEndDate: IField = {
   name: "appEndDate",
   label: "Appl. End Date",
-  initValue: "",
   type: "date",
-  disabled: false,
-  hidden: true,
-  patterns: [],
-  options: [
-    {
-      label: "Opcja 1",
-      value: "opt1",
-    },
-  ],
+  conditionalDisabled: h.inGetState,
 };
 
 export const appStartDate: IField = {
   name: "appStartDate",
   label: "Appl. Start Date",
-  initValue: "",
   type: "date",
-  disabled: false,
-  hidden: true,
-  patterns: [],
-  options: [
-    {
-      label: "Opcja 1",
-      value: "opt1",
-    },
-  ],
+  conditionalDisabled: h.inGetState,
 };
 
 export const glCreditAccount: IField = {
   name: "glCreditAccount",
   label: "GL-Credit Account",
-  initValue: "",
   type: "text",
-  disabled: false,
-  hidden: true,
-  patterns: [],
-  options: [
-    {
-      label: "Opcja 1",
-      value: "opt1",
-    },
-  ],
+  conditionalDisabled: h.inGetState,
 };
 
 export const glDebitAccount: IField = {
   name: "glDebitAccount",
   label: "GL-Debit Account",
-  initValue: "",
-  type: "text",
-  disabled: false,
-  hidden: true,
-  patterns: [],
-  options: [],
+  type: "select",
+  conditionalDisabled: h.inGetState,
   dependentOptions: [
     {
       conditions: [
@@ -1787,11 +1149,8 @@ export const glDebitAccount: IField = {
 export const ledgerGroup: IField = {
   name: "ledgerGroup",
   label: "Redwood Ledger Group",
-  initValue: "",
   type: "select",
-  disabled: false,
-  hidden: true,
-  patterns: [],
+  conditionalDisabled: h.inGetState,
   dependentOptions: [
     {
       conditions: [{ when: "companyCode", is: ["pl10"] }],
@@ -1838,16 +1197,8 @@ export const ledgerGroup: IField = {
 export const companyCode: IField = {
   name: "companyCode",
   label: "Company Code",
-  initValue: "",
   type: "select",
-  disabled: false,
-  hidden: true,
-  patterns: [
-    {
-      reg: "required",
-      message: "This field is required",
-    },
-  ],
+  patterns: [h.required()],
   options: [
     {
       label: "DE10",
@@ -1866,28 +1217,5 @@ export const companyCode: IField = {
       value: "nl10",
     },
   ],
-  // dependentOptions: {
-  //   dependencies: ["mode"],
-  //   values: [
-  //     {
-  //       keys: ["modify"],
-  //       options: [
-  //         {
-  //           label: "",
-  //           value: "",
-  //         },
-  //       ],
-  //     },
-  //   ],
-  // },
-  conditionalDisabled: [
-    {
-      conditions: [
-        {
-          when: "mode",
-          is: "modify",
-        },
-      ],
-    },
-  ],
+  conditionalDisabled: h.inModifyState,
 };

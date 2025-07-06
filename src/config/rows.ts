@@ -3,8 +3,8 @@ import * as c from "./columns";
 export const controls = {
   columns: [c.modes, c.appNumbers, c.stateControllerButton],
 };
-export const appInfo = { columns: [c.one, c.two, c.three] };
+export const appInfo = { columns: [c.left, c.middle, c.right] };
 
-export const appValues = { columns: [c.four, c.five, c.six] };
+export const appValues = { columns: [c.ifrs, c.localGaap, c.tax] };
 
-export const attachements = { columns: [c.empty  ,c.attach, c.empty] };
+export const attachements = { columns: [c.empty, c.attach, c.empty] };
