@@ -24,9 +24,11 @@ export const Button = (props: IField) => {
     setPatterns,
     //@ts-ignore
     att,
+    //@ts-ignore
+    setLoading,
   } = useContext(FormContext);
   const className = `field ${props.error ? "field--error" : ""}`;
-  const [shouldValidate, setShouldValudate] = useState(false);
+  const [shouldValidate, setShouldValidate] = useState(false);
   const [defaultValues, setDefaultValues] = useState(null);
   const { dataset } = document.querySelector("body") || {
     dataset: { url: "/", query: "appno", init: "init" },
@@ -53,16 +55,14 @@ export const Button = (props: IField) => {
       }
 
       setTimeout(() => {
-        setShouldValudate(false);
+        setShouldValidate(false);
       }, 500);
     }
   }, [shouldValidate]);
   const handleGet: MouseEventHandler<HTMLButtonElement> = async (e) => {
     e.preventDefault();
 
-    const res = await getData(
-      `${url}&${query}=${formValues.appNumberImport}`,
-    );
+    const res = await getData(`${url}&${query}=${formValues.appNumberImport}`);
     if (res.data) {
       setFormValues((formValues: any) => {
         return { ...formValues, ...res.data };
@@ -86,7 +86,7 @@ export const Button = (props: IField) => {
 
     window.dispatchEvent(new Event("validate"));
     await fetchErrors();
-    setShouldValudate(true);
+    setShouldValidate(true);
   };
 
   const loadData = async () => {
@@ -135,23 +135,27 @@ export const Button = (props: IField) => {
   };
 
   async function getData(url: string) {
+    setLoading(true);
     try {
       const response = await fetch(url);
       if (!response.ok) {
         throw new Error(`Response status: ${response.status}`);
       }
-  
+
       const data = await response.json();
-      return data;
+      return { ...data, mode: "modify" };
     } catch (error: any) {
       console.error(error.message);
+    } finally {
+      setLoading(false);
     }
   }
-  
+
   async function postData(url: string, body: Record<string, any>) {
+    setLoading(true);
     var formData = new FormData();
     formData.append("json", JSON.stringify(body));
-    formData.append(att.fileName,att.fileData);
+    formData.append(att.fileName, att.fileData);
     try {
       const response = await fetch(url, {
         method: "POST",
@@ -164,22 +168,17 @@ export const Button = (props: IField) => {
       return data;
     } catch (error: any) {
       return { error };
+    } finally {
+      setLoading(false);
     }
   }
-  
 
   return (
     <div className={className}>
-      <button
-        className="magic-btn"
-       
-        onClick={getState().onClick}
-      >
+      <button className="magic-btn" onClick={getState().onClick}>
         {getState().label}
       </button>
       <p className="error-message">{props.error}</p>
     </div>
   );
 };
-
-
