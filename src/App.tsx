@@ -4,6 +4,7 @@ import { config } from "./config";
 import { Form } from "./components/Form/Form";
 import { FormContext } from "./context";
 import { Loader } from "./components/Loader/Loader";
+import { Modal } from "./components/Modal/Modal";
 
 function App() {
   const [formValues, setFormValues] = useState<Record<string, string> | {}>({});
@@ -30,6 +31,7 @@ function App() {
       <div className="app" inert={isLoading}>
         <Form rows={config.rows} />
       </div>
+      <Modal />
       {isLoading ? <Loader /> : ""}
     </FormContext.Provider>
   );
