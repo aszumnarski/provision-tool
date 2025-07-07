@@ -36,16 +36,18 @@ export const Select = (props: IField) => {
     }
   }, [props.value]);
 
+  const optionsValue = (props.options && props.options[0]?.value) || "";
+
   useEffect(() => {
     if (props.type === "select" && props.options) {
       setFormValues((formValues: any) => {
         return {
           ...formValues,
-          [props.name]: props.options && props.options[0].value,
+          [props.name]: optionsValue,
         };
       });
     }
-  }, [props.options && props.options[0].value]);
+  }, [optionsValue]);
 
   return (
     <div className={className}>
@@ -54,7 +56,7 @@ export const Select = (props: IField) => {
         <select
           className="field-input"
           name={props.name}
-          value={props.value || (props.options && props.options[0].value)}
+          value={props.value || optionsValue}
           onChange={props.onChange}
           disabled={props.disabled}
           onBlur={props.onBlur}

@@ -24,7 +24,7 @@ export const middle = {
 };
 
 export const right = {
-  fields: [f.user, f.costCenter, f.wbs, f.salesOrder, f.salesOrderItem],
+  fields: [f.user, f.costCenter, f.wbs, f.salesDocument, f.salesDocumentItem],
 };
 
 export const ifrs = {

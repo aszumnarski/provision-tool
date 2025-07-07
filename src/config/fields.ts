@@ -211,7 +211,7 @@ export const costCenter: IField = {
   type: "text",
   patterns: [
     h.required(
-      "This field is required when WBS Element or Sales Order or Sales Order Item are empty",
+      "This field is required when WBS Element or Sales Document or Sales Document Item are empty",
     ),
   ],
   conditionalDisabled: [
@@ -226,7 +226,7 @@ export const costCenter: IField = {
     {
       conditions: [
         {
-          when: "salesOrder",
+          when: "salesDocument",
           is: true,
         },
       ],
@@ -234,7 +234,7 @@ export const costCenter: IField = {
     {
       conditions: [
         {
-          when: "salesOrderItem",
+          when: "salesDocumentItem",
           is: true,
         },
       ],
@@ -248,7 +248,7 @@ export const wbs: IField = {
   type: "text",
   patterns: [
     h.required(
-      "This field is required when Cost Center or Sales Order or Sales Order Item are empty",
+      "This field is required when Cost Center or Sales Document or Sales Document Item are empty",
     ),
   ],
   conditionalDisabled: [
@@ -263,7 +263,7 @@ export const wbs: IField = {
     {
       conditions: [
         {
-          when: "salesOrder",
+          when: "salesDocument",
           is: true,
         },
       ],
@@ -271,7 +271,7 @@ export const wbs: IField = {
     {
       conditions: [
         {
-          when: "salesOrderItem",
+          when: "salesDocumentItem",
           is: true,
         },
       ],
@@ -279,9 +279,9 @@ export const wbs: IField = {
   ],
 };
 
-export const salesOrder: IField = {
-  name: "salesOrder",
-  label: "Sales Order",
+export const salesDocument: IField = {
+  name: "salesDocument",
+  label: "Sales Document",
   type: "text",
   patterns: [
     h.required(
@@ -308,9 +308,9 @@ export const salesOrder: IField = {
   ],
 };
 
-export const salesOrderItem: IField = {
-  name: "salesOrderItem",
-  label: "Sales Order Item",
+export const salesDocumentItem: IField = {
+  name: "salesDocumentItem",
+  label: "Sales Document Item",
   type: "text",
   patterns: [
     h.required(
@@ -662,96 +662,7 @@ export const postingDate: IField = {
   conditionalDisabled: h.inGetState,
 };
 
-// export const salesDocumentItem: IField = {
-//   name: "salesDocumentItem",
-//   label: "Sales Document Item",
-//   type: "text",
-//   disabled: false,
-//   hidden: true,
-//   patterns: [],
-//   conditionalDisabled: [
-//     {
-//       conditions: [
-//         {
-//           when: "wbs",
-//           is: true,
-//         },
-//       ],
-//     },
-//     {
-//       conditions: [
-//         {
-//           when: "costCenter",
-//           is: true,
-//         },
-//       ],
-//     },
-//   ],
-// };
-//
-// export const salesDocument: IField = {
-//   name: "salesDocument",
-//   label: "Sales Document",
-//   type: "text",
-//   disabled: false,
-//   hidden: true,
-//   patterns: [],
-//   conditionalDisabled: [
-//     {
-//       conditions: [
-//         {
-//           when: "wbs",
-//           is: true,
-//         },
-//       ],
-//     },
-//     {
-//       conditions: [
-//         {
-//           when: "costCenter",
-//           is: true,
-//         },
-//       ],
-//     },
-//   ],
-// };
 
-// export const wbs: IField = {
-//   name: "wbs",
-//   label: "Project Definition (WBS)",
-//   type: "text",
-//   patterns: [
-//     h.required(
-//       "This field is required when Cost Center or Sales Order or Sales Order Item are empty",
-//     ),
-//   ],
-//   conditionalDisabled: [
-//     {
-//       conditions: [
-//         {
-//           when: "costCenter",
-//           is: true,
-//         },
-//       ],
-//     },
-//     {
-//       conditions: [
-//         {
-//           when: "salesDocument",
-//           is: true,
-//         },
-//       ],
-//     },
-//     {
-//       conditions: [
-//         {
-//           when: "salesDocumentItem",
-//           is: true,
-//         },
-//       ],
-//     },
-//   ],
-// };
 
 export const appEndDate: IField = {
   name: "appEndDate",
