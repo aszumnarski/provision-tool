@@ -24,12 +24,6 @@ function App() {
       }}
     >
       <div className="app">
-        <div className="logo">
-          <img
-            src="https://www.svgrepo.com/download/303547/siemens-logo.svg"
-            alt="logo"
-          />
-        </div>
         <Form rows={config.rows} />
       </div>
     </FormContext.Provider>
