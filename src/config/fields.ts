@@ -589,9 +589,9 @@ export const _0lCarryFwd: IField = {
 
 export const user: IField = {
   name: "user",
-  label: "User Name",
+  label: "User",
   type: "text",
-  conditionalDisabled: h.inGetState,
+  disabled: true,
 };
 
 export const appNumberOld: IField = {
@@ -662,12 +662,11 @@ export const postingDate: IField = {
   conditionalDisabled: h.inGetState,
 };
 
-
-
 export const appEndDate: IField = {
   name: "appEndDate",
   label: "Appl. End Date",
   type: "date",
+  patterns: [h.future],
   conditionalDisabled: h.inGetState,
 };
 
