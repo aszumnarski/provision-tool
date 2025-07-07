@@ -7,5 +7,7 @@ export type TFormContext = {
   setFormErrors: (e: any) => void;
   patterns: any;
   setPatterns: (e: any) => void;
+  att: any;
+  setAtt: (e: any) => void;
 } | null;
 export const FormContext = createContext<TFormContext>(null);

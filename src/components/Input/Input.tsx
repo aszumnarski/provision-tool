@@ -11,6 +11,7 @@ export const Input = (props: IField) => {
         <input
           type={props.type}
           className="field-input"
+          accept=".png,application/pdf"
           name={props.name}
           onChange={props.onChange}
           disabled={props.disabled}

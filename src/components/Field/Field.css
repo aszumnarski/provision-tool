@@ -13,6 +13,11 @@
   overflow: hidden;
   text-overflow: ellipsis;
 }
+.field > label > span {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
 .field > label > * {
   width: 100%;
 }

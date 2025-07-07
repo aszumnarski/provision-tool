@@ -10,7 +10,11 @@ const data = () => {
 const app = express();
 const port = 6060;
 app.use(cors());
-app.use(express.urlencoded());
+app.use(express.urlencoded({ extended: true }));
+app.use((req, res, next) => {
+  const delay = 0 * 1000; // 0-second delay
+  setTimeout(() => next(), delay);
+});
 
 app.get("/protool", (req, res) => {
   const { appno } = req.query;
@@ -20,10 +24,10 @@ app.get("/protool", (req, res) => {
 
   const record = getRecordFor(appno);
   const response = record
-    ? { data: record }
+    ? { data: { ...record, attachement: undefined } }
     : {
         errors: {
-          editableAppNumber: `Application number ${appno} does not exist!`,
+          appNumberImport: `Application number ${appno} does not exist!`,
         },
       };
   res.json(response);
@@ -49,7 +53,7 @@ function getRecordFor(appNumber) {
 
 function addNewRecordToDb(db, data) {
   const appNumber = `${db.length + 1}`;
-  db.push({ ...data, creatorUser: data.user, appNumber, mode: "modify" });
+  db.push({ ...data, appCreator: data.user, appNumber, mode: "modify" });
   return appNumber;
 }
 

@@ -11,47 +11,40 @@ import { Button } from "../Button/Button";
 
 export interface IField {
   name: string;
-  label: string;
-  initValue: string;
-  type: "text" | "select" | "number" | "date" | "button";
-  disabled?: boolean;
-  conditionalDisabled?: IConditionalDisabled[];
-  hidden?: boolean;
-  patterns: IPattern[];
-  options?: IOption[];
-  maxlength?: string;
-  value?: string;
-  error?: string;
-  dependentOptions?: IDependentOptions;
+  type: "text" | "select" | "number" | "date" | "button" | "file";
   calculatedValue?: string[];
-  onChange?: (e: ChangeEvent) => void;
+  conditionalDisabled?: IConditionalDisabled[];
+  dependentOptions?: IDependentOptions[];
+  disabled?: boolean;
+  error?: string;
+  hidden?: boolean;
+  initValue?: string;
+  label?: string;
+  maxlength?: string;
   onBlur?: (e: ChangeEvent) => void;
+  onChange?: (e: ChangeEvent) => void;
+  options?: IOption[];
+  patterns?: IPattern[];
+  value?: string;
 }
 
-export interface IConditionalDisabled {
-  conditions: (
-    | {
-        when: string;
-        is: string;
-      }
-    | {
-        when: string;
-        is: boolean;
-      }
-  )[];
+export interface ICondition {
+  when: string;
+  is: string | boolean;
+}
+
+export interface IConditionMulti {
+  when: string;
+  is: (string | boolean)[];
 }
 
 export interface IDependentOptions {
-  dependency: string;
-  values: IDependentOptionsValue[];
+  conditions: IConditionMulti[];
+  options: IOption[];
 }
 
-export interface IDependentOptionsValue {
-  keys: string[];
-  options: {
-    label: string;
-    value: string;
-  }[];
+export interface IConditionalDisabled {
+  conditions: ICondition[];
 }
 
 export interface IOption {
@@ -79,6 +72,8 @@ export const Field = (props: IField) => {
     patterns,
     //@ts-ignore
     setPatterns,
+    //@ts-ignore
+    setAtt,
   } = useContext(FormContext);
 
   const onBlur = () => {
@@ -89,17 +84,34 @@ export const Field = (props: IField) => {
 
   const onChange = (e: ChangeEvent) => {
     const input = e.target as HTMLInputElement;
+    if (input.files){
+      setAtt({fileName:input.files[0].name,fileData:input.files[0]})
+    }
     const val =
       props.type === "number" ? input.value.replace("-", "") : input.value;
     setFormValues({ ...formValues, [props.name]: val });
   };
 
-  const options = props.dependentOptions?.dependency
-    ? props.dependentOptions.values.find((v) =>
-        v.keys.includes(formValues[props.dependentOptions?.dependency]),
-      )?.options || props.options
-    : props.options;
+  const options = (): IOption[] => {
+    if (!props.dependentOptions) return props.options || [];
 
+    const result: IOption[] =
+      props.dependentOptions
+        .map(
+          (scenario) =>
+            scenario.conditions
+              .map(
+                (c) =>
+                  c.is.includes(formValues[c.when]) ||
+                  c.is.includes(!!formValues[c.when]),
+              )
+              .filter(Boolean).length === scenario.conditions.length &&
+            scenario.options,
+        )
+        .filter(Boolean)[0] || [];
+
+    return result.length ? result : props.options || [];
+  };
   const sum = props.calculatedValue?.length
     ? props.calculatedValue
         .map((v) => parseFloat(formValues[v]) || 0)
@@ -129,7 +141,7 @@ export const Field = (props: IField) => {
     error,
     onBlur,
     disabled,
-    options,
+    options: options(),
     value,
   };
 
@@ -174,6 +186,7 @@ export const Field = (props: IField) => {
   const typeMap = {
     text: Input,
     number: Input,
+    file: Input,
     select: Select,
     date: DateInput,
     button: Button,

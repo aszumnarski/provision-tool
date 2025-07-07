@@ -1,12 +1,9 @@
-// import { atom, useAtom } from "jotai";
-// import { formValues } from "../../atoms";
-import { useContext, useEffect, useState, type FormEventHandler } from "react";
+import { useContext, useEffect, type FormEventHandler } from "react";
 import { FormContext } from "../../context";
 import "./Form.css";
 import type { IRow } from "../Row/Row";
 import { Row } from "../Row/Row";
 import type { IField, IPattern } from "../Field/Field";
-import { validateField } from "../../utils/validators";
 
 export interface IForm {
   rows: IRow[];
@@ -38,8 +35,16 @@ export function Form({ rows }: IForm) {
     rows.forEach((r) =>
       r.columns.forEach((c) =>
         c.fields.forEach((f) => {
+          const defaultVal =
+            key === "patterns"
+              ? []
+              : f.type === "number"
+                ? 0
+                : f.type === "select"
+                  ? f.options && f.options[0].value
+                  : "";
           //@ts-ignore
-          values[f.name] = f[key as keyof typeof f];
+          values[f.name] = f[key as keyof typeof f] || defaultVal;
         }),
       ),
     );

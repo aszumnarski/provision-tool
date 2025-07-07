@@ -1,10 +1,12 @@
 .row-wrapper {
   display: flex;
   flex-direction: column;
-  gap: 50px;
+  gap: 30px;
 }
 
 .row {
   display: flex;
   gap: 20px;
+  /* border-top: 1px solid lightgray; */
+  /* padding-top: 20px; */
 }
