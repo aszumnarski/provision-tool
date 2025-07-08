@@ -7,7 +7,7 @@ const data = () => {
     init: { data: getUser() },
   };
 };
-const DELAY_IN_SECONDS = 1;
+const DELAY_IN_SECONDS = 0;
 const app = express();
 const port = 6060;
 app.use(cors());

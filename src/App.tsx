@@ -16,7 +16,8 @@ function App() {
     string,
     string
   > | null>(null);
-
+  const body = document.querySelector("body");
+  const imgSource = body && body.dataset?.logo;
   return (
     <FormContext.Provider
       value={{
@@ -34,7 +35,14 @@ function App() {
         setModalContent,
       }}
     >
-      <div className="app" inert={isLoading}>
+      <div className="app" inert={isLoading || !!modalContent}>
+        {imgSource ? (
+          <div className="logo">
+            <img className="logo__pic" src={imgSource || ""} alt="logo" />
+          </div>
+        ) : (
+          ""
+        )}
         <Form rows={config.rows} />
       </div>
       <Modal />

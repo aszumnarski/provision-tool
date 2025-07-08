@@ -330,3 +330,7 @@ strong {
   color: #009688;
   padding: 10px;
 }
+
+.error-container{
+  scale: 1.6;
+}

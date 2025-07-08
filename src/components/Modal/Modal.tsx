@@ -1,21 +1,27 @@
 import "./Modal.css";
+import { FormContext } from "../../context";
+import { useContext } from "react";
 export const Modal = () => {
-  type TModalContent = { message: string; type: string } | undefined;
-  let modalContent: TModalContent = {
-    message: "Application <strong>1234</strong> was updated",
-    type: "success",
-  };
-
-  modalContent = undefined;
+  //@ts-ignore
+  const { modalContent, setModalContent } = useContext(FormContext);
 
   if (!modalContent) return "";
 
+  const onClick = () => {
+    setModalContent(null);
+  };
   return (
     <div className="modal__backdrop">
       <div className="modal">
-        {modalContent && modalContent.type === "error" ? <ErrorAnim /> : <SuccessAnim />}
+        {modalContent && modalContent.type === "error" ? (
+          <ErrorAnim />
+        ) : (
+          <SuccessAnim />
+        )}
         <h2 dangerouslySetInnerHTML={{ __html: modalContent?.message }} />
-        <button className="magic-btn">OK</button>
+        <button className="magic-btn" onClick={onClick}>
+          OK
+        </button>
       </div>
     </div>
   );
@@ -39,7 +45,7 @@ export const SuccessAnim = () => (
 );
 
 export const ErrorAnim = () => (
-  <div className="containerxxx">
+  <div className="error-container">
     <div className="circle-border"></div>
     <div className="circle">
       <div className="error"></div>

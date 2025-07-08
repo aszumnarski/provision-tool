@@ -211,10 +211,11 @@ export const costCenter: IField = {
   type: "text",
   patterns: [
     h.required(
-      "This field is required when WBS Element or Sales Document or Sales Document Item are empty",
+      "This field is required when WBS Element or Sales Document or Sales Document Item are empty"
     ),
   ],
   conditionalDisabled: [
+    ...h.inGetState,
     {
       conditions: [
         {
@@ -248,10 +249,11 @@ export const wbs: IField = {
   type: "text",
   patterns: [
     h.required(
-      "This field is required when Cost Center or Sales Document or Sales Document Item are empty",
+      "This field is required when Cost Center or Sales Document or Sales Document Item are empty"
     ),
   ],
   conditionalDisabled: [
+    ...h.inGetState,
     {
       conditions: [
         {
@@ -285,10 +287,11 @@ export const salesDocument: IField = {
   type: "text",
   patterns: [
     h.required(
-      "This field is required when Cost Center or WBS Element are empty",
+      "This field is required when Cost Center or WBS Element are empty"
     ),
   ],
   conditionalDisabled: [
+    ...h.inGetState,
     {
       conditions: [
         {
@@ -314,10 +317,11 @@ export const salesDocumentItem: IField = {
   type: "text",
   patterns: [
     h.required(
-      "This field is required when Cost Center or WBS Element are empty",
+      "This field is required when Cost Center or WBS Element are empty"
     ),
   ],
   conditionalDisabled: [
+    ...h.inGetState,
     {
       conditions: [
         {
@@ -598,22 +602,21 @@ export const appNumberOld: IField = {
   name: "appNumberOld",
   label: "Application Number (Old System)",
   type: "text",
-  patterns: [h.required(), h.min(6)],
-  conditionalDisabled: h.inGetState,
+  disabled: true,
 };
 
 export const changedOn: IField = {
   name: "changedOn",
   label: "Changed On",
   type: "date",
-  conditionalDisabled: h.inGetState,
+  disabled: true,
 };
 
 export const appCreationDate: IField = {
   name: "appCreationDate",
   label: "Appl Creation Date",
   type: "date",
-  conditionalDisabled: h.inGetState,
+  disabled: true,
 };
 
 export const description2: IField = {
@@ -635,9 +638,22 @@ export const description1: IField = {
 export const localCurrency: IField = {
   name: "localCurrency",
   label: "Local Currency",
-  type: "text",
-  patterns: [h.required(), h.min(6)],
-  conditionalDisabled: h.inGetState,
+  type: "select",
+  disabled: true,
+  dependentOptions: [
+    {
+      conditions: [{ when: "companyCode", is: ["de10","nl10"] }],
+      options: [{ label: "EUR", value: "EUR" }],
+    },
+    {
+      conditions: [{ when: "companyCode", is: ["pl10"] }],
+      options: [{ label: "PLN", value: "PLN" }],
+    },
+    {
+      conditions: [{ when: "companyCode", is: ["uk10"] }],
+      options: [{ label: "GBP", value: "GBP" }],
+    },
+  ],
 };
 
 export const documentDate: IField = {
@@ -666,7 +682,7 @@ export const appEndDate: IField = {
   name: "appEndDate",
   label: "Appl. End Date",
   type: "date",
-  patterns: [h.future],
+  patterns: [h.future,{reg:"lt_appStartDate",message:"Cannot be before App Start Date."}],
   conditionalDisabled: h.inGetState,
 };
 
@@ -674,6 +690,7 @@ export const appStartDate: IField = {
   name: "appStartDate",
   label: "Appl. Start Date",
   type: "date",
+  patterns: [h.future,{reg:"gt_appEndDate",message:"Cannot be after App End Date."}],
   conditionalDisabled: h.inGetState,
 };
 
