@@ -1,4 +1,25 @@
 .modal {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-evenly;
+  padding: 30px;
+  padding-top: 50px;
+  width: 600px;
+  height: 400px;
+  gap: 20px;
+  background: white;
+  border-radius: 20px;
+  box-shadow:
+    rgba(0, 0, 0, 0.35) 0px 54px 55px,
+    rgba(0, 0, 0, 0.32) 0px -12px 30px,
+    rgba(0, 0, 0, 0.32) 0px 4px 6px,
+    rgba(0, 0, 0, 0.37) 0px 12px 13px,
+    rgba(0, 0, 0, 0.39) 0px -3px 5px;
+}
+
+.modal__backdrop {
+  background-color: #000000cc;
   position: fixed;
   width: 100dvw;
   height: 100dvh;
@@ -124,6 +145,7 @@
 }
 
 .check-container {
+  scale: 1.4;
   width: 6.25rem;
   height: 7.5rem;
   display: flex;
@@ -258,7 +280,7 @@
   position: absolute;
   transform: scale(1.1);
   animation: circle-anim 400ms ease;
-  background: #f86;
+  background: tomato;
 }
 
 @keyframes success-anim {
@@ -285,7 +307,7 @@
   content: "";
   display: block;
   height: 4px;
-  background: #f86;
+  background: tomato;
   position: absolute;
 }
 
@@ -301,4 +323,10 @@
   top: 48%;
   left: 16%;
   transform: rotateZ(-50deg);
+}
+
+strong {
+  font-size: xx-large;
+  color: #009688;
+  padding: 10px;
 }

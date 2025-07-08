@@ -6,10 +6,12 @@ export type TFormContext = {
   formErrors: any;
   setFormErrors: (e: any) => void;
   patterns: any;
-  setPatterns: (e: any) => void;
+  setPatterns: (p: any) => void;
   att: any;
-  setAtt: (e: any) => void;
+  setAtt: (a: any) => void;
   isLoading: boolean;
   setLoading: (loading: boolean) => void;
+  modalContent: any;
+  setModalContent: (m: any) => void;
 } | null;
 export const FormContext = createContext<TFormContext>(null);

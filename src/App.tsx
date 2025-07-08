@@ -12,6 +12,10 @@ function App() {
   const [patterns, setPatterns] = useState<Record<string, string> | {}>({});
   const [att, setAtt] = useState<Record<string, string> | {}>({});
   const [isLoading, setLoading] = useState(false);
+  const [modalContent, setModalContent] = useState<Record<
+    string,
+    string
+  > | null>(null);
 
   return (
     <FormContext.Provider
@@ -26,6 +30,8 @@ function App() {
         setAtt,
         isLoading,
         setLoading,
+        modalContent,
+        setModalContent,
       }}
     >
       <div className="app" inert={isLoading}>
