@@ -5,7 +5,6 @@ import { FormContext } from "../../context";
 import { useState, type ChangeEvent } from "react";
 import { Select } from "../Select/Select";
 import { Input } from "../Input/Input";
-import { validateField } from "../../utils/validators";
 import { DateInput } from "../Date/Date";
 import { Button } from "../Button/Button";
 
@@ -76,6 +75,48 @@ export const Field = (props: IField) => {
     setAtt,
   } = useContext(FormContext);
 
+  function validatePattern(pattern: string, value?: string) {
+    const tokens = {
+      required: () => !value,
+      future: () =>
+        value &&
+        value.split(".").reverse().join("-") <
+          new Date().toISOString().substring(0, 10),
+      min: () => {
+        const minimum = Number(pattern.split("_")[1]);
+        return value && value?.length < minimum;
+      },
+      lt: () => {
+        const fieldName = pattern.split("_")[1];
+        const fieldValue = formValues[fieldName];
+        return value &&
+          value.split(".").reverse().join("-") <
+            fieldValue.split(".").reverse().join("-");
+      },
+      gt: () => {
+        const fieldName = pattern.split("_")[1];
+        const fieldValue = formValues[fieldName];
+        return value &&
+          value.split(".").reverse().join("-") >
+            fieldValue.split(".").reverse().join("-");
+      },
+    };
+    const patternFromToken =
+      tokens[pattern.split("_")[0] as keyof typeof tokens];
+    const regex = new RegExp(pattern);
+    return patternFromToken
+      ? patternFromToken()
+      : value && !regex.test(value || "");
+  }
+
+  const validateField = (patterns: IPattern[], value?: string | boolean) => {
+    if (typeof value !== "string") return undefined;
+    const messages = patterns
+      .map((p) => validatePattern(p.reg, value) && p.message)
+      .filter(Boolean);
+    return messages.length ? messages[0] : undefined;
+  };
+
   const onBlur = () => {
     validate();
   };
@@ -84,8 +125,8 @@ export const Field = (props: IField) => {
 
   const onChange = (e: ChangeEvent) => {
     const input = e.target as HTMLInputElement;
-    if (input.files){
-      setAtt({fileName:input.files[0].name,fileData:input.files[0]})
+    if (input.files) {
+      setAtt({ fileName: input.files[0].name, fileData: input.files[0] });
     }
     const val =
       props.type === "number" ? input.value.replace("-", "") : input.value;
@@ -103,10 +144,10 @@ export const Field = (props: IField) => {
               .map(
                 (c) =>
                   c.is.includes(formValues[c.when]) ||
-                  c.is.includes(!!formValues[c.when]),
+                  c.is.includes(!!formValues[c.when])
               )
               .filter(Boolean).length === scenario.conditions.length &&
-            scenario.options,
+            scenario.options
         )
         .filter(Boolean)[0] || [];
 
@@ -127,9 +168,9 @@ export const Field = (props: IField) => {
             or.conditions
               .map(
                 (c) =>
-                  formValues[c.when] == c.is || !!formValues[c.when] == c.is,
+                  formValues[c.when] == c.is || !!formValues[c.when] == c.is
               )
-              .filter(Boolean).length === or.conditions.length,
+              .filter(Boolean).length === or.conditions.length
         )
         .filter(Boolean).length > 0
     : props.disabled;

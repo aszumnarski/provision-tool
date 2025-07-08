@@ -4,9 +4,6 @@ import { FormContext } from "../../context";
 import { type IField } from "../Field/Field";
 import type { MouseEventHandler } from "react";
 
-// const url = "http://localhost:6060/protool?appno=init";
-// const url1 = "http://localhost:6060/protool";
-
 export const Button = (props: IField) => {
   //@ts-ignore
   const {
@@ -24,9 +21,13 @@ export const Button = (props: IField) => {
     setPatterns,
     //@ts-ignore
     att,
+    //@ts-ignore
+    setLoading,
+    //@ts-ignore
+    setModalContent,
   } = useContext(FormContext);
   const className = `field ${props.error ? "field--error" : ""}`;
-  const [shouldValidate, setShouldValudate] = useState(false);
+  const [shouldValidate, setShouldValidate] = useState(false);
   const [defaultValues, setDefaultValues] = useState(null);
   const { dataset } = document.querySelector("body") || {
     dataset: { url: "/", query: "appno", init: "init" },
@@ -43,6 +44,13 @@ export const Button = (props: IField) => {
       return setFormErrors(res.errors);
     }
     if (res.data) {
+      const content = {
+        message: `Application <strong>${res.data.appNumber}</strong> was ${
+          getState() === states.CREATE ? "created" : "updated"
+        } successfully.`,
+        type: "success",
+      };
+      setModalContent(content)
       resetForm();
     }
   };
@@ -53,16 +61,14 @@ export const Button = (props: IField) => {
       }
 
       setTimeout(() => {
-        setShouldValudate(false);
+        setShouldValidate(false);
       }, 500);
     }
   }, [shouldValidate]);
   const handleGet: MouseEventHandler<HTMLButtonElement> = async (e) => {
     e.preventDefault();
 
-    const res = await getData(
-      `${url}&${query}=${formValues.appNumberImport}`,
-    );
+    const res = await getData(`${url}&${query}=${formValues.appNumberImport}`);
     if (res.data) {
       setFormValues((formValues: any) => {
         return { ...formValues, ...res.data };
@@ -86,13 +92,13 @@ export const Button = (props: IField) => {
 
     window.dispatchEvent(new Event("validate"));
     await fetchErrors();
-    setShouldValudate(true);
+    setShouldValidate(true);
   };
 
   const loadData = async () => {
     const res = await getData(`${url}&${query}=${init}`);
     setFormValues((formValues: any) => {
-      return { ...formValues, user: res.data.user };
+      return { ...formValues, user: res.data.user, appCreator: res.data.user };
     });
   };
 
@@ -135,23 +141,31 @@ export const Button = (props: IField) => {
   };
 
   async function getData(url: string) {
+    setLoading(true);
     try {
       const response = await fetch(url);
       if (!response.ok) {
         throw new Error(`Response status: ${response.status}`);
       }
-  
+
       const data = await response.json();
-      return data;
+      return { ...data, mode: "modify" };
     } catch (error: any) {
       console.error(error.message);
+      setModalContent({
+        message: "Ups something went wrong...",
+        type: "error",
+      });
+    } finally {
+      setLoading(false);
     }
   }
-  
+
   async function postData(url: string, body: Record<string, any>) {
+    setLoading(true);
     var formData = new FormData();
     formData.append("json", JSON.stringify(body));
-    formData.append(att.fileName,att.fileData);
+    formData.append(att.fileName, att.fileData);
     try {
       const response = await fetch(url, {
         method: "POST",
@@ -163,23 +177,22 @@ export const Button = (props: IField) => {
       const data = await response.json();
       return data;
     } catch (error: any) {
+      setModalContent({
+        message: "Ups something went wrong...",
+        type: "error",
+      });
       return { error };
+    } finally {
+      setLoading(false);
     }
   }
-  
 
   return (
     <div className={className}>
-      <button
-        className="magic-btn"
-       
-        onClick={getState().onClick}
-      >
+      <button className="magic-btn" onClick={getState().onClick}>
         {getState().label}
       </button>
       <p className="error-message">{props.error}</p>
     </div>
   );
 };
-
-

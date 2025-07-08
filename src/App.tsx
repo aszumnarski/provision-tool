@@ -3,13 +3,21 @@ import "./App.css";
 import { config } from "./config";
 import { Form } from "./components/Form/Form";
 import { FormContext } from "./context";
+import { Loader } from "./components/Loader/Loader";
+import { Modal } from "./components/Modal/Modal";
 
 function App() {
   const [formValues, setFormValues] = useState<Record<string, string> | {}>({});
   const [formErrors, setFormErrors] = useState<Record<string, string> | {}>({});
   const [patterns, setPatterns] = useState<Record<string, string> | {}>({});
   const [att, setAtt] = useState<Record<string, string> | {}>({});
-
+  const [isLoading, setLoading] = useState(false);
+  const [modalContent, setModalContent] = useState<Record<
+    string,
+    string
+  > | null>(null);
+  const body = document.querySelector("body");
+  const imgSource = body && body.dataset?.logo;
   return (
     <FormContext.Provider
       value={{
@@ -21,11 +29,24 @@ function App() {
         setPatterns,
         att,
         setAtt,
+        isLoading,
+        setLoading,
+        modalContent,
+        setModalContent,
       }}
     >
-      <div className="app">
+      <div className="app" inert={isLoading || !!modalContent}>
+        {imgSource ? (
+          <div className="logo">
+            <img className="logo__pic" src={imgSource || ""} alt="logo" />
+          </div>
+        ) : (
+          ""
+        )}
         <Form rows={config.rows} />
       </div>
+      <Modal />
+      {isLoading ? <Loader /> : ""}
     </FormContext.Provider>
   );
 }
