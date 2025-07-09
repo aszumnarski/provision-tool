@@ -5,6 +5,7 @@
     "main": "index.mjs",
     "type": "module",
     "scripts": {
+        "api": "nodemon index.mjs",
         "test": "echo \"Error: no test specified\" && exit 1"
     },
     "keywords": [],
@@ -14,5 +15,8 @@
         "cors": "^2.8.5",
         "express": "^4.21.2",
         "multer": "^2.0.1"
+    },
+    "devDependencies": {
+        "nodemon": "^3.1.10"
     }
 }
