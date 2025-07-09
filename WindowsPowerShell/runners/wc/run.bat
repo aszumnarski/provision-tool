@@ -1,0 +1,1 @@
+c:\Users\Y357882\Documents\WindowsPowerShell\runners\wc\gotodir.bat && c:\Users\Y357882\Documents\WindowsPowerShell\runners\wc\front.bat && cd c:\Users\Y357882\Projects\portal-web-components\ && c:\Users\Y357882\Downloads\tools\release\neovide.exe c:\Users\Y357882\Projects\portal-web-components

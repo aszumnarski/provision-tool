@@ -1,0 +1,2 @@
+c:\Users\Y357882\Documents\WindowsPowerShell\runners\instalment\gotodir.bat && c:\Users\Y357882\Documents\WindowsPowerShell\runners\instalment\back.bat && c:\Users\Y357882\Documents\WindowsPowerShell\runners\instalment\front.bat && c:\Users\Y357882\Documents\WindowsPowerShell\runners\instalment\browse.bat && cd "c:\Users\Y357882\Projects\instalmentloancaonline-frontend" && c:\Users\Y357882\Downloads\tools\release\neovide.exe c:\Users\Y357882\Projects\instalmentloancaonline-frontend
+

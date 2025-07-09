@@ -1,0 +1,5 @@
+{
+  "name": "cashloan-front",
+  "script": "c:/Users/Y357882/Projects/portal-applications-front/node_modules/@nrwl/cli/bin/nx.js",
+  "args": "serve"
+}

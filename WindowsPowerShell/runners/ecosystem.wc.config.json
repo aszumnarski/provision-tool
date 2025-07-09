@@ -1,0 +1,8 @@
+{
+  "name": "web-components",
+  "script": "c:/Users/Y357882/Projects/portal-web-components/node_modules/gulp/bin/gulp.js",
+  "args": "watch",
+  "exec_mode": "cluster",
+  "autorestart": true,
+  "watch": false
+}

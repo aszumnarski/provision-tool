@@ -1,0 +1,1 @@
+Start-Process -Verb RunAs powershell.exe -Args "-executionpolicy bypass -command Set-Location \`"$PWD\`"; nvm use 10.1.0"
