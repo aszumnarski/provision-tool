@@ -27,6 +27,7 @@ export function Form({ rows }: IForm) {
 
   useEffect(() => {
     setFormValues(createFormState(rows, "initValue"));
+    setTimeout(setFormValues(createFormState(rows, "initValue")),50);
     setPatterns(createFormState(rows, "patterns"));
   }, []);
 
@@ -55,6 +56,7 @@ export function Form({ rows }: IForm) {
     // setFormErrors({ name1: "Jakiś błąd" });
     // validateForm();
   };
+  console.log(formValues)
   return (
     <form onSubmit={onSubmit} className="form">
       <div className="row-wrapper">
@@ -62,6 +64,7 @@ export function Form({ rows }: IForm) {
           <Row key={i} columns={r.columns} />
         ))}
       </div>
+      <pre>X{Object.keys(formValues).length}X</pre>
       <pre>{JSON.stringify(formValues, null, 2)}</pre>
       <hr />
       <pre>{JSON.stringify(formErrors, null, 2)}</pre>

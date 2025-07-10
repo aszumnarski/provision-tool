@@ -11,7 +11,7 @@ import { Button } from "../Button/Button";
 export interface IField {
   name: string;
   type: "text" | "select" | "number" | "date" | "button" | "file";
-  calculatedValue?: string[];
+  calculatedValue?: TSimpleAddition & TMonthAddition;
   conditionalDisabled?: IConditionalDisabled[];
   dependentOptions?: IDependentOptions[];
   disabled?: boolean;
@@ -26,7 +26,9 @@ export interface IField {
   patterns?: IPattern[];
   value?: string;
 }
+export type TSimpleAddition = string[] 
 
+export type TMonthAddition = {date:string, month:number}
 export interface ICondition {
   when: string;
   is: string | boolean;
@@ -153,7 +155,7 @@ export const Field = (props: IField) => {
 
     return result.length ? result : props.options || [];
   };
-  const sum = props.calculatedValue?.length
+  const simpleAddition = () => props.calculatedValue?.length
     ? props.calculatedValue
         .map((v) => parseFloat(formValues[v]) || 0)
         .reduce((accumulator, currentValue) => accumulator + currentValue, 0)
@@ -161,6 +163,21 @@ export const Field = (props: IField) => {
         .replace(/\,/g, "")
     : "";
 
+  const monthAddition = () => {
+    if(!props.calculatedValue?.month) return "";
+    if(!props.calculatedValue?.date) return "";
+    const newDate = new Date(formValues[props.calculatedValue.date].split(".").reverse().join("-"));
+    newDate.setMonth(newDate.getMonth() + props.calculatedValue.month);
+    return "0" + newDate.toLocaleString("en-US",{month:"2-digit"});
+  }   
+
+  const getSum = () => {
+    if(!props.calculatedValue) return "";
+    if(props.calculatedValue.length) return simpleAddition();
+    if(props.calculatedValue.date) return monthAddition();
+    return "";
+  } 
+  const sum = getSum();
   const disabled = props.conditionalDisabled
     ? props.conditionalDisabled
         ?.map(

@@ -24,7 +24,7 @@ export const mode: IField = {
 export const provisionType: IField = {
   name: "provisionType",
   label: "Prov. Type",
-  initValue: "c83",
+
   type: "select",
   patterns: [h.required()],
   options: [
@@ -43,7 +43,7 @@ export const provisionType: IField = {
 export const subType: IField = {
   name: "subType",
   label: "Subtype",
-  initValue: "y09",
+
   type: "select",
   conditionalDisabled: h.inGetState,
   dependentOptions: [
@@ -1184,6 +1184,8 @@ export const postingPeriod: IField = {
   name: "postingPeriod",
   label: "Posting Period",
   type: "text",
+  //@ts-ignore
+  calculatedValue: { date: "postingDate", month: 3 },
   disabled: true,
 };
 
@@ -1378,7 +1380,7 @@ export const glCreditAccount: IField = {
   name: "glCreditAccount",
   label: "GL-Credit Account",
   type: "select",
-  disabled: true,
+  disabled: false,
   dependentOptions: [
     {
       conditions: [
