@@ -123,7 +123,7 @@ export const costCenter: IField = {
   type: "text",
   patterns: [
     h.required(
-      "This field is required when WBS Element or Sales Document or Sales Document Item are empty",
+      "This field is required when WBS Element or Sales Document or Sales Document Item are empty"
     ),
   ],
   conditionalDisabled: [
@@ -317,7 +317,7 @@ export const wbs: IField = {
   type: "text",
   patterns: [
     h.required(
-      "This field is required when Cost Center or Sales Document or Sales Document Item are empty",
+      "This field is required when Cost Center or Sales Document or Sales Document Item are empty"
     ),
   ],
   conditionalDisabled: [
@@ -511,7 +511,7 @@ export const salesDocument: IField = {
   type: "text",
   patterns: [
     h.required(
-      "This field is required when Cost Center or WBS Element are empty",
+      "This field is required when Cost Center or WBS Element are empty"
     ),
   ],
   conditionalDisabled: [
@@ -697,7 +697,7 @@ export const salesDocumentItem: IField = {
   type: "text",
   patterns: [
     h.required(
-      "This field is required when Cost Center or WBS Element are empty",
+      "This field is required when Cost Center or WBS Element are empty"
     ),
   ],
   conditionalDisabled: [
@@ -1008,6 +1008,10 @@ export const _2lCreationAdditionUpdate: IField = {
   name: "2lCreationAdditionUpdate",
   label: "2L-Creation/Addition - Update",
   initValue: "0",
+  dependantValue: {
+    conditions: [{ when: "ledgerGroup", is: ["al", "il"] }],
+    valueFrom: "0lCreationAdditionUpdate",
+  },
   type: "number",
   conditionalDisabled: h.inGetState,
 };
@@ -1032,6 +1036,10 @@ export const _0lClosingBalanceUpdate: IField = {
   name: "0lClosingBalanceUpdate",
   label: "0L-Closing Balance - Update",
   initValue: "0",
+  calculatedValue: {
+    expression:
+      "Number(formValues['0lCreationAdditionUpdate']) + Number(formValues['0lUsageUpdate']) - Number(formValues['0lReleaseUpdate'])",
+  },
   type: "number",
   disabled: true,
 };

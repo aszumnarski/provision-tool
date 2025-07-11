@@ -14,6 +14,7 @@ export interface IField {
   calculatedValue?: ICalculatedValue;
   conditionalDisabled?: IConditionalDisabled[];
   dependentOptions?: IDependentOptions[];
+  dependantValue?: IDependentValue;
   disabled?: boolean;
   error?: string;
   hidden?: boolean;
@@ -47,6 +48,11 @@ export interface IDependentOptions {
   conditions: IConditionMulti[];
   options: IOption[];
   isFromValue?: boolean;
+}
+
+export interface IDependentValue {
+  conditions: IConditionMulti[];
+  valueFrom: string;
 }
 
 export interface IConditionalDisabled {
@@ -158,20 +164,20 @@ export const Field = (props: IField) => {
 
     const result: IOption[] =
       props.dependentOptions
-        .map((scenario) =>
-          scenario.conditions
-            .map(
-              (c) =>
-                c.is.includes(formValues[c.when]) ||
-                c.is.includes(!!formValues[c.when]),
-            )
-            .filter(Boolean).length === scenario.conditions.length &&
-          scenario.isFromValue
-            ? valuedOptions(scenario.options)
-            : scenario.options,
+        .map(
+          (scenario) =>
+            scenario.conditions
+              .map(
+                (c) =>
+                  c.is.includes(formValues[c.when]) ||
+                  c.is.includes(!!formValues[c.when])
+              )
+              .filter(Boolean).length === scenario.conditions.length &&
+            (scenario.isFromValue
+              ? valuedOptions(scenario.options)
+              : scenario.options)
         )
         .filter(Boolean)[0] || [];
-
     return result.length ? result : props.options || [];
   };
 
@@ -185,7 +191,7 @@ export const Field = (props: IField) => {
     if (!props.calculatedValue?.month) return "";
     if (!props.calculatedValue?.date) return "";
     const newDate = new Date(
-      formValues[props.calculatedValue.date].split(".").reverse().join("-"),
+      formValues[props.calculatedValue.date].split(".").reverse().join("-")
     );
     newDate.setMonth(newDate.getMonth() + props.calculatedValue.month);
     return "0" + newDate.toLocaleString("en-US", { month: "2-digit" });
@@ -205,18 +211,30 @@ export const Field = (props: IField) => {
             or.conditions
               .map(
                 (c) =>
-                  formValues[c.when] == c.is || !!formValues[c.when] == c.is,
+                  formValues[c.when] == c.is || !!formValues[c.when] == c.is
               )
-              .filter(Boolean).length === or.conditions.length,
+              .filter(Boolean).length === or.conditions.length
         )
         .filter(Boolean).length > 0
     : props.disabled;
-
+  const copyValue = () => {
+    console.log("started");
+    if (!props.dependantValue) return "";
+    console.log("ok");
+    return props.dependantValue.conditions
+      .map((c) => c.is.includes(formValues[c.when]))
+      .filter(Boolean).length === props.dependantValue.conditions.length
+      ? formValues[props.dependantValue.valueFrom]
+      : "";
+  };
   const getValue = () => {
     if (!Object.keys(JSON.parse(JSON.stringify(formValues))).length) return "";
+    if (props.dependantValue) return copyValue();
     if (sum) return sum;
+    
     if (formValues[props.name]) return formValues[props.name];
     if (props.type === "select" && options().length) return options()[0].value;
+    
     return "";
   };
 
