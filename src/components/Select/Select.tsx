@@ -50,8 +50,14 @@ export const Select = (props: IField) => {
   };
 
   useEffect(() => {
-    setFirstOption();
-    setTimeout(setInitValue, 100);
+    setTimeout(
+      () => {
+        setFirstOption();
+        setInitValue();
+      },
+
+      100,
+    );
   }, [optionsValue, props.value]);
 
   return (
