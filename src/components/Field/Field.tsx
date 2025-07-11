@@ -11,7 +11,7 @@ import { Button } from "../Button/Button";
 export interface IField {
   name: string;
   type: "text" | "select" | "number" | "date" | "button" | "file";
-  calculatedValue?: TSimpleAddition & TMonthAddition;
+  calculatedValue?: ICalculatedValue;
   conditionalDisabled?: IConditionalDisabled[];
   dependentOptions?: IDependentOptions[];
   disabled?: boolean;
@@ -26,9 +26,13 @@ export interface IField {
   patterns?: IPattern[];
   value?: string;
 }
-export type TSimpleAddition = string[];
 
-export type TMonthAddition = { date: string; month: number };
+export interface ICalculatedValue {
+  expression?: string;
+  date?: string;
+  month?: number;
+}
+
 export interface ICondition {
   when: string;
   is: string | boolean;
@@ -42,6 +46,7 @@ export interface IConditionMulti {
 export interface IDependentOptions {
   conditions: IConditionMulti[];
   options: IOption[];
+  isFromValue?: boolean;
 }
 
 export interface IConditionalDisabled {
@@ -142,30 +147,37 @@ export const Field = (props: IField) => {
   const options = (): IOption[] => {
     if (!props.dependentOptions) return props.options || [];
 
+    const valuedOptions = (opts: IOption[]) => {
+      return opts.map((o) => {
+        return {
+          label: formValues[o.label],
+          value: formValues[o.value],
+        };
+      });
+    };
+
     const result: IOption[] =
       props.dependentOptions
-        .map(
-          (scenario) =>
-            scenario.conditions
-              .map(
-                (c) =>
-                  c.is.includes(formValues[c.when]) ||
-                  c.is.includes(!!formValues[c.when]),
-              )
-              .filter(Boolean).length === scenario.conditions.length &&
-            scenario.options,
+        .map((scenario) =>
+          scenario.conditions
+            .map(
+              (c) =>
+                c.is.includes(formValues[c.when]) ||
+                c.is.includes(!!formValues[c.when]),
+            )
+            .filter(Boolean).length === scenario.conditions.length &&
+          scenario.isFromValue
+            ? valuedOptions(scenario.options)
+            : scenario.options,
         )
         .filter(Boolean)[0] || [];
 
     return result.length ? result : props.options || [];
   };
-  const simpleAddition = () =>
-    props.calculatedValue?.length
-      ? props.calculatedValue
-          .map((v) => parseFloat(formValues[v]) || 0)
-          .reduce((accumulator, currentValue) => accumulator + currentValue, 0)
-          .toLocaleString("en-US")
-          .replace(/\,/g, "")
+
+  const evalExpression = () =>
+    props.calculatedValue?.expression
+      ? eval(props.calculatedValue.expression)
       : "";
 
   const monthAddition = () => {
@@ -181,7 +193,7 @@ export const Field = (props: IField) => {
 
   const getSum = () => {
     if (!props.calculatedValue) return "";
-    if (props.calculatedValue.length) return simpleAddition();
+    if (props.calculatedValue.expression) return evalExpression();
     if (props.calculatedValue.date) return monthAddition();
     return "";
   };
