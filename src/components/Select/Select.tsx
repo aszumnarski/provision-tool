@@ -25,29 +25,40 @@ export const Select = (props: IField) => {
         ));
   };
 
-  useEffect(() => {
-    if (props.type === "select" && props.value) {
-      setFormValues((formValues: any) => {
-        return {
-          ...formValues,
-          [props.name]: props.value,
-        };
-      });
-    }
-  }, [props.value]);
-
   const optionsValue = (props.options && props.options[0]?.value) || "";
 
-  useEffect(() => {
-    if (props.type === "select" && props.options) {
-      setFormValues((formValues: any) => {
+  const setFirstOption = async () => {
+    if (props.type === "select" && props.options && optionsValue) {
+      await setFormValues((formValues: any) => {
         return {
           ...formValues,
           [props.name]: optionsValue,
         };
       });
     }
-  }, [optionsValue]);
+  };
+
+  const setInitValue = async () => {
+    if (props.type === "select" && props.value) {
+      await setFormValues((formValues: any) => {
+        return {
+          ...formValues,
+          [props.name]: props.value,
+        };
+      });
+    }
+  };
+
+  useEffect(() => {
+    setTimeout(
+      () => {
+        setFirstOption();
+        setInitValue();
+      },
+
+      100,
+    );
+  }, [optionsValue, props.value]);
 
   return (
     <div className={className}>

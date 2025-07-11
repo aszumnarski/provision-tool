@@ -123,7 +123,7 @@ export const costCenter: IField = {
   type: "text",
   patterns: [
     h.required(
-      "This field is required when WBS Element or Sales Document or Sales Document Item are empty"
+      "This field is required when WBS Element or Sales Document or Sales Document Item are empty",
     ),
   ],
   conditionalDisabled: [
@@ -317,7 +317,7 @@ export const wbs: IField = {
   type: "text",
   patterns: [
     h.required(
-      "This field is required when Cost Center or Sales Document or Sales Document Item are empty"
+      "This field is required when Cost Center or Sales Document or Sales Document Item are empty",
     ),
   ],
   conditionalDisabled: [
@@ -511,7 +511,7 @@ export const salesDocument: IField = {
   type: "text",
   patterns: [
     h.required(
-      "This field is required when Cost Center or WBS Element are empty"
+      "This field is required when Cost Center or WBS Element are empty",
     ),
   ],
   conditionalDisabled: [
@@ -697,7 +697,7 @@ export const salesDocumentItem: IField = {
   type: "text",
   patterns: [
     h.required(
-      "This field is required when Cost Center or WBS Element are empty"
+      "This field is required when Cost Center or WBS Element are empty",
     ),
   ],
   conditionalDisabled: [
@@ -1380,7 +1380,7 @@ export const glCreditAccount: IField = {
   name: "glCreditAccount",
   label: "GL-Credit Account",
   type: "select",
-  disabled: false,
+  disabled: true,
   dependentOptions: [
     {
       conditions: [

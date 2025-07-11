@@ -26,9 +26,9 @@ export interface IField {
   patterns?: IPattern[];
   value?: string;
 }
-export type TSimpleAddition = string[] 
+export type TSimpleAddition = string[];
 
-export type TMonthAddition = {date:string, month:number}
+export type TMonthAddition = { date: string; month: number };
 export interface ICondition {
   when: string;
   is: string | boolean;
@@ -91,16 +91,20 @@ export const Field = (props: IField) => {
       lt: () => {
         const fieldName = pattern.split("_")[1];
         const fieldValue = formValues[fieldName];
-        return value &&
+        return (
+          value &&
           value.split(".").reverse().join("-") <
-            fieldValue.split(".").reverse().join("-");
+            fieldValue.split(".").reverse().join("-")
+        );
       },
       gt: () => {
         const fieldName = pattern.split("_")[1];
         const fieldValue = formValues[fieldName];
-        return value &&
+        return (
+          value &&
           value.split(".").reverse().join("-") >
-            fieldValue.split(".").reverse().join("-");
+            fieldValue.split(".").reverse().join("-")
+        );
       },
     };
     const patternFromToken =
@@ -146,37 +150,41 @@ export const Field = (props: IField) => {
               .map(
                 (c) =>
                   c.is.includes(formValues[c.when]) ||
-                  c.is.includes(!!formValues[c.when])
+                  c.is.includes(!!formValues[c.when]),
               )
               .filter(Boolean).length === scenario.conditions.length &&
-            scenario.options
+            scenario.options,
         )
         .filter(Boolean)[0] || [];
 
     return result.length ? result : props.options || [];
   };
-  const simpleAddition = () => props.calculatedValue?.length
-    ? props.calculatedValue
-        .map((v) => parseFloat(formValues[v]) || 0)
-        .reduce((accumulator, currentValue) => accumulator + currentValue, 0)
-        .toLocaleString("en-US")
-        .replace(/\,/g, "")
-    : "";
+  const simpleAddition = () =>
+    props.calculatedValue?.length
+      ? props.calculatedValue
+          .map((v) => parseFloat(formValues[v]) || 0)
+          .reduce((accumulator, currentValue) => accumulator + currentValue, 0)
+          .toLocaleString("en-US")
+          .replace(/\,/g, "")
+      : "";
 
   const monthAddition = () => {
-    if(!props.calculatedValue?.month) return "";
-    if(!props.calculatedValue?.date) return "";
-    const newDate = new Date(formValues[props.calculatedValue.date].split(".").reverse().join("-"));
+    if (!Object.keys(JSON.parse(JSON.stringify(formValues))).length) return "";
+    if (!props.calculatedValue?.month) return "";
+    if (!props.calculatedValue?.date) return "";
+    const newDate = new Date(
+      formValues[props.calculatedValue.date].split(".").reverse().join("-"),
+    );
     newDate.setMonth(newDate.getMonth() + props.calculatedValue.month);
-    return "0" + newDate.toLocaleString("en-US",{month:"2-digit"});
-  }   
+    return "0" + newDate.toLocaleString("en-US", { month: "2-digit" });
+  };
 
   const getSum = () => {
-    if(!props.calculatedValue) return "";
-    if(props.calculatedValue.length) return simpleAddition();
-    if(props.calculatedValue.date) return monthAddition();
+    if (!props.calculatedValue) return "";
+    if (props.calculatedValue.length) return simpleAddition();
+    if (props.calculatedValue.date) return monthAddition();
     return "";
-  } 
+  };
   const sum = getSum();
   const disabled = props.conditionalDisabled
     ? props.conditionalDisabled
@@ -185,16 +193,26 @@ export const Field = (props: IField) => {
             or.conditions
               .map(
                 (c) =>
-                  formValues[c.when] == c.is || !!formValues[c.when] == c.is
+                  formValues[c.when] == c.is || !!formValues[c.when] == c.is,
               )
-              .filter(Boolean).length === or.conditions.length
+              .filter(Boolean).length === or.conditions.length,
         )
         .filter(Boolean).length > 0
     : props.disabled;
-  const value = sum ? sum : formValues ? formValues[props.name] : "";
+
+  const getValue = () => {
+    if (!Object.keys(JSON.parse(JSON.stringify(formValues))).length) return "";
+    if (sum) return sum;
+    if (formValues[props.name]) return formValues[props.name];
+    if (props.type === "select" && options().length) return options()[0].value;
+    return "";
+  };
+
+  const value = getValue();
   const error = formErrors[props.name];
   const enhancedProps = {
     ...props,
+
     onChange,
     error,
     onBlur,

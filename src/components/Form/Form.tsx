@@ -27,7 +27,6 @@ export function Form({ rows }: IForm) {
 
   useEffect(() => {
     setFormValues(createFormState(rows, "initValue"));
-    setTimeout(setFormValues(createFormState(rows, "initValue")),50);
     setPatterns(createFormState(rows, "patterns"));
   }, []);
 
@@ -53,10 +52,7 @@ export function Form({ rows }: IForm) {
   }
   const onSubmit: FormEventHandler<HTMLFormElement> = (e) => {
     e.preventDefault();
-    // setFormErrors({ name1: "Jakiś błąd" });
-    // validateForm();
   };
-  console.log(formValues)
   return (
     <form onSubmit={onSubmit} className="form">
       <div className="row-wrapper">
