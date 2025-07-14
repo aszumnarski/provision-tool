@@ -14,7 +14,7 @@ export interface IField {
   calculatedValue?: ICalculatedValue;
   conditionalDisabled?: IConditionalDisabled[];
   dependentOptions?: IDependentOptions[];
-  dependantValue?: IDependentValue;
+  dependantValue?: IDependentValue[];
   disabled?: boolean;
   error?: string;
   hidden?: boolean;
@@ -217,24 +217,25 @@ export const Field = (props: IField) => {
         )
         .filter(Boolean).length > 0
     : props.disabled;
+
   const copyValue = () => {
-    console.log("started");
     if (!props.dependantValue) return "";
-    console.log("ok");
-    return props.dependantValue.conditions
-      .map((c) => c.is.includes(formValues[c.when]))
-      .filter(Boolean).length === props.dependantValue.conditions.length
-      ? formValues[props.dependantValue.valueFrom]
-      : "";
+
+    const match = props.dependantValue.find((or) =>
+      or.conditions.some((c) => c.is.includes(formValues[c.when]))
+    );
+
+    return match ? formValues[match.valueFrom] : "";
   };
+
   const getValue = () => {
     if (!Object.keys(JSON.parse(JSON.stringify(formValues))).length) return "";
     if (props.dependantValue) return copyValue();
     if (sum) return sum;
-    
+
     if (formValues[props.name]) return formValues[props.name];
     if (props.type === "select" && options().length) return options()[0].value;
-    
+
     return "";
   };
 

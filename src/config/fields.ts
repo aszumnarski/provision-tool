@@ -24,7 +24,7 @@ export const mode: IField = {
 export const provisionType: IField = {
   name: "provisionType",
   label: "Prov. Type",
-
+  initValue: "c83",
   type: "select",
   patterns: [h.required()],
   options: [
@@ -43,7 +43,7 @@ export const provisionType: IField = {
 export const subType: IField = {
   name: "subType",
   label: "Subtype",
-
+  initValue: "y09",
   type: "select",
   conditionalDisabled: h.inGetState,
   dependentOptions: [
@@ -905,7 +905,7 @@ export const TlReleaseUpdate: IField = {
   label: "TL-Release - Update",
   initValue: "0",
   type: "number",
-  conditionalDisabled: h.inGetState,
+  disabled: true,
 };
 
 export const TlRelease: IField = {
@@ -921,7 +921,7 @@ export const TlUsageUpdate: IField = {
   label: "TL-Usage - Update",
   initValue: "0",
   type: "number",
-  conditionalDisabled: h.inGetState,
+  disabled: true,
 };
 
 export const TlUsage: IField = {
@@ -936,8 +936,18 @@ export const TlCreationAdditionUpdate: IField = {
   name: "TlCreationAdditionUpdate",
   label: "TL-Creation/Addition - Update",
   initValue: "0",
+  dependantValue: [
+    {
+      conditions: [{ when: "ledgerGroup", is: ["al"] }],
+      valueFrom: "0lCreationAdditionUpdate",
+    },
+    {
+      conditions: [{ when: "ledgerGroup", is: ["il"] }],
+      valueFrom: "2lCreationAdditionUpdate",
+    },
+  ],
   type: "number",
-  conditionalDisabled: h.inGetState,
+  disabled: true,
 };
 
 export const TlCreationAddition: IField = {
@@ -976,8 +986,58 @@ export const _2lReleaseUpdate: IField = {
   name: "2lReleaseUpdate",
   label: "2L-Release - Update",
   initValue: "0",
+  dependantValue: [
+    {
+      conditions: [{ when: "ledgerGroup", is: ["al", "il"] }],
+      valueFrom: "0lReleaseUpdate",
+    },
+  ],
   type: "number",
-  conditionalDisabled: h.inGetState,
+  conditionalDisabled: [
+    ...h.inGetState,
+    {
+      conditions: [{ when: "ledgerGroup", is: "al" }],
+    },
+    {
+      conditions: [{ when: "ledgerGroup", is: "0l" }],
+    },
+    {
+      conditions: [{ when: "ledgerGroup", is: "il" }],
+    },
+    {
+      conditions: [{ when: "subType", is: "y07" }],
+    },
+    {
+      conditions: [{ when: "subType", is: "y27c" }],
+    },
+    {
+      conditions: [{ when: "subType", is: "y07c" }],
+    },
+    {
+      conditions: [{ when: "subType", is: "y091" }],
+    },
+    {
+      conditions: [{ when: "subType", is: "y091c" }],
+    },
+    {
+      conditions: [{ when: "subType", is: "y09" }],
+    },
+    {
+      conditions: [{ when: "subType", is: "y09c" }],
+    },
+    {
+      conditions: [{ when: "subType", is: "aed" }],
+    },
+    {
+      conditions: [{ when: "subType", is: "ccc" }],
+    },
+    {
+      conditions: [{ when: "subType", is: "con" }],
+    },
+    {
+      conditions: [{ when: "subType", is: "cwe" }],
+    },
+  ],
 };
 
 export const _2lRelease: IField = {
@@ -992,8 +1052,61 @@ export const _2lUsageUpdate: IField = {
   name: "2lUsageUpdate",
   label: "2L-Usage - Update",
   initValue: "0",
+  dependantValue: [
+    {
+      conditions: [{ when: "ledgerGroup", is: ["al", "il"] }],
+      valueFrom: "0lUsageUpdate",
+    },
+  ],
   type: "number",
-  conditionalDisabled: h.inGetState,
+  conditionalDisabled: [
+    ...h.inGetState,
+    {
+      conditions: [{ when: "ledgerGroup", is: "al" }],
+    },
+    {
+      conditions: [{ when: "ledgerGroup", is: "0l" }],
+    },
+    {
+      conditions: [{ when: "ledgerGroup", is: "il" }],
+    },
+    {
+      conditions: [{ when: "subType", is: "y09" }],
+    },
+    {
+      conditions: [{ when: "subType", is: "y09c" }],
+    },
+    {
+      conditions: [{ when: "subType", is: "y28" }],
+    },
+    {
+      conditions: [{ when: "subType", is: "y08" }],
+    },
+    {
+      conditions: [{ when: "subType", is: "y28c" }],
+    },
+    {
+      conditions: [{ when: "subType", is: "y08c" }],
+    },
+    {
+      conditions: [{ when: "subType", is: "y092" }],
+    },
+    {
+      conditions: [{ when: "subType", is: "y092c" }],
+    },
+    {
+      conditions: [{ when: "subType", is: "aed" }],
+    },
+    {
+      conditions: [{ when: "subType", is: "ccc" }],
+    },
+    {
+      conditions: [{ when: "subType", is: "con" }],
+    },
+    {
+      conditions: [{ when: "subType", is: "cwe" }],
+    },
+  ],
 };
 
 export const _2lUsage: IField = {
@@ -1008,12 +1121,70 @@ export const _2lCreationAdditionUpdate: IField = {
   name: "2lCreationAdditionUpdate",
   label: "2L-Creation/Addition - Update",
   initValue: "0",
-  dependantValue: {
-    conditions: [{ when: "ledgerGroup", is: ["al", "il"] }],
-    valueFrom: "0lCreationAdditionUpdate",
-  },
+  dependantValue: [
+    {
+      conditions: [{ when: "ledgerGroup", is: ["al", "il"] }],
+      valueFrom: "0lCreationAdditionUpdate",
+    },
+  ],
   type: "number",
-  conditionalDisabled: h.inGetState,
+  conditionalDisabled: [
+    ...h.inGetState,
+    {
+      conditions: [{ when: "ledgerGroup", is: "al" }],
+    },
+    {
+      conditions: [{ when: "ledgerGroup", is: "0l" }],
+    },
+    {
+      conditions: [{ when: "ledgerGroup", is: "il" }],
+    },
+    {
+      conditions: [{ when: "subType", is: "y07" }],
+    },
+    {
+      conditions: [{ when: "subType", is: "y27c" }],
+    },
+    {
+      conditions: [{ when: "subType", is: "y07c" }],
+    },
+    {
+      conditions: [{ when: "subType", is: "y091" }],
+    },
+    {
+      conditions: [{ when: "subType", is: "y091c" }],
+    },
+    {
+      conditions: [{ when: "subType", is: "y28" }],
+    },
+    {
+      conditions: [{ when: "subType", is: "y08" }],
+    },
+    {
+      conditions: [{ when: "subType", is: "y28c" }],
+    },
+    {
+      conditions: [{ when: "subType", is: "y08c" }],
+    },
+    {
+      conditions: [{ when: "subType", is: "y092" }],
+    },
+    {
+      conditions: [{ when: "subType", is: "y092c" }],
+    },
+    {
+      conditions: [{ when: "subType", is: "aed" }],
+    },
+    {
+      conditions: [{ when: "subType", is: "ccc" }],
+    },
+    {
+      conditions: [{ when: "subType", is: "con" }],
+    },
+    {
+      conditions: [{ when: "subType", is: "cwe" }],
+    },
+  ],
 };
 
 export const _2lCreationAddition: IField = {
@@ -1038,7 +1209,7 @@ export const _0lClosingBalanceUpdate: IField = {
   initValue: "0",
   calculatedValue: {
     expression:
-      "Number(formValues['0lCreationAdditionUpdate']) + Number(formValues['0lUsageUpdate']) - Number(formValues['0lReleaseUpdate'])",
+      "Number(formValues['0lCreationAdditionUpdate']) - Number(formValues['0lUsageUpdate']) - Number(formValues['0lReleaseUpdate'])",
   },
   type: "number",
   disabled: true,
@@ -1057,7 +1228,48 @@ export const _0lReleaseUpdate: IField = {
   label: "0L-Release - Update",
   initValue: "0",
   type: "number",
-  conditionalDisabled: h.inGetState,
+  conditionalDisabled: [
+    ...h.inGetState,
+    {
+      conditions: [{ when: "subType", is: "y09" }],
+    },
+    {
+      conditions: [{ when: "subType", is: "y09c" }],
+    },
+    {
+      conditions: [{ when: "subType", is: "y27" }],
+    },
+    {
+      conditions: [{ when: "subType", is: "y07" }],
+    },
+    {
+      conditions: [{ when: "subType", is: "y27c" }],
+    },
+    {
+      conditions: [{ when: "subType", is: "y07c" }],
+    },
+    {
+      conditions: [{ when: "subType", is: "y091" }],
+    },
+    {
+      conditions: [{ when: "subType", is: "y091c" }],
+    },
+    {
+      conditions: [{ when: "ledgerGroup", is: "2l" }],
+    },
+    {
+      conditions: [{ when: "subType", is: "aed" }],
+    },
+    {
+      conditions: [{ when: "subType", is: "ccc" }],
+    },
+    {
+      conditions: [{ when: "subType", is: "con" }],
+    },
+    {
+      conditions: [{ when: "subType", is: "cwe" }],
+    },
+  ],
 };
 
 export const _0lRelease: IField = {
@@ -1073,7 +1285,48 @@ export const _0lUsageUpdate: IField = {
   label: "0L-Usage - Update",
   initValue: "0",
   type: "number",
-  conditionalDisabled: h.inGetState,
+  conditionalDisabled: [
+    ...h.inGetState,
+    {
+      conditions: [{ when: "subType", is: "y09" }],
+    },
+    {
+      conditions: [{ when: "subType", is: "y09c" }],
+    },
+    {
+      conditions: [{ when: "ledgerGroup", is: "2l" }],
+    },
+    {
+      conditions: [{ when: "subType", is: "y28" }],
+    },
+    {
+      conditions: [{ when: "subType", is: "y08" }],
+    },
+    {
+      conditions: [{ when: "subType", is: "y28c" }],
+    },
+    {
+      conditions: [{ when: "subType", is: "y08c" }],
+    },
+    {
+      conditions: [{ when: "subType", is: "y092" }],
+    },
+    {
+      conditions: [{ when: "subType", is: "y092c" }],
+    },
+    {
+      conditions: [{ when: "subType", is: "aed" }],
+    },
+    {
+      conditions: [{ when: "subType", is: "ccc" }],
+    },
+    {
+      conditions: [{ when: "subType", is: "con" }],
+    },
+    {
+      conditions: [{ when: "subType", is: "cwe" }],
+    },
+  ],
 };
 
 export const _0lUsage: IField = {
@@ -1092,10 +1345,55 @@ export const _0lCreationAdditionUpdate: IField = {
   conditionalDisabled: [
     ...h.inGetState,
     {
-      conditions: [
-        { when: "subType", is: "y09" },
-        { when: "ledgerGroup", is: "2l" },
-      ],
+      conditions: [{ when: "ledgerGroup", is: "2l" }],
+    },
+    {
+      conditions: [{ when: "subType", is: "y27" }],
+    },
+    {
+      conditions: [{ when: "subType", is: "y07" }],
+    },
+    {
+      conditions: [{ when: "subType", is: "y27c" }],
+    },
+    {
+      conditions: [{ when: "subType", is: "y07c" }],
+    },
+    {
+      conditions: [{ when: "subType", is: "y091" }],
+    },
+    {
+      conditions: [{ when: "subType", is: "y091c" }],
+    },
+    {
+      conditions: [{ when: "subType", is: "y28" }],
+    },
+    {
+      conditions: [{ when: "subType", is: "y08" }],
+    },
+    {
+      conditions: [{ when: "subType", is: "y28c" }],
+    },
+    {
+      conditions: [{ when: "subType", is: "y08c" }],
+    },
+    {
+      conditions: [{ when: "subType", is: "y092" }],
+    },
+    {
+      conditions: [{ when: "subType", is: "y092c" }],
+    },
+    {
+      conditions: [{ when: "subType", is: "aed" }],
+    },
+    {
+      conditions: [{ when: "subType", is: "ccc" }],
+    },
+    {
+      conditions: [{ when: "subType", is: "con" }],
+    },
+    {
+      conditions: [{ when: "subType", is: "cwe" }],
     },
   ],
 };
