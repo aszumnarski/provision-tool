@@ -888,6 +888,10 @@ export const TlClosingBalanceUpdate: IField = {
   name: "TlClosingBalanceUpdate",
   label: "TL-Closing Balance - Update",
   initValue: "0",
+  calculatedValue: {
+    expression:
+      "Number(formValues['tlCarryFwd']) + Number(formValues['tlCreationAddition']) + Number(formValues['tlCreationAdditionUpdate']) - Number(formValues['tlUsage']) - Number(formValues['tlUsageUpdate']) - Number(formValues['tlRelease']) - Number(formValues['tlReleaseUpdate'])",
+  },
   type: "number",
   disabled: true,
 };
@@ -942,7 +946,7 @@ export const TlCreationAdditionUpdate: IField = {
       valueFrom: "0lCreationAdditionUpdate",
     },
     {
-      conditions: [{ when: "ledgerGroup", is: ["il"] }],
+      conditions: [{ when: "ledgerGroup", is: ["0llt"] }],
       valueFrom: "2lCreationAdditionUpdate",
     },
   ],
@@ -970,6 +974,10 @@ export const _2lClosingBalanceUpdate: IField = {
   name: "2lClosingBalanceUpdate",
   label: "2L-Closing Balance - Update",
   initValue: "0",
+  calculatedValue: {
+    expression:
+      "Number(formValues['2lCarryFwd']) + Number(formValues['2lCreationAddition']) + Number(formValues['2lCreationAdditionUpdate']) - Number(formValues['2lUsage']) - Number(formValues['2lUsageUpdate']) - Number(formValues['2lRelease']) - Number(formValues['2lReleaseUpdate'])",
+  },
   type: "number",
   disabled: true,
 };
@@ -1209,7 +1217,7 @@ export const _0lClosingBalanceUpdate: IField = {
   initValue: "0",
   calculatedValue: {
     expression:
-      "Number(formValues['0lCreationAdditionUpdate']) - Number(formValues['0lUsageUpdate']) - Number(formValues['0lReleaseUpdate'])",
+      "Number(formValues['0lCarryFwd']) + Number(formValues['0lCreationAddition']) + Number(formValues['0lCreationAdditionUpdate']) - Number(formValues['0lUsage']) - Number(formValues['0lUsageUpdate']) - Number(formValues['0lRelease']) - Number(formValues['0lReleaseUpdate'])",
   },
   type: "number",
   disabled: true,
