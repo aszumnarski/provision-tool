@@ -53,32 +53,6 @@ export function Form({ rows }: IForm) {
   const onSubmit: FormEventHandler<HTMLFormElement> = (e) => {
     e.preventDefault();
   };
-  const balas2 =
-    Number(formValues["2lCarryFwd"]) +
-    Number(formValues["2lCreationAddition"]) +
-    Number(formValues["2lCreationAdditionUpdate"]) -
-    Number(formValues["2lUsage"]) -
-    Number(formValues["2lUsageUpdate"]) -
-    Number(formValues["2lRelease"]) -
-    Number(formValues["2lReleaseUpdate"]);
-  const balasT =
-    Number(formValues["TlCarryFwd"]) +
-    Number(formValues["TlCreationAddition"]) +
-    Number(formValues["TlCreationAdditionUpdate"]) -
-    Number(formValues["TlUsage"]) -
-    Number(formValues["TlUsageUpdate"]) -
-    Number(formValues["TlRelease"]) -
-    Number(formValues["TlReleaseUpdate"]);
-  console.log({
-    a: formValues["2lCarryFwd"],
-    b: formValues["2lCreationAddition"],
-    c: formValues["2lCreationAdditionUpdate"],
-    d: formValues["2lUsage"],
-    e: formValues["2lUsageUpdate"],
-    f: formValues["2lRelease"],
-    g: formValues["2lReleaseUpdate"],
-  });
-  console.log({ balasT,balas2, formValues, cr: formValues["appCreator"] });
   return (
     <form onSubmit={onSubmit} className="form">
       <div className="row-wrapper">
