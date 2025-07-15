@@ -19,6 +19,24 @@ export const min = (minVal: number, optionalmessage?: string) => {
   };
 };
 
+export const max = (maxVal: number, optionalmessage?: string) => {
+  return {
+    reg: `max_${maxVal}`,
+    message:
+      optionalmessage ||
+      `The phrase is too long - maximum ${maxVal} characters are required`,
+  };
+};
+
+export const maxSize = (maxVal: number, optionalmessage?: string) => {
+  return {
+    reg: `maxSize_${maxVal}`,
+    message:
+      optionalmessage ||
+      `File size cannot exceed ${maxVal} MB`,
+  };
+};
+
 export const inGetState = [
   {
     conditions: [

@@ -86,6 +86,8 @@ export const Field = (props: IField) => {
     setPatterns,
     //@ts-ignore
     setAtt,
+    //@ts-ignore
+    att,
   } = useContext(FormContext);
 
   function validatePattern(pattern: string, value?: string) {
@@ -98,6 +100,16 @@ export const Field = (props: IField) => {
       min: () => {
         const minimum = Number(pattern.split("_")[1]);
         return value && value?.length < minimum;
+      },
+      max: () => {
+        const maximum = Number(pattern.split("_")[1]);
+        return value && value?.length > maximum;
+      },
+      maxSize: () => {
+        //console.log("hi");
+        const maximum = Number(pattern.split("_")[1]);
+        //return att && Number(att.fileSize) / 1024 / 1024 > maximum;
+        return att.fileSize > maximum;
       },
       lt: () => {
         const fieldName = pattern.split("_")[1];
@@ -143,7 +155,11 @@ export const Field = (props: IField) => {
   const onChange = (e: ChangeEvent) => {
     const input = e.target as HTMLInputElement;
     if (input.files) {
-      setAtt({ fileName: input.files[0].name, fileData: input.files[0] });
+      setAtt({
+        fileName: input.files[0].name,
+        fileData: input.files[0],
+        fileSize: input.files[0].size,
+      });
     }
     const val =
       props.type === "number" ? input.value.replace("-", "") : input.value;
@@ -170,12 +186,12 @@ export const Field = (props: IField) => {
               .map(
                 (c) =>
                   c.is.includes(formValues[c.when]) ||
-                  c.is.includes(!!formValues[c.when]),
+                  c.is.includes(!!formValues[c.when])
               )
               .filter(Boolean).length === scenario.conditions.length &&
             (scenario.isFromValue
               ? valuedOptions(scenario.options)
-              : scenario.options),
+              : scenario.options)
         )
         .filter(Boolean)[0] || [];
     return result.length ? result : props.options || [];
@@ -191,7 +207,7 @@ export const Field = (props: IField) => {
     if (!props.calculatedValue?.month) return "";
     if (!props.calculatedValue?.date) return "";
     const newDate = new Date(
-      formValues[props.calculatedValue.date].split(".").reverse().join("-"),
+      formValues[props.calculatedValue.date].split(".").reverse().join("-")
     );
     newDate.setMonth(newDate.getMonth() + props.calculatedValue.month);
     return "0" + newDate.toLocaleString("en-US", { month: "2-digit" });
@@ -211,9 +227,9 @@ export const Field = (props: IField) => {
             or.conditions
               .map(
                 (c) =>
-                  formValues[c.when] == c.is || !!formValues[c.when] == c.is,
+                  formValues[c.when] == c.is || !!formValues[c.when] == c.is
               )
-              .filter(Boolean).length === or.conditions.length,
+              .filter(Boolean).length === or.conditions.length
         )
         .filter(Boolean).length > 0
     : props.disabled;
@@ -222,7 +238,7 @@ export const Field = (props: IField) => {
     if (!props.dependantValue) return "";
 
     const match = props.dependantValue.find((or) =>
-      or.conditions.every((c) => c.is.includes(formValues[c.when])),
+      or.conditions.every((c) => c.is.includes(formValues[c.when]))
     );
 
     return match ? formValues[match.valueFrom] : formValues[props.name];

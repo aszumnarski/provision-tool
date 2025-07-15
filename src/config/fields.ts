@@ -108,6 +108,7 @@ export const attachement: IField = {
   label: "Attachement",
   type: "file",
   conditionalDisabled: h.inGetState,
+  patterns: [h.maxSize(10)],
 };
 
 export const appNumber: IField = {
@@ -1454,7 +1455,7 @@ export const description2: IField = {
   name: "description2",
   label: "Description 2 (Free Text)",
   type: "text",
-  patterns: [h.required(), h.min(6)],
+  patterns: [h.required(), h.max(50)],
   conditionalDisabled: h.inGetState,
 };
 
@@ -1462,7 +1463,7 @@ export const description1: IField = {
   name: "description1",
   label: "Description 1 (Fixed Text)",
   type: "text",
-  patterns: [h.required(), h.min(6)],
+  patterns: [h.required()],
   conditionalDisabled: h.inModifyState,
 };
 
