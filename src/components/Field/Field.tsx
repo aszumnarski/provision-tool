@@ -170,12 +170,12 @@ export const Field = (props: IField) => {
               .map(
                 (c) =>
                   c.is.includes(formValues[c.when]) ||
-                  c.is.includes(!!formValues[c.when])
+                  c.is.includes(!!formValues[c.when]),
               )
               .filter(Boolean).length === scenario.conditions.length &&
             (scenario.isFromValue
               ? valuedOptions(scenario.options)
-              : scenario.options)
+              : scenario.options),
         )
         .filter(Boolean)[0] || [];
     return result.length ? result : props.options || [];
@@ -191,7 +191,7 @@ export const Field = (props: IField) => {
     if (!props.calculatedValue?.month) return "";
     if (!props.calculatedValue?.date) return "";
     const newDate = new Date(
-      formValues[props.calculatedValue.date].split(".").reverse().join("-")
+      formValues[props.calculatedValue.date].split(".").reverse().join("-"),
     );
     newDate.setMonth(newDate.getMonth() + props.calculatedValue.month);
     return "0" + newDate.toLocaleString("en-US", { month: "2-digit" });
@@ -211,9 +211,9 @@ export const Field = (props: IField) => {
             or.conditions
               .map(
                 (c) =>
-                  formValues[c.when] == c.is || !!formValues[c.when] == c.is
+                  formValues[c.when] == c.is || !!formValues[c.when] == c.is,
               )
-              .filter(Boolean).length === or.conditions.length
+              .filter(Boolean).length === or.conditions.length,
         )
         .filter(Boolean).length > 0
     : props.disabled;
@@ -222,10 +222,10 @@ export const Field = (props: IField) => {
     if (!props.dependantValue) return "";
 
     const match = props.dependantValue.find((or) =>
-      or.conditions.some((c) => c.is.includes(formValues[c.when]))
+      or.conditions.every((c) => c.is.includes(formValues[c.when])),
     );
 
-    return match ? formValues[match.valueFrom] : "";
+    return match ? formValues[match.valueFrom] : formValues[props.name];
   };
 
   const getValue = () => {
