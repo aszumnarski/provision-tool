@@ -890,7 +890,7 @@ export const TlClosingBalanceUpdate: IField = {
   initValue: "0",
   calculatedValue: {
     expression:
-      "Number(formValues['tlCarryFwd']) + Number(formValues['tlCreationAddition']) + Number(formValues['tlCreationAdditionUpdate']) - Number(formValues['tlUsage']) - Number(formValues['tlUsageUpdate']) - Number(formValues['tlRelease']) - Number(formValues['tlReleaseUpdate'])",
+      "Number(formValues['TlCarryFwd']) + Number(formValues['TlCreationAddition']) + Number(formValues['TlCreationAdditionUpdate']) - Number(formValues['TlUsage']) - Number(formValues['TlUsageUpdate']) - Number(formValues['TlRelease']) - Number(formValues['TlReleaseUpdate'])",
   },
   type: "number",
   disabled: true,

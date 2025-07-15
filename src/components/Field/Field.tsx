@@ -298,5 +298,6 @@ export const Field = (props: IField) => {
     date: DateInput,
     button: Button,
   };
+    console.log({name:props.name, ev: enhancedProps.value, fv: formValues[props.name]})
   return props.type ? typeMap[props.type](enhancedProps) : "";
 };
