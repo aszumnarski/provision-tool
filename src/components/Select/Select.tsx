@@ -12,14 +12,7 @@ export const Select = (props: IField) => {
     return !props.options
       ? ""
       : props.options.map((o) => (
-          <option
-            key={o.value}
-            value={o.value}
-            selected={
-              o.value ===
-              (props.value || (props.options && props.options[0].value))
-            }
-          >
+          <option key={o.value} value={o.value}>
             {o.label}
           </option>
         ));
@@ -27,38 +20,22 @@ export const Select = (props: IField) => {
 
   const optionsValue = (props.options && props.options[0]?.value) || "";
 
-  const setFirstOption = async () => {
-    if (props.type === "select" && props.options && optionsValue) {
-      await setFormValues((formValues: any) => {
-        return {
-          ...formValues,
-          [props.name]: optionsValue,
-        };
-      });
-    }
-  };
-
-  const setInitValue = async () => {
-    if (props.type === "select" && props.value) {
-      await setFormValues((formValues: any) => {
-        return {
-          ...formValues,
-          [props.name]: props.value,
-        };
-      });
+  const setFirstOption = (optionsValue: string) => {
+    if (props.type === "select") {
+      setTimeout(() => {
+        setFormValues((formValues: any) => {
+          return {
+            ...formValues,
+            [props.name]: optionsValue,
+          };
+        });
+      }, 100);
     }
   };
 
   useEffect(() => {
-    setTimeout(
-      () => {
-        setFirstOption();
-        setInitValue();
-      },
-
-      100,
-    );
-  }, [optionsValue, props.value]);
+    setFirstOption(optionsValue);
+  }, [optionsValue]);
 
   return (
     <div className={className}>
@@ -79,5 +56,3 @@ export const Select = (props: IField) => {
     </div>
   );
 };
-
-
