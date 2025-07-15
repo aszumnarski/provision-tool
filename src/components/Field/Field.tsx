@@ -298,6 +298,15 @@ export const Field = (props: IField) => {
     date: DateInput,
     button: Button,
   };
-    console.log({name:props.name, ev: enhancedProps.value, fv: formValues[props.name]})
+
+  useEffect(() => {
+    if (enhancedProps.value !== formValues[props.name]) {
+      setFormValues({
+        ...formValues,
+        [props.name]: enhancedProps.value,
+      });
+    }
+  });
+
   return props.type ? typeMap[props.type](enhancedProps) : "";
 };
