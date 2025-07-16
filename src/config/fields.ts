@@ -885,60 +885,60 @@ export const appCreator: IField = {
   disabled: true,
 };
 
-export const TlClosingBalanceUpdate: IField = {
-  name: "TlClosingBalanceUpdate",
+export const tlClosingBalanceUpdate: IField = {
+  name: "tlClosingBalanceUpdate",
   label: "TL-Closing Balance - Update",
   initValue: "0",
   calculatedValue: {
     expression:
-      "Number(formValues['TlCarryFwd']) + Number(formValues['TlCreationAddition']) + Number(formValues['TlCreationAdditionUpdate']) - Number(formValues['TlUsage']) - Number(formValues['TlUsageUpdate']) - Number(formValues['TlRelease']) - Number(formValues['TlReleaseUpdate'])",
+      "Number(formValues['tlCarryFwd']) + Number(formValues['tlCreationAddition']) + Number(formValues['tlCreationAdditionUpdate']) - Number(formValues['tlUsage']) - Number(formValues['tlUsageUpdate']) - Number(formValues['tlRelease']) - Number(formValues['tlReleaseUpdate'])",
   },
   type: "number",
   disabled: true,
 };
 
-export const TlClosingBalance: IField = {
-  name: "TlClosingBalance",
+export const tlClosingBalance: IField = {
+  name: "tlClosingBalance",
   label: "TL-Closing Balance - Posted & Booked",
   initValue: "0",
   type: "number",
   disabled: true,
 };
 
-export const TlReleaseUpdate: IField = {
-  name: "TlReleaseUpdate",
+export const tlReleaseUpdate: IField = {
+  name: "tlReleaseUpdate",
   label: "TL-Release - Update",
   initValue: "0",
   type: "number",
   disabled: true,
 };
 
-export const TlRelease: IField = {
-  name: "TlRelease",
+export const tlRelease: IField = {
+  name: "tlRelease",
   label: "TL-Release - Posted & Booked",
   initValue: "0",
   type: "number",
   disabled: true,
 };
 
-export const TlUsageUpdate: IField = {
-  name: "TlUsageUpdate",
+export const tlUsageUpdate: IField = {
+  name: "tlUsageUpdate",
   label: "TL-Usage - Update",
   initValue: "0",
   type: "number",
   disabled: true,
 };
 
-export const TlUsage: IField = {
-  name: "TlUsage",
+export const tlUsage: IField = {
+  name: "tlUsage",
   label: "TL-Usage - Posted & Booked",
   initValue: "0",
   type: "number",
   disabled: true,
 };
 
-export const TlCreationAdditionUpdate: IField = {
-  name: "TlCreationAdditionUpdate",
+export const tlCreationAdditionUpdate: IField = {
+  name: "tlCreationAdditionUpdate",
   label: "TL-Creation/Addition - Update",
   initValue: "0",
   dependantValue: [
@@ -955,16 +955,16 @@ export const TlCreationAdditionUpdate: IField = {
   disabled: true,
 };
 
-export const TlCreationAddition: IField = {
-  name: "TlCreationAddition",
+export const tlCreationAddition: IField = {
+  name: "tlCreationAddition",
   label: "TL-Creation/Addition - Posted & Booked",
   initValue: "0",
   type: "number",
   disabled: true,
 };
 
-export const TlCarryFwd: IField = {
-  name: "TlCarryFwd",
+export const tlCarryFwd: IField = {
+  name: "tlCarryFwd",
   label: "TL-Carry Fwd from Last Year",
   initValue: "0",
   type: "number",
@@ -977,8 +977,10 @@ export const _2lClosingBalanceUpdate: IField = {
   initValue: "0",
   calculatedValue: {
     expression:
+      //"Number(formValues['2lCarryFwd']) + Number(formValues['2lCreationAddition']) + Number(formValues['2lCreationAdditionUpdate']) - Number(formValues['2lUsage']) - Number(formValues['2lUsageUpdate']) - Number(formValues['2lRelease']) - Number(formValues['2lReleaseUpdate'])",
       "Number(formValues['2lCarryFwd']) + Number(formValues['2lCreationAddition']) + Number(formValues['2lCreationAdditionUpdate']) - Number(formValues['2lUsage']) - Number(formValues['2lUsageUpdate']) - Number(formValues['2lRelease']) - Number(formValues['2lReleaseUpdate'])",
-  },
+
+    },
   type: "number",
   disabled: true,
 };
@@ -1132,7 +1134,11 @@ export const _2lCreationAdditionUpdate: IField = {
   initValue: "0",
   dependantValue: [
     {
-      conditions: [{ when: "ledgerGroup", is: ["al", "il"] }],
+      conditions: [{ when: "ledgerGroup", is: ["al"] }],
+      valueFrom: "0lCreationAdditionUpdate",
+    },
+    {
+      conditions: [{ when: "ledgerGroup", is: ["il"] }],
       valueFrom: "0lCreationAdditionUpdate",
     },
   ],

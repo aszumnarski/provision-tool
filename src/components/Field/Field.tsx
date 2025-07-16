@@ -108,8 +108,8 @@ export const Field = (props: IField) => {
       maxSize: () => {
         //console.log("hi");
         const maximum = Number(pattern.split("_")[1]);
-        //return att && Number(att.fileSize) / 1024 / 1024 > maximum;
-        return att.fileSize > maximum;
+        return att ? Number(att.fileSize) / 1024 / 1024 > maximum : false;
+        //return att ? att.fileSize > maximum : false;
       },
       lt: () => {
         const fieldName = pattern.split("_")[1];
@@ -154,12 +154,14 @@ export const Field = (props: IField) => {
 
   const onChange = (e: ChangeEvent) => {
     const input = e.target as HTMLInputElement;
-    if (input.files) {
+    if (input.files && input.files[0]) {
       setAtt({
         fileName: input.files[0].name,
         fileData: input.files[0],
         fileSize: input.files[0].size,
       });
+    }else{
+      setAtt(null);
     }
     const val =
       props.type === "number" ? input.value.replace("-", "") : input.value;
@@ -314,7 +316,6 @@ export const Field = (props: IField) => {
     date: DateInput,
     button: Button,
   };
-
   useEffect(() => {
     if (enhancedProps.value !== formValues[props.name]) {
       setFormValues({
@@ -323,6 +324,5 @@ export const Field = (props: IField) => {
       });
     }
   });
-
   return props.type ? typeMap[props.type](enhancedProps) : "";
 };
