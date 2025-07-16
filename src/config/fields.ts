@@ -103,9 +103,9 @@ export const submitButton: IField = {
   type: "button",
 };
 
-export const attachement: IField = {
-  name: "attachement",
-  label: "Attachement",
+export const attachment: IField = {
+  name: "attachment",
+  label: "Attachment",
   type: "file",
   conditionalDisabled: h.inGetState,
   patterns: [h.maxSize(10)],

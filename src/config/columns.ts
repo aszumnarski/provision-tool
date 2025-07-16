@@ -90,6 +90,6 @@ export const tax = {
   header: "TAX",
 };
 
-export const attach = { fields: [f.attachement] };
+export const attach = { fields: [f.attachment] };
 
 export const empty = { fields: [] };
