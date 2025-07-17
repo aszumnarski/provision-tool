@@ -24,7 +24,7 @@ export const max = (maxVal: number, optionalmessage?: string) => {
     reg: `max_${maxVal}`,
     message:
       optionalmessage ||
-      `The phrase is too long - maximum ${maxVal} characters are required`,
+      `The phrase is too long - maximum ${maxVal} characters are allowed`,
   };
 };
 

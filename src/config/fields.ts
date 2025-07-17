@@ -72,22 +72,27 @@ export const subType: IField = {
       conditions: [{ when: "mode", is: ["create"] }],
       options: [pSubTypes.y09],
     },
-  ],
-  options: [
-    pSubTypes.y07,
-    pSubTypes.y07c,
-    pSubTypes.y08,
-    pSubTypes.y08c,
-    pSubTypes.y09,
-    pSubTypes.y09c,
-    pSubTypes.y27,
-    pSubTypes.y27c,
-    pSubTypes.y28,
-    pSubTypes.y28c,
-    pSubTypes.aed,
-    pSubTypes.ccc,
-    pSubTypes.con,
-    pSubTypes.cwe,
+    {
+      conditions: [
+        { when: "mode", is: ["modify"] },
+      ],
+      options: [
+        pSubTypes.y09,
+        pSubTypes.y09c,
+        pSubTypes.y07,
+        pSubTypes.y07c,
+        pSubTypes.y08,
+        pSubTypes.y08c,
+        pSubTypes.y27,
+        pSubTypes.y27c,
+        pSubTypes.y28,
+        pSubTypes.y28c,
+        pSubTypes.aed,
+        pSubTypes.ccc,
+        pSubTypes.con,
+        pSubTypes.cwe,
+      ],
+    },
   ],
 };
 
@@ -1461,7 +1466,7 @@ export const description2: IField = {
   name: "description2",
   label: "Description 2 (Free Text)",
   type: "text",
-  patterns: [h.required(), h.max(50)],
+  maxlength: "50",
   conditionalDisabled: h.inGetState,
 };
 

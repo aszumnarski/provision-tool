@@ -164,7 +164,7 @@ export const Field = (props: IField) => {
       setAtt(null);
     }
     const val =
-      props.type === "number" ? input.value.replace("-", "") : input.value;
+      props.type === "number" ? input.value.replace(/-/g, "") : input.value;
     setFormValues({ ...formValues, [props.name]: val });
   };
 
