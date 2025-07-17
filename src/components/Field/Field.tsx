@@ -88,6 +88,8 @@ export const Field = (props: IField) => {
     setAtt,
     //@ts-ignore
     att,
+    //@ts-ignore
+    userCompanyCodes,
   } = useContext(FormContext);
 
   function validatePattern(pattern: string, value?: string) {
@@ -129,6 +131,10 @@ export const Field = (props: IField) => {
             fieldValue.split(".").reverse().join("-")
         );
       },
+      numberOnly: () => {
+        return value && !/^\d+$/.test(value);
+      },
+    
     };
     const patternFromToken =
       tokens[pattern.split("_")[0] as keyof typeof tokens];
@@ -152,6 +158,8 @@ export const Field = (props: IField) => {
 
   const [shouldValidate, setShouldValidate] = useState(false);
 
+
+
   const onChange = (e: ChangeEvent) => {
     const input = e.target as HTMLInputElement;
     if (input.files && input.files[0]) {
@@ -169,6 +177,12 @@ export const Field = (props: IField) => {
   };
 
   const options = (): IOption[] => {
+    
+
+  if (props.name === "companyCode" && userCompanyCodes.length) {
+    return userCompanyCodes;
+  }
+
     if (!props.dependentOptions) return props.options || [];
 
     const valuedOptions = (opts: IOption[]) => {

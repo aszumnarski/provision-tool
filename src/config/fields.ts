@@ -73,9 +73,7 @@ export const subType: IField = {
       options: [pSubTypes.y09],
     },
     {
-      conditions: [
-        { when: "mode", is: ["modify"] },
-      ],
+      conditions: [{ when: "mode", is: ["modify"] }],
       options: [
         pSubTypes.y09,
         pSubTypes.y09c,
@@ -984,8 +982,7 @@ export const _2lClosingBalanceUpdate: IField = {
     expression:
       //"Number(formValues['2lCarryFwd']) + Number(formValues['2lCreationAddition']) + Number(formValues['2lCreationAdditionUpdate']) - Number(formValues['2lUsage']) - Number(formValues['2lUsageUpdate']) - Number(formValues['2lRelease']) - Number(formValues['2lReleaseUpdate'])",
       "Number(formValues['2lCarryFwd']) + Number(formValues['2lCreationAddition']) + Number(formValues['2lCreationAdditionUpdate']) - Number(formValues['2lUsage']) - Number(formValues['2lUsageUpdate']) - Number(formValues['2lRelease']) - Number(formValues['2lReleaseUpdate'])",
-
-    },
+  },
   type: "number",
   disabled: true,
 };
@@ -1009,6 +1006,7 @@ export const _2lReleaseUpdate: IField = {
     },
   ],
   type: "number",
+  patterns: [{ reg: "numberOnly", message: "Only digits are allowed." }],
   conditionalDisabled: [
     ...h.inGetState,
     {
@@ -1075,6 +1073,7 @@ export const _2lUsageUpdate: IField = {
     },
   ],
   type: "number",
+  patterns: [{ reg: "numberOnly", message: "Only digits are allowed." }],
   conditionalDisabled: [
     ...h.inGetState,
     {
@@ -1148,6 +1147,7 @@ export const _2lCreationAdditionUpdate: IField = {
     },
   ],
   type: "number",
+  patterns: [{ reg: "numberOnly", message: "Only digits are allowed." }],
   conditionalDisabled: [
     ...h.inGetState,
     {
@@ -1248,6 +1248,7 @@ export const _0lReleaseUpdate: IField = {
   label: "0L-Release - Update",
   initValue: "0",
   type: "number",
+  patterns: [{ reg: "numberOnly", message: "Only digits are allowed." }],
   conditionalDisabled: [
     ...h.inGetState,
     {
@@ -1305,6 +1306,7 @@ export const _0lUsageUpdate: IField = {
   label: "0L-Usage - Update",
   initValue: "0",
   type: "number",
+  patterns: [{ reg: "numberOnly", message: "Only digits are allowed." }],
   conditionalDisabled: [
     ...h.inGetState,
     {
@@ -1362,6 +1364,10 @@ export const _0lCreationAdditionUpdate: IField = {
   label: "0L-Creation/Addition - Update",
   initValue: "0",
   type: "number",
+  patterns: [
+    { reg: "numberOnly", message: "Only digits are allowed." },
+    h.required(),
+  ],
   conditionalDisabled: [
     ...h.inGetState,
     {

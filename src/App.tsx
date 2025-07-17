@@ -5,12 +5,14 @@ import { Form } from "./components/Form/Form";
 import { FormContext } from "./context";
 import { Loader } from "./components/Loader/Loader";
 import { Modal } from "./components/Modal/Modal";
+import type { IOption } from "./components/Field/Field";
 
 function App() {
   const [formValues, setFormValues] = useState<Record<string, string> | {}>({});
   const [formErrors, setFormErrors] = useState<Record<string, string> | {}>({});
   const [patterns, setPatterns] = useState<Record<string, string> | {}>({});
   const [att, setAtt] = useState<Record<string, string> | {}>({});
+  const [userCompanyCodes, setUserCompanyCodes] = useState<IOption[]>([]);
   const [isLoading, setLoading] = useState(false);
   const [modalContent, setModalContent] = useState<Record<
     string,
@@ -29,6 +31,8 @@ function App() {
         setPatterns,
         att,
         setAtt,
+        userCompanyCodes,
+        setUserCompanyCodes,
         isLoading,
         setLoading,
         modalContent,
