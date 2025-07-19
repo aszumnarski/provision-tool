@@ -1,13 +1,14 @@
 {
   "name": "provision-tool",
   "private": true,
-  "version": "1.2.0",
+  "version": "1.2.1",
   "type": "module",
   "scripts": {
     "dev": "vite",
     "build": "tsc -b && vite build",
     "lint": "eslint .",
-    "start": "concurrently -p '[{name}]' -n 'BACKEND,FRONTEND' -c 'bgBlue.bold,bgMagenta.bold' 'nodemon ./mock/index.mjs' 'vite'",
+    "be": "nodemon ./mock/index.mjs",
+    "start": "concurrently -p '[{name}]' -n 'BACKEND,FRONTEND' -c 'bgBlue.bold,bgMagenta.bold' \"npm run be\" 'vite'",
     "preview": "vite preview"
   },
   "dependencies": {

@@ -77,19 +77,19 @@ export const localGaap = {
 
 export const tax = {
   fields: [
-    f.TlCarryFwd,
-    f.TlCreationAddition,
-    f.TlCreationAdditionUpdate,
-    f.TlUsage,
-    f.TlUsageUpdate,
-    f.TlRelease,
-    f.TlReleaseUpdate,
-    f.TlClosingBalance,
-    f.TlClosingBalanceUpdate,
+    f.tlCarryFwd,
+    f.tlCreationAddition,
+    f.tlCreationAdditionUpdate,
+    f.tlUsage,
+    f.tlUsageUpdate,
+    f.tlRelease,
+    f.tlReleaseUpdate,
+    f.tlClosingBalance,
+    f.tlClosingBalanceUpdate,
   ],
   header: "TAX",
 };
 
-export const attach = { fields: [f.attachement] };
+export const attach = { fields: [f.attachment] };
 
 export const empty = { fields: [] };

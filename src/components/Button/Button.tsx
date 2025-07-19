@@ -24,6 +24,8 @@ export const Button = (props: IField) => {
     //@ts-ignore
     setLoading,
     //@ts-ignore
+    setUserCompanyCodes,
+    //@ts-ignore
     setModalContent,
   } = useContext(FormContext);
   const className = `field ${props.error ? "field--error" : ""}`;
@@ -100,6 +102,9 @@ export const Button = (props: IField) => {
     setFormValues((formValues: any) => {
       return { ...formValues, user: res.data.user, appCreator: res.data.user };
     });
+    console.log(res);
+    setUserCompanyCodes(res.config.companyCodes);
+
   };
 
   const resetForm = () => {
@@ -165,7 +170,7 @@ export const Button = (props: IField) => {
     setLoading(true);
     var formData = new FormData();
     formData.append("json", JSON.stringify(body));
-    formData.append(att.fileName, att.fileData);
+    if(att) formData.append(att.fileName, att.fileData);
     try {
       const response = await fetch(url, {
         method: "POST",

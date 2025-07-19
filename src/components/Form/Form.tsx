@@ -52,8 +52,6 @@ export function Form({ rows }: IForm) {
   }
   const onSubmit: FormEventHandler<HTMLFormElement> = (e) => {
     e.preventDefault();
-    // setFormErrors({ name1: "Jakiś błąd" });
-    // validateForm();
   };
   return (
     <form onSubmit={onSubmit} className="form">
@@ -62,6 +60,7 @@ export function Form({ rows }: IForm) {
           <Row key={i} columns={r.columns} />
         ))}
       </div>
+      <pre>X{Object.keys(formValues).length}X</pre>
       <pre>{JSON.stringify(formValues, null, 2)}</pre>
       <hr />
       <pre>{JSON.stringify(formErrors, null, 2)}</pre>

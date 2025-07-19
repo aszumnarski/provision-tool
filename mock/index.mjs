@@ -4,7 +4,13 @@ import fs from "fs";
 import cors from "cors";
 const data = () => {
   return {
-    init: { data: getUser() },
+    init: { data: getUser(), config:{
+
+      "companyCodes": [
+        { "label": "DE10", "value": "de10" },
+        { "label": "PWN10", "value": "pl10" }
+      ]
+    }},
   };
 };
 const DELAY_IN_SECONDS = 0;

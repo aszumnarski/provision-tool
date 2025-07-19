@@ -12,41 +12,29 @@ export const Select = (props: IField) => {
     return !props.options
       ? ""
       : props.options.map((o) => (
-          <option
-            key={o.value}
-            value={o.value}
-            selected={
-              o.value ===
-              (props.value || (props.options && props.options[0].value))
-            }
-          >
+          <option key={o.value} value={o.value}>
             {o.label}
           </option>
         ));
   };
 
-  useEffect(() => {
-    if (props.type === "select" && props.value) {
-      setFormValues((formValues: any) => {
-        return {
-          ...formValues,
-          [props.name]: props.value,
-        };
-      });
-    }
-  }, [props.value]);
-
   const optionsValue = (props.options && props.options[0]?.value) || "";
 
-  useEffect(() => {
-    if (props.type === "select" && props.options) {
-      setFormValues((formValues: any) => {
-        return {
-          ...formValues,
-          [props.name]: optionsValue,
-        };
-      });
+  const setFirstOption = (optionsValue: string) => {
+    if (props.type === "select") {
+      setTimeout(() => {
+        setFormValues((formValues: any) => {
+          return {
+            ...formValues,
+            [props.name]: optionsValue,
+          };
+        });
+      }, 100);
     }
+  };
+
+  useEffect(() => {
+    setFirstOption(optionsValue);
   }, [optionsValue]);
 
   return (

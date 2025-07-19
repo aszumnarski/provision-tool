@@ -9,6 +9,8 @@ export type TFormContext = {
   setPatterns: (p: any) => void;
   att: any;
   setAtt: (a: any) => void;
+  userCompanyCodes: any,
+  setUserCompanyCodes:(a:any) => void;
   isLoading: boolean;
   setLoading: (loading: boolean) => void;
   modalContent: any;
