@@ -36,7 +36,7 @@ export const DateInput = (props: IField) => {
           [props.name]: toDotted(today),
         };
       });
-    }, 50);
+    }, 5);
   }, []);
 
   return (
