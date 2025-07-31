@@ -904,6 +904,16 @@ export const tlClosingBalance: IField = {
   name: "tlClosingBalance",
   label: "TL-Closing Balance - Posted & Booked",
   initValue: "0",
+  dependantValue: [
+    {
+      conditions: [{ when: "ledgerGroup", is: ["al"] }],
+      valueFrom: "0lClosingBalance",
+    },
+    {
+      conditions: [{ when: "ledgerGroup", is: ["0llt"] }],
+      valueFrom: "2lClosingBalance",
+    },
+  ],
   type: "number",
   disabled: true,
 };
@@ -912,6 +922,16 @@ export const tlReleaseUpdate: IField = {
   name: "tlReleaseUpdate",
   label: "TL-Release - Update",
   initValue: "0",
+  dependantValue: [
+    {
+      conditions: [{ when: "ledgerGroup", is: ["al"] }],
+      valueFrom: "0lReleaseUpdate",
+    },
+    {
+      conditions: [{ when: "ledgerGroup", is: ["0llt"] }],
+      valueFrom: "2lReleaseUpdate",
+    },
+  ],
   type: "number",
   disabled: true,
 };
@@ -920,6 +940,16 @@ export const tlRelease: IField = {
   name: "tlRelease",
   label: "TL-Release - Posted & Booked",
   initValue: "0",
+  dependantValue: [
+    {
+      conditions: [{ when: "ledgerGroup", is: ["al"] }],
+      valueFrom: "0lRelease",
+    },
+    {
+      conditions: [{ when: "ledgerGroup", is: ["0llt"] }],
+      valueFrom: "2lRelease",
+    },
+  ],
   type: "number",
   disabled: true,
 };
@@ -928,6 +958,16 @@ export const tlUsageUpdate: IField = {
   name: "tlUsageUpdate",
   label: "TL-Usage - Update",
   initValue: "0",
+  dependantValue: [
+    {
+      conditions: [{ when: "ledgerGroup", is: ["al"] }],
+      valueFrom: "0lUsageUpdate",
+    },
+    {
+      conditions: [{ when: "ledgerGroup", is: ["0llt"] }],
+      valueFrom: "2lUsageUpdate",
+    },
+  ],
   type: "number",
   disabled: true,
 };
@@ -936,6 +976,16 @@ export const tlUsage: IField = {
   name: "tlUsage",
   label: "TL-Usage - Posted & Booked",
   initValue: "0",
+  dependantValue: [
+    {
+      conditions: [{ when: "ledgerGroup", is: ["al"] }],
+      valueFrom: "0lUsage",
+    },
+    {
+      conditions: [{ when: "ledgerGroup", is: ["0llt"] }],
+      valueFrom: "2lUsage",
+    },
+  ],
   type: "number",
   disabled: true,
 };
@@ -962,6 +1012,16 @@ export const tlCreationAddition: IField = {
   name: "tlCreationAddition",
   label: "TL-Creation/Addition - Posted & Booked",
   initValue: "0",
+  dependantValue: [
+    {
+      conditions: [{ when: "ledgerGroup", is: ["al"] }],
+      valueFrom: "0lCreationAddition",
+    },
+    {
+      conditions: [{ when: "ledgerGroup", is: ["0llt"] }],
+      valueFrom: "2lCreationAddition",
+    },
+  ],
   type: "number",
   disabled: true,
 };
@@ -991,6 +1051,12 @@ export const _2lClosingBalance: IField = {
   name: "2lClosingBalance",
   label: "2L-Closing Balance - Posted & Booked",
   initValue: "0",
+  dependantValue: [
+    {
+      conditions: [{ when: "ledgerGroup", is: ["al", "il"] }],
+      valueFrom: "0lClosingBalance",
+    },
+  ],
   type: "number",
   disabled: true,
 };
@@ -1058,6 +1124,12 @@ export const _2lRelease: IField = {
   name: "2lRelease",
   label: "2L-Release - Posted & Booked",
   initValue: "0",
+  dependantValue: [
+    {
+      conditions: [{ when: "ledgerGroup", is: ["al", "il"] }],
+      valueFrom: "0lRelease",
+    },
+  ],
   type: "number",
   disabled: true,
 };
@@ -1128,6 +1200,12 @@ export const _2lUsage: IField = {
   name: "2lUsage",
   label: "2L-Usage - Posted & Booked",
   initValue: "0",
+  dependantValue: [
+    {
+      conditions: [{ when: "ledgerGroup", is: ["al", "il"] }],
+      valueFrom: "0lUsage",
+    },
+  ],
   type: "number",
   disabled: true,
 };
@@ -1211,6 +1289,16 @@ export const _2lCreationAddition: IField = {
   name: "2lCreationAddition",
   label: "2L-Creation/Addition - Posted & Booked",
   initValue: "0",
+  dependantValue: [
+    {
+      conditions: [{ when: "ledgerGroup", is: ["al"] }],
+      valueFrom: "0lCreationAddition",
+    },
+    {
+      conditions: [{ when: "ledgerGroup", is: ["il"] }],
+      valueFrom: "0lCreationAddition",
+    },
+  ],
   type: "number",
   disabled: true,
 };
@@ -1491,7 +1579,7 @@ export const localCurrency: IField = {
   disabled: true,
   dependentOptions: [
     {
-      conditions: [{ when: "companyCode", is: ["de10", "nl10"] }],
+      conditions: [{ when: "companyCode", is: ["de10", "nl10","be10","lx10","pt10","gr10"] }],
       options: [{ label: "EUR", value: "EUR" }],
     },
     {
@@ -1501,6 +1589,14 @@ export const localCurrency: IField = {
     {
       conditions: [{ when: "companyCode", is: ["uk10"] }],
       options: [{ label: "GBP", value: "GBP" }],
+    },
+    {
+      conditions: [{ when: "companyCode", is: ["tr10"] }],
+      options: [{ label: "TRY", value: "TRY" }],
+    },
+    {
+      conditions: [{ when: "companyCode", is: ["us10"] }],
+      options: [{ label: "USD", value: "USD" }],
     },
   ],
 };

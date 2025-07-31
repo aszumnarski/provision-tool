@@ -3,8 +3,8 @@ import { type IField } from "../Field/Field";
 
 export const Input = (props: IField) => {
   const className = `field ${props.error ? "field--error" : ""}`;
-  const counter = props.maxlength
-    ? `(Characters left: ${Number(props.maxlength) - (props.value ? props.value?.length : 0)})`
+  const counter = (props.maxlength && props.value?.length)
+    ? `(Characters left: ${Number(props.maxlength) - props.value?.length})`
     : "";
 
   return (
