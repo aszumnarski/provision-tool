@@ -265,7 +265,7 @@ export const Field = (props: IField) => {
   const getValue = () => {
     if (!Object.keys(JSON.parse(JSON.stringify(formValues))).length) return "";
     if (props.dependantValue) return copyValue();
-    if (sum || sum === 0) return sum;
+    if (sum) return sum;
 
     if (formValues[props.name]) return formValues[props.name];
     if (props.type === "select" && options().length) return options()[0].value;
