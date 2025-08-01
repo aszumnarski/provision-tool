@@ -1453,8 +1453,7 @@ export const _0lCreationAdditionUpdate: IField = {
   initValue: "0",
   type: "number",
   patterns: [
-    { reg: "numberOnly", message: "Only digits are allowed." },
-    h.required(),
+    h.required("Not a proper number!"),
   ],
   conditionalDisabled: [
     ...h.inGetState,

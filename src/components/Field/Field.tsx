@@ -216,6 +216,8 @@ export const Field = (props: IField) => {
   const evalExpression = () =>
     props.calculatedValue?.expression
       ? eval(props.calculatedValue.expression)
+        .toLocaleString("en-US")
+        .replace(/\,/g, "")
       : "";
 
   const monthAddition = () => {
