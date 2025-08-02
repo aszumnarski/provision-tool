@@ -1072,7 +1072,9 @@ export const _2lReleaseUpdate: IField = {
     },
   ],
   type: "number",
-  patterns: [{ reg: "numberOnly", message: "Only digits are allowed." }],
+  patterns: [
+    h.required("Not a proper number!"),
+  ],
   conditionalDisabled: [
     ...h.inGetState,
     {
@@ -1145,7 +1147,9 @@ export const _2lUsageUpdate: IField = {
     },
   ],
   type: "number",
-  patterns: [{ reg: "numberOnly", message: "Only digits are allowed." }],
+  patterns: [
+    h.required("Not a proper number!"),
+  ],
   conditionalDisabled: [
     ...h.inGetState,
     {
@@ -1225,7 +1229,9 @@ export const _2lCreationAdditionUpdate: IField = {
     },
   ],
   type: "number",
-  patterns: [{ reg: "numberOnly", message: "Only digits are allowed." }],
+  patterns: [
+    h.required("Not a proper number!"),
+  ],
   conditionalDisabled: [
     ...h.inGetState,
     {
@@ -1336,7 +1342,9 @@ export const _0lReleaseUpdate: IField = {
   label: "0L-Release - Update",
   initValue: "0",
   type: "number",
-  patterns: [{ reg: "numberOnly", message: "Only digits are allowed." }],
+  patterns: [
+    h.required("Not a proper number!"),
+  ],
   conditionalDisabled: [
     ...h.inGetState,
     {
@@ -1394,7 +1402,9 @@ export const _0lUsageUpdate: IField = {
   label: "0L-Usage - Update",
   initValue: "0",
   type: "number",
-  patterns: [{ reg: "numberOnly", message: "Only digits are allowed." }],
+  patterns: [
+    h.required("Not a proper number!"),
+  ],
   conditionalDisabled: [
     ...h.inGetState,
     {
