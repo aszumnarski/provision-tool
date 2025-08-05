@@ -891,19 +891,18 @@ export const appCreator: IField = {
 export const tlClosingBalanceUpdate: IField = {
   name: "tlClosingBalanceUpdate",
   label: "TL-Closing Balance - Update",
-  initValue: "0",
   calculatedValue: {
     expression:
       "Number(formValues['tlCarryFwd']) + Number(formValues['tlCreationAddition']) + Number(formValues['tlCreationAdditionUpdate']) - Number(formValues['tlUsage']) - Number(formValues['tlUsageUpdate']) - Number(formValues['tlRelease']) - Number(formValues['tlReleaseUpdate'])",
   },
   type: "number",
+  patterns: [h.required()],
   disabled: true,
 };
 
 export const tlClosingBalance: IField = {
   name: "tlClosingBalance",
   label: "TL-Closing Balance - Posted & Booked",
-  initValue: "0",
   dependantValue: [
     {
       conditions: [{ when: "ledgerGroup", is: ["al"] }],
@@ -915,13 +914,13 @@ export const tlClosingBalance: IField = {
     },
   ],
   type: "number",
+  patterns: [h.required()],
   disabled: true,
 };
 
 export const tlReleaseUpdate: IField = {
   name: "tlReleaseUpdate",
   label: "TL-Release - Update",
-  initValue: "0",
   dependantValue: [
     {
       conditions: [{ when: "ledgerGroup", is: ["al"] }],
@@ -933,13 +932,13 @@ export const tlReleaseUpdate: IField = {
     },
   ],
   type: "number",
+  patterns: [h.required()],
   disabled: true,
 };
 
 export const tlRelease: IField = {
   name: "tlRelease",
   label: "TL-Release - Posted & Booked",
-  initValue: "0",
   dependantValue: [
     {
       conditions: [{ when: "ledgerGroup", is: ["al"] }],
@@ -951,13 +950,13 @@ export const tlRelease: IField = {
     },
   ],
   type: "number",
+  patterns: [h.required()],
   disabled: true,
 };
 
 export const tlUsageUpdate: IField = {
   name: "tlUsageUpdate",
   label: "TL-Usage - Update",
-  initValue: "0",
   dependantValue: [
     {
       conditions: [{ when: "ledgerGroup", is: ["al"] }],
@@ -969,13 +968,13 @@ export const tlUsageUpdate: IField = {
     },
   ],
   type: "number",
+  patterns: [h.required()],
   disabled: true,
 };
 
 export const tlUsage: IField = {
   name: "tlUsage",
   label: "TL-Usage - Posted & Booked",
-  initValue: "0",
   dependantValue: [
     {
       conditions: [{ when: "ledgerGroup", is: ["al"] }],
@@ -987,13 +986,13 @@ export const tlUsage: IField = {
     },
   ],
   type: "number",
+  patterns: [h.required()],
   disabled: true,
 };
 
 export const tlCreationAdditionUpdate: IField = {
   name: "tlCreationAdditionUpdate",
   label: "TL-Creation/Addition - Update",
-  initValue: "0",
   dependantValue: [
     {
       conditions: [{ when: "ledgerGroup", is: ["al"] }],
@@ -1005,13 +1004,13 @@ export const tlCreationAdditionUpdate: IField = {
     },
   ],
   type: "number",
+  patterns: [h.required()],
   disabled: true,
 };
 
 export const tlCreationAddition: IField = {
   name: "tlCreationAddition",
   label: "TL-Creation/Addition - Posted & Booked",
-  initValue: "0",
   dependantValue: [
     {
       conditions: [{ when: "ledgerGroup", is: ["al"] }],
@@ -1023,34 +1022,34 @@ export const tlCreationAddition: IField = {
     },
   ],
   type: "number",
+  patterns: [h.required()],
   disabled: true,
 };
 
 export const tlCarryFwd: IField = {
   name: "tlCarryFwd",
   label: "TL-Carry Fwd from Last Year",
-  initValue: "0",
   type: "number",
+  patterns: [h.required()],
   disabled: true,
 };
 
 export const _2lClosingBalanceUpdate: IField = {
   name: "2lClosingBalanceUpdate",
   label: "2L-Closing Balance - Update",
-  initValue: "0",
   calculatedValue: {
     expression:
       //"Number(formValues['2lCarryFwd']) + Number(formValues['2lCreationAddition']) + Number(formValues['2lCreationAdditionUpdate']) - Number(formValues['2lUsage']) - Number(formValues['2lUsageUpdate']) - Number(formValues['2lRelease']) - Number(formValues['2lReleaseUpdate'])",
       "Number(formValues['2lCarryFwd']) + Number(formValues['2lCreationAddition']) + Number(formValues['2lCreationAdditionUpdate']) - Number(formValues['2lUsage']) - Number(formValues['2lUsageUpdate']) - Number(formValues['2lRelease']) - Number(formValues['2lReleaseUpdate'])",
   },
   type: "number",
+  patterns: [h.required()],
   disabled: true,
 };
 
 export const _2lClosingBalance: IField = {
   name: "2lClosingBalance",
   label: "2L-Closing Balance - Posted & Booked",
-  initValue: "0",
   dependantValue: [
     {
       conditions: [{ when: "ledgerGroup", is: ["al", "il"] }],
@@ -1058,13 +1057,13 @@ export const _2lClosingBalance: IField = {
     },
   ],
   type: "number",
+  patterns: [h.required()],
   disabled: true,
 };
 
 export const _2lReleaseUpdate: IField = {
   name: "2lReleaseUpdate",
   label: "2L-Release - Update",
-  initValue: "0",
   dependantValue: [
     {
       conditions: [{ when: "ledgerGroup", is: ["al", "il"] }],
@@ -1074,6 +1073,7 @@ export const _2lReleaseUpdate: IField = {
   type: "number",
   patterns: [
     h.required("Not a proper number!"),
+    h.empty("2lUsageUpdate,2lCreationAdditionUpdate","LOCAL GAAP"),
   ],
   conditionalDisabled: [
     ...h.inGetState,
@@ -1125,7 +1125,6 @@ export const _2lReleaseUpdate: IField = {
 export const _2lRelease: IField = {
   name: "2lRelease",
   label: "2L-Release - Posted & Booked",
-  initValue: "0",
   dependantValue: [
     {
       conditions: [{ when: "ledgerGroup", is: ["al", "il"] }],
@@ -1133,13 +1132,13 @@ export const _2lRelease: IField = {
     },
   ],
   type: "number",
+  patterns: [h.required()],
   disabled: true,
 };
 
 export const _2lUsageUpdate: IField = {
   name: "2lUsageUpdate",
   label: "2L-Usage - Update",
-  initValue: "0",
   dependantValue: [
     {
       conditions: [{ when: "ledgerGroup", is: ["al", "il"] }],
@@ -1149,6 +1148,7 @@ export const _2lUsageUpdate: IField = {
   type: "number",
   patterns: [
     h.required("Not a proper number!"),
+    h.empty("2lCreationAdditionUpdate,2lReleaseUpdate","LOCAL GAAP"),
   ],
   conditionalDisabled: [
     ...h.inGetState,
@@ -1203,7 +1203,6 @@ export const _2lUsageUpdate: IField = {
 export const _2lUsage: IField = {
   name: "2lUsage",
   label: "2L-Usage - Posted & Booked",
-  initValue: "0",
   dependantValue: [
     {
       conditions: [{ when: "ledgerGroup", is: ["al", "il"] }],
@@ -1211,13 +1210,13 @@ export const _2lUsage: IField = {
     },
   ],
   type: "number",
+  patterns: [h.required()],
   disabled: true,
 };
 
 export const _2lCreationAdditionUpdate: IField = {
   name: "2lCreationAdditionUpdate",
   label: "2L-Creation/Addition - Update",
-  initValue: "0",
   dependantValue: [
     {
       conditions: [{ when: "ledgerGroup", is: ["al"] }],
@@ -1231,6 +1230,7 @@ export const _2lCreationAdditionUpdate: IField = {
   type: "number",
   patterns: [
     h.required("Not a proper number!"),
+    h.empty("2lUsageUpdate,2lReleaseUpdate","LOCAL GAAP"),
   ],
   conditionalDisabled: [
     ...h.inGetState,
@@ -1294,7 +1294,6 @@ export const _2lCreationAdditionUpdate: IField = {
 export const _2lCreationAddition: IField = {
   name: "2lCreationAddition",
   label: "2L-Creation/Addition - Posted & Booked",
-  initValue: "0",
   dependantValue: [
     {
       conditions: [{ when: "ledgerGroup", is: ["al"] }],
@@ -1306,44 +1305,45 @@ export const _2lCreationAddition: IField = {
     },
   ],
   type: "number",
+  patterns: [h.required()],
   disabled: true,
 };
 
 export const _2lCarryFwd: IField = {
   name: "2lCarryFwd",
   label: "2L-Carry Fwd from Last Year",
-  initValue: "0",
   type: "number",
+  patterns: [h.required()],
   disabled: true,
 };
 
 export const _0lClosingBalanceUpdate: IField = {
   name: "0lClosingBalanceUpdate",
   label: "0L-Closing Balance - Update",
-  initValue: "0",
   calculatedValue: {
     expression:
       "Number(formValues['0lCarryFwd']) + Number(formValues['0lCreationAddition']) + Number(formValues['0lCreationAdditionUpdate']) - Number(formValues['0lUsage']) - Number(formValues['0lUsageUpdate']) - Number(formValues['0lRelease']) - Number(formValues['0lReleaseUpdate'])",
   },
   type: "number",
+  patterns: [h.required()],
   disabled: true,
 };
 
 export const _0lClosingBalance: IField = {
   name: "0lClosingBalance",
   label: "0L-Closing Balance - Posted & Booked",
-  initValue: "0",
   type: "number",
+  patterns: [h.required()],
   disabled: true,
 };
 
 export const _0lReleaseUpdate: IField = {
   name: "0lReleaseUpdate",
   label: "0L-Release - Update",
-  initValue: "0",
   type: "number",
   patterns: [
     h.required("Not a proper number!"),
+    h.empty("0lUsageUpdate,0lCreationAdditionUpdate","IFRS"),
   ],
   conditionalDisabled: [
     ...h.inGetState,
@@ -1392,18 +1392,18 @@ export const _0lReleaseUpdate: IField = {
 export const _0lRelease: IField = {
   name: "0lRelease",
   label: "0L-Release - Posted & Booked",
-  initValue: "0",
   type: "number",
+  patterns: [h.required()],
   disabled: true,
 };
 
 export const _0lUsageUpdate: IField = {
   name: "0lUsageUpdate",
   label: "0L-Usage - Update",
-  initValue: "0",
   type: "number",
   patterns: [
     h.required("Not a proper number!"),
+    h.empty("0lCreationAdditionUpdate,0lReleaseUpdate","IFRS"),
   ],
   conditionalDisabled: [
     ...h.inGetState,
@@ -1452,18 +1452,18 @@ export const _0lUsageUpdate: IField = {
 export const _0lUsage: IField = {
   name: "0lUsage",
   label: "0L-Usage - Posted & Booked",
-  initValue: "0",
   type: "number",
+  patterns: [h.required()],
   disabled: true,
 };
 
 export const _0lCreationAdditionUpdate: IField = {
   name: "0lCreationAdditionUpdate",
   label: "0L-Creation/Addition - Update",
-  initValue: "0",
   type: "number",
   patterns: [
     h.required("Not a proper number!"),
+    h.empty("0lUsageUpdate,0lReleaseUpdate","IFRS"),
   ],
   conditionalDisabled: [
     ...h.inGetState,
@@ -1524,16 +1524,16 @@ export const _0lCreationAdditionUpdate: IField = {
 export const _0lCreationAddition: IField = {
   name: "0lCreationAddition",
   label: "0L-Creation/Addition - Posted & Booked",
-  initValue: "0",
   type: "number",
+  patterns: [h.required()],
   disabled: true,
 };
 
 export const _0lCarryFwd: IField = {
   name: "0lCarryFwd",
   label: "0L-Carry Fwd from Last Year",
-  initValue: "0",
   type: "number",
+  patterns: [h.required()],
   disabled: true,
 };
 

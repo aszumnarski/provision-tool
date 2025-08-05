@@ -134,7 +134,9 @@ export const Field = (props: IField) => {
       numberOnly: () => {
         return value && !/^\d+$/.test(value);
       },
-    
+      empty: () => {
+        return pattern.split("_")[1].split(",").some(field => formValues[field] !== "" && formValues[field] !== null);
+      },
     };
     const patternFromToken =
       tokens[pattern.split("_")[0] as keyof typeof tokens];
@@ -158,8 +160,6 @@ export const Field = (props: IField) => {
 
   const [shouldValidate, setShouldValidate] = useState(false);
 
-
-
   const onChange = (e: ChangeEvent) => {
     const input = e.target as HTMLInputElement;
     if (input.files && input.files[0]) {
@@ -168,7 +168,7 @@ export const Field = (props: IField) => {
         fileData: input.files[0],
         fileSize: input.files[0].size,
       });
-    }else{
+    } else {
       setAtt(null);
     }
     const val =
@@ -177,11 +177,9 @@ export const Field = (props: IField) => {
   };
 
   const options = (): IOption[] => {
-    
-
-  if (props.name === "companyCode" && userCompanyCodes.length) {
-    return userCompanyCodes;
-  }
+    if (props.name === "companyCode" && userCompanyCodes.length) {
+      return userCompanyCodes;
+    }
 
     if (!props.dependentOptions) return props.options || [];
 
@@ -216,8 +214,8 @@ export const Field = (props: IField) => {
   const evalExpression = () =>
     props.calculatedValue?.expression
       ? eval(props.calculatedValue.expression)
-        .toLocaleString("en-US")
-        .replace(/\,/g, "")
+          .toLocaleString("en-US")
+          .replace(/\,/g, "")
       : "";
 
   const monthAddition = () => {
