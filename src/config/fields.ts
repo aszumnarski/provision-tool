@@ -909,7 +909,7 @@ export const tlClosingBalance: IField = {
       valueFrom: "0lClosingBalance",
     },
     {
-      conditions: [{ when: "ledgerGroup", is: ["0llt"] }],
+      conditions: [{ when: "ledgerGroup", is: ["0l,lt"] }],
       valueFrom: "2lClosingBalance",
     },
   ],
@@ -927,7 +927,7 @@ export const tlReleaseUpdate: IField = {
       valueFrom: "0lReleaseUpdate",
     },
     {
-      conditions: [{ when: "ledgerGroup", is: ["0llt"] }],
+      conditions: [{ when: "ledgerGroup", is: ["0l,lt"] }],
       valueFrom: "2lReleaseUpdate",
     },
   ],
@@ -945,7 +945,7 @@ export const tlRelease: IField = {
       valueFrom: "0lRelease",
     },
     {
-      conditions: [{ when: "ledgerGroup", is: ["0llt"] }],
+      conditions: [{ when: "ledgerGroup", is: ["0l,lt"] }],
       valueFrom: "2lRelease",
     },
   ],
@@ -963,7 +963,7 @@ export const tlUsageUpdate: IField = {
       valueFrom: "0lUsageUpdate",
     },
     {
-      conditions: [{ when: "ledgerGroup", is: ["0llt"] }],
+      conditions: [{ when: "ledgerGroup", is: ["0l,lt"] }],
       valueFrom: "2lUsageUpdate",
     },
   ],
@@ -981,7 +981,7 @@ export const tlUsage: IField = {
       valueFrom: "0lUsage",
     },
     {
-      conditions: [{ when: "ledgerGroup", is: ["0llt"] }],
+      conditions: [{ when: "ledgerGroup", is: ["0l,lt"] }],
       valueFrom: "2lUsage",
     },
   ],
@@ -999,7 +999,7 @@ export const tlCreationAdditionUpdate: IField = {
       valueFrom: "0lCreationAdditionUpdate",
     },
     {
-      conditions: [{ when: "ledgerGroup", is: ["0llt"] }],
+      conditions: [{ when: "ledgerGroup", is: ["0l,lt"] }],
       valueFrom: "2lCreationAdditionUpdate",
     },
   ],
@@ -1017,7 +1017,7 @@ export const tlCreationAddition: IField = {
       valueFrom: "0lCreationAddition",
     },
     {
-      conditions: [{ when: "ledgerGroup", is: ["0llt"] }],
+      conditions: [{ when: "ledgerGroup", is: ["0l,lt"] }],
       valueFrom: "2lCreationAddition",
     },
   ],
@@ -2842,7 +2842,7 @@ export const ledgerGroup: IField = {
     },
     {
       label: "0L,LT",
-      value: "0llt",
+      value: "0l,lt",
     },
   ],
 };
