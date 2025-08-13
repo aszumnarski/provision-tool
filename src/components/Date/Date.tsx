@@ -37,16 +37,45 @@ export const DateInput = (props: IField) => {
     });
   };
 
+  //useEffect(() => {
+  // setTimeout(() => {
+  //    setFormValues((formValues: any) => {
+  //      return {
+  //        ...formValues,
+  //        [props.name]: noDash(today),
+  //      };
+  //    });
+  //  }, 20);
+  //}, []);
+
+  
+
   useEffect(() => {
-    setTimeout(() => {
-      setFormValues((formValues: any) => {
-        return {
-          ...formValues,
-          [props.name]: noDash(today),
-        };
-      });
-    }, 20);
-  }, []);
+    if (!formValues[props.name]) {
+      setFormValues((prev: any) => ({
+        ...prev,
+        [props.name]: noDash(today),
+      }));
+    }
+  }, [formValues, props.name, setFormValues]);
+  
+
+
+ //useEffect(() => {
+ // if (formValues) {
+//    setFormValues((formValues: any) => ({
+//      ...formValues,
+//      [props.name]: noDash(today),
+//    }));
+//  }
+//}, []);
+
+
+useEffect(() => {
+  console.log("DateInput mounted with value:", props.value);
+}, []);
+
+
 
   return (
     <div className={className}>
