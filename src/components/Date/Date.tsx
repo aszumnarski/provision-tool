@@ -12,7 +12,16 @@ export const DateInput = (props: IField) => {
     dottedDate ? dottedDate.split(".").reverse().join("-") : "";
   const toDotted = (dashedDate: string) =>
     dashedDate ? dashedDate.split("-").reverse().join(".") : "";
-
+  const noDash = (dashedDate?: string) =>
+    dashedDate ? dashedDate.split("-").join("") : "";
+  const toDash = (notDash?: string) =>
+    notDash
+      ? notDash.substring(0, 4) +
+        "-" +
+        notDash.substring(4, 6) +
+        "-" +
+        notDash.substring(6, 8)
+      : "";
   const today = new Date().toISOString().substring(0, 10);
   const isFuture =
     patterns &&
@@ -24,7 +33,7 @@ export const DateInput = (props: IField) => {
 
     setFormValues({
       ...formValues,
-      [props.name]: toDotted(input.value || today),
+      [props.name]: noDash(input.value || today),
     });
   };
 
@@ -33,10 +42,10 @@ export const DateInput = (props: IField) => {
       setFormValues((formValues: any) => {
         return {
           ...formValues,
-          [props.name]: toDotted(today),
+          [props.name]: noDash(today),
         };
       });
-    }, 5);
+    }, 50);
   }, []);
 
   return (
@@ -49,7 +58,7 @@ export const DateInput = (props: IField) => {
           name={props.name}
           onChange={handleChange}
           onBlur={props.onBlur}
-          value={toDashed(props.value) || today}
+          value={toDash(props.value) || today}
           min={min}
           disabled={props.disabled}
         />
