@@ -8,10 +8,10 @@ export const DateInput = (props: IField) => {
   //@ts-ignore
   const { formValues, setFormValues, patterns } = useContext(FormContext);
   const className = `field ${props.error ? "field--error" : ""}`;
-  const toDashed = (dottedDate?: string) =>
-    dottedDate ? dottedDate.split(".").reverse().join("-") : "";
-  const toDotted = (dashedDate: string) =>
-    dashedDate ? dashedDate.split("-").reverse().join(".") : "";
+  //const toDashed = (dottedDate?: string) =>
+  //  dottedDate ? dottedDate.split(".").reverse().join("-") : "";
+  //const toDotted = (dashedDate: string) =>
+  //  dashedDate ? dashedDate.split("-").reverse().join(".") : "";
   const noDash = (dashedDate?: string) =>
     dashedDate ? dashedDate.split("-").join("") : "";
   const toDash = (notDash?: string) =>
@@ -45,7 +45,7 @@ export const DateInput = (props: IField) => {
           [props.name]: noDash(today),
         };
       });
-    }, 50);
+    }, 20);
   }, []);
 
   return (

@@ -110,12 +110,12 @@ export const inModifyState = [
   },
 ];
 
-export const yyyyMMdd = (inDate : string) => {
-  const pattern = "yyyyMMdd";
-  return stringToDate(pattern,inDate);
-}
+//export const yyyyMMdd = (inDate : string) => {
+//  const pattern = "yyyyMMdd";
+//  return stringToDate(pattern,inDate);
+//}
 
-const stringToDate = (inPattern:string,inDate:string) => {
-  const pattern = inPattern; 
-  return new Date(Number(inDate.substring(0,4)), Number(inDate.substring(4,6))-1, Number(inDate.substring(6,8)));
-}
+//const stringToDate = (inPattern:string,inDate:string) => {
+  //const pattern = inPattern; 
+//  return new Date(Number(inDate.substring(0,4)), Number(inDate.substring(4,6))-1, Number(inDate.substring(6,8)));
+//}
