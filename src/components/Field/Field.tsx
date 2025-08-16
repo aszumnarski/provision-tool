@@ -91,13 +91,20 @@ export const Field = (props: IField) => {
     //@ts-ignore
     userCompanyCodes,
   } = useContext(FormContext);
-
+  const toDash = (notDash?: string) =>
+    notDash
+      ? notDash.substring(0, 4) +
+        "-" +
+        notDash.substring(4, 6) +
+        "-" +
+        notDash.substring(6, 8)
+      : "";
   function validatePattern(pattern: string, value?: string) {
     const tokens = {
       required: () => !value,
       future: () =>
         value &&
-        value.split(".").reverse().join("-") <
+        toDash(value)<
           new Date().toISOString().substring(0, 10),
       min: () => {
         const minimum = Number(pattern.split("_")[1]);
@@ -118,8 +125,8 @@ export const Field = (props: IField) => {
         const fieldValue = formValues[fieldName];
         return (
           value &&
-          value.split(".").reverse().join("-") <
-            fieldValue.split(".").reverse().join("-")
+          toDash(value) <
+            toDash(fieldValue)
         );
       },
       gt: () => {
@@ -127,14 +134,16 @@ export const Field = (props: IField) => {
         const fieldValue = formValues[fieldName];
         return (
           value &&
-          value.split(".").reverse().join("-") >
-            fieldValue.split(".").reverse().join("-")
+          toDash(value) >
+            toDash(fieldValue)
         );
       },
       numberOnly: () => {
         return value && !/^\d+$/.test(value);
       },
-    
+      empty: () => {
+        return pattern.split("_")[1].split(",").some(field => formValues[field] !== "" && formValues[field] !== null);
+      },
     };
     const patternFromToken =
       tokens[pattern.split("_")[0] as keyof typeof tokens];
@@ -158,8 +167,6 @@ export const Field = (props: IField) => {
 
   const [shouldValidate, setShouldValidate] = useState(false);
 
-
-
   const onChange = (e: ChangeEvent) => {
     const input = e.target as HTMLInputElement;
     if (input.files && input.files[0]) {
@@ -168,7 +175,7 @@ export const Field = (props: IField) => {
         fileData: input.files[0],
         fileSize: input.files[0].size,
       });
-    }else{
+    } else {
       setAtt(null);
     }
     const val =
@@ -177,11 +184,9 @@ export const Field = (props: IField) => {
   };
 
   const options = (): IOption[] => {
-    
-
-  if (props.name === "companyCode" && userCompanyCodes.length) {
-    return userCompanyCodes;
-  }
+    if (props.name === "companyCode" && userCompanyCodes.length) {
+      return userCompanyCodes;
+    }
 
     if (!props.dependentOptions) return props.options || [];
 
@@ -216,17 +221,19 @@ export const Field = (props: IField) => {
   const evalExpression = () =>
     props.calculatedValue?.expression
       ? eval(props.calculatedValue.expression)
+          .toLocaleString("en-US")
+          .replace(/\,/g, "")
       : "";
-
+  const today = new Date().toISOString().substring(0, 10);
   const monthAddition = () => {
     if (!Object.keys(JSON.parse(JSON.stringify(formValues))).length) return "";
     if (!props.calculatedValue?.month) return "";
     if (!props.calculatedValue?.date) return "";
     const newDate = new Date(
-      formValues[props.calculatedValue.date].split(".").reverse().join("-")
+      toDash(formValues[props.calculatedValue.date]) || today
     );
     newDate.setMonth(newDate.getMonth() + props.calculatedValue.month);
-    return "0" + newDate.toLocaleString("en-US", { month: "2-digit" });
+    return newDate.toLocaleString("en-US", { month: "2-digit" });
   };
 
   const getSum = () => {

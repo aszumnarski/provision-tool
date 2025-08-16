@@ -10,6 +10,13 @@ export const future = {
   message: "Dates in the past are not allowed",
 };
 
+export const empty = (fields: string, columnName: string) => {
+  return {
+    reg: `empty_${fields}`,
+    message: `Remaining "Update" fields in column ${columnName} have to be empty.`,
+  };
+};
+
 export const min = (minVal: number, optionalmessage?: string) => {
   return {
     reg: `min_${minVal}`,
@@ -31,9 +38,7 @@ export const max = (maxVal: number, optionalmessage?: string) => {
 export const maxSize = (maxVal: number, optionalmessage?: string) => {
   return {
     reg: `maxSize_${maxVal}`,
-    message:
-      optionalmessage ||
-      `File size cannot exceed ${maxVal} MB`,
+    message: optionalmessage || `File size cannot exceed ${maxVal} MB`,
   };
 };
 
@@ -104,3 +109,13 @@ export const inModifyState = [
     ],
   },
 ];
+
+//export const yyyyMMdd = (inDate : string) => {
+//  const pattern = "yyyyMMdd";
+//  return stringToDate(pattern,inDate);
+//}
+
+//const stringToDate = (inPattern:string,inDate:string) => {
+  //const pattern = inPattern; 
+//  return new Date(Number(inDate.substring(0,4)), Number(inDate.substring(4,6))-1, Number(inDate.substring(6,8)));
+//}

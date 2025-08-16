@@ -3,11 +3,16 @@ import { type IField } from "../Field/Field";
 
 export const Input = (props: IField) => {
   const className = `field ${props.error ? "field--error" : ""}`;
+  const counter = (props.maxlength && props.value?.length)
+    ? `(Characters left: ${Number(props.maxlength) - props.value?.length})`
+    : "";
 
   return (
     <div className={className}>
       <label>
-        <span>{props.label}</span>
+        <span>
+          {props.label} {counter}
+        </span>
         <input
           type={props.type}
           className="field-input"

@@ -8,11 +8,20 @@ export const DateInput = (props: IField) => {
   //@ts-ignore
   const { formValues, setFormValues, patterns } = useContext(FormContext);
   const className = `field ${props.error ? "field--error" : ""}`;
-  const toDashed = (dottedDate?: string) =>
-    dottedDate ? dottedDate.split(".").reverse().join("-") : "";
-  const toDotted = (dashedDate: string) =>
-    dashedDate ? dashedDate.split("-").reverse().join(".") : "";
-
+  //const toDashed = (dottedDate?: string) =>
+  //  dottedDate ? dottedDate.split(".").reverse().join("-") : "";
+  //const toDotted = (dashedDate: string) =>
+  //  dashedDate ? dashedDate.split("-").reverse().join(".") : "";
+  const noDash = (dashedDate?: string) =>
+    dashedDate ? dashedDate.split("-").join("") : "";
+  const toDash = (notDash?: string) =>
+    notDash
+      ? notDash.substring(0, 4) +
+        "-" +
+        notDash.substring(4, 6) +
+        "-" +
+        notDash.substring(6, 8)
+      : "";
   const today = new Date().toISOString().substring(0, 10);
   const isFuture =
     patterns &&
@@ -24,20 +33,49 @@ export const DateInput = (props: IField) => {
 
     setFormValues({
       ...formValues,
-      [props.name]: toDotted(input.value || today),
+      [props.name]: noDash(input.value || today),
     });
   };
 
+  //useEffect(() => {
+  // setTimeout(() => {
+  //    setFormValues((formValues: any) => {
+  //      return {
+  //        ...formValues,
+  //        [props.name]: noDash(today),
+  //      };
+  //    });
+  //  }, 20);
+  //}, []);
+
+  
+
   useEffect(() => {
-    setTimeout(() => {
-      setFormValues((formValues: any) => {
-        return {
-          ...formValues,
-          [props.name]: toDotted(today),
-        };
-      });
-    }, 50);
-  }, []);
+    if (!formValues[props.name]) {
+      setFormValues((prev: any) => ({
+        ...prev,
+        [props.name]: noDash(today),
+      }));
+    }
+  }, [formValues, props.name, setFormValues]);
+  
+
+
+ //useEffect(() => {
+ // if (formValues) {
+//    setFormValues((formValues: any) => ({
+//      ...formValues,
+//      [props.name]: noDash(today),
+//    }));
+//  }
+//}, []);
+
+
+useEffect(() => {
+  console.log("DateInput mounted with value:", props.value);
+}, []);
+
+
 
   return (
     <div className={className}>
@@ -49,7 +87,7 @@ export const DateInput = (props: IField) => {
           name={props.name}
           onChange={handleChange}
           onBlur={props.onBlur}
-          value={toDashed(props.value) || today}
+          value={toDash(props.value) || today}
           min={min}
           disabled={props.disabled}
         />
