@@ -1,7 +1,7 @@
 import * as h from "./helpers";
 import * as pTypes from "./provisionTypes";
 import * as pSubTypes from "./provisionSubTypes";
-import { type IField } from "../components/Field/Field";
+import { type IField } from "../context/types";
 
 export const mode: IField = {
   name: "mode",
@@ -890,6 +890,7 @@ export const appCreator: IField = {
 
 export const tlClosingBalanceUpdate: IField = {
   name: "tlClosingBalanceUpdate",
+  initValue: "0",
   label: "TL-Closing Balance - Update",
   calculatedValue: {
     expression:
@@ -902,6 +903,7 @@ export const tlClosingBalanceUpdate: IField = {
 
 export const tlClosingBalance: IField = {
   name: "tlClosingBalance",
+  initValue: "0",
   label: "TL-Closing Balance - Posted & Booked",
   dependantValue: [
     {
@@ -920,6 +922,7 @@ export const tlClosingBalance: IField = {
 
 export const tlReleaseUpdate: IField = {
   name: "tlReleaseUpdate",
+  initValue: "0",
   label: "TL-Release - Update",
   dependantValue: [
     {
@@ -938,6 +941,7 @@ export const tlReleaseUpdate: IField = {
 
 export const tlRelease: IField = {
   name: "tlRelease",
+  initValue: "0",
   label: "TL-Release - Posted & Booked",
   dependantValue: [
     {
@@ -956,6 +960,7 @@ export const tlRelease: IField = {
 
 export const tlUsageUpdate: IField = {
   name: "tlUsageUpdate",
+  initValue: "0",
   label: "TL-Usage - Update",
   dependantValue: [
     {
@@ -974,6 +979,7 @@ export const tlUsageUpdate: IField = {
 
 export const tlUsage: IField = {
   name: "tlUsage",
+  initValue: "0",
   label: "TL-Usage - Posted & Booked",
   dependantValue: [
     {
@@ -992,6 +998,7 @@ export const tlUsage: IField = {
 
 export const tlCreationAdditionUpdate: IField = {
   name: "tlCreationAdditionUpdate",
+  initValue: "0",
   label: "TL-Creation/Addition - Update",
   dependantValue: [
     {
@@ -1010,6 +1017,7 @@ export const tlCreationAdditionUpdate: IField = {
 
 export const tlCreationAddition: IField = {
   name: "tlCreationAddition",
+  initValue: "0",
   label: "TL-Creation/Addition - Posted & Booked",
   dependantValue: [
     {
@@ -1028,6 +1036,7 @@ export const tlCreationAddition: IField = {
 
 export const tlCarryFwd: IField = {
   name: "tlCarryFwd",
+  initValue: "0",
   label: "TL-Carry Fwd from Last Year",
   type: "number",
   patterns: [h.required()],
@@ -1036,6 +1045,7 @@ export const tlCarryFwd: IField = {
 
 export const _2lClosingBalanceUpdate: IField = {
   name: "2lClosingBalanceUpdate",
+  initValue: "0",
   label: "2L-Closing Balance - Update",
   calculatedValue: {
     expression:
@@ -1049,6 +1059,7 @@ export const _2lClosingBalanceUpdate: IField = {
 
 export const _2lClosingBalance: IField = {
   name: "2lClosingBalance",
+  initValue: "0",
   label: "2L-Closing Balance - Posted & Booked",
   dependantValue: [
     {
@@ -1063,6 +1074,7 @@ export const _2lClosingBalance: IField = {
 
 export const _2lReleaseUpdate: IField = {
   name: "2lReleaseUpdate",
+  initValue: "0",
   label: "2L-Release - Update",
   dependantValue: [
     {
@@ -1124,6 +1136,7 @@ export const _2lReleaseUpdate: IField = {
 
 export const _2lRelease: IField = {
   name: "2lRelease",
+  initValue: "0",
   label: "2L-Release - Posted & Booked",
   dependantValue: [
     {
@@ -1138,6 +1151,7 @@ export const _2lRelease: IField = {
 
 export const _2lUsageUpdate: IField = {
   name: "2lUsageUpdate",
+  initValue: "0",
   label: "2L-Usage - Update",
   dependantValue: [
     {
@@ -1202,6 +1216,7 @@ export const _2lUsageUpdate: IField = {
 
 export const _2lUsage: IField = {
   name: "2lUsage",
+  initValue: "0",
   label: "2L-Usage - Posted & Booked",
   dependantValue: [
     {
@@ -1216,6 +1231,7 @@ export const _2lUsage: IField = {
 
 export const _2lCreationAdditionUpdate: IField = {
   name: "2lCreationAdditionUpdate",
+  initValue: "0",
   label: "2L-Creation/Addition - Update",
   dependantValue: [
     {
@@ -1293,6 +1309,7 @@ export const _2lCreationAdditionUpdate: IField = {
 
 export const _2lCreationAddition: IField = {
   name: "2lCreationAddition",
+  initValue: "0",
   label: "2L-Creation/Addition - Posted & Booked",
   dependantValue: [
     {
@@ -1311,6 +1328,7 @@ export const _2lCreationAddition: IField = {
 
 export const _2lCarryFwd: IField = {
   name: "2lCarryFwd",
+  initValue: "0",
   label: "2L-Carry Fwd from Last Year",
   type: "number",
   patterns: [h.required()],
@@ -1319,6 +1337,7 @@ export const _2lCarryFwd: IField = {
 
 export const _0lClosingBalanceUpdate: IField = {
   name: "0lClosingBalanceUpdate",
+  initValue: "0",
   label: "0L-Closing Balance - Update",
   calculatedValue: {
     expression:
@@ -1331,6 +1350,7 @@ export const _0lClosingBalanceUpdate: IField = {
 
 export const _0lClosingBalance: IField = {
   name: "0lClosingBalance",
+  initValue: "0",
   label: "0L-Closing Balance - Posted & Booked",
   type: "number",
   patterns: [h.required()],
@@ -1339,6 +1359,7 @@ export const _0lClosingBalance: IField = {
 
 export const _0lReleaseUpdate: IField = {
   name: "0lReleaseUpdate",
+  initValue: "0",
   label: "0L-Release - Update",
   type: "number",
   patterns: [
@@ -1391,6 +1412,7 @@ export const _0lReleaseUpdate: IField = {
 
 export const _0lRelease: IField = {
   name: "0lRelease",
+  initValue: "0",
   label: "0L-Release - Posted & Booked",
   type: "number",
   patterns: [h.required()],
@@ -1399,6 +1421,7 @@ export const _0lRelease: IField = {
 
 export const _0lUsageUpdate: IField = {
   name: "0lUsageUpdate",
+  initValue: "0",
   label: "0L-Usage - Update",
   type: "number",
   patterns: [
@@ -1451,6 +1474,7 @@ export const _0lUsageUpdate: IField = {
 
 export const _0lUsage: IField = {
   name: "0lUsage",
+  initValue: "0",
   label: "0L-Usage - Posted & Booked",
   type: "number",
   patterns: [h.required()],
@@ -1459,6 +1483,7 @@ export const _0lUsage: IField = {
 
 export const _0lCreationAdditionUpdate: IField = {
   name: "0lCreationAdditionUpdate",
+  initValue: "0",
   label: "0L-Creation/Addition - Update",
   type: "number",
   patterns: [
@@ -1523,6 +1548,7 @@ export const _0lCreationAdditionUpdate: IField = {
 
 export const _0lCreationAddition: IField = {
   name: "0lCreationAddition",
+  initValue: "0",
   label: "0L-Creation/Addition - Posted & Booked",
   type: "number",
   patterns: [h.required()],
@@ -1531,6 +1557,7 @@ export const _0lCreationAddition: IField = {
 
 export const _0lCarryFwd: IField = {
   name: "0lCarryFwd",
+  initValue: "0",
   label: "0L-Carry Fwd from Last Year",
   type: "number",
   patterns: [h.required()],

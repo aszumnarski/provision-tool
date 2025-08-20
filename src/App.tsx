@@ -1,17 +1,34 @@
-import { useState } from "react";
+import { useState, useEffect  } from "react";
+import { useLocation } from "react-router-dom";
 import "./App.css";
 import { config } from "./config";
 import { Form } from "./components/Form/Form";
 import { FormContext } from "./context";
 import { Loader } from "./components/Loader/Loader";
 import { Modal } from "./components/Modal/Modal";
-import type { IOption } from "./components/Field/Field";
+import type { IOption, IPattern } from "./context/types";
 
 function App() {
+
+  const location = useLocation();
+  
+const [isEditingEnabled, setIsEditingEnabled] = useState(true);
+
+
+
+useEffect(() => {
+  const params = new URLSearchParams(location.search);
+  const mode = params.get("mode");
+  setIsEditingEnabled(mode !== "display");
+}, [location.search]);
+
+
+
+  
   const [formValues, setFormValues] = useState<Record<string, string> | {}>({});
   const [formErrors, setFormErrors] = useState<Record<string, string> | {}>({});
-  const [patterns, setPatterns] = useState<Record<string, string> | {}>({});
-  const [att, setAtt] = useState<Record<string, string> | {}>({});
+  const [patterns, setPatterns] = useState<Record<string, IPattern[]> | {}>({});
+  const [att, setAtt] = useState<any>({});
   const [userCompanyCodes, setUserCompanyCodes] = useState<IOption[]>([]);
   const [isLoading, setLoading] = useState(false);
   const [modalContent, setModalContent] = useState<Record<
@@ -20,6 +37,7 @@ function App() {
   > | null>(null);
   const body = document.querySelector("body");
   const imgSource = body && body.dataset?.logo;
+  
   return (
     <FormContext.Provider
       value={{
@@ -35,6 +53,7 @@ function App() {
         setUserCompanyCodes,
         isLoading,
         setLoading,
+        isEditingEnabled,
         modalContent,
         setModalContent,
       }}

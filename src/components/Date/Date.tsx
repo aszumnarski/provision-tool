@@ -1,7 +1,7 @@
 import "./Date.css";
 import { useContext, useEffect } from "react";
 import { FormContext } from "../../context";
-import { type IField, type IPattern } from "../Field/Field";
+import { type IField, type IPattern } from "../../context/types";
 import type { ChangeEvent } from "react";
 
 export const DateInput = (props: IField) => {
@@ -59,24 +59,6 @@ export const DateInput = (props: IField) => {
     }
   }, [formValues, props.name, setFormValues]);
   
-
-
- //useEffect(() => {
- // if (formValues) {
-//    setFormValues((formValues: any) => ({
-//      ...formValues,
-//      [props.name]: noDash(today),
-//    }));
-//  }
-//}, []);
-
-
-useEffect(() => {
-  console.log("DateInput mounted with value:", props.value);
-}, []);
-
-
-
   return (
     <div className={className}>
       <label>

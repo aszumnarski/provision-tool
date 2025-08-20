@@ -1,11 +1,12 @@
 import "./Input.css";
-import { type IField } from "../Field/Field";
+import { type IField } from "../../context/types";
 
 export const Input = (props: IField) => {
   const className = `field ${props.error ? "field--error" : ""}`;
-  const counter = (props.maxlength && props.value?.length)
-    ? `(Characters left: ${Number(props.maxlength) - props.value?.length})`
-    : "";
+  const counter =
+    props.maxlength && props.value?.length
+      ? `(Characters left: ${Number(props.maxlength) - props.value?.length})`
+      : "";
 
   return (
     <div className={className}>
@@ -22,7 +23,11 @@ export const Input = (props: IField) => {
           disabled={props.disabled}
           onBlur={props.onBlur}
           maxLength={Number(props.maxlength) || undefined}
-          value={props.value || ""}
+          value={
+            props.value === "number" && isNaN(Number(props.value))
+              ? ""
+              : props.value
+          }
         />
       </label>
       <p className="error-message">{props.error}</p>

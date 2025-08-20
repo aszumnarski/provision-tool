@@ -1,5 +1,5 @@
 import "./Select.css";
-import { type IField } from "../Field/Field";
+import { type IField } from "../../context/types";
 import { useContext, useEffect } from "react";
 import { FormContext } from "../../context";
 

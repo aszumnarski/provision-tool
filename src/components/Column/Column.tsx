@@ -1,5 +1,6 @@
 import "./Column.css";
-import { Field, type IField } from "../Field/Field";
+import { type IField } from "../../context/types";
+import { Field } from "../Field/Field";
 
 export interface IColumn {
   fields: IField[];

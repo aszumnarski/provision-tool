@@ -1,171 +1,39 @@
 import "./Field.css";
-
-import { useContext, useEffect } from "react";
+import { useContext, useEffect, useMemo } from "react";
 import { FormContext } from "../../context";
+import type { IField } from "../../context/types";
 import { useState, type ChangeEvent } from "react";
 import { Select } from "../Select/Select";
 import { Input } from "../Input/Input";
 import { DateInput } from "../Date/Date";
 import { Button } from "../Button/Button";
-
-export interface IField {
-  name: string;
-  type: "text" | "select" | "number" | "date" | "button" | "file";
-  calculatedValue?: ICalculatedValue;
-  conditionalDisabled?: IConditionalDisabled[];
-  dependentOptions?: IDependentOptions[];
-  dependantValue?: IDependentValue[];
-  disabled?: boolean;
-  error?: string;
-  hidden?: boolean;
-  initValue?: string;
-  label?: string;
-  maxlength?: string;
-  onBlur?: (e: ChangeEvent) => void;
-  onChange?: (e: ChangeEvent) => void;
-  options?: IOption[];
-  patterns?: IPattern[];
-  value?: string;
-}
-
-export interface ICalculatedValue {
-  expression?: string;
-  date?: string;
-  month?: number;
-}
-
-export interface ICondition {
-  when: string;
-  is: string | boolean;
-}
-
-export interface IConditionMulti {
-  when: string;
-  is: (string | boolean)[];
-}
-
-export interface IDependentOptions {
-  conditions: IConditionMulti[];
-  options: IOption[];
-  isFromValue?: boolean;
-}
-
-export interface IDependentValue {
-  conditions: IConditionMulti[];
-  valueFrom: string;
-}
-
-export interface IConditionalDisabled {
-  conditions: ICondition[];
-}
-
-export interface IOption {
-  label: string;
-  value: string;
-}
-
-export interface IPattern {
-  reg: string;
-  message: string;
-}
+import { getOptions, getValue } from "./options";
+import { getSum } from "./date";
+import { validateField } from "./validation";
+import { isFieldDisabled } from "./fieldUtils";
 
 export const Field = (props: IField) => {
-  //@ts-ignore
-  const {
-    //@ts-ignore
-    formValues,
-    //@ts-ignore
-    setFormValues,
-    //@ts-ignore
-    formErrors,
-    //@ts-ignore
-    setFormErrors,
-    //@ts-ignore
-    patterns,
-    //@ts-ignore
-    setPatterns,
-    //@ts-ignore
-    setAtt,
-    //@ts-ignore
-    att,
-    //@ts-ignore
-    userCompanyCodes,
-  } = useContext(FormContext);
-  const toDash = (notDash?: string) =>
-    notDash
-      ? notDash.substring(0, 4) +
-        "-" +
-        notDash.substring(4, 6) +
-        "-" +
-        notDash.substring(6, 8)
-      : "";
-  function validatePattern(pattern: string, value?: string) {
-    const tokens = {
-      required: () => !value,
-      future: () =>
-        value &&
-        toDash(value)<
-          new Date().toISOString().substring(0, 10),
-      min: () => {
-        const minimum = Number(pattern.split("_")[1]);
-        return value && value?.length < minimum;
-      },
-      max: () => {
-        const maximum = Number(pattern.split("_")[1]);
-        return value && value?.length > maximum;
-      },
-      maxSize: () => {
-        //console.log("hi");
-        const maximum = Number(pattern.split("_")[1]);
-        return att ? Number(att.fileSize) / 1024 / 1024 > maximum : false;
-        //return att ? att.fileSize > maximum : false;
-      },
-      lt: () => {
-        const fieldName = pattern.split("_")[1];
-        const fieldValue = formValues[fieldName];
-        return (
-          value &&
-          toDash(value) <
-            toDash(fieldValue)
-        );
-      },
-      gt: () => {
-        const fieldName = pattern.split("_")[1];
-        const fieldValue = formValues[fieldName];
-        return (
-          value &&
-          toDash(value) >
-            toDash(fieldValue)
-        );
-      },
-      numberOnly: () => {
-        return value && !/^\d+$/.test(value);
-      },
-      empty: () => {
-        return pattern.split("_")[1].split(",").some(field => formValues[field] !== "" && formValues[field] !== null);
-      },
-    };
-    const patternFromToken =
-      tokens[pattern.split("_")[0] as keyof typeof tokens];
-    const regex = new RegExp(pattern);
-    return patternFromToken
-      ? patternFromToken()
-      : value && !regex.test(value || "");
-  }
+  const context = useContext(FormContext);
+  if (!context) throw new Error("Field must be used within a FormProvider");
 
-  const validateField = (patterns: IPattern[], value?: string | boolean) => {
-    if (typeof value !== "string") return undefined;
-    const messages = patterns
-      .map((p) => validatePattern(p.reg, value) && p.message)
-      .filter(Boolean);
-    return messages.length ? messages[0] : undefined;
-  };
+  const {
+    formValues,
+    setFormValues,
+    formErrors,
+    setFormErrors,
+    patterns,
+    setAtt,
+    userCompanyCodes,
+    isEditingEnabled,
+  } = context;
+
+  const options = getOptions(props, formValues, userCompanyCodes);
+
+  const [shouldValidate, setShouldValidate] = useState(false);
 
   const onBlur = () => {
     validate();
   };
-
-  const [shouldValidate, setShouldValidate] = useState(false);
 
   const onChange = (e: ChangeEvent) => {
     const input = e.target as HTMLInputElement;
@@ -183,102 +51,24 @@ export const Field = (props: IField) => {
     setFormValues({ ...formValues, [props.name]: val });
   };
 
-  const options = (): IOption[] => {
-    if (props.name === "companyCode" && userCompanyCodes.length) {
-      return userCompanyCodes;
-    }
+  const today = useMemo(() => new Date().toISOString().substring(0, 10), []);
 
-    if (!props.dependentOptions) return props.options || [];
+  const sum = useMemo(
+    () => getSum(props, formValues, today),
+    [props, formValues, today]
+  );
 
-    const valuedOptions = (opts: IOption[]) => {
-      return opts.map((o) => {
-        return {
-          label: formValues[o.label],
-          value: formValues[o.value],
-        };
-      });
-    };
-
-    const result: IOption[] =
-      props.dependentOptions
-        .map(
-          (scenario) =>
-            scenario.conditions
-              .map(
-                (c) =>
-                  c.is.includes(formValues[c.when]) ||
-                  c.is.includes(!!formValues[c.when])
-              )
-              .filter(Boolean).length === scenario.conditions.length &&
-            (scenario.isFromValue
-              ? valuedOptions(scenario.options)
-              : scenario.options)
-        )
-        .filter(Boolean)[0] || [];
-    return result.length ? result : props.options || [];
-  };
-
-  const evalExpression = () =>
-    props.calculatedValue?.expression
-      ? eval(props.calculatedValue.expression)
-          .toLocaleString("en-US")
-          .replace(/\,/g, "")
-      : "";
-  const today = new Date().toISOString().substring(0, 10);
-  const monthAddition = () => {
-    if (!Object.keys(JSON.parse(JSON.stringify(formValues))).length) return "";
-    if (!props.calculatedValue?.month) return "";
-    if (!props.calculatedValue?.date) return "";
-    const newDate = new Date(
-      toDash(formValues[props.calculatedValue.date]) || today
-    );
-    newDate.setMonth(newDate.getMonth() + props.calculatedValue.month);
-    return newDate.toLocaleString("en-US", { month: "2-digit" });
-  };
-
-  const getSum = () => {
-    if (!props.calculatedValue) return "";
-    if (props.calculatedValue.expression) return evalExpression();
-    if (props.calculatedValue.date) return monthAddition();
-    return "";
-  };
-  const sum = getSum();
-  const disabled = props.conditionalDisabled
-    ? props.conditionalDisabled
-        ?.map(
-          (or) =>
-            or.conditions
-              .map(
-                (c) =>
-                  formValues[c.when] == c.is || !!formValues[c.when] == c.is
-              )
-              .filter(Boolean).length === or.conditions.length
-        )
-        .filter(Boolean).length > 0
+  const disabled = !isEditingEnabled
+    ? true
+    : props.conditionalDisabled
+    ? isFieldDisabled(props.conditionalDisabled, formValues)
     : props.disabled;
 
-  const copyValue = () => {
-    if (!props.dependantValue) return "";
+  const value = useMemo(
+    () => getValue(props, formValues, sum, options),
+    [props, formValues, sum, options]
+  );
 
-    const match = props.dependantValue.find((or) =>
-      or.conditions.every((c) => c.is.includes(formValues[c.when]))
-    );
-
-    return match ? formValues[match.valueFrom] : formValues[props.name];
-  };
-
-  const getValue = () => {
-    if (!Object.keys(JSON.parse(JSON.stringify(formValues))).length) return "";
-    if (props.dependantValue) return copyValue();
-    if (sum) return sum;
-
-    if (formValues[props.name]) return formValues[props.name];
-    if (props.type === "select" && options().length) return options()[0].value;
-
-    return "";
-  };
-
-  const value = getValue();
   const error = formErrors[props.name];
   const enhancedProps = {
     ...props,
@@ -287,12 +77,16 @@ export const Field = (props: IField) => {
     error,
     onBlur,
     disabled,
-    options: options(),
+    options,
     value,
   };
 
   const validate = async () => {
-    const errMsg = validateField(patterns[props.name], formValues[props.name]);
+    const errMsg = validateField(
+      patterns[props.name],
+      value,
+      formValues[props.name]
+    );
     await setFormErrors((formErrors: any) => {
       return { ...formErrors, [props.name]: disabled ? undefined : errMsg };
     });
@@ -304,39 +98,35 @@ export const Field = (props: IField) => {
   };
 
   useEffect(() => {
-    setFormValues({
-      ...formValues,
-      [props.name]: value,
-    });
-  }, [value]);
-
-  useEffect(() => {
-    window.addEventListener("validate", triggerValidate);
-    return () => {
-      window.removeEventListener("validate", triggerValidate);
-    };
+    const handler = () => triggerValidate();
+    window.addEventListener("validate", handler);
+    return () => window.removeEventListener("validate", handler);
   }, []);
 
   useEffect(() => {
-    if (disabled) {
+    if (disabled || shouldValidate) {
       validate();
     }
-  }, [disabled]);
+  }, [disabled, shouldValidate]);
 
   useEffect(() => {
-    if (shouldValidate) {
-      validate();
+    if (value !== "" && formValues[props.name] !== value) {
+      setFormValues((prev) => ({ ...prev, [props.name]: value }));
     }
-  }, [shouldValidate]);
+  }, [value]);
 
-  const typeMap = {
-    text: Input,
-    number: Input,
-    file: Input,
-    select: Select,
-    date: DateInput,
-    button: Button,
-  };
+  const typeMap = useMemo(
+    () => ({
+      text: Input,
+      number: Input,
+      file: Input,
+      select: Select,
+      date: DateInput,
+      button: Button,
+    }),
+    []
+  );
+
   useEffect(() => {
     if (enhancedProps.value !== formValues[props.name]) {
       setFormValues({
@@ -345,5 +135,6 @@ export const Field = (props: IField) => {
       });
     }
   });
+
   return props.type ? typeMap[props.type](enhancedProps) : "";
 };
