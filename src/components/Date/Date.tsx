@@ -51,7 +51,11 @@ export const DateInput = (props: IField) => {
   
 
   useEffect(() => {
-    if (!formValues[props.name]) {
+    if (
+
+      formValues &&
+      typeof formValues === "object" &&
+  !formValues[props.name]) {
       setFormValues((prev: any) => ({
         ...prev,
         [props.name]: noDash(today),

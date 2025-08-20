@@ -112,19 +112,30 @@ export const Button = (props: IField) => {
     setFormErrors({});
   };
 
+
   useEffect(() => {
-    if (formValues.mode === "create") resetForm();
-  }, [formValues.mode]);
+    if (formValues && typeof formValues === "object" && formValues.mode === "create") {
+      resetForm();
+    }
+  }, [formValues?.mode]);
+  
 
   useEffect(() => {
     setTimeout(loadData, 100);
   }, []);
 
+
   useEffect(() => {
-    if (formValues.user && !defaultValues) {
+    if (
+      formValues &&
+      typeof formValues === "object" &&
+      formValues.user &&
+      !defaultValues
+    ) {
       setDefaultValues(formValues);
     }
-  }, [formValues.user]);
+  }, [formValues?.user]);
+  
 
   const states = {
     CREATE: { label: "CREATE", onClick: handlePost },
@@ -132,18 +143,22 @@ export const Button = (props: IField) => {
     GET: { label: "GET", onClick: handleGet },
   };
 
-  const getState = () => {
-    if (formValues.mode === "create") return states.CREATE;
 
+  const getState = () => {
+    if (!formValues || typeof formValues !== "object") return states.CREATE;
+  
+    if (formValues.mode === "create") return states.CREATE;
+  
     if (
       formValues.mode === "modify" &&
       !formValues.appNumberImport &&
       formValues.appNumber
     )
       return states.UPDATE;
-
+  
     return states.GET;
   };
+  
 
   async function getData(url: string) {
     setLoading(true);

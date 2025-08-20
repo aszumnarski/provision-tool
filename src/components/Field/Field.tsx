@@ -1,5 +1,8 @@
 import "./Field.css";
 
+import { useFieldValue } from "./useFieldValue";
+import { useEnhancedFieldProps } from "./useEnhancedFieldProps";
+import { validateField } from "./validationUtils";
 import { useContext, useEffect } from "react";
 import { FormContext } from "../../context";
 import { useState, type ChangeEvent } from "react";
@@ -7,6 +10,8 @@ import { Select } from "../Select/Select";
 import { Input } from "../Input/Input";
 import { DateInput } from "../Date/Date";
 import { Button } from "../Button/Button";
+
+import { isFieldDisabled } from "./fieldUtils";
 
 export interface IField {
   name: string;
@@ -69,227 +74,29 @@ export interface IPattern {
   message: string;
 }
 
+export const useFormContextSafe = () => {
+  const context = useContext(FormContext);
+  if (!context) throw new Error("FormContext is undefined");
+  return context;
+};
+
 export const Field = (props: IField) => {
-  //@ts-ignore
   const {
-    //@ts-ignore
     formValues,
-    //@ts-ignore
     setFormValues,
-    //@ts-ignore
     formErrors,
-    //@ts-ignore
     setFormErrors,
-    //@ts-ignore
     patterns,
-    //@ts-ignore
-    setPatterns,
-    //@ts-ignore
-    setAtt,
-    //@ts-ignore
     att,
-    //@ts-ignore
     userCompanyCodes,
-  } = useContext(FormContext);
-  const toDash = (notDash?: string) =>
-    notDash
-      ? notDash.substring(0, 4) +
-        "-" +
-        notDash.substring(4, 6) +
-        "-" +
-        notDash.substring(6, 8)
-      : "";
-  function validatePattern(pattern: string, value?: string) {
-    const tokens = {
-      required: () => !value,
-      future: () =>
-        value &&
-        toDash(value)<
-          new Date().toISOString().substring(0, 10),
-      min: () => {
-        const minimum = Number(pattern.split("_")[1]);
-        return value && value?.length < minimum;
-      },
-      max: () => {
-        const maximum = Number(pattern.split("_")[1]);
-        return value && value?.length > maximum;
-      },
-      maxSize: () => {
-        //console.log("hi");
-        const maximum = Number(pattern.split("_")[1]);
-        return att ? Number(att.fileSize) / 1024 / 1024 > maximum : false;
-        //return att ? att.fileSize > maximum : false;
-      },
-      lt: () => {
-        const fieldName = pattern.split("_")[1];
-        const fieldValue = formValues[fieldName];
-        return (
-          value &&
-          toDash(value) <
-            toDash(fieldValue)
-        );
-      },
-      gt: () => {
-        const fieldName = pattern.split("_")[1];
-        const fieldValue = formValues[fieldName];
-        return (
-          value &&
-          toDash(value) >
-            toDash(fieldValue)
-        );
-      },
-      numberOnly: () => {
-        return value && !/^\d+$/.test(value);
-      },
-      empty: () => {
-        return pattern.split("_")[1].split(",").some(field => formValues[field] !== "" && formValues[field] !== null);
-      },
-    };
-    const patternFromToken =
-      tokens[pattern.split("_")[0] as keyof typeof tokens];
-    const regex = new RegExp(pattern);
-    return patternFromToken
-      ? patternFromToken()
-      : value && !regex.test(value || "");
-  }
+  } = useFormContextSafe();
 
-  const validateField = (patterns: IPattern[], value?: string | boolean) => {
-    if (typeof value !== "string") return undefined;
-    const messages = patterns
-      .map((p) => validatePattern(p.reg, value) && p.message)
-      .filter(Boolean);
-    return messages.length ? messages[0] : undefined;
-  };
-
-  const onBlur = () => {
-    validate();
-  };
-
+  const disabled = isFieldDisabled(
+    props.conditionalDisabled,
+    formValues,
+    props.disabled
+  );
   const [shouldValidate, setShouldValidate] = useState(false);
-
-  const onChange = (e: ChangeEvent) => {
-    const input = e.target as HTMLInputElement;
-    if (input.files && input.files[0]) {
-      setAtt({
-        fileName: input.files[0].name,
-        fileData: input.files[0],
-        fileSize: input.files[0].size,
-      });
-    } else {
-      setAtt(null);
-    }
-    const val =
-      props.type === "number" ? input.value.replace(/-/g, "") : input.value;
-    setFormValues({ ...formValues, [props.name]: val });
-  };
-
-  const options = (): IOption[] => {
-    if (props.name === "companyCode" && userCompanyCodes.length) {
-      return userCompanyCodes;
-    }
-
-    if (!props.dependentOptions) return props.options || [];
-
-    const valuedOptions = (opts: IOption[]) => {
-      return opts.map((o) => {
-        return {
-          label: formValues[o.label],
-          value: formValues[o.value],
-        };
-      });
-    };
-
-    const result: IOption[] =
-      props.dependentOptions
-        .map(
-          (scenario) =>
-            scenario.conditions
-              .map(
-                (c) =>
-                  c.is.includes(formValues[c.when]) ||
-                  c.is.includes(!!formValues[c.when])
-              )
-              .filter(Boolean).length === scenario.conditions.length &&
-            (scenario.isFromValue
-              ? valuedOptions(scenario.options)
-              : scenario.options)
-        )
-        .filter(Boolean)[0] || [];
-    return result.length ? result : props.options || [];
-  };
-
-  const evalExpression = () =>
-    props.calculatedValue?.expression
-      ? eval(props.calculatedValue.expression)
-          .toLocaleString("en-US")
-          .replace(/\,/g, "")
-      : "";
-  const today = new Date().toISOString().substring(0, 10);
-  const monthAddition = () => {
-    if (!Object.keys(JSON.parse(JSON.stringify(formValues))).length) return "";
-    if (!props.calculatedValue?.month) return "";
-    if (!props.calculatedValue?.date) return "";
-    const newDate = new Date(
-      toDash(formValues[props.calculatedValue.date]) || today
-    );
-    newDate.setMonth(newDate.getMonth() + props.calculatedValue.month);
-    return newDate.toLocaleString("en-US", { month: "2-digit" });
-  };
-
-  const getSum = () => {
-    if (!props.calculatedValue) return "";
-    if (props.calculatedValue.expression) return evalExpression();
-    if (props.calculatedValue.date) return monthAddition();
-    return "";
-  };
-  const sum = getSum();
-  const disabled = props.conditionalDisabled
-    ? props.conditionalDisabled
-        ?.map(
-          (or) =>
-            or.conditions
-              .map(
-                (c) =>
-                  formValues[c.when] == c.is || !!formValues[c.when] == c.is
-              )
-              .filter(Boolean).length === or.conditions.length
-        )
-        .filter(Boolean).length > 0
-    : props.disabled;
-
-  const copyValue = () => {
-    if (!props.dependantValue) return "";
-
-    const match = props.dependantValue.find((or) =>
-      or.conditions.every((c) => c.is.includes(formValues[c.when]))
-    );
-
-    return match ? formValues[match.valueFrom] : formValues[props.name];
-  };
-
-  const getValue = () => {
-    if (!Object.keys(JSON.parse(JSON.stringify(formValues))).length) return "";
-    if (props.dependantValue) return copyValue();
-    if (sum) return sum;
-
-    if (formValues[props.name]) return formValues[props.name];
-    if (props.type === "select" && options().length) return options()[0].value;
-
-    return "";
-  };
-
-  const value = getValue();
-  const error = formErrors[props.name];
-  const enhancedProps = {
-    ...props,
-
-    onChange,
-    error,
-    onBlur,
-    disabled,
-    options: options(),
-    value,
-  };
 
   const validate = async () => {
     const errMsg = validateField(patterns[props.name], formValues[props.name]);
@@ -297,6 +104,17 @@ export const Field = (props: IField) => {
       return { ...formErrors, [props.name]: disabled ? undefined : errMsg };
     });
   };
+  const value = useFieldValue(props, formValues);
+
+  const enhancedProps = useEnhancedFieldProps(
+    props,
+    formValues,
+    formErrors,
+    setFormValues,
+    setFormErrors,
+    userCompanyCodes,
+    att
+  );
 
   const triggerValidate = () => {
     setShouldValidate(true);
@@ -304,10 +122,13 @@ export const Field = (props: IField) => {
   };
 
   useEffect(() => {
-    setFormValues({
-      ...formValues,
-      [props.name]: value,
-    });
+    if (
+      formValues &&
+      typeof formValues === "object" &&
+      formValues[props.name] !== value
+    ) {
+      setFormValues((prev: any) => ({ ...prev, [props.name]: value }));
+    }
   }, [value]);
 
   useEffect(() => {
@@ -318,16 +139,10 @@ export const Field = (props: IField) => {
   }, []);
 
   useEffect(() => {
-    if (disabled) {
+    if (disabled || shouldValidate) {
       validate();
     }
-  }, [disabled]);
-
-  useEffect(() => {
-    if (shouldValidate) {
-      validate();
-    }
-  }, [shouldValidate]);
+  }, [disabled, shouldValidate]);
 
   const typeMap = {
     text: Input,
@@ -337,13 +152,7 @@ export const Field = (props: IField) => {
     date: DateInput,
     button: Button,
   };
-  useEffect(() => {
-    if (enhancedProps.value !== formValues[props.name]) {
-      setFormValues({
-        ...formValues,
-        [props.name]: enhancedProps.value,
-      });
-    }
-  });
   return props.type ? typeMap[props.type](enhancedProps) : "";
+
+  //return props.type ? typeMap[props.type] : null;
 };
