@@ -55,7 +55,7 @@ useEffect(() => {
         setModalContent,
       }}
     >
-      <div className="app" inert={isLoading || !!modalContent}>
+      <div className="app" inert={isLoading || !!modalContent || !!isEditingEnabled}>
         {imgSource ? (
           <div className="logo">
             <img className="logo__pic" src={imgSource || ""} alt="logo" />
