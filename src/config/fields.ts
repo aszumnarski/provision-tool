@@ -1826,8 +1826,8 @@ export const glCreditAccount: IField = {
       ],
       options: [
         {
-          label: "24182000",
-          value: "24182000",
+          label: "24182100",
+          value: "24182100",
         },
       ],
     },
@@ -1838,8 +1838,8 @@ export const glCreditAccount: IField = {
       ],
       options: [
         {
-          label: "24189000",
-          value: "24189000",
+          label: "24189100",
+          value: "24189100",
         },
       ],
     },
@@ -1881,7 +1881,19 @@ export const glCreditAccount: IField = {
     },
     {
       conditions: [
-        { when: "provisionType", is: ["o70", "o71"] },
+        { when: "provisionType", is: ["o70"] },
+        { when: "subType", is: ["y07c", "y08c", "y09", "y27c", "y28c"] },
+      ],
+      options: [
+        {
+          label: "38710000",
+          value: "38710000",
+        },
+      ],
+    },
+    {
+      conditions: [
+        { when: "provisionType", is: ["o71"] },
         { when: "subType", is: ["y07c", "y08c", "y09", "y27c", "y28c"] },
       ],
       options: [
@@ -1930,7 +1942,7 @@ export const glCreditAccount: IField = {
     {
       conditions: [
         { when: "provisionType", is: ["c83", "c84"] },
-        { when: "subType", is: ["y07"] },
+        { when: "subType", is: ["y07","y27"] },
       ],
       options: [
         {
@@ -1942,7 +1954,7 @@ export const glCreditAccount: IField = {
     {
       conditions: [
         { when: "provisionType", is: ["c83", "c84"] },
-        { when: "subType", is: ["y08"] },
+        { when: "subType", is: ["y08","y28"] },
       ],
       options: [
         {
@@ -1960,30 +1972,6 @@ export const glCreditAccount: IField = {
         {
           label: "60900009",
           value: "60900009",
-        },
-      ],
-    },
-    {
-      conditions: [
-        { when: "provisionType", is: ["c83", "c84"] },
-        { when: "subType", is: ["y27"] },
-      ],
-      options: [
-        {
-          label: "60900027",
-          value: "60900027",
-        },
-      ],
-    },
-    {
-      conditions: [
-        { when: "provisionType", is: ["c83", "c84"] },
-        { when: "subType", is: ["y28"] },
-      ],
-      options: [
-        {
-          label: "60900028",
-          value: "60900028",
         },
       ],
     },
@@ -2319,8 +2307,8 @@ export const glDebitAccount: IField = {
       ],
       options: [
         {
-          label: "24182000",
-          value: "24182000",
+          label: "24182100",
+          value: "24182100",
         },
       ],
     },
@@ -2331,8 +2319,8 @@ export const glDebitAccount: IField = {
       ],
       options: [
         {
-          label: "24189000",
-          value: "24189000",
+          label: "24189100",
+          value: "24189100",
         },
       ],
     },
@@ -2374,7 +2362,19 @@ export const glDebitAccount: IField = {
     },
     {
       conditions: [
-        { when: "provisionType", is: ["o70", "o71"] },
+        { when: "provisionType", is: ["o70"] },
+        { when: "subType", is: ["y07", "y08", "y09c", "y27", "y28"] },
+      ],
+      options: [
+        {
+          label: "38710000",
+          value: "38710000",
+        },
+      ],
+    },
+    {
+      conditions: [
+        { when: "provisionType", is: ["o71"] },
         { when: "subType", is: ["y07", "y08", "y09c", "y27", "y28"] },
       ],
       options: [
@@ -2423,7 +2423,7 @@ export const glDebitAccount: IField = {
     {
       conditions: [
         { when: "provisionType", is: ["c83", "c84"] },
-        { when: "subType", is: ["y07c"] },
+        { when: "subType", is: ["y07c","y27c"] },
       ],
       options: [
         {
@@ -2435,7 +2435,7 @@ export const glDebitAccount: IField = {
     {
       conditions: [
         { when: "provisionType", is: ["c83", "c84"] },
-        { when: "subType", is: ["y08c"] },
+        { when: "subType", is: ["y08c","y28c"] },
       ],
       options: [
         {
@@ -2453,30 +2453,6 @@ export const glDebitAccount: IField = {
         {
           label: "60900009",
           value: "60900009",
-        },
-      ],
-    },
-    {
-      conditions: [
-        { when: "provisionType", is: ["c83", "c84"] },
-        { when: "subType", is: ["y27c"] },
-      ],
-      options: [
-        {
-          label: "60900027",
-          value: "60900027",
-        },
-      ],
-    },
-    {
-      conditions: [
-        { when: "provisionType", is: ["c83", "c84"] },
-        { when: "subType", is: ["y28c"] },
-      ],
-      options: [
-        {
-          label: "60900028",
-          value: "60900028",
         },
       ],
     },
