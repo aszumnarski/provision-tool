@@ -3,9 +3,7 @@ import "./Field.css";
 import { useContext, useEffect } from "react";
 import { FormContext } from "../../context";
 import { useState, type ChangeEvent } from "react";
-import { Select } from "../Select/Select";
 import { Input } from "../Input/Input";
-import { DateInput } from "../Date/Date";
 import { Button } from "../Button/Button";
 
 export interface IField {
@@ -333,8 +331,8 @@ export const Field = (props: IField) => {
     text: Input,
     number: Input,
     file: Input,
-    select: Select,
-    date: DateInput,
+    select: Input,
+    date: Input,
     button: Button,
   };
   useEffect(() => {
@@ -346,4 +344,5 @@ export const Field = (props: IField) => {
     }
   });
   return props.type ? typeMap[props.type](enhancedProps) : "";
+    // return <div>{props.name}</div>
 };

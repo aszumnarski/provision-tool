@@ -1,0 +1,739 @@
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Provision Tool</title>
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+        <link
+            href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap"
+            rel="stylesheet"
+        />
+        <link
+            rel="icon"
+            href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🎯</text></svg>"
+        />
+    <style>
+        *{box-sizing:border-box}:root{font-family:system-ui,Avenir,Helvetica,Arial,sans-serif;font-size:14px;font-weight:400;color:#ffffffde;background-color:#242424;font-synthesis:none;text-rendering:optimizeLegibility;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale}a{font-weight:500;color:#646cff;text-decoration:inherit}a:hover{color:#535bf2}body{margin:0;display:flex;place-items:center;min-width:320px;min-height:100vh}h1{font-size:3.2em;line-height:1.1}h3{margin-top:0}button{border-radius:8px;border:1px solid transparent;padding:.6em 1.2em;font-size:1em;font-weight:500;font-family:inherit;background-color:#ebebeb;cursor:pointer;transition:all .25s;box-shadow:0 0 #fff}button:hover{box-shadow:0 0 10px #009688}button:focus,button:focus-visible{outline:4px auto -webkit-focus-ring-color}:root{color:#213547;background-color:#fff}a:hover{color:#747bff}button{background-color:#f9f9f9}#root{width:99vw;margin:0 auto;padding:1rem;text-align:left}.app{max-width:1800px;margin:0 auto}img.logo__pic{height:50px;margin-bottom:20px}.field{display:flex;flex-direction:column;justify-content:center}.field>label{font-weight:700;display:flex;flex-direction:column;align-items:center;gap:6px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.field>label>span{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.field>label>*{width:100%}.field--error>*{color:red}.field--error>*>.field-input{border-color:red;border-width:2px;color:red}.error-message{min-height:18px;font-size:12px;text-align:left;margin:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.field-input{border:1px solid gray;border-radius:4px;padding:2px;height:28px}input[type=number]{-moz-appearance:textfield;-webkit-appearance:none;appearance:none}input[type=number]::-webkit-inner-spin-button,input[type=number]::-webkit-outer-spin-button{-webkit-appearance:none;margin:0}input:disabled{-moz-appearance:none;-webkit-appearance:none;appearance:none;background-image:none;background-color:#f0f0f0;color:#888;font-weight:700;border-color:#999}button.magic-btn{height:51px;background-color:#009688;color:#fff;font-weight:700}.row-wrapper{display:flex;flex-direction:column;gap:30px}.row{display:flex;gap:20px}.column{width:100%;display:flex;flex-direction:column;min-width:30%;gap:10px}.loader__wrapper{position:fixed;width:100dvw;height:100dvh;background-color:#ffffffa3;animation:fadein 1s;-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px);outline:0;margin:0;top:0;left:0;display:flex;justify-content:center;align-items:center}.loader{display:flex;flex-direction:column;width:100vw;height:80vh;justify-content:center;align-items:center}:root{--primary-color: #009999;--small-radius: 10px;--form-control-color: rebeccapurple;--form-control-disabled: #959495}.loader,.loader:before,.loader:after{background:var(--primary-color);border-radius:var(--small-radius);-webkit-animation:load1 1s infinite ease-in-out;animation:load1 1s infinite ease-in-out;width:1em;height:4em}.loader{color:var(--primary-color);text-indent:-9999em;margin:88px auto;position:relative;border-radius:var(--small-radius);font-size:11px;-webkit-transform:translateZ(0);-ms-transform:translateZ(0);transform:translateZ(0);-webkit-animation-delay:-.16s;animation-delay:-.16s}.loader:before,.loader:after{position:absolute;border-radius:var(--small-radius);top:0;content:""}.loader:before{left:-1.5em;-webkit-animation-delay:-.32s;animation-delay:-.32s;border-radius:var(--small-radius)}.loader:after{left:1.5em;border-radius:var(--small-radius)}@-webkit-keyframes load1{0%,80%,to{box-shadow:0 0;height:4em}40%{box-shadow:0 -2em;height:5em}}@keyframes load1{0%,80%,to{box-shadow:0 0;height:4em}40%{box-shadow:0 -2em;height:5em}}@-webkit-keyframes topAnimation{0%{transform:translate(0)}to{transform:translateY(3.5rem)}}@keyframes topAnimation{0%{transform:translate(0)}to{transform:translateY(3.5rem)}}@-webkit-keyframes bottomAnimation{0%{transform:translate(-11.5rem)}to{transform:translate(0)}}@keyframes bottomAnimation{0%{transform:translate(-11.5rem)}to{transform:translate(0)}}@keyframes fadein{0%{opacity:0}to{opacity:1}}.modal{display:flex;flex-direction:column;align-items:center;justify-content:space-evenly;padding:50px 30px 30px;width:600px;height:400px;gap:20px;background:#fff;border-radius:20px;box-shadow:#00000059 0 54px 55px,#00000052 0 -12px 30px,#00000052 0 4px 6px,#0000005e 0 12px 13px,#00000063 0 -3px 5px}.modal__backdrop{background-color:#000c;position:fixed;width:100dvw;height:100dvh;outline:0;margin:0;top:0;left:0;display:flex;justify-content:center;align-items:center}.success-animation{display:flex;justify-content:center;align-items:center;width:100px;height:100px;background-color:#4caf50;border-radius:50%;position:relative;animation:pop .4s ease-out}.checkmark{width:35px;height:70px;border:solid white;border-width:0 10px 10px 0;transform:rotate(45deg);position:absolute;top:25%;left:30%;opacity:0;animation:draw .5s ease-out .4s forwards}@keyframes pop{0%{transform:scale(.5);opacity:0}to{transform:scale(1);opacity:1}}@keyframes draw{0%{opacity:0;transform:rotate(45deg) scale(.5)}to{opacity:1;transform:rotate(45deg) scale(1)}}.error-icon{position:relative;width:80px;height:80px;animation:shake .5s ease-in-out}.circle{width:100%;height:100%;background-color:#ff4d4d;border-radius:50%;position:absolute;animation:fadeIn .5s ease-in-out}.cross{position:absolute;width:60%;height:10%;background-color:#fff;top:50%;left:50%;transform-origin:center;animation:fadeIn .5s ease-in-out}.cross1{transform:translate(-50%,-50%) rotate(45deg)}.cross2{transform:translate(-50%,-50%) rotate(-45deg)}@keyframes fadeIn{0%{opacity:0;transform:scale(.8)}to{opacity:1;transform:scale(1)}}@keyframes shake{0%,to{transform:translate(0)}25%{transform:translate(-5px)}50%{transform:translate(5px)}75%{transform:translate(-5px)}}.check-container{scale:1.4;width:6.25rem;height:7.5rem;display:flex;flex-flow:column;align-items:center;justify-content:space-between}.check-container .check-background{width:100%;height:calc(100% - 1.25rem);background:linear-gradient(to bottom right,#5de593,#41d67c);box-shadow:0 0 0 65px #ffffff40 inset,0 0 0 65px #ffffff40 inset;transform:scale(.84);border-radius:50%;animation:animateContainer .75s ease-out forwards .75s;display:flex;align-items:center;justify-content:center;opacity:0}.check-container .check-background svg{width:65%;transform:translateY(.25rem);stroke-dasharray:80;stroke-dashoffset:80;animation:animateCheck .35s forwards 1.25s ease-out}.check-container .check-shadow{bottom:calc(-15% - 5px);left:0;border-radius:50%;background:radial-gradient(closest-side,rgba(73,218,131,1),transparent);animation:animateShadow .75s ease-out forwards .75s}@keyframes animateContainer{0%{opacity:0;transform:scale(0);box-shadow:0 0 0 65px #ffffff40 inset,0 0 0 65px #ffffff40 inset}25%{opacity:1;transform:scale(.9);box-shadow:0 0 0 65px #ffffff40 inset,0 0 0 65px #ffffff40 inset}43.75%{transform:scale(1.15);box-shadow:0 0 0 43.334px #ffffff40 inset,0 0 0 65px #ffffff40 inset}62.5%{transform:scale(1);box-shadow:0 0 #ffffff40 inset,0 0 0 21.667px #ffffff40 inset}81.25%{box-shadow:0 0 #ffffff40 inset,0 0 #ffffff40 inset}to{opacity:1;box-shadow:0 0 #ffffff40 inset,0 0 #ffffff40 inset}}@keyframes animateCheck{0%{stroke-dashoffset:80}to{stroke-dashoffset:0}}@keyframes animateShadow{0%{opacity:0;width:100%;height:15%}25%{opacity:.25}43.75%{width:40%;height:7%;opacity:.35}to{width:85%;height:15%;opacity:.25}}.circle,.circle-border{width:60px;height:60px;border-radius:50%}.circle{z-index:1;position:relative;background:#fff;transform:scale(1);animation:success-anim .7s ease}.circle-border{z-index:0;position:absolute;transform:scale(1.1);animation:circle-anim .4s ease;background:tomato}@keyframes success-anim{0%{transform:scale(0)}30%{transform:scale(0)}to{transform:scale(1)}}@keyframes circle-anim{0%{transform:scale(0)}to{transform:scale(1.1)}}.error:before,.error:after{content:"";display:block;height:4px;background:tomato;position:absolute}.error:before{width:40px;top:48%;left:16%;transform:rotate(50deg)}.error:after{width:40px;top:48%;left:16%;transform:rotate(-50deg)}strong{font-size:xx-large;color:#009688;padding:10px}.error-container{scale:1.6}
+    </style>
+  </head>
+  <body
+    data-url="http://localhost:6060/protool?invocation=1"
+    data-query="appno"
+    data-init="init"
+    data-logo="https://pl.yunextraffic.com/wp-content/themes/yunex/public/images/yunex.56a477.svg"
+  >
+    <div id="root">
+      <div class="app">
+        <div class="logo">
+          <img
+            class="logo__pic"
+            alt="logo"
+            src="https://pl.yunextraffic.com/wp-content/themes/yunex/public/images/yunex.56a477.svg"
+          />
+        </div>
+        <form class="form">
+          <div class="row-wrapper">
+            <div class="row">
+              <div class="column">
+                <div class="field">
+                  <label
+                    ><span>Application mode </span
+                    ><input
+                      class="field-input"
+                      readonly=""
+                      type="text"
+                      value="{mode}"
+                      name="mode"
+                  /></label>
+                  <p class="error-message"></p>
+                </div>
+              </div>
+              <div class="column">
+                <div class="field">
+                  <label
+                    ><span>Application Number to Import </span
+                    ><input
+                      class="field-input"
+                      readonly=""
+                      type="text"
+                      value="{appNumberImport}"
+                      name="appNumberImport"
+                  /></label>
+                  <p class="error-message"></p>
+                </div>
+              </div>
+              <div class="column">
+                <div class="field">
+                  <button class="magic-btn">CREATE</button>
+                  <p class="error-message"></p>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="column">
+                <div class="field">
+                  <label
+                    ><span>Company Code </span
+                    ><input
+                      class="field-input"
+                      readonly=""
+                      type="text"
+                      value="{companyCode}"
+                      name="companyCode"
+                  /></label>
+                  <p class="error-message"></p>
+                </div>
+                <div class="field">
+                  <label
+                    ><span>Prov. Type </span
+                    ><input
+                      class="field-input"
+                      readonly=""
+                      type="text"
+                      value="{provisionType}"
+                      name="provisionType"
+                  /></label>
+                  <p class="error-message"></p>
+                </div>
+                <div class="field">
+                  <label
+                    ><span>Subtype </span
+                    ><input
+                      class="field-input"
+                      readonly=""
+                      type="text"
+                      value="{subType}"
+                      name="subType"
+                  /></label>
+                  <p class="error-message"></p>
+                </div>
+                <div class="field">
+                  <label
+                    ><span>Redwood Ledger Group </span
+                    ><input
+                      class="field-input"
+                      readonly=""
+                      type="text"
+                      value="{ledgerGroup}"
+                      name="ledgerGroup"
+                  /></label>
+                  <p class="error-message"></p>
+                </div>
+                <div class="field">
+                  <label
+                    ><span>GL-Debit Account </span
+                    ><input
+                      class="field-input"
+                      readonly=""
+                      type="text"
+                      value="{glDebitAccount}"
+                      name="glDebitAccount"
+                  /></label>
+                  <p class="error-message"></p>
+                </div>
+                <div class="field">
+                  <label
+                    ><span>GL-Credit Account </span
+                    ><input
+                      class="field-input"
+                      readonly=""
+                      type="text"
+                      value="{glCreditAccount}"
+                      name="glCreditAccount"
+                  /></label>
+                  <p class="error-message"></p>
+                </div>
+                <div class="field">
+                  <label
+                    ><span>Appl. Start Date </span
+                    ><input
+                      class="field-input"
+                      readonly=""
+                      type="text"
+                      value="{appStartDate}"
+                      name="appStartDate"
+                  /></label>
+                  <p class="error-message"></p>
+                </div>
+                <div class="field">
+                  <label
+                    ><span>Appl. End Date </span
+                    ><input
+                      class="field-input"
+                      readonly=""
+                      type="text"
+                      value="{appEndDate}"
+                      name="appEndDate"
+                  /></label>
+                  <p class="error-message"></p>
+                </div>
+              </div>
+              <div class="column">
+                <div class="field field--error">
+                  <label
+                    ><span>Cost Center </span
+                    ><input
+                      class="field-input"
+                      readonly=""
+                      type="text"
+                      value="{costCenter}"
+                      name="costCenter"
+                  /></label>
+                  <p class="error-message">
+                    This field is required when WBS Element or Sales Document or
+                    Sales Document Item are empty
+                  </p>
+                </div>
+                <div class="field field--error">
+                  <label
+                    ><span>Project Definition (WBS) </span
+                    ><input
+                      class="field-input"
+                      readonly=""
+                      type="text"
+                      value="{wbs}"
+                      name="wbs"
+                  /></label>
+                  <p class="error-message">
+                    This field is required when Cost Center or Sales Document or
+                    Sales Document Item are empty
+                  </p>
+                </div>
+                <div class="field field--error">
+                  <label
+                    ><span>Sales Document </span
+                    ><input
+                      class="field-input"
+                      readonly=""
+                      type="text"
+                      value="{salesDocument}"
+                      name="salesDocument"
+                  /></label>
+                  <p class="error-message">
+                    This field is required when Cost Center or WBS Element are
+                    empty
+                  </p>
+                </div>
+                <div class="field field--error">
+                  <label
+                    ><span>Sales Document Item </span
+                    ><input
+                      class="field-input"
+                      readonly=""
+                      type="text"
+                      value="{salesDocumentItem}"
+                      name="salesDocumentItem"
+                  /></label>
+                  <p class="error-message">
+                    This field is required when Cost Center or WBS Element are
+                    empty
+                  </p>
+                </div>
+                <div class="field">
+                  <label
+                    ><span>Posting Date </span
+                    ><input
+                      class="field-input"
+                      readonly=""
+                      type="text"
+                      value="{postingDate}"
+                      name="postingDate"
+                  /></label>
+                  <p class="error-message"></p>
+                </div>
+                <div class="field">
+                  <label
+                    ><span>Posting Period </span
+                    ><input
+                      class="field-input"
+                      readonly=""
+                      type="text"
+                      value="{postingPeriod}"
+                      name="postingPeriod"
+                  /></label>
+                  <p class="error-message"></p>
+                </div>
+                <div class="field">
+                  <label
+                    ><span>Document Date </span
+                    ><input
+                      class="field-input"
+                      readonly=""
+                      type="text"
+                      value="{documentDate}"
+                      name="documentDate"
+                  /></label>
+                  <p class="error-message"></p>
+                </div>
+                <div class="field">
+                  <label
+                    ><span>Local Currency </span
+                    ><input
+                      class="field-input"
+                      readonly=""
+                      type="text"
+                      value="{localCurrency}"
+                      name="localCurrency"
+                  /></label>
+                  <p class="error-message"></p>
+                </div>
+              </div>
+              <div class="column">
+                <div class="field">
+                  <label
+                    ><span>Application Number </span
+                    ><input
+                      class="field-input"
+                      readonly=""
+                      type="text"
+                      value="{appNumber}"
+                      name="appNumber"
+                  /></label>
+                  <p class="error-message"></p>
+                </div>
+                <div class="field field--error">
+                  <label
+                    ><span>Description 1 (Fixed Text) </span
+                    ><input
+                      class="field-input"
+                      readonly=""
+                      type="text"
+                      value="{description1}"
+                      name="description1"
+                  /></label>
+                  <p class="error-message">This field is required</p>
+                </div>
+                <div class="field">
+                  <label
+                    ><span>Description 2 (Free Text) </span
+                    ><input
+                      class="field-input"
+                      readonly=""
+                      type="text"
+                      value="{description2}"
+                      name="description2"
+                  /></label>
+                  <p class="error-message"></p>
+                </div>
+                <div class="field">
+                  <label
+                    ><span>Appl Creator </span
+                    ><input
+                      class="field-input"
+                      readonly=""
+                      type="text"
+                      value="{appCreator}"
+                      name="appCreator"
+                  /></label>
+                  <p class="error-message"></p>
+                </div>
+                <div class="field">
+                  <label
+                    ><span>Appl Creation Date </span
+                    ><input
+                      class="field-input"
+                      readonly=""
+                      type="text"
+                      value="{appCreationDate}"
+                      name="appCreationDate"
+                  /></label>
+                  <p class="error-message"></p>
+                </div>
+                <div class="field">
+                  <label
+                    ><span>Changed On </span
+                    ><input
+                      class="field-input"
+                      readonly=""
+                      type="text"
+                      value="{changedOn}"
+                      name="changedOn"
+                  /></label>
+                  <p class="error-message"></p>
+                </div>
+                <div class="field">
+                  <label
+                    ><span>Application Number (Old System) </span
+                    ><input
+                      class="field-input"
+                      readonly=""
+                      type="text"
+                      value="{appNumberOld}"
+                      name="appNumberOld"
+                  /></label>
+                  <p class="error-message"></p>
+                </div>
+                <div class="field">
+                  <label
+                    ><span>User </span
+                    ><input
+                      class="field-input"
+                      readonly=""
+                      type="text"
+                      value="{user}"
+                      name="user"
+                  /></label>
+                  <p class="error-message"></p>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="column">
+                <h3 class="column-header">IFRS</h3>
+                <div class="field">
+                  <label
+                    ><span>0L-Carry Fwd from Last Year </span
+                    ><input
+                      class="field-input"
+                      readonly=""
+                      type="text"
+                      value="{0lCarryFwd}"
+                      name="0lCarryFwd"
+                  /></label>
+                  <p class="error-message"></p>
+                </div>
+                <div class="field">
+                  <label
+                    ><span>0L-Creation/Addition - Posted &amp; Booked </span
+                    ><input
+                      class="field-input"
+                      readonly=""
+                      type="text"
+                      value="{0lCreationAddition}"
+                      name="0lCreationAddition"
+                  /></label>
+                  <p class="error-message"></p>
+                </div>
+                <div class="field field--error">
+                  <label
+                    ><span>0L-Creation/Addition - Update </span
+                    ><input
+                      class="field-input"
+                      readonly=""
+                      type="text"
+                      value="{0lCreationAdditionUpdate}"
+                      name="0lCreationAdditionUpdate"
+                  /></label>
+                  <p class="error-message">Not a proper number!</p>
+                </div>
+                <div class="field">
+                  <label
+                    ><span>0L-Usage - Posted &amp; Booked </span
+                    ><input
+                      class="field-input"
+                      readonly=""
+                      type="text"
+                      value="{0lUsage}"
+                      name="0lUsage"
+                  /></label>
+                  <p class="error-message"></p>
+                </div>
+                <div class="field">
+                  <label
+                    ><span>0L-Usage - Update </span
+                    ><input
+                      class="field-input"
+                      readonly=""
+                      type="text"
+                      value="{0lUsageUpdate}"
+                      name="0lUsageUpdate"
+                  /></label>
+                  <p class="error-message"></p>
+                </div>
+                <div class="field">
+                  <label
+                    ><span>0L-Release - Posted &amp; Booked </span
+                    ><input
+                      class="field-input"
+                      readonly=""
+                      type="text"
+                      value="{0lRelease}"
+                      name="0lRelease"
+                  /></label>
+                  <p class="error-message"></p>
+                </div>
+                <div class="field">
+                  <label
+                    ><span>0L-Release - Update </span
+                    ><input
+                      class="field-input"
+                      readonly=""
+                      type="text"
+                      value="{0lReleaseUpdate}"
+                      name="0lReleaseUpdate"
+                  /></label>
+                  <p class="error-message"></p>
+                </div>
+                <div class="field">
+                  <label
+                    ><span>0L-Closing Balance - Posted &amp; Booked </span
+                    ><input
+                      class="field-input"
+                      readonly=""
+                      type="text"
+                      value="{0lClosingBalance}"
+                      name="0lClosingBalance"
+                  /></label>
+                  <p class="error-message"></p>
+                </div>
+                <div class="field">
+                  <label
+                    ><span>0L-Closing Balance - Update </span
+                    ><input
+                      class="field-input"
+                      readonly=""
+                      type="text"
+                      value="{0lClosingBalanceUpdate}"
+                      name="0lClosingBalanceUpdate"
+                  /></label>
+                  <p class="error-message"></p>
+                </div>
+              </div>
+              <div class="column">
+                <h3 class="column-header">LOCAL GAAP</h3>
+                <div class="field">
+                  <label
+                    ><span>2L-Carry Fwd from Last Year </span
+                    ><input
+                      class="field-input"
+                      readonly=""
+                      type="text"
+                      value="{2lCarryFwd}"
+                      name="2lCarryFwd"
+                  /></label>
+                  <p class="error-message"></p>
+                </div>
+                <div class="field">
+                  <label
+                    ><span>2L-Creation/Addition - Posted &amp; Booked </span
+                    ><input
+                      class="field-input"
+                      readonly=""
+                      type="text"
+                      value="{2lCreationAddition}"
+                      name="2lCreationAddition"
+                  /></label>
+                  <p class="error-message"></p>
+                </div>
+                <div class="field">
+                  <label
+                    ><span>2L-Creation/Addition - Update </span
+                    ><input
+                      class="field-input"
+                      readonly=""
+                      type="text"
+                      value="{2lCreationAdditionUpdate}"
+                      name="2lCreationAdditionUpdate"
+                  /></label>
+                  <p class="error-message"></p>
+                </div>
+                <div class="field">
+                  <label
+                    ><span>2L-Usage - Posted &amp; Booked </span
+                    ><input
+                      class="field-input"
+                      readonly=""
+                      type="text"
+                      value="{2lUsage}"
+                      name="2lUsage"
+                  /></label>
+                  <p class="error-message"></p>
+                </div>
+                <div class="field">
+                  <label
+                    ><span>2L-Usage - Update </span
+                    ><input
+                      class="field-input"
+                      readonly=""
+                      type="text"
+                      value="{2lUsageUpdate}"
+                      name="2lUsageUpdate"
+                  /></label>
+                  <p class="error-message"></p>
+                </div>
+                <div class="field">
+                  <label
+                    ><span>2L-Release - Posted &amp; Booked </span
+                    ><input
+                      class="field-input"
+                      readonly=""
+                      type="text"
+                      value="{2lRelease}"
+                      name="2lRelease"
+                  /></label>
+                  <p class="error-message"></p>
+                </div>
+                <div class="field">
+                  <label
+                    ><span>2L-Release - Update </span
+                    ><input
+                      class="field-input"
+                      readonly=""
+                      type="text"
+                      value="{2lReleaseUpdate}"
+                      name="2lReleaseUpdate"
+                  /></label>
+                  <p class="error-message"></p>
+                </div>
+                <div class="field">
+                  <label
+                    ><span>2L-Closing Balance - Posted &amp; Booked </span
+                    ><input
+                      class="field-input"
+                      readonly=""
+                      type="text"
+                      value="{2lClosingBalance}"
+                      name="2lClosingBalance"
+                  /></label>
+                  <p class="error-message"></p>
+                </div>
+                <div class="field">
+                  <label
+                    ><span>2L-Closing Balance - Update </span
+                    ><input
+                      class="field-input"
+                      readonly=""
+                      type="text"
+                      value="{2lClosingBalanceUpdate}"
+                      name="2lClosingBalanceUpdate"
+                  /></label>
+                  <p class="error-message"></p>
+                </div>
+              </div>
+              <div class="column">
+                <h3 class="column-header">TAX</h3>
+                <div class="field">
+                  <label
+                    ><span>TL-Carry Fwd from Last Year </span
+                    ><input
+                      class="field-input"
+                      readonly=""
+                      type="text"
+                      value="{tlCarryFwd}"
+                      name="tlCarryFwd"
+                  /></label>
+                  <p class="error-message"></p>
+                </div>
+                <div class="field">
+                  <label
+                    ><span>TL-Creation/Addition - Posted &amp; Booked </span
+                    ><input
+                      class="field-input"
+                      readonly=""
+                      type="text"
+                      value="{tlCreationAddition}"
+                      name="tlCreationAddition"
+                  /></label>
+                  <p class="error-message"></p>
+                </div>
+                <div class="field">
+                  <label
+                    ><span>TL-Creation/Addition - Update </span
+                    ><input
+                      class="field-input"
+                      readonly=""
+                      type="text"
+                      value="{tlCreationAdditionUpdate}"
+                      name="tlCreationAdditionUpdate"
+                  /></label>
+                  <p class="error-message"></p>
+                </div>
+                <div class="field">
+                  <label
+                    ><span>TL-Usage - Posted &amp; Booked </span
+                    ><input
+                      class="field-input"
+                      readonly=""
+                      type="text"
+                      value="{tlUsage}"
+                      name="tlUsage"
+                  /></label>
+                  <p class="error-message"></p>
+                </div>
+                <div class="field">
+                  <label
+                    ><span>TL-Usage - Update </span
+                    ><input
+                      class="field-input"
+                      readonly=""
+                      type="text"
+                      value="{tlUsageUpdate}"
+                      name="tlUsageUpdate"
+                  /></label>
+                  <p class="error-message"></p>
+                </div>
+                <div class="field">
+                  <label
+                    ><span>TL-Release - Posted &amp; Booked </span
+                    ><input
+                      class="field-input"
+                      readonly=""
+                      type="text"
+                      value="{tlRelease}"
+                      name="tlRelease"
+                  /></label>
+                  <p class="error-message"></p>
+                </div>
+                <div class="field">
+                  <label
+                    ><span>TL-Release - Update </span
+                    ><input
+                      class="field-input"
+                      readonly=""
+                      type="text"
+                      value="{tlReleaseUpdate}"
+                      name="tlReleaseUpdate"
+                  /></label>
+                  <p class="error-message"></p>
+                </div>
+                <div class="field">
+                  <label
+                    ><span>TL-Closing Balance - Posted &amp; Booked </span
+                    ><input
+                      class="field-input"
+                      readonly=""
+                      type="text"
+                      value="{tlClosingBalance}"
+                      name="tlClosingBalance"
+                  /></label>
+                  <p class="error-message"></p>
+                </div>
+                <div class="field">
+                  <label
+                    ><span>TL-Closing Balance - Update </span
+                    ><input
+                      class="field-input"
+                      readonly=""
+                      type="text"
+                      value="{tlClosingBalanceUpdate}"
+                      name="tlClosingBalanceUpdate"
+                  /></label>
+                  <p class="error-message"></p>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="column">
+                <div class="field">
+                  <label
+                    ><span>Attachment </span
+                    ><input
+                      class="field-input"
+                      readonly=""
+                      type="text"
+                      value="{attachment}"
+                      name="attachment"
+                  /></label>
+                  <p class="error-message"></p>
+                </div>
+              </div>
+              <div class="column"></div>
+              <div class="column"></div>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </body>
+</html>
