@@ -1,41 +1,53 @@
+
 import "./Select.css";
 import { type IField } from "../../context/types";
-import { useContext, useEffect } from "react";
+import { useContext, useEffect, useMemo } from "react";
 import { FormContext } from "../../context";
 
 export const Select = (props: IField) => {
-  //@ts-ignore
-  const { formValues, setFormValues, patterns } = useContext(FormContext);
+  const formContext = useContext(FormContext);
+  if (!formContext) {
+    throw new Error("FormContext is not available");
+  }
+
+  const { formValues, setFormValues, patterns } = formContext;
   const className = `field ${props.error ? "field--error" : ""}`;
 
-  const renderOptions = () => {
-    return !props.options
-      ? ""
-      : props.options.map((o) => (
-          <option key={o.value} value={o.value}>
-            {o.label}
-          </option>
-        ));
-  };
+  const options = useMemo(() => props.options ?? [], [props.options]);
 
-  const optionsValue = (props.options && props.options[0]?.value) || "";
+  const renderOptions = () => {
+    return options.map((o) => (
+      <option key={o.value} value={o.value}>
+        {o.label}
+      </option>
+    ));
+  };
 
   const setFirstOption = (optionsValue: string) => {
-    if (props.type === "select") {
-      setTimeout(() => {
-        setFormValues((formValues: any) => {
-          return {
-            ...formValues,
-            [props.name]: optionsValue,
-          };
-        });
-      }, 100);
-    }
+    setFormValues((formValues: any) => {
+      if (formValues === null || typeof formValues !== "object") {
+        return { [props.name]: optionsValue };
+      }
+      if (formValues[props.name] === undefined) {
+        return {
+          ...formValues,
+          [props.name]: optionsValue,
+        };
+      }
+      return formValues;
+    });
   };
 
+  // ✅ Only run once when options are available and value is not set
   useEffect(() => {
-    setFirstOption(optionsValue);
-  }, [optionsValue]);
+    if (
+      props.type === "select" &&
+      options.length > 0 &&
+      formValues?.[props.name] === undefined
+    ) {
+      setFirstOption(options[0].value);
+    }
+  }, [props.name, props.type, options]);
 
   return (
     <div className={className}>
@@ -44,7 +56,7 @@ export const Select = (props: IField) => {
         <select
           className="field-input"
           name={props.name}
-          value={props.value || optionsValue}
+          value={props.value || formValues?.[props.name] || options[0]?.value || ""}
           onChange={props.onChange}
           disabled={props.disabled}
           onBlur={props.onBlur}

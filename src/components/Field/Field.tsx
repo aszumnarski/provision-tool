@@ -70,27 +70,47 @@ export const Field = (props: IField) => {
   );
 
   const error = formErrors[props.name];
-  const enhancedProps = {
-    ...props,
 
-    onChange,
-    error,
-    onBlur,
-    disabled,
-    options,
-    value,
-  };
+  const enhancedProps = useMemo(() => {
+    return {
+      ...props,
+      onChange,
+      error,
+      onBlur,
+      disabled,
+      options,
+      value,
+    };
+  }, [props, onChange, error, onBlur, disabled, options, value]);
+  
+
+
 
   const validate = async () => {
-    const errMsg = validateField(
-      patterns[props.name],
-      value,
-      formValues[props.name]
-    );
-    await setFormErrors((formErrors: any) => {
-      return { ...formErrors, [props.name]: disabled ? undefined : errMsg };
-    });
+    const safeFormValues =
+      formValues && typeof formValues === "object" ? formValues : {};
+  
+    try {
+      const errMsg = validateField(
+        patterns[props.name],
+        value,
+        safeFormValues[props.name]
+      );
+  
+      await setFormErrors((formErrors: any) => {
+        const safeFormErrors =
+          formErrors && typeof formErrors === "object" ? formErrors : {};
+        return {
+          ...safeFormErrors,
+          [props.name]: disabled ? undefined : errMsg,
+        };
+      });
+    } catch (error) {
+      console.error("Validation error:", error);
+    }
   };
+  
+  
 
   const triggerValidate = () => {
     setShouldValidate(true);
@@ -109,11 +129,6 @@ export const Field = (props: IField) => {
     }
   }, [disabled, shouldValidate]);
 
-  useEffect(() => {
-    if (value !== "" && formValues[props.name] !== value) {
-      setFormValues((prev) => ({ ...prev, [props.name]: value }));
-    }
-  }, [value]);
 
   const typeMap = useMemo(
     () => ({
@@ -127,14 +142,35 @@ export const Field = (props: IField) => {
     []
   );
 
+
+
+
+
+
   useEffect(() => {
-    if (enhancedProps.value !== formValues[props.name]) {
-      setFormValues({
-        ...formValues,
-        [props.name]: enhancedProps.value,
+    const currentValue = formValues?.[props.name];
+    const incomingValue = enhancedProps.value;
+  
+    if (
+      currentValue === undefined &&
+      incomingValue !== undefined
+    ) {
+      setFormValues((prev) => {
+        if (prev?.[props.name] === undefined) {
+          return {
+            ...prev,
+            [props.name]: incomingValue,
+          };
+        }
+        return prev;
       });
     }
-  });
+  }, [props.name, enhancedProps.value]);
+  
+  
+  
+  
+  
 
   return props.type ? typeMap[props.type](enhancedProps) : "";
 };

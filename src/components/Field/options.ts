@@ -20,23 +20,27 @@ export function getOptions(
     }));
   };
 
+
   const result: IOption[] =
-    props.dependentOptions
-      .map(scenario => {
-        const allConditionsMet = scenario.conditions.every(c =>
-          c.is.includes(formValues[c.when]) ||
-          c.is.includes(!!formValues[c.when])
-        );
+  props.dependentOptions
+    .map(scenario => {
+      if (!formValues || typeof formValues !== "object") return null;
 
-        if (!allConditionsMet) return null;
+      const allConditionsMet = scenario.conditions.every(c =>
+        c.is.includes(formValues[c.when]) ||
+        c.is.includes(!!formValues[c.when])
+      );
 
-        return scenario.isFromValue
-          ? valuedOptions(scenario.options)
-          : scenario.options;
-      })
-      .filter(Boolean)[0] || [];
+      if (!allConditionsMet) return null;
 
-  return result.length ? result : props.options || [];
+      return scenario.isFromValue
+        ? valuedOptions(scenario.options)
+        : scenario.options;
+    })
+    .filter(Boolean)[0] || [];
+
+return result.length ? result : props.options || [];
+
 }
 
 
@@ -59,6 +63,7 @@ export function getValue(
     sum: string,
     options: { value: string }[]
   ): string {
+    if(!formValues) return "";
     if (!Object.keys(formValues).length) return "";
   
     if (props.dependantValue) return copyValue(props, formValues) ?? "";

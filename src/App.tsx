@@ -25,7 +25,7 @@ useEffect(() => {
 
 
   
-  const [formValues, setFormValues] = useState<Record<string, string> | {}>({});
+  const [formValues, setFormValues] = useState<Record<string, any>>({});
   const [formErrors, setFormErrors] = useState<Record<string, string> | {}>({});
   const [patterns, setPatterns] = useState<Record<string, IPattern[]> | {}>({});
   const [att, setAtt] = useState<any>({});

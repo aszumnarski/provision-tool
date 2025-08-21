@@ -1,5 +1,5 @@
 import "./Button.css";
-import { useContext, useEffect, useState } from "react";
+import { useContext, useEffect, useState,useRef  } from "react";
 import { FormContext } from "../../context";
 import { type IField } from "../../context/types";
 import type { MouseEventHandler } from "react";
@@ -97,33 +97,71 @@ export const Button = (props: IField) => {
     setShouldValidate(true);
   };
 
+  
+useEffect(() => {
+  // Step 1: Immediately set mode to "create"
+  setFormValues((prev: any) => ({
+    ...prev,
+    mode: "create",
+  }));
+
+  // Step 2: Load user data after a short delay
+  const timer = setTimeout(loadData, 100);
+  return () => clearTimeout(timer);
+}, []);
+
+
   const loadData = async () => {
     const res = await getData(`${url}&${query}=${init}`);
     setFormValues((formValues: any) => {
-      return { ...formValues, user: res.data.user, appCreator: res.data.user };
+      return {
+        ...formValues,
+        user: res.data.user,
+        appCreator: res.data.user,
+        mode: "create", // ✅ explicitly set mode
+      };
     });
     setUserCompanyCodes(res.config.companyCodes);
-
   };
+  
 
   const resetForm = () => {
     setFormValues(defaultValues);
     setFormErrors({});
   };
 
-  useEffect(() => {
-    if (formValues.mode === "create") resetForm();
-  }, [formValues.mode]);
+
+
+  const hasResetRef = useRef(false);
 
   useEffect(() => {
-    setTimeout(loadData, 100);
-  }, []);
+    if (
+      !hasResetRef.current &&
+      formValues &&
+      typeof formValues === "object" &&
+      formValues.mode === "create"
+    ) {
+      resetForm();
+      hasResetRef.current = true;
+    }
+  }, [formValues?.mode]);
+  
+  
+
+
+
 
   useEffect(() => {
-    if (formValues.user && !defaultValues) {
+    if (
+      formValues &&
+      typeof formValues === "object" &&
+      formValues.user &&
+      !defaultValues
+    ) {
       setDefaultValues(formValues);
     }
-  }, [formValues.user]);
+  }, [formValues?.user]);
+  
 
   const states = {
     CREATE: { label: "CREATE", onClick: handlePost },
@@ -132,6 +170,9 @@ export const Button = (props: IField) => {
   };
 
   const getState = () => {
+    
+if (!formValues || typeof formValues !== "object") return states.CREATE;
+
     if (formValues.mode === "create") return states.CREATE;
 
     if (
