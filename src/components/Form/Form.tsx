@@ -30,7 +30,7 @@ const initialValues = createInitialValues(rows);
 const [formValues, setFormValues] = useState<Record<string, any>>(initialValues);
 const initialPatterns = createInitialPatterns(rows);
 const [patterns, setPatterns] = useState<Record<string, IPattern[]>>(initialPatterns);
-const [isEditingEnabled, setIsEditingEnabled] = useState(true);
+const [isEditingEnabled] = useState(true);
   const contextValue: TFormContext = {
     formValues,
     setFormValues,
