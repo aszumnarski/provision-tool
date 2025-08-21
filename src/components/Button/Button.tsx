@@ -127,7 +127,7 @@ export const Button = (props: IField) => {
   }, [formValues.user]);
 
   const states = {
-    CREATE: { label: "CREATE", onClick: handlePost },
+    CREATE: { label: "TO PDF", onClick: handlePost },
     UPDATE: { label: "UPDATE", onClick: handlePost },
     GET: { label: "GET", onClick: handleGet },
   };
