@@ -1,5 +1,4 @@
 import { useState, useEffect  } from "react";
-import { useLocation } from "react-router-dom";
 import "./App.css";
 import { config } from "./config";
 import { Form } from "./components/Form/Form";
@@ -10,8 +9,6 @@ import type { IOption, IPattern } from "./context/types";
 
 function App() {
 
-  const location = useLocation();
-  
 const [isEditingEnabled, setIsEditingEnabled] = useState(true);
 
 

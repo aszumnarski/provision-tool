@@ -5,32 +5,21 @@ import { type IField } from "../../context/types";
 import type { MouseEventHandler } from "react";
 
 export const Button = (props: IField) => {
-  //@ts-ignore
+  const context = useContext(FormContext);
+  if (!context) throw new Error("Field must be used within a FormProvider");
   const {
-    //@ts-ignore
     formValues,
-    //@ts-ignore
     setFormValues,
-    //@ts-ignore
     formErrors,
-    //@ts-ignore
     setFormErrors,
-    //@ts-ignore
-    patterns,
-    //@ts-ignore
-    setPatterns,
-    //@ts-ignore
     att,
-    //@ts-ignore
     setLoading,
-    //@ts-ignore
     setUserCompanyCodes,
-    //@ts-ignore
     setModalContent,
-  } = useContext(FormContext);
+  } = context;
   const className = `field ${props.error ? "field--error" : ""}`;
   const [shouldValidate, setShouldValidate] = useState(false);
-  const [defaultValues, setDefaultValues] = useState(null);
+  const [defaultValues, setDefaultValues] = useState<Record<string, any>>({});;
   const { dataset } = document.querySelector("body") || {
     dataset: { url: "/", query: "appno", init: "init" },
   };

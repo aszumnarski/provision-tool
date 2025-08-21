@@ -1,53 +1,30 @@
-import { useState, type FormEventHandler } from "react";
+
+import { useContext, useEffect, type FormEventHandler } from "react";
 import { FormContext } from "../../context";
 import "./Form.css";
 import type { IRow } from "../Row/Row";
 import { Row } from "../Row/Row";
-import type { IPattern, IOption, TFormContext } from "../../context/types";
+import type { IPattern } from "../../context/types";
 
 export interface IForm {
   rows: IRow[];
 }
 
+
+
+
 export function Form({ rows }: IForm) {
-  
-  const [formErrors, setFormErrors] = useState<
-    Record<string, string | undefined>
-  >({});
-  
-  const [att, setAtt] = useState<{
-    fileName: string;
-    fileData: File;
-    fileSize: number;
-  } | null>(null);
-  const [userCompanyCodes, setUserCompanyCodes] = useState<IOption[]>([]);
-  const [isLoading, setLoading] = useState<boolean>(false);
-  const [modalContent, setModalContent] = useState<any>(null);
-
-
-  
-const initialValues = createInitialValues(rows);
-const [formValues, setFormValues] = useState<Record<string, any>>(initialValues);
-const initialPatterns = createInitialPatterns(rows);
-const [patterns, setPatterns] = useState<Record<string, IPattern[]>>(initialPatterns);
-const [isEditingEnabled] = useState(true);
-  const contextValue: TFormContext = {
+  const context = useContext(FormContext);
+if (!context) {
+  throw new Error("Form must be used within a FormContext.Provider");
+}
+  const {
     formValues,
     setFormValues,
     formErrors,
-    setFormErrors,
     patterns,
     setPatterns,
-    att,
-    setAtt,
-    userCompanyCodes,
-    setUserCompanyCodes,
-    isLoading,
-    setLoading,
-    modalContent,
-    setModalContent,
-    isEditingEnabled,
-  };
+  } = context;
 
   function createInitialValues(rows: IRow[]): Record<string, any> {
     const values: Record<string, any> = {};
@@ -79,25 +56,33 @@ const [isEditingEnabled] = useState(true);
     return patternMap;
   }
 
+  // Initialize values and patterns only once
+
+  useEffect(() => {
+    if (Object.keys(formValues).length === 0) {
+      setFormValues(createInitialValues(rows));
+      setPatterns(createInitialPatterns(rows));
+    }
+  }, [formValues, rows, setFormValues, setPatterns]);
+  
+
   const onSubmit: FormEventHandler<HTMLFormElement> = (e) => {
     e.preventDefault();
   };
 
   return (
-    <FormContext.Provider value={contextValue}>
-      <form onSubmit={onSubmit} className="form">
-        <div className="row-wrapper">
-          {rows.map((r, i) => (
-            <Row key={i} columns={r.columns} />
-          ))}
-        </div>
-        <pre>X{Object.keys(formValues).length}X</pre>
-        <pre>{JSON.stringify(formValues, null, 2)}</pre>
-        <hr />
-        <pre>{JSON.stringify(formErrors, null, 2)}</pre>
-        <hr />
-        <pre>{JSON.stringify(patterns, null, 2)}</pre>
-      </form>
-    </FormContext.Provider>
+    <form onSubmit={onSubmit} className="form">
+      <div className="row-wrapper">
+        {rows.map((r, i) => (
+          <Row key={i} columns={r.columns} />
+        ))}
+      </div>
+      <pre>X{Object.keys(formValues).length}X</pre>
+      <pre>{JSON.stringify(formValues, null, 2)}</pre>
+      <hr />
+      <pre>{JSON.stringify(formErrors, null, 2)}</pre>
+      <hr />
+      <pre>{JSON.stringify(patterns, null, 2)}</pre>
+    </form>
   );
 }
