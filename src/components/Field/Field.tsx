@@ -142,7 +142,7 @@ export const Field = (props: IField) => {
         return value && !/^\d+$/.test(value);
       },
       empty: () => {
-        return pattern.split("_")[1].split(",").some(field => formValues[field] !== "" && formValues[field] !== null);
+        return pattern.split("_")[1].split(",").some(field => formValues[field] !== "" && formValues[field] !== null && formValues[field] !== "0");
       },
     };
     const patternFromToken =
