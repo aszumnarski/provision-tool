@@ -58,10 +58,10 @@ export const subType: IField = {
       options: [
         pSubTypes.y09,
         pSubTypes.y09c,
-        pSubTypes.y091,
-        pSubTypes.y091c,
-        pSubTypes.y092,
-        pSubTypes.y092c,
+        pSubTypes.y097,
+        pSubTypes.y097c,
+        pSubTypes.y098,
+        pSubTypes.y098c,
         pSubTypes.aed,
         pSubTypes.ccc,
         pSubTypes.con,
@@ -1096,10 +1096,10 @@ export const _2lReleaseUpdate: IField = {
       conditions: [{ when: "subType", is: "y07c" }],
     },
     {
-      conditions: [{ when: "subType", is: "y091" }],
+      conditions: [{ when: "subType", is: "y097" }],
     },
     {
-      conditions: [{ when: "subType", is: "y091c" }],
+      conditions: [{ when: "subType", is: "y097c" }],
     },
     {
       conditions: [{ when: "subType", is: "y09" }],
@@ -1180,10 +1180,10 @@ export const _2lUsageUpdate: IField = {
       conditions: [{ when: "subType", is: "y08c" }],
     },
     {
-      conditions: [{ when: "subType", is: "y092" }],
+      conditions: [{ when: "subType", is: "y098" }],
     },
     {
-      conditions: [{ when: "subType", is: "y092c" }],
+      conditions: [{ when: "subType", is: "y098c" }],
     },
     {
       conditions: [{ when: "subType", is: "aed" }],
@@ -1253,10 +1253,10 @@ export const _2lCreationAdditionUpdate: IField = {
       conditions: [{ when: "subType", is: "y07c" }],
     },
     {
-      conditions: [{ when: "subType", is: "y091" }],
+      conditions: [{ when: "subType", is: "y097" }],
     },
     {
-      conditions: [{ when: "subType", is: "y091c" }],
+      conditions: [{ when: "subType", is: "y097c" }],
     },
     {
       conditions: [{ when: "subType", is: "y28" }],
@@ -1271,10 +1271,10 @@ export const _2lCreationAdditionUpdate: IField = {
       conditions: [{ when: "subType", is: "y08c" }],
     },
     {
-      conditions: [{ when: "subType", is: "y092" }],
+      conditions: [{ when: "subType", is: "y098" }],
     },
     {
-      conditions: [{ when: "subType", is: "y092c" }],
+      conditions: [{ when: "subType", is: "y098c" }],
     },
     {
       conditions: [{ when: "subType", is: "aed" }],
@@ -1366,10 +1366,10 @@ export const _0lReleaseUpdate: IField = {
       conditions: [{ when: "subType", is: "y07c" }],
     },
     {
-      conditions: [{ when: "subType", is: "y091" }],
+      conditions: [{ when: "subType", is: "y097" }],
     },
     {
-      conditions: [{ when: "subType", is: "y091c" }],
+      conditions: [{ when: "subType", is: "y097c" }],
     },
     {
       conditions: [{ when: "ledgerGroup", is: "2l" }],
@@ -1429,10 +1429,10 @@ export const _0lUsageUpdate: IField = {
       conditions: [{ when: "subType", is: "y08c" }],
     },
     {
-      conditions: [{ when: "subType", is: "y092" }],
+      conditions: [{ when: "subType", is: "y098" }],
     },
     {
-      conditions: [{ when: "subType", is: "y092c" }],
+      conditions: [{ when: "subType", is: "y098c" }],
     },
     {
       conditions: [{ when: "subType", is: "aed" }],
@@ -1483,10 +1483,10 @@ export const _0lCreationAdditionUpdate: IField = {
       conditions: [{ when: "subType", is: "y07c" }],
     },
     {
-      conditions: [{ when: "subType", is: "y091" }],
+      conditions: [{ when: "subType", is: "y097" }],
     },
     {
-      conditions: [{ when: "subType", is: "y091c" }],
+      conditions: [{ when: "subType", is: "y097c" }],
     },
     {
       conditions: [{ when: "subType", is: "y28" }],
@@ -1501,10 +1501,10 @@ export const _0lCreationAdditionUpdate: IField = {
       conditions: [{ when: "subType", is: "y08c" }],
     },
     {
-      conditions: [{ when: "subType", is: "y092" }],
+      conditions: [{ when: "subType", is: "y098" }],
     },
     {
-      conditions: [{ when: "subType", is: "y092c" }],
+      conditions: [{ when: "subType", is: "y098c" }],
     },
     {
       conditions: [{ when: "subType", is: "aed" }],
@@ -1711,6 +1711,18 @@ export const appEndDate: IField = {
         },
         {
           when: "subType",
+          is: "y098",
+        },
+      ],
+    },
+    {
+      conditions: [
+        {
+          when: "mode",
+          is: "modify",
+        },
+        {
+          when: "subType",
           is: "y09c",
         },
       ],
@@ -1822,7 +1834,7 @@ export const glCreditAccount: IField = {
     {
       conditions: [
         { when: "provisionType", is: ["j55"] },
-        { when: "subType", is: ["y09", "y091c", "y092c"] },
+        { when: "subType", is: ["y09", "y097c", "y098c"] },
       ],
       options: [
         {
@@ -1834,7 +1846,7 @@ export const glCreditAccount: IField = {
     {
       conditions: [
         { when: "provisionType", is: ["j51"] },
-        { when: "subType", is: ["y09", "y091c", "y092c"] },
+        { when: "subType", is: ["y09", "y097c", "y098c"] },
       ],
       options: [
         {
@@ -1918,7 +1930,7 @@ export const glCreditAccount: IField = {
     {
       conditions: [
         { when: "provisionType", is: ["j55"] },
-        { when: "subType", is: ["y09c", "y091", "y092"] },
+        { when: "subType", is: ["y09c", "y097", "y098"] },
       ],
       options: [
         {
@@ -1930,7 +1942,7 @@ export const glCreditAccount: IField = {
     {
       conditions: [
         { when: "provisionType", is: ["j51"] },
-        { when: "subType", is: ["y09c", "y091", "y092"] },
+        { when: "subType", is: ["y09c", "y097", "y098"] },
       ],
       options: [
         {
@@ -2303,7 +2315,7 @@ export const glDebitAccount: IField = {
     {
       conditions: [
         { when: "provisionType", is: ["j55"] },
-        { when: "subType", is: ["y09c", "y091", "y092"] },
+        { when: "subType", is: ["y09c", "y097", "y098"] },
       ],
       options: [
         {
@@ -2315,7 +2327,7 @@ export const glDebitAccount: IField = {
     {
       conditions: [
         { when: "provisionType", is: ["j51"] },
-        { when: "subType", is: ["y09c", "y091", "y092"] },
+        { when: "subType", is: ["y09c", "y097", "y098"] },
       ],
       options: [
         {
@@ -2399,7 +2411,7 @@ export const glDebitAccount: IField = {
     {
       conditions: [
         { when: "provisionType", is: ["j55"] },
-        { when: "subType", is: ["y09", "y091c", "y092c"] },
+        { when: "subType", is: ["y09", "y097c", "y098c"] },
       ],
       options: [
         {
@@ -2411,7 +2423,7 @@ export const glDebitAccount: IField = {
     {
       conditions: [
         { when: "provisionType", is: ["j51"] },
-        { when: "subType", is: ["y09", "y091c", "y092c"] },
+        { when: "subType", is: ["y09", "y097c", "y098c"] },
       ],
       options: [
         {

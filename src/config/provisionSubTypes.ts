@@ -2,14 +2,14 @@ export const y09 = {
     label: "Creation/Addition of other provisions/accruals/adjustments",
     value: "y09",
   };
-  export const y091 = {
+  export const y097 = {
     label: "Usage of other provisions/accruals/adjustments",
-    value: "y091",
+    value: "y097",
   };
-  export const y092 = {
+  export const y098 = {
     label:
       "Release, no longer needed of other provisions/accruals/adjustments",
-    value: "y092",
+    value: "y098",
   };
   export const y27 = {
     label:
@@ -53,14 +53,14 @@ export const y09 = {
     label: "Correction - Release, no longer needed of other provisions/accruals/adjustments - Previous Yr",
     value: "y08c",
   };
-  export const y091c = {
+  export const y097c = {
     label: "Correction - Usage of other provisions/accruals/adjustments",
-    value: "y091c",
+    value: "y097c",
   };
-  export const y092c = {
+  export const y098c = {
     label:
       "Correction - Release, no longer needed of other provisions/accruals/adjustments",
-    value: "y092c",
+    value: "y098c",
   };
   export const aed = {
     label: "Change in Application End Date",
