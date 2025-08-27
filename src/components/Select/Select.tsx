@@ -4,49 +4,35 @@ import { useContext, useEffect } from "react";
 import { FormContext } from "../../context";
 
 export const Select = (props: IField) => {
-  //@ts-ignore
-  const { formValues, setFormValues, patterns } = useContext(FormContext);
+  const context = useContext(FormContext);
+  if (!context) {
+    throw new Error("Select must be used within a FormProvider");
+  }
+
+  const { formValues, setFormValues } = context;
   const className = `field ${props.error ? "field--error" : ""}`;
 
   const renderOptions = () => {
-    return !props.options
-      ? ""
-      : props.options.map((o) => (
-          <option key={o.value} value={o.value}>
-            {o.label}
-          </option>
-        ));
+    return (
+      props.options?.map((o) => (
+        <option key={o.value} value={o.value}>
+          {o.label}
+        </option>
+      )) ?? null
+    );
   };
 
-  const optionsValue = (props.options && props.options[0]?.value) || "";
+  const optionsValue =
+    props.value ?? (props.options && props.options[0]?.value) ?? "";
 
-//  const setFirstOption = (optionsValue: string) => {
-//    if (props.type === "select") {
-//      setTimeout(() => {
-//        setFormValues((formValues: any) => {
-//          return {
-//            ...formValues,
-//            [props.name]: optionsValue,
-//          };
-//        });
-//      }, 100);
-//    }
-//  };
-
-//  useEffect(() => {
-//    setFirstOption(optionsValue);
-//  }, [optionsValue]);
-
-  
-useEffect(() => {
-  if (props.type === "select" && !formValues?.[props.name]) {
-    setFormValues((prev: any) => ({
-      ...prev,
-      [props.name]: optionsValue,
-    }));
-  }
-}, [optionsValue, props.name, props.type]);
-
+  useEffect(() => {
+    if (props.type === "select" && !formValues?.[props.name]) {
+      setFormValues((prev: any) => ({
+        ...prev,
+        [props.name]: optionsValue,
+      }));
+    }
+  }, [optionsValue, props.name, props.type]);
 
   return (
     <div className={className}>
