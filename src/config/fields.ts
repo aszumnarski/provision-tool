@@ -2840,23 +2840,5 @@ export const companyCode: IField = {
   label: "Company Code",
   type: "select",
   patterns: [h.required()],
-  options: [
-    {
-      label: "DE10",
-      value: "de10",
-    },
-    {
-      label: "PL10",
-      value: "pl10",
-    },
-    {
-      label: "UK10",
-      value: "uk10",
-    },
-    {
-      label: "NL10",
-      value: "nl10",
-    },
-  ],
   conditionalDisabled: h.inModifyState,
 };
