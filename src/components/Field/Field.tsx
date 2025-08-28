@@ -115,7 +115,6 @@ export const Field = (props: IField) => {
         return value && value?.length > maximum;
       },
       maxSize: () => {
-        //console.log("hi");
         const maximum = Number(pattern.split("_")[1]);
         return att ? Number(att.fileSize) / 1024 / 1024 > maximum : false;
         //return att ? att.fileSize > maximum : false;

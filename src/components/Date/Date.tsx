@@ -70,13 +70,6 @@ export const DateInput = (props: IField) => {
 //  }
 //}, []);
 
-
-useEffect(() => {
-  console.log("DateInput mounted with value:", props.value);
-}, []);
-
-
-
   return (
     <div className={className}>
       <label>

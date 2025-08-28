@@ -102,7 +102,6 @@ export const Button = (props: IField) => {
     setFormValues((formValues: any) => {
       return { ...formValues, user: res.data.user, appCreator: res.data.user };
     });
-    console.log(res);
     setUserCompanyCodes(res.config.companyCodes);
 
   };

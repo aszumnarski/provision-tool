@@ -10,6 +10,7 @@ export interface IForm {
 }
 
 export function Form({ rows }: IForm) {
+  const isDebug = window.location.search.includes("debug=true");
   const {
     //@ts-ignore
     formValues,
@@ -60,12 +61,20 @@ export function Form({ rows }: IForm) {
           <Row key={i} columns={r.columns} />
         ))}
       </div>
-      <pre>X{Object.keys(formValues).length}X</pre>
+
+
+      {isDebug && (
+        <>
+
+      <pre>X{formValues ? Object.keys(formValues).length : ""}X</pre>
       <pre>{JSON.stringify(formValues, null, 2)}</pre>
       <hr />
       <pre>{JSON.stringify(formErrors, null, 2)}</pre>
       <hr />
       <pre>{JSON.stringify(patterns, null, 2)}</pre>
+</>
+      )}
+
     </form>
   );
 }
