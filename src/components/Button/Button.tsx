@@ -68,10 +68,15 @@ export const Button = (props: IField) => {
     }
   }, [shouldValidate]);
 
-  const handleGet: MouseEventHandler<HTMLButtonElement> = async (e) => {
+  const handleGet = async (
+    e: React.MouseEvent<HTMLButtonElement>,
+    appNumberOverride?: string
+  ) => {
     e.preventDefault();
 
-    const res = await getData(`${url}&${query}=${formValues.appNumberImport}`);
+    const appNumber = appNumberOverride ?? formValues.appNumberImport;
+    const res = await getData(`${url}&${query}=${appNumber}`);
+
     if (res.data) {
       setFormValues((formValues: any) => {
         return { ...formValues, ...res.data };
@@ -94,14 +99,7 @@ export const Button = (props: IField) => {
   const handleRefresh: MouseEventHandler<HTMLButtonElement> = async (e) => {
     e.preventDefault();
 
-    setFormValues((prev: any) => ({
-      ...prev,
-      appNumberImport: prev.appNumber,
-    }));
-
-    setTimeout(() => {
-      handleGet(e);
-    }, 100);
+    handleGet(e, formValues.appNumber.split("-")[0]);
   };
 
   const handlePost: MouseEventHandler<HTMLButtonElement> = async (e) => {
