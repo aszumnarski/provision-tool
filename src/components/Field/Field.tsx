@@ -7,6 +7,7 @@ import { Select } from "../Select/Select";
 import { Input } from "../Input/Input";
 import { DateInput } from "../Date/Date";
 import { Button } from "../Button/Button";
+import { con } from "../../config/provisionSubTypes";
 
 export interface IField {
   name: string;
@@ -103,9 +104,7 @@ export const Field = (props: IField) => {
     const tokens = {
       required: () => !value,
       future: () =>
-        value &&
-        toDash(value)<
-          new Date().toISOString().substring(0, 10),
+        value && toDash(value) < new Date().toISOString().substring(0, 10),
       min: () => {
         const minimum = Number(pattern.split("_")[1]);
         return value && value?.length < minimum;
@@ -122,26 +121,26 @@ export const Field = (props: IField) => {
       lt: () => {
         const fieldName = pattern.split("_")[1];
         const fieldValue = formValues[fieldName];
-        return (
-          value &&
-          toDash(value) <
-            toDash(fieldValue)
-        );
+        return value && toDash(value) < toDash(fieldValue);
       },
       gt: () => {
         const fieldName = pattern.split("_")[1];
         const fieldValue = formValues[fieldName];
-        return (
-          value &&
-          toDash(value) >
-            toDash(fieldValue)
-        );
+        return value && toDash(value) > toDash(fieldValue);
       },
       numberOnly: () => {
         return value && !/^\d+$/.test(value);
       },
       empty: () => {
-        return pattern.split("_")[1].split(",").some(field => formValues[field] !== "" && formValues[field] !== null && formValues[field] !== "0");
+        return pattern
+          .split("_")[1]
+          .split(",")
+          .some(
+            (field) =>
+              formValues[field] !== "" &&
+              formValues[field] !== null &&
+              formValues[field] !== "0"
+          );
       },
     };
     const patternFromToken =
@@ -231,8 +230,12 @@ export const Field = (props: IField) => {
     const newDate = new Date(
       toDash(formValues[props.calculatedValue.date]) || today
     );
-    newDate.setMonth(newDate.getMonth() + props.calculatedValue.month);
-    return (("0" + (newDate.getMonth()+1)).slice(-2));
+    const year = newDate.getFullYear();
+    const month = newDate.getMonth() + props.calculatedValue.month;
+    const tempDate = new Date(year, month, 1);
+    tempDate.setMonth(tempDate.getMonth() + 1);
+    tempDate.setDate(0);
+    return ("0" + (tempDate.getMonth() + 1)).slice(-2);
   };
 
   const getSum = () => {
