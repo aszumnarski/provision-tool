@@ -25,14 +25,22 @@ export const Select = (props: IField) => {
   const optionsValue =
     props.value ?? (props.options && props.options[0]?.value) ?? "";
 
-  useEffect(() => {
-    if (props.type === "select" && !formValues?.[props.name]) {
-      setFormValues((prev: any) => ({
-        ...prev,
-        [props.name]: optionsValue,
-      }));
-    }
-  }, [optionsValue, props.name, props.type]);
+      useEffect(() => {
+        const currentValue = formValues?.[props.name];
+        const firstOptionValue = props.options?.[0]?.value;
+    
+        const shouldUpdate =
+          props.type === "select" &&
+          props.options?.length &&
+          (!currentValue || !props.options.some((opt) => opt.value === currentValue));
+    
+        if (shouldUpdate && firstOptionValue) {
+          setFormValues((prev: any) => ({
+            ...prev,
+            [props.name]: firstOptionValue,
+          }));
+        }
+      }, [props.options]);
 
   return (
     <div className={className}>
