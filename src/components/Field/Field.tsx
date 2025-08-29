@@ -7,7 +7,6 @@ import { Select } from "../Select/Select";
 import { Input } from "../Input/Input";
 import { DateInput } from "../Date/Date";
 import { Button } from "../Button/Button";
-import { con } from "../../config/provisionSubTypes";
 
 export interface IField {
   name: string;
