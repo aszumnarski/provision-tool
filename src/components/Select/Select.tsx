@@ -18,8 +18,12 @@ export const Select = (props: IField) => {
         ));
   };
 
+
   const optionsValue =
-    props.value || (props.options && props.options[0]?.value) || "";
+  props.value !== undefined && props.value !== null
+    ? props.value
+    : props.options?.[0]?.value || "";
+
 
   const setFirstOption = (optionsValue: string) => {
     if (props.type === "select") {
