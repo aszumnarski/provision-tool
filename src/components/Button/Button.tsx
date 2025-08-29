@@ -52,7 +52,7 @@ export const Button = (props: IField) => {
         } successfully.`,
         type: "success",
       };
-      setModalContent(content)
+      setModalContent(content);
       resetForm();
     }
   };
@@ -67,6 +67,7 @@ export const Button = (props: IField) => {
       }, 500);
     }
   }, [shouldValidate]);
+
   const handleGet: MouseEventHandler<HTMLButtonElement> = async (e) => {
     e.preventDefault();
 
@@ -89,6 +90,20 @@ export const Button = (props: IField) => {
       }, 200);
     });
   }
+
+  const handleRefresh: MouseEventHandler<HTMLButtonElement> = async (e) => {
+    e.preventDefault();
+
+    setFormValues((prev: any) => ({
+      ...prev,
+      appNumberImport: prev.appNumber,
+    }));
+
+    setTimeout(() => {
+      handleGet(e);
+    }, 100);
+  };
+
   const handlePost: MouseEventHandler<HTMLButtonElement> = async (e) => {
     e.preventDefault();
 
@@ -103,7 +118,6 @@ export const Button = (props: IField) => {
       return { ...formValues, user: res.data.user, appCreator: res.data.user };
     });
     setUserCompanyCodes(res.config.companyCodes);
-
   };
 
   const resetForm = () => {
@@ -129,6 +143,7 @@ export const Button = (props: IField) => {
     CREATE: { label: "CREATE", onClick: handlePost },
     UPDATE: { label: "UPDATE", onClick: handlePost },
     GET: { label: "GET", onClick: handleGet },
+    REFRESH: { label: "REFRESH", onClick: handleRefresh },
   };
 
   const getState = () => {
@@ -137,10 +152,17 @@ export const Button = (props: IField) => {
     if (
       formValues.mode === "modify" &&
       !formValues.appNumberImport &&
-      formValues.appNumber
+      formValues.appNumber &&
+      !formValues.appNumber.includes("-")
     )
       return states.UPDATE;
-
+    if (
+      formValues.mode === "modify" &&
+      !formValues.appNumberImport &&
+      formValues.appNumber &&
+      formValues.appNumber.includes("-")
+    )
+      return states.REFRESH;
     return states.GET;
   };
 
@@ -169,7 +191,7 @@ export const Button = (props: IField) => {
     setLoading(true);
     var formData = new FormData();
     formData.append("json", JSON.stringify(body));
-    if(att) formData.append(att.fileName, att.fileData);
+    if (att) formData.append(att.fileName, att.fileData);
     try {
       const response = await fetch(url, {
         method: "POST",
