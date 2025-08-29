@@ -232,7 +232,7 @@ export const Field = (props: IField) => {
       toDash(formValues[props.calculatedValue.date]) || today
     );
     newDate.setMonth(newDate.getMonth() + props.calculatedValue.month);
-    return newDate.toLocaleString("en-US", { month: "2-digit" });
+    return (("0" + (newDate.getMonth()+1)).slice(-2));
   };
 
   const getSum = () => {
