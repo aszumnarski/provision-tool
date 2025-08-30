@@ -205,8 +205,9 @@ export const Field = (props: IField) => {
             scenario.conditions
               .map(
                 (c) =>
-                  c.is.includes(formValues[c.when]) ||
-                  c.is.includes(!!formValues[c.when]),
+                  formValues &&
+                  (c.is.includes(formValues[c.when]) ||
+                    c.is.includes(!!formValues[c.when])),
               )
               .filter(Boolean).length === scenario.conditions.length &&
             (scenario.isFromValue
@@ -225,6 +226,7 @@ export const Field = (props: IField) => {
       : "";
   const today = new Date().toISOString().substring(0, 10);
   const monthAddition = () => {
+    if (!formValues) return "";
     if (!Object.keys(JSON.parse(JSON.stringify(formValues))).length) return "";
     if (!props.calculatedValue?.month) return "";
     if (!props.calculatedValue?.date) return "";
@@ -242,19 +244,20 @@ export const Field = (props: IField) => {
     return "";
   };
   const sum = getSum();
-  const disabled = props.conditionalDisabled
-    ? props.conditionalDisabled
-        ?.map(
-          (or) =>
-            or.conditions
-              .map(
-                (c) =>
-                  formValues[c.when] == c.is || !!formValues[c.when] == c.is,
-              )
-              .filter(Boolean).length === or.conditions.length,
-        )
-        .filter(Boolean).length > 0
-    : props.disabled;
+  const disabled =
+    !!formValues && props.conditionalDisabled
+      ? props.conditionalDisabled
+          ?.map(
+            (or) =>
+              or.conditions
+                .map(
+                  (c) =>
+                    formValues[c.when] == c.is || !!formValues[c.when] == c.is,
+                )
+                .filter(Boolean).length === or.conditions.length,
+          )
+          .filter(Boolean).length > 0
+      : props.disabled;
 
   const copyValue = () => {
     if (!props.dependantValue) return "";
@@ -267,6 +270,7 @@ export const Field = (props: IField) => {
   };
 
   const getValue = () => {
+    if (!formValues) return "";
     if (!Object.keys(JSON.parse(JSON.stringify(formValues))).length) return "";
     if (props.dependantValue) return copyValue();
     if (sum) return sum;

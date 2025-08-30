@@ -43,6 +43,7 @@ export const Button = (props: IField) => {
     return JSON.parse(JSON.stringify(formErrors));
   }
   const post = async () => {
+    console.log("POST", { formValues });
     const res = await postData(url || "/protool", formValues);
     if (res.errors) {
       return setFormErrors(res.errors);
@@ -55,11 +56,13 @@ export const Button = (props: IField) => {
         type: "success",
       };
       setModalContent(content);
+      console.log("calling reset");
       resetForm();
     }
   };
   useEffect(() => {
-    if (shouldValidate) {
+    if (shouldValidate && formValues) {
+      console.log("shouldvalidate", formValues);
       if (!Object.keys(errors()).length) {
         post();
       }
@@ -68,7 +71,8 @@ export const Button = (props: IField) => {
         setShouldValidate(false);
       }, 500);
     }
-  }, [shouldValidate]);
+  }, [shouldValidate, formValues]);
+
   const handleGet: MouseEventHandler<HTMLButtonElement> = async (e) => {
     e.preventDefault();
 
@@ -110,13 +114,14 @@ export const Button = (props: IField) => {
   };
 
   const resetForm = () => {
+    console.log({ defaultValues });
     setFormValues(defaultValues);
     setFormErrors({});
   };
 
   useEffect(() => {
-    if (formValues.mode === "create") resetForm();
-  }, [formValues.mode]);
+    if (defaultValues && formValues?.mode === "create") resetForm();
+  }, [formValues?.mode, defaultValues]);
 
   useEffect(() => {
     if (isAppInited) {
@@ -125,16 +130,14 @@ export const Button = (props: IField) => {
   }, [isAppInited]);
 
   useEffect(() => {
-    if (user && !formValues.user && !defaultValues) {
-      handleDefaults();
+    if (user && formValues  && !defaultValues) {
+      console.log({ user, formValues });
+      setDefaultValues(() => {
+        return { ...formValues, user, appCreator: user };
+      });
     }
-  }, [user, formValues.user]);
+  }, [user, formValues, formValues?.user]);
 
-  const handleDefaults = async () => {
-    setDefaultValues(() => {
-      return { ...formValues, user, appCreator: user };
-    });
-  };
 
   const states = {
     CREATE: { label: "CREATE", onClick: handlePost },
@@ -143,6 +146,7 @@ export const Button = (props: IField) => {
   };
 
   const getState = () => {
+    if (!formValues) return states.GET;
     if (formValues.mode === "create") return states.CREATE;
 
     if (
@@ -179,6 +183,7 @@ export const Button = (props: IField) => {
   async function postData(url: string, body: Record<string, any>) {
     setLoading(true);
     var formData = new FormData();
+    console.log({ body, formValues });
     formData.append("json", JSON.stringify(body));
     if (att) formData.append(att.fileName, att.fileData);
     try {
@@ -190,6 +195,7 @@ export const Button = (props: IField) => {
         throw new Error(`Response status: ${response.status}`);
       }
       const data = await response.json();
+      console.log({ data });
       return data;
     } catch (error: any) {
       setModalContent({

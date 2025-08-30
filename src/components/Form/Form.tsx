@@ -53,6 +53,7 @@ export function Form({ rows }: IForm) {
   const onSubmit: FormEventHandler<HTMLFormElement> = (e) => {
     e.preventDefault();
   };
+  console.log({ formValues });
   return (
     <form onSubmit={onSubmit} className="form">
       <div className="row-wrapper">
@@ -64,7 +65,7 @@ export function Form({ rows }: IForm) {
           />
         ))}
       </div>
-      <pre>X{Object.keys(formValues).length}X</pre>
+      <pre>X{formValues && Object.keys(formValues).length}X</pre>
       <pre>{JSON.stringify(formValues, null, 2)}</pre>
       <hr />
       <pre>{JSON.stringify(formErrors, null, 2)}</pre>

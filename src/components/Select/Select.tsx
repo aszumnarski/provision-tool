@@ -20,22 +20,14 @@ export const Select = (props: IField) => {
 
   const optionsValue = (props.options && props.options[0]?.value) || "";
 
-  const setFirstOption = (optionsValue: string) => {
-    if (props.type === "select") {
-      setTimeout(() => {
-        setFormValues((formValues: any) => {
-          return {
-            ...formValues,
-            [props.name]: optionsValue,
-          };
-        });
-      }, 100);
-    }
-  };
-
   useEffect(() => {
-    setFirstOption(optionsValue);
-  }, [optionsValue]);
+    if (props.type === "select" && !formValues?.[props.name]) {
+      setFormValues((prev: any) => ({
+        ...prev,
+        [props.name]: optionsValue,
+      }));
+    }
+  }, [optionsValue, props.name, props.type]);
 
   return (
     <div className={className}>
