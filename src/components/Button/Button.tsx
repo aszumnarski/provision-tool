@@ -8,6 +8,8 @@ export const Button = (props: IField) => {
   //@ts-ignore
   const {
     //@ts-ignore
+    isAppInited,
+    //@ts-ignore
     formValues,
     //@ts-ignore
     setFormValues,
@@ -30,11 +32,11 @@ export const Button = (props: IField) => {
   } = useContext(FormContext);
   const className = `field ${props.error ? "field--error" : ""}`;
   const [shouldValidate, setShouldValidate] = useState(false);
+  const [user, setUser] = useState("");
   const [defaultValues, setDefaultValues] = useState(null);
   const { dataset } = document.querySelector("body") || {
     dataset: { url: "/", query: "appno", init: "init" },
   };
-
   const { url, query, init } = dataset;
 
   function errors() {
@@ -52,7 +54,7 @@ export const Button = (props: IField) => {
         } successfully.`,
         type: "success",
       };
-      setModalContent(content)
+      setModalContent(content);
       resetForm();
     }
   };
@@ -99,11 +101,12 @@ export const Button = (props: IField) => {
 
   const loadData = async () => {
     const res = await getData(`${url}&${query}=${init}`);
-    setFormValues((formValues: any) => {
-      return { ...formValues, user: res.data.user, appCreator: res.data.user };
-    });
-    setUserCompanyCodes(res.config.companyCodes);
 
+    await setFormValues((prev: any) => {
+      return { ...prev, user: res.data.user, appCreator: res.data.user };
+    });
+    setUser(res.data.user);
+    setUserCompanyCodes(res.config.companyCodes);
   };
 
   const resetForm = () => {
@@ -116,14 +119,22 @@ export const Button = (props: IField) => {
   }, [formValues.mode]);
 
   useEffect(() => {
-    setTimeout(loadData, 100);
-  }, []);
+    if (isAppInited) {
+      setTimeout(async () => await loadData(), 400);
+    }
+  }, [isAppInited]);
 
   useEffect(() => {
-    if (formValues.user && !defaultValues) {
-      setDefaultValues(formValues);
+    if (user && !formValues.user && !defaultValues) {
+      handleDefaults();
     }
-  }, [formValues.user]);
+  }, [user, formValues.user]);
+
+  const handleDefaults = async () => {
+    setDefaultValues(() => {
+      return { ...formValues, user, appCreator: user };
+    });
+  };
 
   const states = {
     CREATE: { label: "CREATE", onClick: handlePost },
@@ -169,7 +180,7 @@ export const Button = (props: IField) => {
     setLoading(true);
     var formData = new FormData();
     formData.append("json", JSON.stringify(body));
-    if(att) formData.append(att.fileName, att.fileData);
+    if (att) formData.append(att.fileName, att.fileData);
     try {
       const response = await fetch(url, {
         method: "POST",
@@ -190,7 +201,6 @@ export const Button = (props: IField) => {
       setLoading(false);
     }
   }
-
   return (
     <div className={className}>
       <button className="magic-btn" onClick={getState().onClick}>

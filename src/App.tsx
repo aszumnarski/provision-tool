@@ -13,7 +13,8 @@ function App() {
   const [patterns, setPatterns] = useState<Record<string, string> | {}>({});
   const [att, setAtt] = useState<Record<string, string> | {}>({});
   const [userCompanyCodes, setUserCompanyCodes] = useState<IOption[]>([]);
-  const [isLoading, setLoading] = useState(false);
+  const [isLoading, setLoading] = useState(true);
+  const [isAppInited, setIsAppInited] = useState(false);
   const [modalContent, setModalContent] = useState<Record<
     string,
     string
@@ -35,6 +36,8 @@ function App() {
         setUserCompanyCodes,
         isLoading,
         setLoading,
+        isAppInited,
+        setIsAppInited,
         modalContent,
         setModalContent,
       }}
@@ -47,7 +50,7 @@ function App() {
         ) : (
           ""
         )}
-        <Form rows={config.rows} />
+       <Form rows={config.rows} />
       </div>
       <Modal />
       {isLoading ? <Loader /> : ""}

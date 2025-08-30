@@ -26,7 +26,7 @@ export function Form({ rows }: IForm) {
   } = useContext(FormContext);
 
   useEffect(() => {
-    setFormValues(createFormState(rows, "initValue"));
+    setFormValues(() => createFormState(rows, "initValue"));
     setPatterns(createFormState(rows, "patterns"));
   }, []);
 
@@ -41,7 +41,7 @@ export function Form({ rows }: IForm) {
               : f.type === "number"
                 ? 0
                 : f.type === "select"
-                  ? f.options && f.options[0].value
+                  ? f.options && f.options[0]?.value
                   : "";
           //@ts-ignore
           values[f.name] = f[key as keyof typeof f] || defaultVal;
@@ -57,7 +57,11 @@ export function Form({ rows }: IForm) {
     <form onSubmit={onSubmit} className="form">
       <div className="row-wrapper">
         {rows.map((r, i) => (
-          <Row key={i} columns={r.columns} />
+          <Row
+            key={"row_" + i}
+            columns={r.columns}
+            lastrow={rows.length === i + 1}
+          />
         ))}
       </div>
       <pre>X{Object.keys(formValues).length}X</pre>

@@ -13,6 +13,8 @@ export type TFormContext = {
   setUserCompanyCodes:(a:any) => void;
   isLoading: boolean;
   setLoading: (loading: boolean) => void;
+  isAppInited: boolean;
+  setIsAppInited: (isInited: boolean) => void;
   modalContent: any;
   setModalContent: (m: any) => void;
 } | null;

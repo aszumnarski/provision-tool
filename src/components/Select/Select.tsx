@@ -18,8 +18,7 @@ export const Select = (props: IField) => {
         ));
   };
 
-  const optionsValue =
-    props.value || (props.options && props.options[0]?.value) || "";
+  const optionsValue = (props.options && props.options[0]?.value) || "";
 
   const setFirstOption = (optionsValue: string) => {
     if (props.type === "select") {
