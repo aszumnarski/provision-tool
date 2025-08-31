@@ -164,7 +164,7 @@ export const Field = (props: IField) => {
 
   const [shouldValidate, setShouldValidate] = useState(false);
 
-  const onChange = (e: ChangeEvent) => {
+  const onChange = async (e: ChangeEvent) => {
     const input = e.target as HTMLInputElement;
     if (input.files && input.files[0]) {
       setAtt({
@@ -177,11 +177,8 @@ export const Field = (props: IField) => {
     }
     const val =
       props.type === "number" ? input.value.replace(/-/g, "") : input.value;
-    setFormValues((prev: any) => {
-      return {
-        ...prev,
-        [props.name]: val,
-      };
+    await setFormValues({
+      [props.name]: val,
     });
   };
 
@@ -312,15 +309,36 @@ export const Field = (props: IField) => {
   useEffect(() => {
     const fieldsNo = document.querySelectorAll(".field").length;
     const formValNo = Object.keys(formValues).length;
-    if (formValNo === fieldsNo) {
-      setFormValues((prev: any) => {
-        return {
-          ...prev,
-          [props.name]: value,
-        };
+    const updateVals = async () => {
+      await setFormValues({
+        [props.name]: value,
       });
+    };
+    if (formValNo === fieldsNo) {
+      updateVals();
     }
-  }, [value, JSON.stringify(formValues)]);
+  }, [value]);
+
+  const opts = options();
+  useEffect(() => {
+    const currentValue = formValues?.[props.name];
+    const firstOptionValue = opts?.[0]?.value;
+
+    const updateVals = async () => {
+      await setFormValues({
+        [props.name]: firstOptionValue,
+      });
+    };
+
+    const shouldUpdate =
+      props.type === "select" &&
+      opts?.length &&
+      (!currentValue || !opts.some((opt) => opt.value === currentValue));
+
+    if (shouldUpdate && firstOptionValue) {
+      updateVals();
+    }
+  }, [opts]);
 
   useEffect(() => {
     window.addEventListener("validate", triggerValidate);

@@ -53,7 +53,7 @@ export const Button = (props: IField) => {
         type: "success",
       };
       setModalContent(content);
-      resetForm();
+      await resetForm();
     }
   };
   useEffect(() => {
@@ -78,9 +78,7 @@ export const Button = (props: IField) => {
     const res = await getData(`${url}&${query}=${appNumber}`);
 
     if (res.data) {
-      setFormValues((formValues: any) => {
-        return { ...formValues, ...res.data };
-      });
+      await setFormValues({ ...res.data });
       setFormErrors({});
       if (res.data.status) {
         const content = {
@@ -88,7 +86,7 @@ export const Button = (props: IField) => {
           type: "info",
         };
         setModalContent(content);
-        resetForm();
+        await resetForm();
       }
     } else {
       setFormErrors((formErrors: any) => {
@@ -118,8 +116,8 @@ export const Button = (props: IField) => {
     setShouldValidate(true);
   };
 
-  const resetForm = () => {
-    setFormValues(defaultValues);
+  const resetForm = async () => {
+    await setFormValues(defaultValues);
     setFormErrors({});
   };
 

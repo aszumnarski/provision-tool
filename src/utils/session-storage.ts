@@ -26,7 +26,7 @@ export const useFormValues = (values?: any) => {
 };
 
 export const useAsyncFormValues = async (values?: any) => {
-  const key = "FORM_VALUES";
+  const key = "ASYNC_FORM_VALUES";
 
   if (values) {
     const old = (await getSessionStorage(key)) || {};

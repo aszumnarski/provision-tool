@@ -1,6 +1,6 @@
 import "./Select.css";
 import { type IField } from "../Field/Field";
-import { useContext, useEffect } from "react";
+import { useRef, useContext, useEffect } from "react";
 import { FormContext } from "../../context";
 
 export const Select = (props: IField) => {
@@ -8,6 +8,21 @@ export const Select = (props: IField) => {
   if (!context) {
     throw new Error("Select must be used within a FormProvider");
   }
+
+  const inputRef = useRef(null);
+
+  const triggerChange = () => {
+    const inputElement = inputRef.current;
+    const nativeInputValueSetter = Object.getOwnPropertyDescriptor(
+      window.HTMLInputElement.prototype,
+      "value",
+    ).set;
+
+    nativeInputValueSetter.call(inputElement, "New Value");
+
+    const event = new Event("input", { bubbles: true });
+    inputElement.dispatchEvent(event);
+  };
 
   const { formValues, setFormValues } = context;
   const className = `field ${props.error ? "field--error" : ""}`;
@@ -22,26 +37,22 @@ export const Select = (props: IField) => {
     );
   };
 
-  const optionsValue =
-    props.value ?? (props.options && props.options[0]?.value) ?? "";
+  const val =
+    props.value || (props.options?.length ? props.options[0].value : "");
+
+  console.log("hh", {
+    val,
+    pv: props.value,
+    name: props.name,
+    fv: formValues[props.name],
+  });
 
   useEffect(() => {
-    const currentValue = formValues?.[props.name];
-    const firstOptionValue = props.options?.[0]?.value;
-
-    const shouldUpdate =
-      props.type === "select" &&
-      props.options?.length &&
-      (!currentValue ||
-        !props.options.some((opt) => opt.value === currentValue));
-
-    if (shouldUpdate && firstOptionValue) {
-      setFormValues((prev: any) => ({
-        ...prev,
-        [props.name]: firstOptionValue,
-      }));
+    if (!formValues[props.name] && props.type==="select") {
+      setFormValues({ [props.name]: val || "0" });
     }
-  }, [props.options]);
+    // triggerChange();
+  });
 
   return (
     <div className={className}>
@@ -50,7 +61,8 @@ export const Select = (props: IField) => {
         <select
           className="field-input"
           name={props.name}
-          value={props.value || optionsValue}
+          ref={inputRef}
+          value={props.value}
           onChange={props.onChange}
           disabled={props.disabled}
           onBlur={props.onBlur}

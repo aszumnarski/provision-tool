@@ -48,27 +48,22 @@ export const DateInput = (props: IField) => {
   //  }, 20);
   //}, []);
 
-  
-
   useEffect(() => {
     if (!formValues[props.name]) {
-      setFormValues((prev: any) => ({
-        ...prev,
+      setFormValues({
         [props.name]: noDash(today),
-      }));
+      });
     }
-  }, [formValues, props.name, setFormValues]);
-  
+  }, [formValues, props.name]);
 
-
- //useEffect(() => {
- // if (formValues) {
-//    setFormValues((formValues: any) => ({
-//      ...formValues,
-//      [props.name]: noDash(today),
-//    }));
-//  }
-//}, []);
+  //useEffect(() => {
+  // if (formValues) {
+  //    setFormValues((formValues: any) => ({
+  //      ...formValues,
+  //      [props.name]: noDash(today),
+  //    }));
+  //  }
+  //}, []);
 
   return (
     <div className={className}>

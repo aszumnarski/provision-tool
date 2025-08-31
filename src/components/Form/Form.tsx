@@ -59,11 +59,13 @@ export function Form({ rows }: IForm) {
   const initializeValues = async () => {
     const res = await getData(`${url}&${query}=${init}`);
     setUserCompanyCodes(res.config.companyCodes);
-    setFormValues({
+    const initialState = {
       ...createFormState(rows, "initValue"),
       user: res.data.user,
       appCreator: res.data.user,
-    });
+    };
+    await setFormValues(initialState);
+    console.log({ initialState });
     setPatterns(createFormState(rows, "patterns"));
   };
 
@@ -94,7 +96,7 @@ export function Form({ rows }: IForm) {
   const onSubmit: FormEventHandler<HTMLFormElement> = (e) => {
     e.preventDefault();
   };
-  return formValues?(
+  return formValues ? (
     <form onSubmit={onSubmit} className="form">
       <div className="row-wrapper">
         {rows.map((r, i) => (
@@ -113,5 +115,7 @@ export function Form({ rows }: IForm) {
         </>
       )}
     </form>
-  ):"";
+  ) : (
+    ""
+  );
 }
