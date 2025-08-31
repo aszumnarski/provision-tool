@@ -138,7 +138,7 @@ export const Field = (props: IField) => {
             (field) =>
               formValues[field] !== "" &&
               formValues[field] !== null &&
-              formValues[field] !== "0"
+              formValues[field] !== "0",
           );
       },
     };
@@ -153,9 +153,9 @@ export const Field = (props: IField) => {
   const validateField = (patterns: IPattern[], value?: string | boolean) => {
     if (typeof value !== "string") return undefined;
     const messages = patterns
-      .map((p) => validatePattern(p.reg, value) && p.message)
+      ?.map((p) => validatePattern(p.reg, value) && p.message)
       .filter(Boolean);
-    return messages.length ? messages[0] : undefined;
+    return messages?.length ? messages[0] : undefined;
   };
 
   const onBlur = () => {
@@ -204,12 +204,12 @@ export const Field = (props: IField) => {
               .map(
                 (c) =>
                   c.is.includes(formValues[c.when]) ||
-                  c.is.includes(!!formValues[c.when])
+                  c.is.includes(!!formValues[c.when]),
               )
               .filter(Boolean).length === scenario.conditions.length &&
             (scenario.isFromValue
               ? valuedOptions(scenario.options)
-              : scenario.options)
+              : scenario.options),
         )
         .filter(Boolean)[0] || [];
     return result.length ? result : props.options || [];
@@ -227,7 +227,7 @@ export const Field = (props: IField) => {
     if (!props.calculatedValue?.month) return "";
     if (!props.calculatedValue?.date) return "";
     const newDate = new Date(
-      toDash(formValues[props.calculatedValue.date]) || today
+      toDash(formValues[props.calculatedValue.date]) || today,
     );
     const year = newDate.getFullYear();
     const month = newDate.getMonth() + props.calculatedValue.month;
@@ -251,9 +251,9 @@ export const Field = (props: IField) => {
             or.conditions
               .map(
                 (c) =>
-                  formValues[c.when] == c.is || !!formValues[c.when] == c.is
+                  formValues[c.when] == c.is || !!formValues[c.when] == c.is,
               )
-              .filter(Boolean).length === or.conditions.length
+              .filter(Boolean).length === or.conditions.length,
         )
         .filter(Boolean).length > 0
     : props.disabled;
@@ -262,7 +262,7 @@ export const Field = (props: IField) => {
     if (!props.dependantValue) return "";
 
     const match = props.dependantValue.find((or) =>
-      or.conditions.every((c) => c.is.includes(formValues[c.when]))
+      or.conditions.every((c) => c.is.includes(formValues[c.when])),
     );
 
     return match ? formValues[match.valueFrom] : formValues[props.name];
@@ -305,11 +305,17 @@ export const Field = (props: IField) => {
   };
 
   useEffect(() => {
-    setFormValues({
-      ...formValues,
-      [props.name]: value,
+    // setFormValues({
+    //   ...formValues,
+    //   [props.name]: value,
+    // });
+    setFormValues((prev: any) => {
+      return {
+        ...prev,
+        [props.name]: enhancedProps.value,
+      };
     });
-  }, [value]);
+  }, [value, enhancedProps.value]);
 
   useEffect(() => {
     window.addEventListener("validate", triggerValidate);
@@ -338,13 +344,5 @@ export const Field = (props: IField) => {
     date: DateInput,
     button: Button,
   };
-  useEffect(() => {
-    if (enhancedProps.value !== formValues[props.name]) {
-      setFormValues({
-        ...formValues,
-        [props.name]: enhancedProps.value,
-      });
-    }
-  });
   return props.type ? typeMap[props.type](enhancedProps) : "";
 };
