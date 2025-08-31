@@ -103,9 +103,7 @@ export const Field = (props: IField) => {
     const tokens = {
       required: () => !value,
       future: () =>
-        value &&
-        toDash(value)<
-          new Date().toISOString().substring(0, 10),
+        value && toDash(value) < new Date().toISOString().substring(0, 10),
       min: () => {
         const minimum = Number(pattern.split("_")[1]);
         return value && value?.length < minimum;
@@ -115,34 +113,29 @@ export const Field = (props: IField) => {
         return value && value?.length > maximum;
       },
       maxSize: () => {
-        //console.log("hi");
         const maximum = Number(pattern.split("_")[1]);
         return att ? Number(att.fileSize) / 1024 / 1024 > maximum : false;
-        //return att ? att.fileSize > maximum : false;
       },
       lt: () => {
         const fieldName = pattern.split("_")[1];
         const fieldValue = formValues[fieldName];
-        return (
-          value &&
-          toDash(value) <
-            toDash(fieldValue)
-        );
+        return value && toDash(value) < toDash(fieldValue);
       },
       gt: () => {
         const fieldName = pattern.split("_")[1];
         const fieldValue = formValues[fieldName];
-        return (
-          value &&
-          toDash(value) >
-            toDash(fieldValue)
-        );
+        return value && toDash(value) > toDash(fieldValue);
       },
       numberOnly: () => {
         return value && !/^\d+$/.test(value);
       },
       empty: () => {
-        return pattern.split("_")[1].split(",").some(field => formValues[field] !== "" && formValues[field] !== null);
+        return pattern
+          .split("_")[1]
+          .split(",")
+          .some(
+            (field) => formValues[field] !== "" && formValues[field] !== null,
+          );
       },
     };
     const patternFromToken =
@@ -207,12 +200,12 @@ export const Field = (props: IField) => {
               .map(
                 (c) =>
                   c.is.includes(formValues[c.when]) ||
-                  c.is.includes(!!formValues[c.when])
+                  c.is.includes(!!formValues[c.when]),
               )
               .filter(Boolean).length === scenario.conditions.length &&
             (scenario.isFromValue
               ? valuedOptions(scenario.options)
-              : scenario.options)
+              : scenario.options),
         )
         .filter(Boolean)[0] || [];
     return result.length ? result : props.options || [];
@@ -230,7 +223,7 @@ export const Field = (props: IField) => {
     if (!props.calculatedValue?.month) return "";
     if (!props.calculatedValue?.date) return "";
     const newDate = new Date(
-      toDash(formValues[props.calculatedValue.date]) || today
+      toDash(formValues[props.calculatedValue.date]) || today,
     );
     newDate.setMonth(newDate.getMonth() + props.calculatedValue.month);
     return newDate.toLocaleString("en-US", { month: "2-digit" });
@@ -250,9 +243,9 @@ export const Field = (props: IField) => {
             or.conditions
               .map(
                 (c) =>
-                  formValues[c.when] == c.is || !!formValues[c.when] == c.is
+                  formValues[c.when] == c.is || !!formValues[c.when] == c.is,
               )
-              .filter(Boolean).length === or.conditions.length
+              .filter(Boolean).length === or.conditions.length,
         )
         .filter(Boolean).length > 0
     : props.disabled;
@@ -261,7 +254,7 @@ export const Field = (props: IField) => {
     if (!props.dependantValue) return "";
 
     const match = props.dependantValue.find((or) =>
-      or.conditions.every((c) => c.is.includes(formValues[c.when]))
+      or.conditions.every((c) => c.is.includes(formValues[c.when])),
     );
 
     return match ? formValues[match.valueFrom] : formValues[props.name];

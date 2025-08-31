@@ -127,7 +127,7 @@ export const costCenter: IField = {
   type: "text",
   patterns: [
     h.required(
-      "This field is required when WBS Element or Sales Document or Sales Document Item are empty"
+      "This field is required when WBS Element or Sales Document or Sales Document Item are empty",
     ),
   ],
   conditionalDisabled: [
@@ -321,7 +321,7 @@ export const wbs: IField = {
   type: "text",
   patterns: [
     h.required(
-      "This field is required when Cost Center or Sales Document or Sales Document Item are empty"
+      "This field is required when Cost Center or Sales Document or Sales Document Item are empty",
     ),
   ],
   conditionalDisabled: [
@@ -515,7 +515,7 @@ export const salesDocument: IField = {
   type: "text",
   patterns: [
     h.required(
-      "This field is required when Cost Center or WBS Element are empty"
+      "This field is required when Cost Center or WBS Element are empty",
     ),
   ],
   conditionalDisabled: [
@@ -701,7 +701,7 @@ export const salesDocumentItem: IField = {
   type: "text",
   patterns: [
     h.required(
-      "This field is required when Cost Center or WBS Element are empty"
+      "This field is required when Cost Center or WBS Element are empty",
     ),
   ],
   conditionalDisabled: [
@@ -1073,7 +1073,7 @@ export const _2lReleaseUpdate: IField = {
   type: "number",
   patterns: [
     h.required("Not a proper number!"),
-    h.empty("2lUsageUpdate,2lCreationAdditionUpdate","LOCAL GAAP"),
+    h.empty("2lUsageUpdate,2lCreationAdditionUpdate", "LOCAL GAAP"),
   ],
   conditionalDisabled: [
     ...h.inGetState,
@@ -1148,7 +1148,7 @@ export const _2lUsageUpdate: IField = {
   type: "number",
   patterns: [
     h.required("Not a proper number!"),
-    h.empty("2lCreationAdditionUpdate,2lReleaseUpdate","LOCAL GAAP"),
+    h.empty("2lCreationAdditionUpdate,2lReleaseUpdate", "LOCAL GAAP"),
   ],
   conditionalDisabled: [
     ...h.inGetState,
@@ -1230,7 +1230,7 @@ export const _2lCreationAdditionUpdate: IField = {
   type: "number",
   patterns: [
     h.required("Not a proper number!"),
-    h.empty("2lUsageUpdate,2lReleaseUpdate","LOCAL GAAP"),
+    h.empty("2lUsageUpdate,2lReleaseUpdate", "LOCAL GAAP"),
   ],
   conditionalDisabled: [
     ...h.inGetState,
@@ -1343,7 +1343,7 @@ export const _0lReleaseUpdate: IField = {
   type: "number",
   patterns: [
     h.required("Not a proper number!"),
-    h.empty("0lUsageUpdate,0lCreationAdditionUpdate","IFRS"),
+    h.empty("0lUsageUpdate,0lCreationAdditionUpdate", "IFRS"),
   ],
   conditionalDisabled: [
     ...h.inGetState,
@@ -1403,7 +1403,7 @@ export const _0lUsageUpdate: IField = {
   type: "number",
   patterns: [
     h.required("Not a proper number!"),
-    h.empty("0lCreationAdditionUpdate,0lReleaseUpdate","IFRS"),
+    h.empty("0lCreationAdditionUpdate,0lReleaseUpdate", "IFRS"),
   ],
   conditionalDisabled: [
     ...h.inGetState,
@@ -1463,7 +1463,7 @@ export const _0lCreationAdditionUpdate: IField = {
   type: "number",
   patterns: [
     h.required("Not a proper number!"),
-    h.empty("0lUsageUpdate,0lReleaseUpdate","IFRS"),
+    h.empty("0lUsageUpdate,0lReleaseUpdate", "IFRS"),
   ],
   conditionalDisabled: [
     ...h.inGetState,
@@ -1588,7 +1588,12 @@ export const localCurrency: IField = {
   disabled: true,
   dependentOptions: [
     {
-      conditions: [{ when: "companyCode", is: ["de10", "nl10","be10","lx10","pt10","gr10"] }],
+      conditions: [
+        {
+          when: "companyCode",
+          is: ["de10", "nl10", "be10", "lx10", "pt10", "gr10"],
+        },
+      ],
       options: [{ label: "EUR", value: "EUR" }],
     },
     {

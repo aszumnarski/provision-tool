@@ -52,7 +52,7 @@ export const Button = (props: IField) => {
         } successfully.`,
         type: "success",
       };
-      setModalContent(content)
+      setModalContent(content);
       resetForm();
     }
   };
@@ -103,7 +103,6 @@ export const Button = (props: IField) => {
       return { ...formValues, user: res.data.user, appCreator: res.data.user };
     });
     setUserCompanyCodes(res.config.companyCodes);
-
   };
 
   const resetForm = () => {
@@ -116,7 +115,7 @@ export const Button = (props: IField) => {
   }, [formValues.mode]);
 
   useEffect(() => {
-    setTimeout(loadData, 100);
+    setTimeout(loadData, 400);
   }, []);
 
   useEffect(() => {
@@ -169,7 +168,7 @@ export const Button = (props: IField) => {
     setLoading(true);
     var formData = new FormData();
     formData.append("json", JSON.stringify(body));
-    if(att) formData.append(att.fileName, att.fileData);
+    if (att) formData.append(att.fileName, att.fileData);
     try {
       const response = await fetch(url, {
         method: "POST",

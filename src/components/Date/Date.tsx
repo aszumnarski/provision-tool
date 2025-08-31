@@ -48,8 +48,6 @@ export const DateInput = (props: IField) => {
   //  }, 20);
   //}, []);
 
-  
-
   useEffect(() => {
     if (!formValues[props.name]) {
       setFormValues((prev: any) => ({
@@ -58,24 +56,15 @@ export const DateInput = (props: IField) => {
       }));
     }
   }, [formValues, props.name, setFormValues]);
-  
 
-
- //useEffect(() => {
- // if (formValues) {
-//    setFormValues((formValues: any) => ({
-//      ...formValues,
-//      [props.name]: noDash(today),
-//    }));
-//  }
-//}, []);
-
-
-useEffect(() => {
-  console.log("DateInput mounted with value:", props.value);
-}, []);
-
-
+  //useEffect(() => {
+  // if (formValues) {
+  //    setFormValues((formValues: any) => ({
+  //      ...formValues,
+  //      [props.name]: noDash(today),
+  //    }));
+  //  }
+  //}, []);
 
   return (
     <div className={className}>
