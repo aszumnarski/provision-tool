@@ -11,19 +11,6 @@ export const Select = (props: IField) => {
 
   const inputRef = useRef(null);
 
-  const triggerChange = () => {
-    const inputElement = inputRef.current;
-    const nativeInputValueSetter = Object.getOwnPropertyDescriptor(
-      window.HTMLInputElement.prototype,
-      "value",
-    ).set;
-
-    nativeInputValueSetter.call(inputElement, "New Value");
-
-    const event = new Event("input", { bubbles: true });
-    inputElement.dispatchEvent(event);
-  };
-
   const { formValues, setFormValues } = context;
   const className = `field ${props.error ? "field--error" : ""}`;
 
@@ -48,10 +35,9 @@ export const Select = (props: IField) => {
   });
 
   useEffect(() => {
-    if (!formValues[props.name] && props.type==="select") {
+    if (!formValues[props.name] && props.type === "select") {
       setFormValues({ [props.name]: val || "0" });
     }
-    // triggerChange();
   });
 
   return (
