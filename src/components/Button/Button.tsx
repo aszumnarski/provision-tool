@@ -128,7 +128,7 @@ export const Button = (props: IField) => {
   }, [formValues.mode]);
 
   useEffect(() => {
-    setTimeout(loadData, 100);
+    setTimeout(loadData, 400);
   }, []);
 
   useEffect(() => {
