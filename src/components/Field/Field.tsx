@@ -177,7 +177,12 @@ export const Field = (props: IField) => {
     }
     const val =
       props.type === "number" ? input.value.replace(/-/g, "") : input.value;
-    setFormValues({ ...formValues, [props.name]: val });
+    setFormValues((prev: any) => {
+      return {
+        ...prev,
+        [props.name]: val,
+      };
+    });
   };
 
   const options = (): IOption[] => {
@@ -305,17 +310,17 @@ export const Field = (props: IField) => {
   };
 
   useEffect(() => {
-    // setFormValues({
-    //   ...formValues,
-    //   [props.name]: value,
-    // });
-    setFormValues((prev: any) => {
-      return {
-        ...prev,
-        [props.name]: enhancedProps.value,
-      };
-    });
-  }, [value, enhancedProps.value]);
+    const fieldsNo = document.querySelectorAll(".field").length;
+    const formValNo = Object.keys(formValues).length;
+    if (formValNo === fieldsNo) {
+      setFormValues((prev: any) => {
+        return {
+          ...prev,
+          [props.name]: value,
+        };
+      });
+    }
+  }, [value, JSON.stringify(formValues)]);
 
   useEffect(() => {
     window.addEventListener("validate", triggerValidate);
