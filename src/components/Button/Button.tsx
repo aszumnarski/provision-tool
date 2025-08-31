@@ -43,7 +43,6 @@ export const Button = (props: IField) => {
     return JSON.parse(JSON.stringify(formErrors));
   }
   const post = async () => {
-    console.log("POST", { formValues });
     const res = await postData(url || "/protool", formValues);
     if (res.errors) {
       return setFormErrors(res.errors);
@@ -56,13 +55,11 @@ export const Button = (props: IField) => {
         type: "success",
       };
       setModalContent(content);
-      console.log("calling reset");
       resetForm();
     }
   };
   useEffect(() => {
     if (shouldValidate && formValues) {
-      console.log("shouldvalidate", formValues);
       if (!Object.keys(errors()).length) {
         post();
       }
@@ -71,7 +68,7 @@ export const Button = (props: IField) => {
         setShouldValidate(false);
       }, 500);
     }
-  }, [shouldValidate, formValues]);
+  }, [shouldValidate]);
 
   const handleGet: MouseEventHandler<HTMLButtonElement> = async (e) => {
     e.preventDefault();
@@ -114,7 +111,6 @@ export const Button = (props: IField) => {
   };
 
   const resetForm = () => {
-    console.log({ defaultValues });
     setFormValues(defaultValues);
     setFormErrors({});
   };
@@ -130,14 +126,12 @@ export const Button = (props: IField) => {
   }, [isAppInited]);
 
   useEffect(() => {
-    if (user && formValues  && !defaultValues) {
-      console.log({ user, formValues });
+    if (user && formValues && !defaultValues) {
       setDefaultValues(() => {
         return { ...formValues, user, appCreator: user };
       });
     }
   }, [user, formValues, formValues?.user]);
-
 
   const states = {
     CREATE: { label: "CREATE", onClick: handlePost },
@@ -183,7 +177,6 @@ export const Button = (props: IField) => {
   async function postData(url: string, body: Record<string, any>) {
     setLoading(true);
     var formData = new FormData();
-    console.log({ body, formValues });
     formData.append("json", JSON.stringify(body));
     if (att) formData.append(att.fileName, att.fileData);
     try {
@@ -195,7 +188,6 @@ export const Button = (props: IField) => {
         throw new Error(`Response status: ${response.status}`);
       }
       const data = await response.json();
-      console.log({ data });
       return data;
     } catch (error: any) {
       setModalContent({

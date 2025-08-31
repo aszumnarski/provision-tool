@@ -53,8 +53,7 @@ export function Form({ rows }: IForm) {
   const onSubmit: FormEventHandler<HTMLFormElement> = (e) => {
     e.preventDefault();
   };
-  console.log({ formValues });
-  return (
+  return formValues ? (
     <form onSubmit={onSubmit} className="form">
       <div className="row-wrapper">
         {rows.map((r, i) => (
@@ -72,5 +71,7 @@ export function Form({ rows }: IForm) {
       <hr />
       <pre>{JSON.stringify(patterns, null, 2)}</pre>
     </form>
+  ) : (
+    ""
   );
 }
