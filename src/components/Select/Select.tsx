@@ -25,7 +25,7 @@ export const Select = (props: IField) => {
   };
 
   const val =
-    props.value ?? (props.options?.length ? props.options[0].value : "0");
+    props.value || (props.options?.length ? props.options[0].value : "0");
 
   console.log("hh", {
     val,
@@ -35,8 +35,8 @@ export const Select = (props: IField) => {
   });
 
   useEffect(() => {
-    if (!formValues[props.name] && props.type === "select") {
-      setFormValues({ [props.name]: val });
+    if (formValues[props.name]===undefined && props.type === "select") {
+      setFormValues({ [props.name]: val || "0" });
     }
   });
 
