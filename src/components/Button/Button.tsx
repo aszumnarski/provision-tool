@@ -35,7 +35,7 @@ export const Button = (props: IField) => {
     dataset: { url: "/", query: "appno", init: "init" },
   };
 
-  const { url, query, init } = dataset;
+  const { url, query } = dataset;
 
   function errors() {
     return JSON.parse(JSON.stringify(formErrors));
@@ -118,14 +118,6 @@ export const Button = (props: IField) => {
     setShouldValidate(true);
   };
 
-  const loadData = async () => {
-    const res = await getData(`${url}&${query}=${init}`);
-    setFormValues((formValues: any) => {
-      return { ...formValues, user: res.data.user, appCreator: res.data.user };
-    });
-    setUserCompanyCodes(res.config.companyCodes);
-  };
-
   const resetForm = () => {
     setFormValues(defaultValues);
     setFormErrors({});
@@ -134,10 +126,6 @@ export const Button = (props: IField) => {
   useEffect(() => {
     if (formValues.mode === "create") resetForm();
   }, [formValues.mode]);
-
-  useEffect(() => {
-    setTimeout(loadData, 400);
-  }, []);
 
   useEffect(() => {
     if (formValues.user && !defaultValues) {
