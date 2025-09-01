@@ -26,7 +26,7 @@ function App() {
     const asyncFormValues = await useAsyncFormValues(values);
     const syncFormValues = useFormValues(values);
     //@ts-ignore
-    await _setFormValues(asyncFormValues);
+    await _setFormValues(syncFormValues);
     console.log({ values, asyncFormValues, syncFormValues });
   };
 
