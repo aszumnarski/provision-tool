@@ -8,10 +8,6 @@ export const DateInput = (props: IField) => {
   //@ts-ignore
   const { formValues, setFormValues, patterns } = useContext(FormContext);
   const className = `field ${props.error ? "field--error" : ""}`;
-  //const toDashed = (dottedDate?: string) =>
-  //  dottedDate ? dottedDate.split(".").reverse().join("-") : "";
-  //const toDotted = (dashedDate: string) =>
-  //  dashedDate ? dashedDate.split("-").reverse().join(".") : "";
   const noDash = (dashedDate?: string) =>
     dashedDate ? dashedDate.split("-").join("") : "";
   const toDash = (notDash?: string) =>
@@ -37,38 +33,13 @@ export const DateInput = (props: IField) => {
     });
   };
 
-  //useEffect(() => {
-  // setTimeout(() => {
-  //    setFormValues((formValues: any) => {
-  //      return {
-  //        ...formValues,
-  //        [props.name]: noDash(today),
-  //      };
-  //    });
-  //  }, 20);
-  //}, []);
-
-  
-
   useEffect(() => {
     if (!formValues[props.name]) {
-      setFormValues((prev: any) => ({
-        ...prev,
+      setFormValues({
         [props.name]: noDash(today),
-      }));
+      });
     }
-  }, [formValues, props.name, setFormValues]);
-  
-
-
- //useEffect(() => {
- // if (formValues) {
-//    setFormValues((formValues: any) => ({
-//      ...formValues,
-//      [props.name]: noDash(today),
-//    }));
-//  }
-//}, []);
+  }, [formValues, props.name]);
 
   return (
     <div className={className}>
