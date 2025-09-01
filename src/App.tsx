@@ -6,7 +6,7 @@ import { FormContext } from "./context";
 import { Loader } from "./components/Loader/Loader";
 import { Modal } from "./components/Modal/Modal";
 import type { IOption } from "./components/Field/Field";
-import { useAsyncFormValues } from "./utils/session-storage";
+import { useAsyncFormValues, useFormValues } from "./utils/session-storage";
 
 function App() {
   const [formValues, _setFormValues] = useState<Record<string, string> | {}>(
@@ -24,9 +24,10 @@ function App() {
 
   const setFormValues = async (values: any) => {
     const asyncFormValues = await useAsyncFormValues(values);
+    const syncFormValues = useFormValues(values);
     //@ts-ignore
     await _setFormValues(asyncFormValues);
-        console.log({values, asyncFormValues})
+    console.log({ values, asyncFormValues, syncFormValues });
   };
 
   const body = document.querySelector("body");
