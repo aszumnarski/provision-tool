@@ -65,7 +65,6 @@ export function Form({ rows }: IForm) {
       appCreator: res.data.user,
     };
     await setFormValues(initialState);
-    console.log({ initialState });
     setPatterns(createFormState(rows, "patterns"));
   };
 
