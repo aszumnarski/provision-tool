@@ -2810,27 +2810,30 @@ export const ledgerGroup: IField = {
         },
       ],
     },
-  ],
-  options: [
     {
-      label: "AL",
-      value: "al",
-    },
-    {
-      label: "0L",
-      value: "0l",
-    },
-    {
-      label: "2L",
-      value: "2l",
-    },
-    {
-      label: "IL",
-      value: "il",
-    },
-    {
-      label: "0L,LT",
-      value: "0l,lt",
+      conditions: [{ when: "companyCode", is: ["de10"] }],
+      options: [
+        {
+          label: "AL",
+          value: "al",
+        },
+        {
+          label: "0L",
+          value: "0l",
+        },
+        {
+          label: "2L",
+          value: "2l",
+        },
+        {
+          label: "IL",
+          value: "il",
+        },
+        {
+          label: "0L,LT",
+          value: "0l,lt",
+        },
+      ],
     },
   ],
 };
