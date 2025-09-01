@@ -138,7 +138,8 @@ export const Field = (props: IField) => {
             (field) =>
               formValues[field] !== "" &&
               formValues[field] !== null &&
-              formValues[field] !== "0"
+              formValues[field] !== "0" &&
+              formValues[field] !== 0,
           );
       },
     };
