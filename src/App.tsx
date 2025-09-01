@@ -13,7 +13,7 @@ function App() {
   const [patterns, setPatterns] = useState<Record<string, string> | {}>({});
   const [att, setAtt] = useState<Record<string, string> | {}>({});
   const [userCompanyCodes, setUserCompanyCodes] = useState<IOption[]>([]);
-  const [isLoading, setLoading] = useState(false);
+  const [isLoading, setLoading] = useState(true);
   const [modalContent, setModalContent] = useState<Record<
     string,
     string

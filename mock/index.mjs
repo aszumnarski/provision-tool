@@ -4,16 +4,78 @@ import fs from "fs";
 import cors from "cors";
 const data = () => {
   return {
-    init: { data: getUser(), config:{
-
-      "companyCodes": [
-        { "label": "DE10", "value": "de10" },
-        { "label": "PWN10", "value": "pl10" }
-      ]
-    }},
+    init: {
+      data: getUser(),
+      config: {
+        companyCodes: [
+          { label: "DE10", value: "de10" },
+          { label: "PWN10", value: "pl10" },
+        ],
+      },
+    },
   };
 };
 const DELAY_IN_SECONDS = 0;
+const RESPONSE_WITH_STATUS = {
+  data: {
+    status: "waiting for approval!",
+    mode: "modify",
+    appNumberImport: "",
+    submitButton: "",
+    companyCode: "de10",
+    provisionType: "c83",
+    subType: "y09",
+    ledgerGroup: "al",
+    glDebitAccount: "60900009",
+    glCreditAccount: "38610000",
+    appStartDate: "20250831",
+    appEndDate: "20250831",
+    costCenter: "pupa",
+    wbs: "",
+    salesDocument: "",
+    salesDocumentItem: "",
+    postingDate: "20250831",
+    postingPeriod: "11",
+    documentDate: "20250831",
+    localCurrency: "EUR",
+    appNumber: "666",
+    description1: "pupka",
+    description2: "",
+    appCreator: "123456",
+    appCreationDate: "20250831",
+    changedOn: "20250831",
+    appNumberOld: "",
+    user: "123456",
+    "0lCarryFwd": "",
+    "0lCreationAddition": "",
+    "0lCreationAdditionUpdate": "12334",
+    "0lUsage": "",
+    "0lUsageUpdate": "",
+    "0lRelease": "",
+    "0lReleaseUpdate": "",
+    "0lClosingBalance": "",
+    "0lClosingBalanceUpdate": "12334",
+    "2lCarryFwd": "",
+    "2lCreationAddition": "",
+    "2lCreationAdditionUpdate": "12334",
+    "2lUsage": "",
+    "2lUsageUpdate": "",
+    "2lRelease": "",
+    "2lReleaseUpdate": "",
+    "2lClosingBalance": "",
+    "2lClosingBalanceUpdate": "12334",
+    tlCarryFwd: "",
+    tlCreationAddition: "",
+    tlCreationAdditionUpdate: "12334",
+    tlUsage: "",
+    tlUsageUpdate: "",
+    tlRelease: "",
+    tlReleaseUpdate: "",
+    tlClosingBalance: "",
+    tlClosingBalanceUpdate: "12334",
+    attachment: "",
+  },
+};
 const app = express();
 const port = 6060;
 app.use(cors());
@@ -28,6 +90,8 @@ app.get("/protool", (req, res) => {
   if (!appno) return res.json({ errors: { error: "Wrong query string!" } });
 
   if (appno === "init") return res.json(data()[appno]);
+
+  if (appno === "666") return res.json(RESPONSE_WITH_STATUS);
 
   const record = getRecordFor(appno);
   const response = record

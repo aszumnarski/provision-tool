@@ -70,7 +70,7 @@ export const Button = (props: IField) => {
 
   const handleGet = async (
     e: React.MouseEvent<HTMLButtonElement>,
-    appNumberOverride?: string
+    appNumberOverride?: string,
   ) => {
     e.preventDefault();
 
@@ -82,6 +82,14 @@ export const Button = (props: IField) => {
         return { ...formValues, ...res.data };
       });
       setFormErrors({});
+      if (res.data.status) {
+        const content = {
+          message: `Application <strong>${res.data.appNumber}</strong> is ${res.data.status}`,
+          type: "info",
+        };
+        setModalContent(content);
+        resetForm();
+      }
     } else {
       setFormErrors((formErrors: any) => {
         return { ...formErrors, ...res.errors };
@@ -128,7 +136,7 @@ export const Button = (props: IField) => {
   }, [formValues.mode]);
 
   useEffect(() => {
-    setTimeout(loadData, 100);
+    setTimeout(loadData, 400);
   }, []);
 
   useEffect(() => {
