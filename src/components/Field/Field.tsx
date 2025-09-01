@@ -275,8 +275,8 @@ export const Field = (props: IField) => {
     if (props.dependantValue) return copyValue();
     if (sum) return sum;
 
-    if (props.type === "select" && options().length) return options()[0].value;
     if (formValues[props.name]) return formValues[props.name];
+    if (props.type === "select" && options().length) return options()[0].value;
 
     return "";
   };
@@ -305,19 +305,6 @@ export const Field = (props: IField) => {
     setShouldValidate(true);
     setTimeout(() => setShouldValidate(false), 1000);
   };
-
-  useEffect(() => {
-    const fieldsNo = document.querySelectorAll(".field").length;
-    const formValNo = Object.keys(formValues).length;
-    const updateVals = async () => {
-      await setFormValues({
-        [props.name]: value,
-      });
-    };
-    if (formValNo === fieldsNo) {
-      updateVals();
-    }
-  }, [value]);
 
   const opts = options();
   useEffect(() => {
