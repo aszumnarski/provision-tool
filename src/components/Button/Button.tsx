@@ -183,7 +183,11 @@ export const Button = (props: IField) => {
     setLoading(true);
     var formData = new FormData();
     formData.append("json", JSON.stringify(body));
-    if (att) formData.append(att.fileName, att.fileData);
+    if (att && Array.isArray(att)){
+      att.forEach((file) => {
+        formData.append(file.fileData,file.fileName);
+      });
+    }
     try {
       const response = await fetch(url, {
         method: "POST",

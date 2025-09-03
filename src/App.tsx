@@ -5,7 +5,7 @@ import { Form } from "./components/Form/Form";
 import { FormContext } from "./context";
 import { Loader } from "./components/Loader/Loader";
 import { Modal } from "./components/Modal/Modal";
-import type { IOption } from "./components/Field/Field";
+import type { IOption, TAttachment } from "./components/Field/Field";
 import { useFormValues } from "./utils/session-storage";
 
 function App() {
@@ -14,7 +14,7 @@ function App() {
   );
   const [formErrors, setFormErrors] = useState<Record<string, string> | {}>({});
   const [patterns, setPatterns] = useState<Record<string, string> | {}>({});
-  const [att, setAtt] = useState<Record<string, string> | {}>({});
+  const [att, setAtt] = useState<TAttachment[] | null>(null);
   const [userCompanyCodes, setUserCompanyCodes] = useState<IOption[]>([]);
   const [isLoading, setLoading] = useState(true);
   const [modalContent, setModalContent] = useState<Record<

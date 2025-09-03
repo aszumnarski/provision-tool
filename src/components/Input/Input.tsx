@@ -24,14 +24,15 @@ export const Input = (props: IField) => {
         <input
           type={props.type}
           className="field-input"
-          accept=".xlsx,.pdf"
+          accept={props.type === 'file' ? ".xlsx,.pdf" : undefined}
           name={props.name}
           onChange={props.onChange}
           disabled={props.disabled}
           onBlur={props.onBlur}
           onKeyDown={handleKeyDown}
-          maxLength={Number(props.maxlength) || undefined}
-          value={props.value || ""}
+          maxLength={props.type !== 'file' ? Number(props.maxlength) || undefined : undefined}
+          {...(props.type !== 'file' ? { value: props.value || "" } : {})}
+          multiple={props.type === 'file'}
         />
       </label>
       <p className="error-message">{props.error}</p>
