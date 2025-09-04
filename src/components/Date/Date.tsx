@@ -3,6 +3,7 @@ import { useContext, useEffect } from "react";
 import { FormContext } from "../../context";
 import { type IField, type IPattern } from "../Field/Field";
 import type { ChangeEvent } from "react";
+import { preventEnterSubmit } from '../../utils/keyboard-utils';
 import { toDash } from "../../utils/validation";
 
 export const DateInput = (props: IField) => {
@@ -44,6 +45,7 @@ export const DateInput = (props: IField) => {
           name={props.name}
           onChange={handleChange}
           onBlur={props.onBlur}
+          onKeyDown={preventEnterSubmit}
           value={toDash(props.value) || today}
           min={min}
           disabled={props.disabled}
