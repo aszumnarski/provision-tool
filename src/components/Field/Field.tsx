@@ -9,6 +9,12 @@ import { Input } from "../Input/Input";
 import { DateInput } from "../Date/Date";
 import { Button } from "../Button/Button";
 
+export type TAttachment = {
+  fileName: string;
+  fileData: File;
+  fileSize: number;
+};
+
 export interface IField {
   name: string;
   type: "text" | "select" | "number" | "date" | "button" | "file";
@@ -97,7 +103,7 @@ export const Field = (props: IField) => {
     validate({
       patterns,
       disabled,
-      name:props.name,
+      name: props.name,
       setFormErrors,
       formValues,
       att,
@@ -108,14 +114,30 @@ export const Field = (props: IField) => {
 
   const onChange = async (e: ChangeEvent) => {
     const input = e.target as HTMLInputElement;
-    if (input.files && input.files[0]) {
-      setAtt({
-        fileName: input.files[0].name,
-        fileData: input.files[0],
-        fileSize: input.files[0].size,
+    if (input.files && input.files.length > 0) {
+      const files = Array.from(input.files);
+
+      const attachments: TAttachment[] = files.map(
+        (file: File): TAttachment => ({
+          fileName: file.name,
+          fileData: file,
+          fileSize: file.size,
+        }),
+      );
+
+      setAtt(attachments);
+
+      await setFormValues({
+        [props.name]: attachments.map((att) => att.fileName).join(", "),
       });
     } else {
       setAtt(null);
+
+      const val =
+        props.type === "number" ? input.value.replace(/-/g, "") : input.value;
+      await setFormValues({
+        [props.name]: val,
+      });
     }
     const val =
       props.type === "number" ? input.value.replace(/-/g, "") : input.value;
@@ -274,7 +296,7 @@ export const Field = (props: IField) => {
       validate({
         patterns,
         disabled,
-        name:props.name,
+        name: props.name,
         setFormErrors,
         formValues,
         att,
@@ -287,7 +309,7 @@ export const Field = (props: IField) => {
       validate({
         patterns,
         disabled,
-        name:props.name,
+        name: props.name,
         setFormErrors,
         formValues,
         att,

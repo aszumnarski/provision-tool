@@ -1,4 +1,4 @@
-import type { IPattern } from "../components/Field/Field";
+import type { TAttachment, IPattern } from "../components/Field/Field";
 
 export interface IValidatePattern {
   pattern: string;
@@ -6,7 +6,6 @@ export interface IValidatePattern {
   formValues: any;
   att: any;
 }
-
 
 export interface IValidateAll {
   patterns: Record<string, IPattern[]>;
@@ -58,9 +57,17 @@ function validatePattern({
       return value && value?.length > maximum;
     },
     maxSize: () => {
+      if (!Array.isArray(att)) return false;
       const maximum = Number(pattern.split("_")[1]);
-      return att ? Number(att.fileSize) / 1024 / 1024 > maximum : false;
-      //return att ? att.fileSize > maximum : false;
+      return att
+        ? Number(
+            att.reduce(
+              (sum: number, file: TAttachment) => sum + file.fileSize,
+              0,
+            ) /
+              (1024 * 1024),
+          ) > maximum
+        : false;
     },
     lt: () => {
       const fieldName = pattern.split("_")[1];
@@ -128,17 +135,11 @@ export const validate = ({
   return result;
 };
 
-
-
 export const validateAll = ({
-patterns,
-    setFormErrors,
-    formValues,
-    att
-
-}:IValidateAll) => {
-    const enabledFields = document.querySelectorAll(".field[disabled]")
-
-}
-
-
+  patterns,
+  setFormErrors,
+  formValues,
+  att,
+}: IValidateAll) => {
+  const enabledFields = document.querySelectorAll(".field[disabled]");
+};
