@@ -3,6 +3,7 @@ import { useContext, useEffect, useState } from "react";
 import { FormContext } from "../../context";
 import { type IField } from "../Field/Field";
 import type { MouseEventHandler } from "react";
+import { validateAll } from "../../utils/validation";
 
 export const Button = (props: IField) => {
   //@ts-ignore
@@ -110,7 +111,12 @@ export const Button = (props: IField) => {
 
   const handlePost: MouseEventHandler<HTMLButtonElement> = async (e) => {
     e.preventDefault();
-
+    validateAll({
+      patterns,
+      setFormErrors,
+      formValues,
+      att,
+    });
     window.dispatchEvent(new Event("validate"));
     await fetchErrors();
     setShouldValidate(true);
@@ -183,9 +189,9 @@ export const Button = (props: IField) => {
     setLoading(true);
     var formData = new FormData();
     formData.append("json", JSON.stringify(body));
-    if (att && Array.isArray(att)){
+    if (att && Array.isArray(att)) {
       att.forEach((file) => {
-        formData.append(file.fileData,file.fileName);
+        formData.append(file.fileData, file.fileName);
       });
     }
     try {

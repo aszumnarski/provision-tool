@@ -17,7 +17,7 @@ export interface IValidateAll {
 export interface IValidate {
   patterns: Record<string, IPattern[]>;
   name: string;
-  disabled: boolean;
+  disabled?: boolean;
   setFormErrors: any;
   formValues: any;
   att: any;
@@ -141,5 +141,22 @@ export const validateAll = ({
   formValues,
   att,
 }: IValidateAll) => {
-  const enabledFields = document.querySelectorAll(".field[disabled]");
+  const enabledFields = document.querySelectorAll(
+    ".field:not(:has([disabled])) [name]",
+  );
+  const enabledFieldNames = (
+    Array.from(enabledFields) as HTMLInputElement[]
+  ).map((input) => input.name);
+
+  const validations = enabledFieldNames.map((name) =>
+    validate({ patterns, name, setFormErrors, formValues, att }),
+  );
+
+  const errorsLength = validations.filter(Boolean);
+
+  const allOk = !errorsLength;
+
+  console.log({ validations, allOk });
+
+  return allOk;
 };
