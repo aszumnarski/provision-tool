@@ -4,6 +4,7 @@ import { FormContext } from "../../context";
 import { type IField, type IPattern } from "../Field/Field";
 import type { ChangeEvent } from "react";
 import { preventEnterSubmit } from '../../utils/keyboard-utils';
+import { toDash } from "../../utils/validation";
 
 export const DateInput = (props: IField) => {
   //@ts-ignore
@@ -11,14 +12,6 @@ export const DateInput = (props: IField) => {
   const className = `field ${props.error ? "field--error" : ""}`;
   const noDash = (dashedDate?: string) =>
     dashedDate ? dashedDate.split("-").join("") : "";
-  const toDash = (notDash?: string) =>
-    notDash
-      ? notDash.substring(0, 4) +
-        "-" +
-        notDash.substring(4, 6) +
-        "-" +
-        notDash.substring(6, 8)
-      : "";
   const today = new Date().toISOString().substring(0, 10);
   const isFuture =
     patterns &&

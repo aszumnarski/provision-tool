@@ -2,6 +2,7 @@ import "./Field.css";
 
 import { useContext, useEffect } from "react";
 import { FormContext } from "../../context";
+import { toDash, validate } from "../../utils/validation";
 import { useState, type ChangeEvent } from "react";
 import { Select } from "../Select/Select";
 import { Input } from "../Input/Input";
@@ -91,76 +92,16 @@ export const Field = (props: IField) => {
     //@ts-ignore
     userCompanyCodes,
   } = useContext(FormContext);
-  const toDash = (notDash?: string) =>
-    notDash
-      ? notDash.substring(0, 4) +
-        "-" +
-        notDash.substring(4, 6) +
-        "-" +
-        notDash.substring(6, 8)
-      : "";
-  function validatePattern(pattern: string, value?: string) {
-    const tokens = {
-      required: () => !value,
-      future: () =>
-        value && toDash(value) < new Date().toISOString().substring(0, 10),
-      min: () => {
-        const minimum = Number(pattern.split("_")[1]);
-        return value && value?.length < minimum;
-      },
-      max: () => {
-        const maximum = Number(pattern.split("_")[1]);
-        return value && value?.length > maximum;
-      },
-      maxSize: () => {
-        const maximum = Number(pattern.split("_")[1]);
-        return att ? Number(att.fileSize) / 1024 / 1024 > maximum : false;
-        //return att ? att.fileSize > maximum : false;
-      },
-      lt: () => {
-        const fieldName = pattern.split("_")[1];
-        const fieldValue = formValues[fieldName];
-        return value && toDash(value) < toDash(fieldValue);
-      },
-      gt: () => {
-        const fieldName = pattern.split("_")[1];
-        const fieldValue = formValues[fieldName];
-        return value && toDash(value) > toDash(fieldValue);
-      },
-      numberOnly: () => {
-        return value && !/^\d+$/.test(value);
-      },
-      empty: () => {
-        return pattern
-          .split("_")[1]
-          .split(",")
-          .some(
-            (field) =>
-              formValues[field] !== "" &&
-              formValues[field] !== null &&
-              formValues[field] !== "0" &&
-              formValues[field] !== 0,
-          );
-      },
-    };
-    const patternFromToken =
-      tokens[pattern.split("_")[0] as keyof typeof tokens];
-    const regex = new RegExp(pattern);
-    return patternFromToken
-      ? patternFromToken()
-      : value && !regex.test(value || "");
-  }
-
-  const validateField = (patterns: IPattern[], value?: string | boolean) => {
-    if (typeof value !== "string") return undefined;
-    const messages = patterns
-      ?.map((p) => validatePattern(p.reg, value) && p.message)
-      .filter(Boolean);
-    return messages?.length ? messages[0] : undefined;
-  };
 
   const onBlur = () => {
-    validate();
+    validate({
+      patterns,
+      disabled,
+      name:props.name,
+      setFormErrors,
+      formValues,
+      att,
+    });
   };
 
   const [shouldValidate, setShouldValidate] = useState(false);
@@ -259,7 +200,7 @@ export const Field = (props: IField) => {
               .filter(Boolean).length === or.conditions.length,
         )
         .filter(Boolean).length > 0
-    : props.disabled;
+    : !!props.disabled;
 
   const copyValue = () => {
     if (!props.dependantValue) return "";
@@ -293,13 +234,6 @@ export const Field = (props: IField) => {
     disabled,
     options: options(),
     value,
-  };
-
-  const validate = async () => {
-    const errMsg = validateField(patterns[props.name], formValues[props.name]);
-    await setFormErrors((formErrors: any) => {
-      return { ...formErrors, [props.name]: disabled ? undefined : errMsg };
-    });
   };
 
   const triggerValidate = () => {
@@ -337,13 +271,27 @@ export const Field = (props: IField) => {
 
   useEffect(() => {
     if (disabled) {
-      validate();
+      validate({
+        patterns,
+        disabled,
+        name:props.name,
+        setFormErrors,
+        formValues,
+        att,
+      });
     }
   }, [disabled]);
 
   useEffect(() => {
     if (shouldValidate) {
-      validate();
+      validate({
+        patterns,
+        disabled,
+        name:props.name,
+        setFormErrors,
+        formValues,
+        att,
+      });
     }
   }, [shouldValidate]);
 
