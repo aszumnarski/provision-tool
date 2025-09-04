@@ -7,10 +7,54 @@ const data = () => {
     init: {
       data: getUser(),
       config: {
+        ledgerGroups: {
+          pl10: [
+              {
+                  label: "0L = IFRS",
+                  value: "0l"
+              },
+              {
+                  label: "2L = Local",
+                  value: "2l"
+              },
+              {
+                  label: "IL = IFRS + Local",
+                  value: "il"
+              }
+          ],
+          de10: [
+              {
+                  label: "AL = IFRS + Local + Tax",
+                  value: "al"
+              },
+              {
+                  label: "0L = IFRS",
+                  value: "0l"
+              },
+              {
+                  label: "2L = Local",
+                  value: "2l"
+              },
+              {
+                  label: "IL = IFRS + Local",
+                  value: "il"
+              },
+              {
+                  label: "0L, LT = Diff. values IFRS + Local/Tax",
+                  value: "0l,lt"
+              }
+          ]
+      },
         companyCodes: [
           { label: "DE10", value: "de10" },
           { label: "PWN10", value: "pl10" },
         ],
+
+        currencies: {
+          de10: "EUR",
+          pl10: "PLN"
+        }
+    
       },
     },
   };

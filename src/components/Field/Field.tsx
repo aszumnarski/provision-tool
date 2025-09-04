@@ -96,6 +96,10 @@ export const Field = (props: IField) => {
     att,
     //@ts-ignore
     userCompanyCodes,
+    //@ts-ignore
+    ledgerGroups,
+    //@ts-ignore
+    currencies,
   } = useContext(FormContext);
   const toDash = (notDash?: string) =>
     notDash
@@ -121,7 +125,15 @@ export const Field = (props: IField) => {
       maxSize: () => {
         if (!Array.isArray(att)) return false;
         const maximum = Number(pattern.split("_")[1]);
-        return att ? Number(att.reduce((sum:number, file:TAttachment) => sum + file.fileSize, 0) / (1024 * 1024)) > maximum : false;
+        return att
+          ? Number(
+              att.reduce(
+                (sum: number, file: TAttachment) => sum + file.fileSize,
+                0
+              ) /
+                (1024 * 1024)
+            ) > maximum
+          : false;
       },
       lt: () => {
         const fieldName = pattern.split("_")[1];
@@ -176,11 +188,13 @@ export const Field = (props: IField) => {
     if (input.files && input.files.length > 0) {
       const files = Array.from(input.files);
 
-      const attachments: TAttachment[] = files.map((file:File): TAttachment => ({
-        fileName: file.name,
-        fileData: file,
-        fileSize: file.size,
-      }));
+      const attachments: TAttachment[] = files.map(
+        (file: File): TAttachment => ({
+          fileName: file.name,
+          fileData: file,
+          fileSize: file.size,
+        })
+      );
 
       setAtt(attachments);
 
@@ -197,10 +211,29 @@ export const Field = (props: IField) => {
       });
     }
   };
-
   const options = (): IOption[] => {
     if (props.name === "companyCode" && userCompanyCodes.length) {
       return userCompanyCodes;
+    }
+
+    if (
+      props.name === "ledgerGroup" &&
+      formValues.companyCode &&
+      ledgerGroups
+    ) {
+      const selectedCode = formValues.companyCode;
+      const groupOptions = ledgerGroups[selectedCode];
+      return groupOptions?.length ? groupOptions : [{ label: "No options", value: "" }];
+    }
+
+    if (
+      props.name === "localCurrency" &&
+      formValues.companyCode &&
+      currencies
+    ) {
+      const selectedCode = formValues.companyCode;
+      const groupOptions = currencies[selectedCode];
+      return groupOptions?.length ? groupOptions : [{ label: "No options", value: "" }];
     }
 
     if (!props.dependentOptions) return props.options || [];

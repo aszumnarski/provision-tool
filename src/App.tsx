@@ -10,12 +10,16 @@ import { useFormValues } from "./utils/session-storage";
 
 function App() {
   const [formValues, _setFormValues] = useState<Record<string, string> | {}>(
-    {},
+    {}
   );
   const [formErrors, setFormErrors] = useState<Record<string, string> | {}>({});
   const [patterns, setPatterns] = useState<Record<string, string> | {}>({});
   const [att, setAtt] = useState<TAttachment[] | null>(null);
   const [userCompanyCodes, setUserCompanyCodes] = useState<IOption[]>([]);
+  const [ledgerGroups, setLedgerGroups] = useState<Record<string, IOption[]>>(
+    {}
+  );
+  const [currency, setCurrency] = useState<string>("");
   const [isLoading, setLoading] = useState(true);
   const [modalContent, setModalContent] = useState<Record<
     string,
@@ -47,6 +51,10 @@ function App() {
         setLoading,
         modalContent,
         setModalContent,
+        ledgerGroups,
+        setLedgerGroups,
+        currency,
+        setCurrency,
       }}
     >
       <div className="app" inert={isLoading || !!modalContent}>

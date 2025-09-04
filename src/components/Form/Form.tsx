@@ -34,6 +34,10 @@ export function Form({ rows }: IForm) {
     setLoading,
     //@ts-ignore
     setModalContent,
+    //@ts-ignore
+    setLedgerGroups,
+    //@ts-ignore
+    setCurrency,
   } = useContext(FormContext);
 
   async function getData(url: string) {
@@ -59,6 +63,8 @@ export function Form({ rows }: IForm) {
   const initializeValues = async () => {
     const res = await getData(`${url}&${query}=${init}`);
     setUserCompanyCodes(res.config.companyCodes);
+    setLedgerGroups(res.config.ledgerGroups);
+    setCurrency(res.config.currencies?.[res.config.companyCodes?.[0]?.value] || "");
     const initialState = {
       ...createFormState(rows, "initValue"),
       user: res.data.user,
