@@ -97,7 +97,7 @@ export const Field = (props: IField) => {
     validate({
       patterns,
       disabled,
-      name,
+      name:props.name,
       setFormErrors,
       formValues,
       att,
@@ -274,7 +274,7 @@ export const Field = (props: IField) => {
       validate({
         patterns,
         disabled,
-        name,
+        name:props.name,
         setFormErrors,
         formValues,
         att,
@@ -287,7 +287,7 @@ export const Field = (props: IField) => {
       validate({
         patterns,
         disabled,
-        name,
+        name:props.name,
         setFormErrors,
         formValues,
         att,
