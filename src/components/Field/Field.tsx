@@ -3,7 +3,7 @@ import "./Field.css";
 import { useContext, useEffect } from "react";
 import { FormContext } from "../../context";
 import { toDash, validate } from "../../utils/validation";
-import { useState, type ChangeEvent } from "react";
+import { type ChangeEvent } from "react";
 import { Select } from "../Select/Select";
 import { Input } from "../Input/Input";
 import { DateInput } from "../Date/Date";
@@ -109,8 +109,6 @@ export const Field = (props: IField) => {
       att,
     });
   };
-
-  const [shouldValidate, setShouldValidate] = useState(false);
 
   const onChange = async (e: ChangeEvent) => {
     const input = e.target as HTMLInputElement;
@@ -258,11 +256,6 @@ export const Field = (props: IField) => {
     value,
   };
 
-  const triggerValidate = () => {
-    setShouldValidate(true);
-    setTimeout(() => setShouldValidate(false), 1000);
-  };
-
   const opts = options();
   useEffect(() => {
     const currentValue = formValues?.[props.name];
@@ -285,13 +278,6 @@ export const Field = (props: IField) => {
   }, [opts]);
 
   useEffect(() => {
-    window.addEventListener("validate", triggerValidate);
-    return () => {
-      window.removeEventListener("validate", triggerValidate);
-    };
-  }, []);
-
-  useEffect(() => {
     if (disabled) {
       validate({
         patterns,
@@ -304,19 +290,6 @@ export const Field = (props: IField) => {
     }
   }, [disabled]);
 
-  useEffect(() => {
-    if (shouldValidate) {
-      validate({
-        patterns,
-        disabled,
-        name: props.name,
-        setFormErrors,
-        formValues,
-        att,
-      });
-    }
-  }, [shouldValidate]);
-
   const typeMap = {
     text: Input,
     number: Input,
@@ -325,6 +298,7 @@ export const Field = (props: IField) => {
     date: DateInput,
     button: Button,
   };
+
   useEffect(() => {
     if (enhancedProps.value !== formValues[props.name]) {
       setFormValues({

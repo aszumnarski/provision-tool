@@ -152,11 +152,9 @@ export const validateAll = ({
     validate({ patterns, name, setFormErrors, formValues, att }),
   );
 
-  const errorsLength = validations.filter(Boolean);
+  const errorsLength = validations.filter(Boolean).length;
 
   const allOk = !errorsLength;
-
-  console.log({ validations, allOk });
 
   return allOk;
 };

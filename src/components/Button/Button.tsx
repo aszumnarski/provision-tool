@@ -30,7 +30,6 @@ export const Button = (props: IField) => {
     setModalContent,
   } = useContext(FormContext);
   const className = `field ${props.error ? "field--error" : ""}`;
-  const [shouldValidate, setShouldValidate] = useState(false);
   const [defaultValues, setDefaultValues] = useState(null);
   const { dataset } = document.querySelector("body") || {
     dataset: { url: "/", query: "appno", init: "init" },
@@ -38,9 +37,6 @@ export const Button = (props: IField) => {
 
   const { url, query } = dataset;
 
-  function errors() {
-    return JSON.parse(JSON.stringify(formErrors));
-  }
   const post = async () => {
     const res = await postData(url || "/protool", formValues);
     if (res.errors) {
@@ -57,17 +53,6 @@ export const Button = (props: IField) => {
       await resetForm();
     }
   };
-  useEffect(() => {
-    if (shouldValidate) {
-      if (!Object.keys(errors()).length) {
-        post();
-      }
-
-      setTimeout(() => {
-        setShouldValidate(false);
-      }, 500);
-    }
-  }, [shouldValidate]);
 
   const handleGet = async (
     e: React.MouseEvent<HTMLButtonElement>,
@@ -95,13 +80,6 @@ export const Button = (props: IField) => {
       });
     }
   };
-  async function fetchErrors() {
-    return new Promise((resolve, _) => {
-      setTimeout(() => {
-        resolve(errors());
-      }, 200);
-    });
-  }
 
   const handleRefresh: MouseEventHandler<HTMLButtonElement> = async (e) => {
     e.preventDefault();
@@ -111,15 +89,16 @@ export const Button = (props: IField) => {
 
   const handlePost: MouseEventHandler<HTMLButtonElement> = async (e) => {
     e.preventDefault();
-    validateAll({
+    const isAllOk = validateAll({
       patterns,
       setFormErrors,
       formValues,
       att,
     });
-    window.dispatchEvent(new Event("validate"));
-    await fetchErrors();
-    setShouldValidate(true);
+
+    if (isAllOk) {
+      await post();
+    }
   };
 
   const resetForm = async () => {
