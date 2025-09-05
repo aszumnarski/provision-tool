@@ -58,10 +58,10 @@ export const subType: IField = {
       options: [
         pSubTypes.y09,
         pSubTypes.y09c,
-        pSubTypes.y091,
-        pSubTypes.y091c,
-        pSubTypes.y092,
-        pSubTypes.y092c,
+        pSubTypes.y097,
+        pSubTypes.y097c,
+        pSubTypes.y098,
+        pSubTypes.y098c,
         pSubTypes.aed,
         pSubTypes.ccc,
         pSubTypes.con,
@@ -127,7 +127,7 @@ export const costCenter: IField = {
   type: "text",
   patterns: [
     h.required(
-      "This field is required when WBS Element or Sales Document or Sales Document Item are empty"
+      "This field is required when WBS Element or Sales Document or Sales Document Item are empty",
     ),
   ],
   conditionalDisabled: [
@@ -321,7 +321,7 @@ export const wbs: IField = {
   type: "text",
   patterns: [
     h.required(
-      "This field is required when Cost Center or Sales Document or Sales Document Item are empty"
+      "This field is required when Cost Center or Sales Document or Sales Document Item are empty",
     ),
   ],
   conditionalDisabled: [
@@ -515,7 +515,7 @@ export const salesDocument: IField = {
   type: "text",
   patterns: [
     h.required(
-      "This field is required when Cost Center or WBS Element are empty"
+      "This field is required when Cost Center or WBS Element are empty",
     ),
   ],
   conditionalDisabled: [
@@ -701,7 +701,7 @@ export const salesDocumentItem: IField = {
   type: "text",
   patterns: [
     h.required(
-      "This field is required when Cost Center or WBS Element are empty"
+      "This field is required when Cost Center or WBS Element are empty",
     ),
   ],
   conditionalDisabled: [
@@ -1073,7 +1073,7 @@ export const _2lReleaseUpdate: IField = {
   type: "number",
   patterns: [
     h.required("Not a proper number!"),
-    h.empty("2lUsageUpdate,2lCreationAdditionUpdate","LOCAL GAAP"),
+    h.empty("2lUsageUpdate,2lCreationAdditionUpdate", "LOCAL GAAP"),
   ],
   conditionalDisabled: [
     ...h.inGetState,
@@ -1096,10 +1096,10 @@ export const _2lReleaseUpdate: IField = {
       conditions: [{ when: "subType", is: "y07c" }],
     },
     {
-      conditions: [{ when: "subType", is: "y091" }],
+      conditions: [{ when: "subType", is: "y097" }],
     },
     {
-      conditions: [{ when: "subType", is: "y091c" }],
+      conditions: [{ when: "subType", is: "y097c" }],
     },
     {
       conditions: [{ when: "subType", is: "y09" }],
@@ -1148,7 +1148,7 @@ export const _2lUsageUpdate: IField = {
   type: "number",
   patterns: [
     h.required("Not a proper number!"),
-    h.empty("2lCreationAdditionUpdate,2lReleaseUpdate","LOCAL GAAP"),
+    h.empty("2lCreationAdditionUpdate,2lReleaseUpdate", "LOCAL GAAP"),
   ],
   conditionalDisabled: [
     ...h.inGetState,
@@ -1180,10 +1180,10 @@ export const _2lUsageUpdate: IField = {
       conditions: [{ when: "subType", is: "y08c" }],
     },
     {
-      conditions: [{ when: "subType", is: "y092" }],
+      conditions: [{ when: "subType", is: "y098" }],
     },
     {
-      conditions: [{ when: "subType", is: "y092c" }],
+      conditions: [{ when: "subType", is: "y098c" }],
     },
     {
       conditions: [{ when: "subType", is: "aed" }],
@@ -1230,7 +1230,7 @@ export const _2lCreationAdditionUpdate: IField = {
   type: "number",
   patterns: [
     h.required("Not a proper number!"),
-    h.empty("2lUsageUpdate,2lReleaseUpdate","LOCAL GAAP"),
+    h.empty("2lUsageUpdate,2lReleaseUpdate", "LOCAL GAAP"),
   ],
   conditionalDisabled: [
     ...h.inGetState,
@@ -1253,10 +1253,10 @@ export const _2lCreationAdditionUpdate: IField = {
       conditions: [{ when: "subType", is: "y07c" }],
     },
     {
-      conditions: [{ when: "subType", is: "y091" }],
+      conditions: [{ when: "subType", is: "y097" }],
     },
     {
-      conditions: [{ when: "subType", is: "y091c" }],
+      conditions: [{ when: "subType", is: "y097c" }],
     },
     {
       conditions: [{ when: "subType", is: "y28" }],
@@ -1271,10 +1271,10 @@ export const _2lCreationAdditionUpdate: IField = {
       conditions: [{ when: "subType", is: "y08c" }],
     },
     {
-      conditions: [{ when: "subType", is: "y092" }],
+      conditions: [{ when: "subType", is: "y098" }],
     },
     {
-      conditions: [{ when: "subType", is: "y092c" }],
+      conditions: [{ when: "subType", is: "y098c" }],
     },
     {
       conditions: [{ when: "subType", is: "aed" }],
@@ -1343,7 +1343,7 @@ export const _0lReleaseUpdate: IField = {
   type: "number",
   patterns: [
     h.required("Not a proper number!"),
-    h.empty("0lUsageUpdate,0lCreationAdditionUpdate","IFRS"),
+    h.empty("0lUsageUpdate,0lCreationAdditionUpdate", "IFRS"),
   ],
   conditionalDisabled: [
     ...h.inGetState,
@@ -1366,10 +1366,10 @@ export const _0lReleaseUpdate: IField = {
       conditions: [{ when: "subType", is: "y07c" }],
     },
     {
-      conditions: [{ when: "subType", is: "y091" }],
+      conditions: [{ when: "subType", is: "y097" }],
     },
     {
-      conditions: [{ when: "subType", is: "y091c" }],
+      conditions: [{ when: "subType", is: "y097c" }],
     },
     {
       conditions: [{ when: "ledgerGroup", is: "2l" }],
@@ -1403,7 +1403,7 @@ export const _0lUsageUpdate: IField = {
   type: "number",
   patterns: [
     h.required("Not a proper number!"),
-    h.empty("0lCreationAdditionUpdate,0lReleaseUpdate","IFRS"),
+    h.empty("0lCreationAdditionUpdate,0lReleaseUpdate", "IFRS"),
   ],
   conditionalDisabled: [
     ...h.inGetState,
@@ -1429,10 +1429,10 @@ export const _0lUsageUpdate: IField = {
       conditions: [{ when: "subType", is: "y08c" }],
     },
     {
-      conditions: [{ when: "subType", is: "y092" }],
+      conditions: [{ when: "subType", is: "y098" }],
     },
     {
-      conditions: [{ when: "subType", is: "y092c" }],
+      conditions: [{ when: "subType", is: "y098c" }],
     },
     {
       conditions: [{ when: "subType", is: "aed" }],
@@ -1463,7 +1463,7 @@ export const _0lCreationAdditionUpdate: IField = {
   type: "number",
   patterns: [
     h.required("Not a proper number!"),
-    h.empty("0lUsageUpdate,0lReleaseUpdate","IFRS"),
+    h.empty("0lUsageUpdate,0lReleaseUpdate", "IFRS"),
   ],
   conditionalDisabled: [
     ...h.inGetState,
@@ -1483,10 +1483,10 @@ export const _0lCreationAdditionUpdate: IField = {
       conditions: [{ when: "subType", is: "y07c" }],
     },
     {
-      conditions: [{ when: "subType", is: "y091" }],
+      conditions: [{ when: "subType", is: "y097" }],
     },
     {
-      conditions: [{ when: "subType", is: "y091c" }],
+      conditions: [{ when: "subType", is: "y097c" }],
     },
     {
       conditions: [{ when: "subType", is: "y28" }],
@@ -1501,10 +1501,10 @@ export const _0lCreationAdditionUpdate: IField = {
       conditions: [{ when: "subType", is: "y08c" }],
     },
     {
-      conditions: [{ when: "subType", is: "y092" }],
+      conditions: [{ when: "subType", is: "y098" }],
     },
     {
-      conditions: [{ when: "subType", is: "y092c" }],
+      conditions: [{ when: "subType", is: "y098c" }],
     },
     {
       conditions: [{ when: "subType", is: "aed" }],
@@ -1588,7 +1588,12 @@ export const localCurrency: IField = {
   disabled: true,
   dependentOptions: [
     {
-      conditions: [{ when: "companyCode", is: ["de10", "nl10","be10","lx10","pt10","gr10"] }],
+      conditions: [
+        {
+          when: "companyCode",
+          is: ["de10", "nl10", "be10", "lx10", "pt10", "gr10"],
+        },
+      ],
       options: [{ label: "EUR", value: "EUR" }],
     },
     {
@@ -1711,6 +1716,18 @@ export const appEndDate: IField = {
         },
         {
           when: "subType",
+          is: "y098",
+        },
+      ],
+    },
+    {
+      conditions: [
+        {
+          when: "mode",
+          is: "modify",
+        },
+        {
+          when: "subType",
           is: "y09c",
         },
       ],
@@ -1816,30 +1833,31 @@ export const appStartDate: IField = {
 export const glCreditAccount: IField = {
   name: "glCreditAccount",
   label: "GL-Credit Account",
+  initValue: "",
   type: "select",
   disabled: true,
   dependentOptions: [
     {
       conditions: [
         { when: "provisionType", is: ["j55"] },
-        { when: "subType", is: ["y09", "y091c", "y092c"] },
+        { when: "subType", is: ["y09", "y097c", "y098c"] },
       ],
       options: [
         {
-          label: "24182000",
-          value: "24182000",
+          label: "24182100",
+          value: "24182100",
         },
       ],
     },
     {
       conditions: [
         { when: "provisionType", is: ["j51"] },
-        { when: "subType", is: ["y09", "y091c", "y092c"] },
+        { when: "subType", is: ["y09", "y097c", "y098c"] },
       ],
       options: [
         {
-          label: "24189000",
-          value: "24189000",
+          label: "24189100",
+          value: "24189100",
         },
       ],
     },
@@ -1881,7 +1899,19 @@ export const glCreditAccount: IField = {
     },
     {
       conditions: [
-        { when: "provisionType", is: ["o70", "o71"] },
+        { when: "provisionType", is: ["o70"] },
+        { when: "subType", is: ["y07c", "y08c", "y09", "y27c", "y28c"] },
+      ],
+      options: [
+        {
+          label: "38710000",
+          value: "38710000",
+        },
+      ],
+    },
+    {
+      conditions: [
+        { when: "provisionType", is: ["o71"] },
         { when: "subType", is: ["y07c", "y08c", "y09", "y27c", "y28c"] },
       ],
       options: [
@@ -1906,7 +1936,7 @@ export const glCreditAccount: IField = {
     {
       conditions: [
         { when: "provisionType", is: ["j55"] },
-        { when: "subType", is: ["y09c", "y091", "y092"] },
+        { when: "subType", is: ["y09c", "y097", "y098"] },
       ],
       options: [
         {
@@ -1918,7 +1948,7 @@ export const glCreditAccount: IField = {
     {
       conditions: [
         { when: "provisionType", is: ["j51"] },
-        { when: "subType", is: ["y09c", "y091", "y092"] },
+        { when: "subType", is: ["y09c", "y097", "y098"] },
       ],
       options: [
         {
@@ -1930,7 +1960,7 @@ export const glCreditAccount: IField = {
     {
       conditions: [
         { when: "provisionType", is: ["c83", "c84"] },
-        { when: "subType", is: ["y07"] },
+        { when: "subType", is: ["y07", "y27"] },
       ],
       options: [
         {
@@ -1942,7 +1972,7 @@ export const glCreditAccount: IField = {
     {
       conditions: [
         { when: "provisionType", is: ["c83", "c84"] },
-        { when: "subType", is: ["y08"] },
+        { when: "subType", is: ["y08", "y28"] },
       ],
       options: [
         {
@@ -1960,30 +1990,6 @@ export const glCreditAccount: IField = {
         {
           label: "60900009",
           value: "60900009",
-        },
-      ],
-    },
-    {
-      conditions: [
-        { when: "provisionType", is: ["c83", "c84"] },
-        { when: "subType", is: ["y27"] },
-      ],
-      options: [
-        {
-          label: "60900027",
-          value: "60900027",
-        },
-      ],
-    },
-    {
-      conditions: [
-        { when: "provisionType", is: ["c83", "c84"] },
-        { when: "subType", is: ["y28"] },
-      ],
-      options: [
-        {
-          label: "60900028",
-          value: "60900028",
         },
       ],
     },
@@ -2309,30 +2315,31 @@ export const glCreditAccount: IField = {
 export const glDebitAccount: IField = {
   name: "glDebitAccount",
   label: "GL-Debit Account",
+  initValue: "",
   type: "select",
   disabled: true,
   dependentOptions: [
     {
       conditions: [
         { when: "provisionType", is: ["j55"] },
-        { when: "subType", is: ["y09c", "y091", "y092"] },
+        { when: "subType", is: ["y09c", "y097", "y098"] },
       ],
       options: [
         {
-          label: "24182000",
-          value: "24182000",
+          label: "24182100",
+          value: "24182100",
         },
       ],
     },
     {
       conditions: [
         { when: "provisionType", is: ["j51"] },
-        { when: "subType", is: ["y09c", "y091", "y092"] },
+        { when: "subType", is: ["y09c", "y097", "y098"] },
       ],
       options: [
         {
-          label: "24189000",
-          value: "24189000",
+          label: "24189100",
+          value: "24189100",
         },
       ],
     },
@@ -2374,7 +2381,19 @@ export const glDebitAccount: IField = {
     },
     {
       conditions: [
-        { when: "provisionType", is: ["o70", "o71"] },
+        { when: "provisionType", is: ["o70"] },
+        { when: "subType", is: ["y07", "y08", "y09c", "y27", "y28"] },
+      ],
+      options: [
+        {
+          label: "38710000",
+          value: "38710000",
+        },
+      ],
+    },
+    {
+      conditions: [
+        { when: "provisionType", is: ["o71"] },
         { when: "subType", is: ["y07", "y08", "y09c", "y27", "y28"] },
       ],
       options: [
@@ -2399,7 +2418,7 @@ export const glDebitAccount: IField = {
     {
       conditions: [
         { when: "provisionType", is: ["j55"] },
-        { when: "subType", is: ["y09", "y091c", "y092c"] },
+        { when: "subType", is: ["y09", "y097c", "y098c"] },
       ],
       options: [
         {
@@ -2411,7 +2430,7 @@ export const glDebitAccount: IField = {
     {
       conditions: [
         { when: "provisionType", is: ["j51"] },
-        { when: "subType", is: ["y09", "y091c", "y092c"] },
+        { when: "subType", is: ["y09", "y097c", "y098c"] },
       ],
       options: [
         {
@@ -2423,7 +2442,7 @@ export const glDebitAccount: IField = {
     {
       conditions: [
         { when: "provisionType", is: ["c83", "c84"] },
-        { when: "subType", is: ["y07c"] },
+        { when: "subType", is: ["y07c", "y27c"] },
       ],
       options: [
         {
@@ -2435,7 +2454,7 @@ export const glDebitAccount: IField = {
     {
       conditions: [
         { when: "provisionType", is: ["c83", "c84"] },
-        { when: "subType", is: ["y08c"] },
+        { when: "subType", is: ["y08c", "y28c"] },
       ],
       options: [
         {
@@ -2453,30 +2472,6 @@ export const glDebitAccount: IField = {
         {
           label: "60900009",
           value: "60900009",
-        },
-      ],
-    },
-    {
-      conditions: [
-        { when: "provisionType", is: ["c83", "c84"] },
-        { when: "subType", is: ["y27c"] },
-      ],
-      options: [
-        {
-          label: "60900027",
-          value: "60900027",
-        },
-      ],
-    },
-    {
-      conditions: [
-        { when: "provisionType", is: ["c83", "c84"] },
-        { when: "subType", is: ["y28c"] },
-      ],
-      options: [
-        {
-          label: "60900028",
-          value: "60900028",
         },
       ],
     },
@@ -2809,40 +2804,43 @@ export const ledgerGroup: IField = {
       conditions: [{ when: "companyCode", is: ["pl10"] }],
       options: [
         {
-          label: "0L",
+          label: "0L = IFRS",
           value: "0l",
         },
         {
-          label: "2L",
+          label: "2L = Local",
           value: "2l",
         },
         {
-          label: "IL",
+          label: "IL = IFRS + Local",
           value: "il",
         },
       ],
     },
-  ],
-  options: [
     {
-      label: "AL",
-      value: "al",
-    },
-    {
-      label: "0L",
-      value: "0l",
-    },
-    {
-      label: "2L",
-      value: "2l",
-    },
-    {
-      label: "IL",
-      value: "il",
-    },
-    {
-      label: "0L,LT",
-      value: "0l,lt",
+      conditions: [{ when: "companyCode", is: ["de10"] }],
+      options: [
+        {
+          label: "AL = IFRS + Local + Tax",
+          value: "al",
+        },
+        {
+          label: "0L = IFRS",
+          value: "0l",
+        },
+        {
+          label: "2L = Local",
+          value: "2l",
+        },
+        {
+          label: "IL = IFRS + Local",
+          value: "il",
+        },
+        {
+          label: "0L, LT = Diff. values IFRS + Local/Tax",
+          value: "0l,lt",
+        },
+      ],
     },
   ],
 };
@@ -2852,23 +2850,6 @@ export const companyCode: IField = {
   label: "Company Code",
   type: "select",
   patterns: [h.required()],
-  options: [
-    {
-      label: "DE10",
-      value: "de10",
-    },
-    {
-      label: "PL10",
-      value: "pl10",
-    },
-    {
-      label: "UK10",
-      value: "uk10",
-    },
-    {
-      label: "NL10",
-      value: "nl10",
-    },
-  ],
+  initValue: "",
   conditionalDisabled: h.inModifyState,
 };

@@ -5,6 +5,11 @@ export const Modal = () => {
   //@ts-ignore
   const { modalContent, setModalContent } = useContext(FormContext);
 
+  const icons = {
+    success: <SuccessAnim />,
+    error: <ErrorAnim />,
+  };
+
   if (!modalContent) return "";
 
   const onClick = () => {
@@ -13,11 +18,7 @@ export const Modal = () => {
   return (
     <div className="modal__backdrop">
       <div className="modal">
-        {modalContent && modalContent.type === "error" ? (
-          <ErrorAnim />
-        ) : (
-          <SuccessAnim />
-        )}
+        {icons[modalContent.type as keyof typeof icons] || ""}
         <h2 dangerouslySetInnerHTML={{ __html: modalContent?.message }} />
         <button className="magic-btn" onClick={onClick}>
           OK

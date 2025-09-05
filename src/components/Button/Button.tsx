@@ -3,6 +3,7 @@ import { useContext, useEffect, useState } from "react";
 import { FormContext } from "../../context";
 import { type IField } from "../Field/Field";
 import type { MouseEventHandler } from "react";
+import { validateAll } from "../../utils/validation";
 
 export const Button = (props: IField) => {
   //@ts-ignore
@@ -29,17 +30,13 @@ export const Button = (props: IField) => {
     setModalContent,
   } = useContext(FormContext);
   const className = `field ${props.error ? "field--error" : ""}`;
-  const [shouldValidate, setShouldValidate] = useState(false);
   const [defaultValues, setDefaultValues] = useState(null);
   const { dataset } = document.querySelector("body") || {
     dataset: { url: "/", query: "appno", init: "init" },
   };
 
-  const { url, query, init } = dataset;
+  const { url, query } = dataset;
 
-  function errors() {
-    return JSON.parse(JSON.stringify(formErrors));
-  }
   const post = async () => {
     const res = await postData(url || "/protool", formValues);
     if (res.errors) {
@@ -52,72 +49,66 @@ export const Button = (props: IField) => {
         } successfully.`,
         type: "success",
       };
-      setModalContent(content)
-      resetForm();
+      setModalContent(content);
+      await resetForm();
     }
   };
-  useEffect(() => {
-    if (shouldValidate) {
-      if (!Object.keys(errors()).length) {
-        post();
-      }
 
-      setTimeout(() => {
-        setShouldValidate(false);
-      }, 500);
-    }
-  }, [shouldValidate]);
-  const handleGet: MouseEventHandler<HTMLButtonElement> = async (e) => {
+  const handleGet = async (
+    e: React.MouseEvent<HTMLButtonElement>,
+    appNumberOverride?: string,
+  ) => {
     e.preventDefault();
 
-    const res = await getData(`${url}&${query}=${formValues.appNumberImport}`);
+    const appNumber = appNumberOverride ?? formValues.appNumberImport;
+    const res = await getData(`${url}&${query}=${appNumber}`);
+
     if (res.data) {
-      setFormValues((formValues: any) => {
-        return { ...formValues, ...res.data };
-      });
+      await setFormValues({ ...res.data });
       setFormErrors({});
+      if (res.data.status) {
+        const content = {
+          message: `Application <strong>${res.data.appNumber}</strong> is ${res.data.status}`,
+          type: "info",
+        };
+        setModalContent(content);
+        await resetForm();
+      }
     } else {
       setFormErrors((formErrors: any) => {
         return { ...formErrors, ...res.errors };
       });
     }
   };
-  async function fetchErrors() {
-    return new Promise((resolve, _) => {
-      setTimeout(() => {
-        resolve(errors());
-      }, 200);
-    });
-  }
-  const handlePost: MouseEventHandler<HTMLButtonElement> = async (e) => {
+
+  const handleRefresh: MouseEventHandler<HTMLButtonElement> = async (e) => {
     e.preventDefault();
 
-    window.dispatchEvent(new Event("validate"));
-    await fetchErrors();
-    setShouldValidate(true);
+    handleGet(e, formValues.appNumber.split("-")[0]);
   };
 
-  const loadData = async () => {
-    const res = await getData(`${url}&${query}=${init}`);
-    setFormValues((formValues: any) => {
-      return { ...formValues, user: res.data.user, appCreator: res.data.user };
+  const handlePost: MouseEventHandler<HTMLButtonElement> = async (e) => {
+    e.preventDefault();
+    const isAllOk = validateAll({
+      patterns,
+      setFormErrors,
+      formValues,
+      att,
     });
-    setUserCompanyCodes(res.config.companyCodes);
 
+    if (isAllOk) {
+      await post();
+    }
   };
 
-  const resetForm = () => {
-    setFormValues(defaultValues);
+  const resetForm = async () => {
+    await setFormValues(defaultValues);
     setFormErrors({});
   };
 
   useEffect(() => {
     if (formValues.mode === "create") resetForm();
   }, [formValues.mode]);
-
-  useEffect(() => {
-    setTimeout(loadData, 100);
-  }, []);
 
   useEffect(() => {
     if (formValues.user && !defaultValues) {
@@ -129,6 +120,7 @@ export const Button = (props: IField) => {
     CREATE: { label: "CREATE", onClick: handlePost },
     UPDATE: { label: "UPDATE", onClick: handlePost },
     GET: { label: "GET", onClick: handleGet },
+    REFRESH: { label: "REFRESH", onClick: handleRefresh },
   };
 
   const getState = () => {
@@ -137,10 +129,17 @@ export const Button = (props: IField) => {
     if (
       formValues.mode === "modify" &&
       !formValues.appNumberImport &&
-      formValues.appNumber
+      formValues.appNumber &&
+      !formValues.appNumber.includes("-")
     )
       return states.UPDATE;
-
+    if (
+      formValues.mode === "modify" &&
+      !formValues.appNumberImport &&
+      formValues.appNumber &&
+      formValues.appNumber.includes("-")
+    )
+      return states.REFRESH;
     return states.GET;
   };
 
@@ -169,7 +168,11 @@ export const Button = (props: IField) => {
     setLoading(true);
     var formData = new FormData();
     formData.append("json", JSON.stringify(body));
-    if(att) formData.append(att.fileName, att.fileData);
+    if (att && Array.isArray(att)) {
+      att.forEach((file) => {
+        formData.append(file.fileData, file.fileName);
+      });
+    }
     try {
       const response = await fetch(url, {
         method: "POST",
