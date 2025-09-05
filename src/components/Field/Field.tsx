@@ -3,11 +3,17 @@ import "./Field.css";
 import { useContext, useEffect } from "react";
 import { FormContext } from "../../context";
 import { toDash, validate } from "../../utils/validation";
-import { useState, type ChangeEvent } from "react";
+import { type ChangeEvent } from "react";
 import { Select } from "../Select/Select";
 import { Input } from "../Input/Input";
 import { DateInput } from "../Date/Date";
 import { Button } from "../Button/Button";
+
+export type TAttachment = {
+  fileName: string;
+  fileData: File;
+  fileSize: number;
+};
 
 export interface IField {
   name: string;
@@ -97,25 +103,39 @@ export const Field = (props: IField) => {
     validate({
       patterns,
       disabled,
-      name:props.name,
+      name: props.name,
       setFormErrors,
       formValues,
       att,
     });
   };
 
-  const [shouldValidate, setShouldValidate] = useState(false);
-
   const onChange = async (e: ChangeEvent) => {
     const input = e.target as HTMLInputElement;
-    if (input.files && input.files[0]) {
-      setAtt({
-        fileName: input.files[0].name,
-        fileData: input.files[0],
-        fileSize: input.files[0].size,
+    if (input.files && input.files.length > 0) {
+      const files = Array.from(input.files);
+
+      const attachments: TAttachment[] = files.map(
+        (file: File): TAttachment => ({
+          fileName: file.name,
+          fileData: file,
+          fileSize: file.size,
+        }),
+      );
+
+      setAtt(attachments);
+
+      await setFormValues({
+        [props.name]: attachments.map((att) => att.fileName).join(", "),
       });
     } else {
       setAtt(null);
+
+      const val =
+        props.type === "number" ? input.value.replace(/-/g, "") : input.value;
+      await setFormValues({
+        [props.name]: val,
+      });
     }
     const val =
       props.type === "number" ? input.value.replace(/-/g, "") : input.value;
@@ -236,11 +256,6 @@ export const Field = (props: IField) => {
     value,
   };
 
-  const triggerValidate = () => {
-    setShouldValidate(true);
-    setTimeout(() => setShouldValidate(false), 1000);
-  };
-
   const opts = options();
   useEffect(() => {
     const currentValue = formValues?.[props.name];
@@ -263,37 +278,17 @@ export const Field = (props: IField) => {
   }, [opts]);
 
   useEffect(() => {
-    window.addEventListener("validate", triggerValidate);
-    return () => {
-      window.removeEventListener("validate", triggerValidate);
-    };
-  }, []);
-
-  useEffect(() => {
     if (disabled) {
       validate({
         patterns,
         disabled,
-        name:props.name,
+        name: props.name,
         setFormErrors,
         formValues,
         att,
       });
     }
   }, [disabled]);
-
-  useEffect(() => {
-    if (shouldValidate) {
-      validate({
-        patterns,
-        disabled,
-        name:props.name,
-        setFormErrors,
-        formValues,
-        att,
-      });
-    }
-  }, [shouldValidate]);
 
   const typeMap = {
     text: Input,
@@ -303,6 +298,7 @@ export const Field = (props: IField) => {
     date: DateInput,
     button: Button,
   };
+
   useEffect(() => {
     if (enhancedProps.value !== formValues[props.name]) {
       setFormValues({

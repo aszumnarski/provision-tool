@@ -1,4 +1,4 @@
-import type { IPattern } from "../components/Field/Field";
+import type { TAttachment, IPattern } from "../components/Field/Field";
 
 export interface IValidatePattern {
   pattern: string;
@@ -6,7 +6,6 @@ export interface IValidatePattern {
   formValues: any;
   att: any;
 }
-
 
 export interface IValidateAll {
   patterns: Record<string, IPattern[]>;
@@ -18,7 +17,7 @@ export interface IValidateAll {
 export interface IValidate {
   patterns: Record<string, IPattern[]>;
   name: string;
-  disabled: boolean;
+  disabled?: boolean;
   setFormErrors: any;
   formValues: any;
   att: any;
@@ -58,9 +57,17 @@ function validatePattern({
       return value && value?.length > maximum;
     },
     maxSize: () => {
+      if (!Array.isArray(att)) return false;
       const maximum = Number(pattern.split("_")[1]);
-      return att ? Number(att.fileSize) / 1024 / 1024 > maximum : false;
-      //return att ? att.fileSize > maximum : false;
+      return att
+        ? Number(
+            att.reduce(
+              (sum: number, file: TAttachment) => sum + file.fileSize,
+              0,
+            ) /
+              (1024 * 1024),
+          ) > maximum
+        : false;
     },
     lt: () => {
       const fieldName = pattern.split("_")[1];
@@ -128,17 +135,26 @@ export const validate = ({
   return result;
 };
 
-
-
 export const validateAll = ({
-patterns,
-    setFormErrors,
-    formValues,
-    att
+  patterns,
+  setFormErrors,
+  formValues,
+  att,
+}: IValidateAll) => {
+  const enabledFields = document.querySelectorAll(
+    ".field:not(:has([disabled])) [name]",
+  );
+  const enabledFieldNames = (
+    Array.from(enabledFields) as HTMLInputElement[]
+  ).map((input) => input.name);
 
-}:IValidateAll) => {
-    const enabledFields = document.querySelectorAll(".field[disabled]")
+  const validations = enabledFieldNames.map((name) =>
+    validate({ patterns, name, setFormErrors, formValues, att }),
+  );
 
-}
+  const errorsLength = validations.filter(Boolean).length;
 
+  const allOk = !errorsLength;
 
+  return allOk;
+};
