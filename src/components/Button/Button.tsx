@@ -70,7 +70,7 @@ export const Button = (props: IField) => {
 
   const handleGet = async (
     e: React.MouseEvent<HTMLButtonElement>,
-    appNumberOverride?: string,
+    appNumberOverride?: string
   ) => {
     e.preventDefault();
 
@@ -184,6 +184,11 @@ export const Button = (props: IField) => {
     var formData = new FormData();
     formData.append("json", JSON.stringify(body));
     if (att) formData.append(att.fileName, att.fileData);
+
+    for (let [key, value] of formData.entries()) {
+      console.log(key, value);
+    }
+
     try {
       const response = await fetch(url, {
         method: "POST",
