@@ -96,7 +96,7 @@ export function Form({ rows }: IForm) {
     e.preventDefault();
   };
   return formValues ? (
-    <form onSubmit={onSubmit} className="form">
+    <form  autoComplete="off" onSubmit={onSubmit} className="form">
       <div className="row-wrapper">
         {rows.map((r, i) => (
           <Row key={i} columns={r.columns} />

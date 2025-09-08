@@ -167,6 +167,7 @@ export const Field = (props: IField) => {
 
   const onChange = async (e: ChangeEvent) => {
     const input = e.target as HTMLInputElement;
+    if (input.type === "file") {
     if (input.files && input.files[0]) {
       setAtt({
         fileName: input.files[0].name,
@@ -176,6 +177,7 @@ export const Field = (props: IField) => {
     } else {
       setAtt(null);
     }
+  }
     const val =
       props.type === "number" ? input.value.replace(/-/g, "") : input.value;
     await setFormValues({
