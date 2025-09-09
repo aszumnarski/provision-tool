@@ -15,8 +15,6 @@ export const Input = (props: IField) => {
     }
   };
   
-console.log("fileInputKey in Input:", props.fileInputKey);
-
   const isMultiFilesEnabled = window.location.search.includes("multi=true");
   return (
     <div className={className}>

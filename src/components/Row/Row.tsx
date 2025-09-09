@@ -9,8 +9,6 @@ export interface IRow {
 
 export function Row({ columns, fileInputKey }: IRow) {
   
-console.log("Row.tsx → fileInputKey received:", fileInputKey);
-
   return (
     <div className="row">
       {columns.map((c, i) => (

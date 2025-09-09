@@ -125,7 +125,6 @@ export const Button = (props: IField) => {
         !defaultValues || Object.keys(defaultValues).length < 55;
 
       if (isIncomplete) {
-        console.log("Setting defaultValues with full form:", formValues);
         setDefaultValues(structuredClone(formValues));
       }
     }
@@ -188,7 +187,6 @@ export const Button = (props: IField) => {
         formData.append(file.fileData, file.fileName);
       });
     }
-    console.log({ att });
     try {
       const response = await fetch(url, {
         method: "POST",

@@ -11,8 +11,6 @@ export const Column = (column: IColumn) => {
   const { fields, header, fileInputKey } = column;
   
 
-  console.log("Passing fileInputKey to Field:", fileInputKey);
-
   return (
     <div className="column">
       {header ? <h3 className="column-header">{header}</h3> : ""}

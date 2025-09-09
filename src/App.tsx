@@ -32,8 +32,6 @@ function App() {
   const body = document.querySelector("body");
   const imgSource = body && body.dataset?.logo;
   
-console.log("App.tsx → fileInputKey:", fileInputKey);
-
   return (
     <FormContext.Provider
       value={{

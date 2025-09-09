@@ -101,9 +101,6 @@ export function Form({ rows }: IForm) {
     e.preventDefault();
   };
   
-
-  console.log("Form.tsx → fileInputKey from context:", fileInputKey);
-
   return formValues ? (
     <form onSubmit={onSubmit} className="form">
       <div className="row-wrapper">
