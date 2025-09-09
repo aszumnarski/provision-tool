@@ -45,7 +45,7 @@ export const subType: IField = {
   label: "Subtype",
   initValue: "y09",
   type: "select",
-  conditionalDisabled: h.inGetState,
+  conditionalDisabled: [...h.inGetState, ...h.inCreateState],
   dependentOptions: [
     {
       conditions: [
