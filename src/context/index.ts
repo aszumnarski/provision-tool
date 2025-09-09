@@ -15,5 +15,8 @@ export type TFormContext = {
   setLoading: (loading: boolean) => void;
   modalContent: any;
   setModalContent: (m: any) => void;
+  fileInputKey: number;
+  setFileInputKey: (k: number)  => void;
+
 } | null;
 export const FormContext = createContext<TFormContext>(null);

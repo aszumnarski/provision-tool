@@ -7,6 +7,7 @@ import type { IField, IPattern } from "../Field/Field";
 
 export interface IForm {
   rows: IRow[];
+  fileInputKey?: number;
 }
 
 export function Form({ rows }: IForm) {
@@ -34,6 +35,10 @@ export function Form({ rows }: IForm) {
     setLoading,
     //@ts-ignore
     setModalContent,
+    //@ts-ignore
+    fileInputKey,
+    //@ts-ignore
+    setFileInputKey,
   } = useContext(FormContext);
 
   async function getData(url: string) {
@@ -95,11 +100,15 @@ export function Form({ rows }: IForm) {
   const onSubmit: FormEventHandler<HTMLFormElement> = (e) => {
     e.preventDefault();
   };
+  
+
+  console.log("Form.tsx → fileInputKey from context:", fileInputKey);
+
   return formValues ? (
     <form onSubmit={onSubmit} className="form">
       <div className="row-wrapper">
         {rows.map((r, i) => (
-          <Row key={i} columns={r.columns} />
+          <Row key={i} columns={r.columns} fileInputKey={fileInputKey} />
         ))}
       </div>
 

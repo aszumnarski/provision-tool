@@ -10,13 +10,14 @@ import { useFormValues } from "./utils/session-storage";
 
 function App() {
   const [formValues, _setFormValues] = useState<Record<string, string> | {}>(
-    {},
+    {}
   );
   const [formErrors, setFormErrors] = useState<Record<string, string> | {}>({});
   const [patterns, setPatterns] = useState<Record<string, string> | {}>({});
   const [att, setAtt] = useState<TAttachment[] | null>(null);
   const [userCompanyCodes, setUserCompanyCodes] = useState<IOption[]>([]);
   const [isLoading, setLoading] = useState(true);
+  const [fileInputKey, setFileInputKey] = useState(0);
   const [modalContent, setModalContent] = useState<Record<
     string,
     string
@@ -30,6 +31,9 @@ function App() {
 
   const body = document.querySelector("body");
   const imgSource = body && body.dataset?.logo;
+  
+console.log("App.tsx → fileInputKey:", fileInputKey);
+
   return (
     <FormContext.Provider
       value={{
@@ -47,6 +51,8 @@ function App() {
         setLoading,
         modalContent,
         setModalContent,
+        fileInputKey,
+        setFileInputKey,
       }}
     >
       <div className="app" inert={isLoading || !!modalContent}>
@@ -57,7 +63,7 @@ function App() {
         ) : (
           ""
         )}
-        <Form rows={config.rows} />
+        <Form rows={config.rows} fileInputKey={fileInputKey}/>
       </div>
       <Modal />
       {isLoading ? <Loader /> : ""}

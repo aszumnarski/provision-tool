@@ -27,6 +27,8 @@ export const Button = (props: IField) => {
     //@ts-ignore
     setLoading,
     //@ts-ignore
+    setFileInputKey,
+    //@ts-ignore
     setUserCompanyCodes,
     //@ts-ignore
     setModalContent,
@@ -58,7 +60,7 @@ export const Button = (props: IField) => {
 
   const handleGet = async (
     e: React.MouseEvent<HTMLButtonElement>,
-    appNumberOverride?: string,
+    appNumberOverride?: string
   ) => {
     e.preventDefault();
 
@@ -104,9 +106,10 @@ export const Button = (props: IField) => {
   };
 
   const resetForm = async () => {
-    setAtt(null);
     await setFormValues(defaultValues);
+    setAtt([]);
     setFormErrors({});
+    setFileInputKey((prev:number) => prev + 1);
   };
 
   useEffect(() => {
@@ -116,17 +119,17 @@ export const Button = (props: IField) => {
   useEffect(() => {
     const fieldCount = Object.keys(formValues).length;
     const isReady = formValues.user && fieldCount >= 55;
-  
+
     if (isReady) {
-      const isIncomplete = !defaultValues || Object.keys(defaultValues).length < 55;
-  
+      const isIncomplete =
+        !defaultValues || Object.keys(defaultValues).length < 55;
+
       if (isIncomplete) {
         console.log("Setting defaultValues with full form:", formValues);
         setDefaultValues(structuredClone(formValues));
       }
     }
   }, [formValues]);
-  
 
   const states = {
     CREATE: { label: "CREATE", onClick: handlePost },
@@ -185,7 +188,7 @@ export const Button = (props: IField) => {
         formData.append(file.fileData, file.fileName);
       });
     }
-    console.log({att});
+    console.log({ att });
     try {
       const response = await fetch(url, {
         method: "POST",

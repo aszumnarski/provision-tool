@@ -14,6 +14,9 @@ export const Input = (props: IField) => {
       preventArrowKeyIncrement(e);
     }
   };
+  
+console.log("fileInputKey in Input:", props.fileInputKey);
+
   const isMultiFilesEnabled = window.location.search.includes("multi=true");
   return (
     <div className={className}>
@@ -22,6 +25,7 @@ export const Input = (props: IField) => {
           {props.label} {counter}
         </span>
         <input
+          key={props.type === "file" ? props.fileInputKey : undefined}
           type={props.type}
           className="field-input"
           accept={props.type === "file" ? ".xlsx,.pdf" : undefined}

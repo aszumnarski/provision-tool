@@ -4,10 +4,14 @@ import { Field, type IField } from "../Field/Field";
 export interface IColumn {
   fields: IField[];
   header?: string;
+  fileInputKey?: number;
 }
 
 export const Column = (column: IColumn) => {
-  const { fields, header } = column;
+  const { fields, header, fileInputKey } = column;
+  
+
+  console.log("Passing fileInputKey to Field:", fileInputKey);
 
   return (
     <div className="column">
@@ -27,6 +31,7 @@ export const Column = (column: IColumn) => {
           conditionalDisabled={f.conditionalDisabled}
           dependentOptions={f.dependentOptions}
           dependantValue={f.dependantValue}
+          fileInputKey={fileInputKey}
         />
       ))}
     </div>
