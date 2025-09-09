@@ -180,29 +180,27 @@ export const Button = (props: IField) => {
   }
 
   async function postData(url: string, body: Record<string, any>) {
-    
-console.log("att.fileName:", att?.fileName);
-console.log("att.fileData:", att?.fileData);
+    console.log("att.fileName:", att?.fileName);
+    console.log("att.fileData:", att?.fileData);
 
-if (
-  body.attachment && // attachment path exists in JSON
-  (!att || !att.fileData || !(att.fileData instanceof File)) // but no valid File object
-) {
-  alert("Please re-select the file before submitting. Autofill may have cleared it.");
-  return;
-}
+    if (
+      body.attachment && // attachment path exists in JSON
+      (!att || !att.fileData || !(att.fileData instanceof File)) // but no valid File object
+    ) {
+      alert(
+        "Please re-select the file before submitting. Autofill may have cleared it."
+      );
+      return;
+    }
 
     setLoading(true);
     var formData = new FormData();
     formData.append("json", JSON.stringify(body));
-    if (att) formData.append(att.fileName, att.fileData);
+    if (att && att.fileData instanceof File) formData.append(att.fileName, att.fileData);
 
     for (let [key, value] of formData.entries()) {
       console.log(key, value);
     }
-
-
-    
 
     try {
       const response = await fetch(url, {
