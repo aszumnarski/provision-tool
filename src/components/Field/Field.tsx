@@ -112,31 +112,33 @@ export const Field = (props: IField) => {
 
   const onChange = async (e: ChangeEvent) => {
     const input = e.target as HTMLInputElement;
-    if (input.files && input.files.length > 0) {
-      const files = Array.from(input.files);
+    if (input.type === "file") {
+      if (input.files && input.files.length > 0) {
+        const files = Array.from(input.files);
 
-      const attachments: TAttachment[] = files.map(
-        (file: File): TAttachment => ({
-          fileName: file.name,
-          fileData: file,
-          fileSize: file.size,
-        }),
-      );
+        const attachments: TAttachment[] = files.map(
+          (file: File): TAttachment => ({
+            fileName: file.name,
+            fileData: file,
+            fileSize: file.size,
+          })
+        );
+        setAtt(attachments);
 
-      setAtt(attachments);
+        await setFormValues({
+          [props.name]: attachments.map((att) => att.fileName).join(", "),
+        });
+      } else {
+        setAtt(null);
 
-      await setFormValues({
-        [props.name]: attachments.map((att) => att.fileName).join(", "),
-      });
-    } else {
-      setAtt(null);
-
-      const val =
-        props.type === "number" ? input.value.replace(/-/g, "") : input.value;
-      await setFormValues({
-        [props.name]: val,
-      });
+        const val =
+          props.type === "number" ? input.value.replace(/-/g, "") : input.value;
+        await setFormValues({
+          [props.name]: val,
+        });
+      }
     }
+
     const val =
       props.type === "number" ? input.value.replace(/-/g, "") : input.value;
     await setFormValues({
@@ -168,12 +170,12 @@ export const Field = (props: IField) => {
               .map(
                 (c) =>
                   c.is.includes(formValues[c.when]) ||
-                  c.is.includes(!!formValues[c.when]),
+                  c.is.includes(!!formValues[c.when])
               )
               .filter(Boolean).length === scenario.conditions.length &&
             (scenario.isFromValue
               ? valuedOptions(scenario.options)
-              : scenario.options),
+              : scenario.options)
         )
         .filter(Boolean)[0] || [];
     return result.length ? result : props.options || [];
@@ -191,7 +193,7 @@ export const Field = (props: IField) => {
     if (!props.calculatedValue?.month) return "";
     if (!props.calculatedValue?.date) return "";
     const newDate = new Date(
-      toDash(formValues[props.calculatedValue.date]) || today,
+      toDash(formValues[props.calculatedValue.date]) || today
     );
     const year = newDate.getFullYear();
     const month = newDate.getMonth() + props.calculatedValue.month;
@@ -215,9 +217,9 @@ export const Field = (props: IField) => {
             or.conditions
               .map(
                 (c) =>
-                  formValues[c.when] == c.is || !!formValues[c.when] == c.is,
+                  formValues[c.when] == c.is || !!formValues[c.when] == c.is
               )
-              .filter(Boolean).length === or.conditions.length,
+              .filter(Boolean).length === or.conditions.length
         )
         .filter(Boolean).length > 0
     : !!props.disabled;
@@ -226,7 +228,7 @@ export const Field = (props: IField) => {
     if (!props.dependantValue) return "";
 
     const match = props.dependantValue.find((or) =>
-      or.conditions.every((c) => c.is.includes(formValues[c.when])),
+      or.conditions.every((c) => c.is.includes(formValues[c.when]))
     );
 
     return match ? formValues[match.valueFrom] : formValues[props.name];

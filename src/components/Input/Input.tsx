@@ -1,7 +1,6 @@
 import "./Input.css";
 import { type IField } from "../Field/Field";
-import { preventEnterSubmit } from "../../utils/keyboard-utils";
-import { preventArrowKeyIncrement } from "../../utils/keyboard-utils";
+import { preventEnterSubmit , preventArrowKeyIncrement } from "../../utils/keyboard-utils";
 export const Input = (props: IField) => {
   const className = `field ${props.error ? "field--error" : ""}`;
   const counter =
@@ -15,7 +14,7 @@ export const Input = (props: IField) => {
       preventArrowKeyIncrement(e);
     }
   };
-
+  const isMultiFilesEnabled = window.location.search.includes("multi=true");
   return (
     <div className={className}>
       <label>
@@ -37,7 +36,7 @@ export const Input = (props: IField) => {
               : undefined
           }
           {...(props.type !== "file" ? { value: props.value || "" } : {})}
-          multiple={props.type === "file"}
+          multiple={props.type === "file" && isMultiFilesEnabled}
         />
       </label>
       <p className="error-message">{props.error}</p>
