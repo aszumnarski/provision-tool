@@ -23,6 +23,8 @@ export const Button = (props: IField) => {
     //@ts-ignore
     att,
     //@ts-ignore
+    setAtt,
+    //@ts-ignore
     setLoading,
     //@ts-ignore
     setUserCompanyCodes,
@@ -102,6 +104,7 @@ export const Button = (props: IField) => {
   };
 
   const resetForm = async () => {
+    setAtt(null);
     await setFormValues(defaultValues);
     setFormErrors({});
   };
@@ -111,10 +114,19 @@ export const Button = (props: IField) => {
   }, [formValues.mode]);
 
   useEffect(() => {
-    if (formValues.user && !defaultValues) {
-      setDefaultValues(formValues);
+    const fieldCount = Object.keys(formValues).length;
+    const isReady = formValues.user && fieldCount >= 55;
+  
+    if (isReady) {
+      const isIncomplete = !defaultValues || Object.keys(defaultValues).length < 55;
+  
+      if (isIncomplete) {
+        console.log("Setting defaultValues with full form:", formValues);
+        setDefaultValues(structuredClone(formValues));
+      }
     }
-  }, [formValues.user]);
+  }, [formValues]);
+  
 
   const states = {
     CREATE: { label: "CREATE", onClick: handlePost },
@@ -173,6 +185,7 @@ export const Button = (props: IField) => {
         formData.append(file.fileData, file.fileName);
       });
     }
+    console.log({att});
     try {
       const response = await fetch(url, {
         method: "POST",
