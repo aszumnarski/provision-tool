@@ -182,9 +182,9 @@ export const Button = (props: IField) => {
     setLoading(true);
     var formData = new FormData();
     formData.append("json", JSON.stringify(body));
-    if (att && Array.isArray(att)) {
+    if (att && Array.isArray(att) &&  att[0].fileData instanceof File) {
       att.forEach((file) => {
-        formData.append(file.fileData, file.fileName);
+        formData.append(file.fileName,file.fileData);
       });
     }
     try {
