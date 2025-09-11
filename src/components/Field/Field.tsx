@@ -130,12 +130,6 @@ export const Field = (props: IField) => {
         });
       } else {
         setAtt(null);
-
-        const val =
-          props.type === "number" ? input.value.replace(/-/g, "") : input.value;
-        await setFormValues({
-          [props.name]: val,
-        });
       }
     }
 
