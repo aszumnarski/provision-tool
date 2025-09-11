@@ -225,8 +225,6 @@ export const Field = (props: IField) => {
     if (props.dependantValue) return copyValue();
     if (sum) return sum;
 
-    // if (props.type === "file") return "";
-
     if (formValues[props.name]) return formValues[props.name];
     if (props.type === "select" && options().length) return options()[0].value;
 
