@@ -33,7 +33,6 @@ export interface IField {
   options?: IOption[];
   patterns?: IPattern[];
   value?: string;
-  fileInputKey?: number
 }
 
 export interface ICalculatedValue {
@@ -257,8 +256,6 @@ export const Field = (props: IField) => {
     disabled,
     options: options(),
     value,
-    fileInputKey: props.fileInputKey,
-
   };
 
   const opts = options();

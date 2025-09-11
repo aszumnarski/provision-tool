@@ -4,15 +4,14 @@ import { Column } from "../Column/Column";
 
 export interface IRow {
   columns: IColumn[];
-  fileInputKey?: number;
 }
 
-export function Row({ columns, fileInputKey }: IRow) {
+export function Row({ columns }: IRow) {
   
   return (
     <div className="row">
       {columns.map((c, i) => (
-        <Column key={i} fields={c.fields} header={c.header} fileInputKey={fileInputKey} />
+        <Column key={i} fields={c.fields} header={c.header} />
       ))}
     </div>
   );

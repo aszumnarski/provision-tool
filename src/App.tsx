@@ -61,7 +61,7 @@ function App() {
         ) : (
           ""
         )}
-        <Form rows={config.rows} fileInputKey={fileInputKey}/>
+        <Form rows={config.rows}/>
       </div>
       <Modal />
       {isLoading ? <Loader /> : ""}

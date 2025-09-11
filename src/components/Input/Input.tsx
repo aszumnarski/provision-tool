@@ -1,6 +1,10 @@
 import "./Input.css";
 import { type IField } from "../Field/Field";
 import { preventEnterSubmit , preventArrowKeyIncrement } from "../../utils/keyboard-utils";
+
+import { useContext } from "react";
+import { FormContext } from "../../context"
+
 export const Input = (props: IField) => {
   const className = `field ${props.error ? "field--error" : ""}`;
   const counter =
@@ -16,6 +20,12 @@ export const Input = (props: IField) => {
   };
   
   const isMultiFilesEnabled = window.location.search.includes("multi=true");
+
+  
+  const formContext = useContext(FormContext);
+  const fileInputKey = formContext?.fileInputKey;
+
+
   return (
     <div className={className}>
       <label>
@@ -23,7 +33,7 @@ export const Input = (props: IField) => {
           {props.label} {counter}
         </span>
         <input
-          key={props.type === "file" ? props.fileInputKey : undefined}
+          key={props.type === "file" ? fileInputKey : undefined}
           type={props.type}
           className="field-input"
           accept={props.type === "file" ? ".xlsx,.pdf" : undefined}
