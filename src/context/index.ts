@@ -3,6 +3,8 @@ import { createContext } from "react";
 export type TFormContext = {
   formValues: any;
   setFormValues: (v: any) => void;
+  defaultValues: any;
+  setDefaultValues: (v: any) => void;
   formErrors: any;
   setFormErrors: (e: any) => void;
   patterns: any;
