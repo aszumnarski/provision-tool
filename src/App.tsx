@@ -17,6 +17,7 @@ function App() {
   const [att, setAtt] = useState<TAttachment[] | null>(null);
   const [userCompanyCodes, setUserCompanyCodes] = useState<IOption[]>([]);
   const [isLoading, setLoading] = useState(true);
+  const [defaultValues, setDefaultValues] = useState(null);
   const [modalContent, setModalContent] = useState<Record<
     string,
     string
@@ -35,6 +36,8 @@ function App() {
       value={{
         formValues,
         setFormValues,
+        defaultValues,
+        setDefaultValues,
         formErrors,
         setFormErrors,
         patterns,

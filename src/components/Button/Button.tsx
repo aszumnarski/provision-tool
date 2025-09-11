@@ -11,6 +11,8 @@ export const Button = (props: IField) => {
     //@ts-ignore
     formValues,
     //@ts-ignore
+    defaultValues,
+    //@ts-ignore
     setFormValues,
     //@ts-ignore
     formErrors,
@@ -32,7 +34,6 @@ export const Button = (props: IField) => {
     setModalContent,
   } = useContext(FormContext);
   const className = `field ${props.error ? "field--error" : ""}`;
-  const [defaultValues, setDefaultValues] = useState(null);
   const { dataset } = document.querySelector("body") || {
     dataset: { url: "/", query: "appno", init: "init" },
   };
@@ -112,12 +113,6 @@ export const Button = (props: IField) => {
   useEffect(() => {
     if (formValues.mode === "create") resetForm();
   }, [formValues.mode]);
-
-  useEffect(() => {
-    if (formValues.user && !defaultValues) {
-      setDefaultValues(formValues);
-    }
-  }, [formValues.user]);
 
   const states = {
     CREATE: { label: "CREATE", onClick: handlePost },

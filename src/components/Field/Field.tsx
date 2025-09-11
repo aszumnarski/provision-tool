@@ -84,6 +84,10 @@ export const Field = (props: IField) => {
     //@ts-ignore
     setFormValues,
     //@ts-ignore
+    defaultValues,
+    //@ts-ignore
+    setDefaultValues,
+    //@ts-ignore
     formErrors,
     //@ts-ignore
     setFormErrors,
@@ -122,8 +126,10 @@ export const Field = (props: IField) => {
           fileSize: file.size,
         }),
       );
-
       setAtt(attachments);
+    }
+    if (!defaultValues) {
+      setDefaultValues(formValues);
     }
     const val =
       props.type === "number" ? input.value.replace(/-/g, "") : input.value;
