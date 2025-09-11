@@ -23,6 +23,8 @@ export const Button = (props: IField) => {
     //@ts-ignore
     att,
     //@ts-ignore
+    setAtt,
+    //@ts-ignore
     setLoading,
     //@ts-ignore
     setUserCompanyCodes,
@@ -103,6 +105,7 @@ export const Button = (props: IField) => {
 
   const resetForm = async () => {
     await setFormValues(defaultValues);
+    setAtt(null);
     setFormErrors({});
   };
 
@@ -170,7 +173,7 @@ export const Button = (props: IField) => {
     formData.append("json", JSON.stringify(body));
     if (att && Array.isArray(att)) {
       att.forEach((file) => {
-        formData.append(file.fileData, file.fileName);
+        formData.append(file.fileName, file.fileData);
       });
     }
     try {

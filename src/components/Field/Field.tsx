@@ -124,18 +124,6 @@ export const Field = (props: IField) => {
       );
 
       setAtt(attachments);
-
-      await setFormValues({
-        [props.name]: attachments.map((att) => att.fileName).join(", "),
-      });
-    } else {
-      setAtt(null);
-
-      const val =
-        props.type === "number" ? input.value.replace(/-/g, "") : input.value;
-      await setFormValues({
-        [props.name]: val,
-      });
     }
     const val =
       props.type === "number" ? input.value.replace(/-/g, "") : input.value;
@@ -236,6 +224,8 @@ export const Field = (props: IField) => {
     if (!Object.keys(JSON.parse(JSON.stringify(formValues))).length) return "";
     if (props.dependantValue) return copyValue();
     if (sum) return sum;
+
+    // if (props.type === "file") return "";
 
     if (formValues[props.name]) return formValues[props.name];
     if (props.type === "select" && options().length) return options()[0].value;
