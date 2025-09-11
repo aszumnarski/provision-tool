@@ -124,20 +124,16 @@ export const Field = (props: IField) => {
           })
         );
         setAtt(attachments);
-
-        await setFormValues({
-          [props.name]: attachments.map((att) => att.fileName).join(", "),
-        });
       } else {
         setAtt(null);
       }
+    } else {
+      const val =
+        props.type === "number" ? input.value.replace(/-/g, "") : input.value;
+      await setFormValues({
+        [props.name]: val,
+      });
     }
-
-    const val =
-      props.type === "number" ? input.value.replace(/-/g, "") : input.value;
-    await setFormValues({
-      [props.name]: val,
-    });
   };
 
   const options = (): IOption[] => {
