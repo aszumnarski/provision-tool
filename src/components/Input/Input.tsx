@@ -36,7 +36,7 @@ export const Input = (props: IField) => {
               ? Number(props.maxlength) || undefined
               : undefined
           }
-          value={props.value || ""}
+          {...(props.type !== "file" ? { value: props.value || "" } : {})}
           multiple={props.type === "file"}
         />
       </label>
