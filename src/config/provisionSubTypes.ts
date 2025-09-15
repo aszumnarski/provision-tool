@@ -71,7 +71,7 @@ export const y09 = {
     value: "ccc",
   };
   export const con = {
-    label: "Change in Order Number",
+    label: "Change in Sales Document",
     value: "con",
   };
   export const cwe = {
