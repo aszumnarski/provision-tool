@@ -83,11 +83,21 @@ function validatePattern({
       return value && !/^\d+$/.test(value);
     },
     empty: () => {
+
+      
+  const fields = pattern.split("_")[1].split(",");
+
+  console.log("🔍 Running empty validator");
+  console.log("Fields to check:", fields);
+  console.log("Form values:", formValues);
+  console.log("Field values:", fields.map(f => [f, formValues[f]]));
+
       return pattern
         .split("_")[1]
         .split(",")
         .some(
           (field) =>
+            formValues[field] !== undefined &&
             formValues[field] !== "" &&
             formValues[field] !== null &&
             formValues[field] !== "0" &&
