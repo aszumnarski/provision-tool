@@ -47,7 +47,7 @@ function validatePattern({
   const tokens = {
     required: () => !value,
     future: () =>
-      value && toDash(value) < new Date().toISOString().substring(0, 10),
+      value && toDash(value) < new Date(Date.now() - 60 * 24 * 60 * 60 * 1000).toISOString().slice(0, 10),
     min: () => {
       const minimum = Number(pattern.split("_")[1]);
       return value && value?.length < minimum;
@@ -83,15 +83,6 @@ function validatePattern({
       return value && !/^\d+$/.test(value);
     },
     empty: () => {
-
-      
-  const fields = pattern.split("_")[1].split(",");
-
-  console.log("🔍 Running empty validator");
-  console.log("Fields to check:", fields);
-  console.log("Form values:", formValues);
-  console.log("Field values:", fields.map(f => [f, formValues[f]]));
-
       return pattern
         .split("_")[1]
         .split(",")
