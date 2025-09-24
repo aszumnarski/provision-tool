@@ -1057,6 +1057,20 @@ export const tlCreationAddition: IField = {
 export const tlCarryFwd: IField = {
   name: "tlCarryFwd",
   label: "TL-Carry Fwd from Last Year",
+  dependantValue: [
+    {
+      conditions: [{ when: "ledgerGroup", is: ["al"] }],
+      valueFrom: "0lCarryFwd",
+    },
+    {
+      conditions: [{ when: "ledgerGroup", is: ["0l,lt"] }],
+      valueFrom: "2lCarryFwd",
+    },
+    {
+      conditions: [{ when: "ledgerGroup", is: ["0l","2l","il"] }],
+      valueFrom: "",
+    },
+  ],
   type: "number",
   patterns: [h.required()],
   disabled: true,
@@ -1359,6 +1373,16 @@ export const _2lCreationAddition: IField = {
 export const _2lCarryFwd: IField = {
   name: "2lCarryFwd",
   label: "2L-Carry Fwd from Last Year",
+  dependantValue: [
+    {
+      conditions: [{ when: "ledgerGroup", is: ["al","il"] }],
+      valueFrom: "0lCarryFwd",
+    },
+    {
+      conditions: [{ when: "ledgerGroup", is: ["0l"] }],
+      valueFrom: "",
+    },
+  ],
   type: "number",
   patterns: [h.required()],
   disabled: true,
@@ -1650,9 +1674,9 @@ export const appCreationDate: IField = {
 
 export const description2: IField = {
   name: "description2",
-  label: "Description 2 (Free Text)",
+  label: "JV Text (Free Text)",
   type: "text",
-  maxlength: "50",
+  maxlength: "40",
   conditionalDisabled: h.inGetState,
 };
 
@@ -1660,6 +1684,7 @@ export const description1: IField = {
   name: "description1",
   label: "Description 1 (Fixed Text)",
   type: "text",
+  maxlength: "45",
   patterns: [h.required()],
   conditionalDisabled: h.inModifyState,
 };
