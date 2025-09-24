@@ -12,11 +12,13 @@ export const DateInput = (props: IField) => {
   const className = `field ${props.error ? "field--error" : ""}`;
   const noDash = (dashedDate?: string) =>
     dashedDate ? dashedDate.split("-").join("") : "";
+
+  const past = new Date(Date.now() - 60 * 24 * 60 * 60 * 1000).toISOString().slice(0, 10);
   const today = new Date().toISOString().substring(0, 10);
   const isFuture =
     patterns &&
     patterns[props.name]?.map((p: IPattern) => p.reg).includes("future");
-  const min = isFuture ? today : "";
+  const min = isFuture ? past : "";
 
   const handleChange = (e: ChangeEvent) => {
     const input = e.target as HTMLInputElement;
