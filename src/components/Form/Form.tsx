@@ -81,7 +81,7 @@ export function Form({ rows }: IForm) {
             key === "patterns"
               ? []
               : f.type === "number"
-                ? 0
+                ? ""
                 : f.type === "select"
                   ? f.options && f.options[0].value
                   : "";
