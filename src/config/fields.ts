@@ -891,10 +891,24 @@ export const appCreator: IField = {
 export const tlClosingBalanceUpdate: IField = {
   name: "tlClosingBalanceUpdate",
   label: "TL-Closing Balance - Update",
-  calculatedValue: {
-    expression:
-      "Number(formValues['tlCarryFwd'] ?? 0) + Number(formValues['tlCreationAddition'] ?? 0) + Number(formValues['tlCreationAdditionUpdate'] ?? 0) - Number(formValues['tlUsage'] ?? 0) - Number(formValues['tlUsageUpdate'] ?? 0) - Number(formValues['tlRelease'] ?? 0) - Number(formValues['tlReleaseUpdate'] ?? 0)",
-  },
+  dependantValue: [
+    {
+      conditions: [{when: "subType",is:["aed","ccc","con","cwe"]}],
+      valueFrom: "",
+    },   
+    {
+      conditions: [{ when: "ledgerGroup", is: ["0l","2l","il"] }],
+      valueFrom: "",
+    },
+    {
+      conditions: [{ when: "ledgerGroup", is: ["al"] }],
+      valueFrom: "0lClosingBalanceUpdate",
+    },
+    {
+      conditions: [{ when: "ledgerGroup", is: ["0l,lt"] }],
+      valueFrom: "2lClosingBalanceUpdate",
+    },
+  ],
   type: "number",
   patterns: [h.required()],
   disabled: true,
@@ -905,16 +919,16 @@ export const tlClosingBalance: IField = {
   label: "TL-Closing Balance - Posted & Booked",
   dependantValue: [
     {
+      conditions: [{ when: "ledgerGroup", is: ["0l","2l","il"] }],
+      valueFrom: "",
+    },
+    {
       conditions: [{ when: "ledgerGroup", is: ["al"] }],
       valueFrom: "0lClosingBalance",
     },
     {
       conditions: [{ when: "ledgerGroup", is: ["0l,lt"] }],
       valueFrom: "2lClosingBalance",
-    },
-    {
-      conditions: [{ when: "ledgerGroup", is: ["0l","2l","il"] }],
-      valueFrom: "",
     },
   ],
   type: "number",
@@ -927,16 +941,20 @@ export const tlReleaseUpdate: IField = {
   label: "TL-Release - Update",
   dependantValue: [
     {
+      conditions: [{when: "subType",is:["aed","ccc","con","cwe"]}],
+      valueFrom: "",
+    },   
+    {
+      conditions: [{ when: "ledgerGroup", is: ["0l","2l","il"] }],
+      valueFrom: "",
+    },
+    {
       conditions: [{ when: "ledgerGroup", is: ["al"] }],
       valueFrom: "0lReleaseUpdate",
     },
     {
       conditions: [{ when: "ledgerGroup", is: ["0l,lt"] }],
       valueFrom: "2lReleaseUpdate",
-    },
-    {
-      conditions: [{ when: "ledgerGroup", is: ["0l","2l","il"] }],
-      valueFrom: "",
     },
   ],
   type: "number",
@@ -949,16 +967,16 @@ export const tlRelease: IField = {
   label: "TL-Release - Posted & Booked",
   dependantValue: [
     {
+      conditions: [{ when: "ledgerGroup", is: ["0l","2l","il"] }],
+      valueFrom: "",
+    },
+    {
       conditions: [{ when: "ledgerGroup", is: ["al"] }],
       valueFrom: "0lRelease",
     },
     {
       conditions: [{ when: "ledgerGroup", is: ["0l,lt"] }],
       valueFrom: "2lRelease",
-    },
-    {
-      conditions: [{ when: "ledgerGroup", is: ["0l","2l","il"] }],
-      valueFrom: "",
     },
   ],
   type: "number",
@@ -971,16 +989,20 @@ export const tlUsageUpdate: IField = {
   label: "TL-Usage - Update",
   dependantValue: [
     {
+      conditions: [{when: "subType",is:["aed","ccc","con","cwe"]}],
+      valueFrom: "",
+    },   
+    {
+      conditions: [{ when: "ledgerGroup", is: ["0l","2l","il"] }],
+      valueFrom: "",
+    },
+    {
       conditions: [{ when: "ledgerGroup", is: ["al"] }],
       valueFrom: "0lUsageUpdate",
     },
     {
       conditions: [{ when: "ledgerGroup", is: ["0l,lt"] }],
       valueFrom: "2lUsageUpdate",
-    },
-    {
-      conditions: [{ when: "ledgerGroup", is: ["0l","2l","il"] }],
-      valueFrom: "",
     },
   ],
   type: "number",
@@ -993,16 +1015,16 @@ export const tlUsage: IField = {
   label: "TL-Usage - Posted & Booked",
   dependantValue: [
     {
+      conditions: [{ when: "ledgerGroup", is: ["0l","2l","il"] }],
+      valueFrom: "",
+    },
+    {
       conditions: [{ when: "ledgerGroup", is: ["al"] }],
       valueFrom: "0lUsage",
     },
     {
       conditions: [{ when: "ledgerGroup", is: ["0l,lt"] }],
       valueFrom: "2lUsage",
-    },
-    {
-      conditions: [{ when: "ledgerGroup", is: ["0l","2l","il"] }],
-      valueFrom: "",
     },
   ],
   type: "number",
@@ -1015,16 +1037,20 @@ export const tlCreationAdditionUpdate: IField = {
   label: "TL-Creation/Addition - Update",
   dependantValue: [
     {
+      conditions: [{when: "subType",is:["aed","ccc","con","cwe"]}],
+      valueFrom: "",
+    },   
+    {
+      conditions: [{ when: "ledgerGroup", is: ["0l","2l","il"] }],
+      valueFrom: "",
+    },
+    {
       conditions: [{ when: "ledgerGroup", is: ["al"] }],
       valueFrom: "0lCreationAdditionUpdate",
     },
     {
       conditions: [{ when: "ledgerGroup", is: ["0l,lt"] }],
       valueFrom: "2lCreationAdditionUpdate",
-    },
-    {
-      conditions: [{ when: "ledgerGroup", is: ["0l","2l","il"] }],
-      valueFrom: "",
     },
   ],
   type: "number",
@@ -1037,16 +1063,16 @@ export const tlCreationAddition: IField = {
   label: "TL-Creation/Addition - Posted & Booked",
   dependantValue: [
     {
+      conditions: [{ when: "ledgerGroup", is: ["0l","2l","il"] }],
+      valueFrom: "",
+    },
+    {
       conditions: [{ when: "ledgerGroup", is: ["al"] }],
       valueFrom: "0lCreationAddition",
     },
     {
       conditions: [{ when: "ledgerGroup", is: ["0l,lt"] }],
       valueFrom: "2lCreationAddition",
-    },
-    {
-      conditions: [{ when: "ledgerGroup", is: ["0l","2l","il"] }],
-      valueFrom: "",
     },
   ],
   type: "number",
@@ -1059,16 +1085,16 @@ export const tlCarryFwd: IField = {
   label: "TL-Carry Fwd from Last Year",
   dependantValue: [
     {
+      conditions: [{ when: "ledgerGroup", is: ["0l","2l","il"] }],
+      valueFrom: "",
+    },
+    {
       conditions: [{ when: "ledgerGroup", is: ["al"] }],
       valueFrom: "0lCarryFwd",
     },
     {
       conditions: [{ when: "ledgerGroup", is: ["0l,lt"] }],
       valueFrom: "2lCarryFwd",
-    },
-    {
-      conditions: [{ when: "ledgerGroup", is: ["0l","2l","il"] }],
-      valueFrom: "",
     },
   ],
   type: "number",
@@ -1091,16 +1117,10 @@ export const _2lClosingBalanceUpdate: IField = {
 export const _2lClosingBalance: IField = {
   name: "2lClosingBalance",
   label: "2L-Closing Balance - Posted & Booked",
-  dependantValue: [
-    {
-      conditions: [{ when: "ledgerGroup", is: ["al", "il"] }],
-      valueFrom: "0lClosingBalance",
-    },
-    {
-      conditions: [{ when: "ledgerGroup", is: ["0l"] }],
-      valueFrom: "",
-    },
-  ],
+  calculatedValue: {
+    expression:
+      "Number(formValues['2lCarryFwd'] ?? 0) + Number(formValues['2lCreationAddition'] ?? 0) - Number(formValues['2lUsage'] ?? 0) - Number(formValues['2lRelease'] ?? 0)",
+  },
   type: "number",
   patterns: [h.required()],
   disabled: true,
@@ -1110,6 +1130,10 @@ export const _2lReleaseUpdate: IField = {
   name: "2lReleaseUpdate",
   label: "2L-Release - Update",
   dependantValue: [
+    {
+      conditions: [{when: "subType",is:["aed","ccc","con","cwe"]}],
+      valueFrom: "",
+    },
     {
       conditions: [{ when: "ledgerGroup", is: ["al", "il"] }],
       valueFrom: "0lReleaseUpdate",
@@ -1193,6 +1217,10 @@ export const _2lUsageUpdate: IField = {
   name: "2lUsageUpdate",
   label: "2L-Usage - Update",
   dependantValue: [
+    {
+      conditions: [{when: "subType",is:["aed","ccc","con","cwe"]}],
+      valueFrom: "",
+    },
     {
       conditions: [{ when: "ledgerGroup", is: ["al", "il"] }],
       valueFrom: "0lUsageUpdate",
@@ -1279,6 +1307,10 @@ export const _2lCreationAdditionUpdate: IField = {
   name: "2lCreationAdditionUpdate",
   label: "2L-Creation/Addition - Update",
   dependantValue: [
+    {
+      conditions: [{when: "subType",is:["aed","ccc","con","cwe"]}],
+      valueFrom: "",
+    },
     {
       conditions: [{ when: "ledgerGroup", is: ["al","il"] }],
       valueFrom: "0lCreationAdditionUpdate",
@@ -1403,6 +1435,10 @@ export const _0lClosingBalanceUpdate: IField = {
 export const _0lClosingBalance: IField = {
   name: "0lClosingBalance",
   label: "0L-Closing Balance - Posted & Booked",
+  calculatedValue: {
+    expression:
+      "Number(formValues['0lCarryFwd'] ?? 0) + Number(formValues['0lCreationAddition'] ?? 0) - Number(formValues['0lUsage'] ?? 0) - Number(formValues['0lRelease'] ?? 0)",
+  },
   type: "number",
   patterns: [h.required()],
   disabled: true,
@@ -1412,6 +1448,10 @@ export const _0lReleaseUpdate: IField = {
   name: "0lReleaseUpdate",
   label: "0L-Release - Update",
   dependantValue: [
+    {
+      conditions: [{when: "subType",is:["aed","ccc","con","cwe"]}],
+      valueFrom: "",
+    }, 
     {
       conditions: [{ when: "ledgerGroup", is: ["2l"] }],
       valueFrom: "",
@@ -1485,6 +1525,10 @@ export const _0lUsageUpdate: IField = {
   label: "0L-Usage - Update",
   dependantValue: [
     {
+      conditions: [{when: "subType",is:["aed","ccc","con","cwe"]}],
+      valueFrom: "",
+    }, 
+    {
       conditions: [{ when: "ledgerGroup", is: ["2l"] }],
       valueFrom: "",
     },
@@ -1556,6 +1600,10 @@ export const _0lCreationAdditionUpdate: IField = {
   name: "0lCreationAdditionUpdate",
   label: "0L-Creation/Addition - Update",
   dependantValue: [
+    {
+      conditions: [{when: "subType",is:["aed","ccc","con","cwe"]}],
+      valueFrom: "",
+    }, 
     {
       conditions: [{ when: "ledgerGroup", is: ["2l"] }],
       valueFrom: "",
@@ -1740,6 +1788,7 @@ export const postingPeriod: IField = {
 };
 
 export const postingDate: IField = {
+  initValue:"00010101",
   name: "postingDate",
   label: "Posting Date",
   type: "date",
