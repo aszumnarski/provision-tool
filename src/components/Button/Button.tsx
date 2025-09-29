@@ -157,6 +157,7 @@ export const Button = (props: IField) => {
         message: "Ups something went wrong...",
         type: "error",
       });
+      await resetForm();
     } finally {
       setLoading(false);
     }
@@ -186,6 +187,7 @@ export const Button = (props: IField) => {
         message: "Ups something went wrong...",
         type: "error",
       });
+      await resetForm();
       return { error };
     } finally {
       setLoading(false);
