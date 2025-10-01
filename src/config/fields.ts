@@ -1107,7 +1107,7 @@ export const _2lClosingBalanceUpdate: IField = {
   label: "2L-Closing Balance - Update",
   calculatedValue: {
     expression:
-      "Number(formValues['2lCarryFwd'] ?? 0) + Number(formValues['2lCreationAddition'] ?? 0) + ((formValues['subType'] ?? '') ? -Number(formValues['2lCreationAdditionUpdate'] ?? 0) : Number(formValues['2lCreationAdditionUpdate'] ?? 0)) - Number(formValues['2lUsage'] ?? 0) - ((formValues['subType'] ?? '') ? -Number(formValues['2lUsageUpdate'] ?? 0) : Number(formValues['2lUsageUpdate'] ?? 0)) - Number(formValues['2lRelease'] ?? 0) - ((formValues['subType'] ?? '') ? -Number(formValues['2lReleaseUpdate'] ?? 0) : Number(formValues['2lReleaseUpdate'] ?? 0))",
+      "Number(formValues['2lCarryFwd'] ?? 0) + Number(formValues['2lCreationAddition'] ?? 0) + ((formValues['subType'] ?? '').includes('c') ? -Number(formValues['2lCreationAdditionUpdate'] ?? 0) : Number(formValues['2lCreationAdditionUpdate'] ?? 0)) - Number(formValues['2lUsage'] ?? 0) - ((formValues['subType'] ?? '').includes('c') ? -Number(formValues['2lUsageUpdate'] ?? 0) : Number(formValues['2lUsageUpdate'] ?? 0)) - Number(formValues['2lRelease'] ?? 0) - ((formValues['subType'] ?? '').includes('c') ? -Number(formValues['2lReleaseUpdate'] ?? 0) : Number(formValues['2lReleaseUpdate'] ?? 0))",
   },
   type: "number",
   patterns: [h.required()],
@@ -1131,7 +1131,7 @@ export const _2lReleaseUpdate: IField = {
   label: "2L-Release - Update",
   dependantValue: [
     {
-      conditions: [{when: "subType",is:["aed","ccc","con","cwe"]}],
+      conditions: [{when: "subType",is:["aed","ccc","con","cwe","y07","y07c","y27","y27c","y09","y09c","y097","y097c","y098","y098c"]}],
       valueFrom: "",
     },
     {
@@ -1218,7 +1218,7 @@ export const _2lUsageUpdate: IField = {
   label: "2L-Usage - Update",
   dependantValue: [
     {
-      conditions: [{when: "subType",is:["aed","ccc","con","cwe"]}],
+      conditions: [{when: "subType",is:["aed","ccc","con","cwe","y28","y28c","y08","y08c","y09","y09c","y097","y097c","y098","y098c"]}],
       valueFrom: "",
     },
     {
@@ -1308,7 +1308,7 @@ export const _2lCreationAdditionUpdate: IField = {
   label: "2L-Creation/Addition - Update",
   dependantValue: [
     {
-      conditions: [{when: "subType",is:["aed","ccc","con","cwe"]}],
+      conditions: [{when: "subType",is:["aed","ccc","con","cwe","y07","y07c","y08","y08c","y27","y27c","y28","y28c"]}],
       valueFrom: "",
     },
     {
@@ -1425,7 +1425,7 @@ export const _0lClosingBalanceUpdate: IField = {
   label: "0L-Closing Balance - Update",
   calculatedValue: {
     expression:
-      "Number(formValues['0lCarryFwd'] ?? 0) + Number(formValues['0lCreationAddition'] ?? 0) + ((formValues['subType'] ?? '').includes['c'] ? -Number(formValues['0lCreationAdditionUpdate'] ?? 0) : Number(formValues['0lCreationAdditionUpdate'] ?? 0)) - Number(formValues['0lUsage'] ?? 0) - ((formValues['subType'] ?? '') ? -Number(formValues['0lUsageUpdate'] ?? 0) : Number(formValues['0lUsageUpdate'] ?? 0)) - Number(formValues['0lRelease'] ?? 0) - ((formValues['subType'] ?? '') ? -Number(formValues['0lReleaseUpdate'] ?? 0) : Number(formValues['0lReleaseUpdate'] ?? 0))",
+      "Number(formValues['0lCarryFwd'] ?? 0) + Number(formValues['0lCreationAddition'] ?? 0) + ((formValues['subType'] ?? '').includes('c') ? -Number(formValues['0lCreationAdditionUpdate'] ?? 0) : Number(formValues['0lCreationAdditionUpdate'] ?? 0)) - Number(formValues['0lUsage'] ?? 0) - ((formValues['subType'] ?? '').includes('c') ? -Number(formValues['0lUsageUpdate'] ?? 0) : Number(formValues['0lUsageUpdate'] ?? 0)) - Number(formValues['0lRelease'] ?? 0) - ((formValues['subType'] ?? '').includes('c') ? -Number(formValues['0lReleaseUpdate'] ?? 0) : Number(formValues['0lReleaseUpdate'] ?? 0))",
   },
   type: "number",
   patterns: [h.required()],
@@ -1449,7 +1449,7 @@ export const _0lReleaseUpdate: IField = {
   label: "0L-Release - Update",
   dependantValue: [
     {
-      conditions: [{when: "subType",is:["aed","ccc","con","cwe"]}],
+      conditions: [{when: "subType",is:["aed","ccc","con","cwe","y07","y07c","y27","y27c","y09","y09c","y097","y097c","y098","y098c"]}],
       valueFrom: "",
     }, 
     {
@@ -1525,7 +1525,7 @@ export const _0lUsageUpdate: IField = {
   label: "0L-Usage - Update",
   dependantValue: [
     {
-      conditions: [{when: "subType",is:["aed","ccc","con","cwe"]}],
+      conditions: [{when: "subType",is:["aed","ccc","con","cwe","y28","y28c","y08","y08c","y09","y09c","y097","y097c","y098","y098c"]}],
       valueFrom: "",
     }, 
     {
@@ -1601,7 +1601,7 @@ export const _0lCreationAdditionUpdate: IField = {
   label: "0L-Creation/Addition - Update",
   dependantValue: [
     {
-      conditions: [{when: "subType",is:["aed","ccc","con","cwe"]}],
+      conditions: [{when: "subType",is:["aed","ccc","con","cwe","y07","y07c","y08","y08c","y27","y27c","y28","y28c"]}],
       valueFrom: "",
     }, 
     {
