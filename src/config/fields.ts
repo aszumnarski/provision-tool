@@ -1107,7 +1107,7 @@ export const _2lClosingBalanceUpdate: IField = {
   label: "2L-Closing Balance - Update",
   calculatedValue: {
     expression:
-      "Number(formValues['2lCarryFwd'] ?? 0) + Number(formValues['2lCreationAddition'] ?? 0) + Number(formValues['2lCreationAdditionUpdate'] ?? 0) - Number(formValues['2lUsage'] ?? 0) - Number(formValues['2lUsageUpdate'] ?? 0) - Number(formValues['2lRelease'] ?? 0) - Number(formValues['2lReleaseUpdate'] ?? 0)",
+      "Number(formValues['2lCarryFwd'] ?? 0) + Number(formValues['2lCreationAddition'] ?? 0) + ((formValues['subType'] ?? '') ? -Number(formValues['2lCreationAdditionUpdate'] ?? 0) : Number(formValues['2lCreationAdditionUpdate'] ?? 0)) - Number(formValues['2lUsage'] ?? 0) - ((formValues['subType'] ?? '') ? -Number(formValues['2lUsageUpdate'] ?? 0) : Number(formValues['2lUsageUpdate'] ?? 0)) - Number(formValues['2lRelease'] ?? 0) - ((formValues['subType'] ?? '') ? -Number(formValues['2lReleaseUpdate'] ?? 0) : Number(formValues['2lReleaseUpdate'] ?? 0))",
   },
   type: "number",
   patterns: [h.required()],
@@ -1425,7 +1425,7 @@ export const _0lClosingBalanceUpdate: IField = {
   label: "0L-Closing Balance - Update",
   calculatedValue: {
     expression:
-      "Number(formValues['0lCarryFwd'] ?? 0) + Number(formValues['0lCreationAddition'] ?? 0) + Number(formValues['0lCreationAdditionUpdate'] ?? 0) - Number(formValues['0lUsage'] ?? 0) - Number(formValues['0lUsageUpdate'] ?? 0) - Number(formValues['0lRelease'] ?? 0) - Number(formValues['0lReleaseUpdate'] ?? 0)",
+      "Number(formValues['0lCarryFwd'] ?? 0) + Number(formValues['0lCreationAddition'] ?? 0) + ((formValues['subType'] ?? '').includes['c'] ? -Number(formValues['0lCreationAdditionUpdate'] ?? 0) : Number(formValues['0lCreationAdditionUpdate'] ?? 0)) - Number(formValues['0lUsage'] ?? 0) - ((formValues['subType'] ?? '') ? -Number(formValues['0lUsageUpdate'] ?? 0) : Number(formValues['0lUsageUpdate'] ?? 0)) - Number(formValues['0lRelease'] ?? 0) - ((formValues['subType'] ?? '') ? -Number(formValues['0lReleaseUpdate'] ?? 0) : Number(formValues['0lReleaseUpdate'] ?? 0))",
   },
   type: "number",
   patterns: [h.required()],
