@@ -10,7 +10,7 @@ export function calculate2lClosingBalance(formValues: any) {
   let releaseUpdate = Number(formValues["2lReleaseUpdate"] ?? 0);
 
   const subType = formValues["subType"] ?? "";
-  if (subType) {
+  if (subType.includes("c")) {
     creationAdditionUpdate = -creationAdditionUpdate;
     usageUpdate = -usageUpdate;
     releaseUpdate = -releaseUpdate;
@@ -42,8 +42,6 @@ export function calculate0lClosingBalance(formValues: any) {
   const subType = formValues["subType"] ?? "";
   if (subType.includes("c")) {
     creationAdditionUpdate = -creationAdditionUpdate;
-  }
-  if (subType) {
     usageUpdate = -usageUpdate;
     releaseUpdate = -releaseUpdate;
   }
