@@ -9,8 +9,8 @@ import { Input } from "../Input/Input";
 import { DateInput } from "../Date/Date";
 import { Button } from "../Button/Button";
 import * as expressions from "../../utils/big-evals";
-export { expressions };
-
+//export { expressions };
+console.log({expressions});
 export type TAttachment = {
   fileName: string;
   fileData: File;
