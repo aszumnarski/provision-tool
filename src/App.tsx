@@ -8,6 +8,8 @@ import { Modal } from "./components/Modal/Modal";
 import type { IOption, TAttachment } from "./components/Field/Field";
 import { useFormValues } from "./utils/session-storage";
 
+declare const APP_VERSION: string;
+
 function App() {
   const [formValues, _setFormValues] = useState<Record<string, string> | {}>(
     {},
@@ -61,6 +63,7 @@ function App() {
           ""
         )}
         <Form rows={config.rows} />
+        <footer>Client version: {APP_VERSION}</footer>
       </div>
       <Modal />
       {isLoading ? <Loader /> : ""}
