@@ -1730,7 +1730,7 @@ export const description1: IField = {
   name: "description1",
   label: "Description 1 (Fixed Text)",
   type: "text",
-  maxlength: "45",
+  maxlength: "25",
   patterns: [h.required()],
   conditionalDisabled: h.inModifyState,
 };
@@ -1786,7 +1786,7 @@ export const postingPeriod: IField = {
 };
 
 export const postingDate: IField = {
-  initValue:"00010101",
+  initValue:"",
   name: "postingDate",
   label: "Posting Date",
   type: "date",
