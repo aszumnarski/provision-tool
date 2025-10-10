@@ -25,8 +25,8 @@ function App() {
     string
   > | null>(null);
 
-  const setFormValues = async (values: any) => {
-    const syncFormValues = useFormValues(values);
+  const setFormValues = async (values: any, shouldOverwrite?: boolean) => {
+    const syncFormValues = useFormValues(values, shouldOverwrite);
     //@ts-ignore
     await _setFormValues(syncFormValues);
   };
