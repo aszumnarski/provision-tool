@@ -12,13 +12,17 @@ const getSessionStorage = async (key: string) => {
   });
 };
 
-export const useFormValues = (values?: any) => {
+export const useFormValues = (values?: any, shouldOverwrite?: boolean) => {
   const key = "FORM_VALUES";
 
   if (values) {
     const old = sessionStorage.getItem(key);
     const parsed = old ? JSON.parse(old) : {};
-    sessionStorage.setItem(key, JSON.stringify({ ...parsed, ...values }));
+    if (shouldOverwrite) {
+      sessionStorage.setItem(key, JSON.stringify(values));
+    } else {
+      sessionStorage.setItem(key, JSON.stringify({ ...parsed, ...values }));
+    }
   }
 
   const updated = sessionStorage.getItem(key);

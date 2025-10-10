@@ -105,7 +105,7 @@ export const Button = (props: IField) => {
   };
 
   const resetForm = async () => {
-    await setFormValues(defaultValues);
+    await setFormValues(defaultValues, true);
     setAtt(null);
     setFormErrors({});
   };
