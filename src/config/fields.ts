@@ -2251,8 +2251,8 @@ export const glCreditAccount: IField = {
       ],
       options: [
         {
-          label: "68890027",
-          value: "68890027",
+          label: "68890007",
+          value: "68890007",
         },
       ],
     },
@@ -2263,8 +2263,8 @@ export const glCreditAccount: IField = {
       ],
       options: [
         {
-          label: "68890028",
-          value: "68890028",
+          label: "68890008",
+          value: "68890008",
         },
       ],
     },
@@ -2733,8 +2733,8 @@ export const glDebitAccount: IField = {
       ],
       options: [
         {
-          label: "68890027",
-          value: "68890027",
+          label: "68890007",
+          value: "68890007",
         },
       ],
     },
@@ -2745,8 +2745,8 @@ export const glDebitAccount: IField = {
       ],
       options: [
         {
-          label: "68890028",
-          value: "68890028",
+          label: "68890008",
+          value: "68890008",
         },
       ],
     },
