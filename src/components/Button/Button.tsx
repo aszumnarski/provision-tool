@@ -69,6 +69,7 @@ export const Button = (props: IField) => {
     if (res.data) {
       await setFormValues({ ...res.data });
       setFormErrors({});
+      await resetForm();
       if (res.data.status) {
         const content = {
           message: `Application <strong>${res.data.appNumber}</strong> is ${res.data.status}`,
