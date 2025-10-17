@@ -37,6 +37,7 @@ export const Input = (props: IField) => {
               ? Number(props.maxlength) || undefined
               : undefined
           }
+          onWheel={(e) => e.preventDefault()}
           value={props.value || ""}
           multiple={props.type === "file"}
         />
