@@ -2,7 +2,7 @@ import "./Input.css";
 import { type IField } from "../Field/Field";
 import { preventEnterSubmit } from "../../utils/keyboard-utils";
 import { preventArrowKeyIncrement } from "../../utils/keyboard-utils";
-
+import { handleWheel } from "../../utils/keyboard-utils";
 export const Input = (props: IField) => {
   const className = `field ${props.error ? "field--error" : ""}`;
   const counter =
@@ -37,6 +37,7 @@ export const Input = (props: IField) => {
               ? Number(props.maxlength) || undefined
               : undefined
           }
+          onWheel={handleWheel}
           value={props.value || ""}
           multiple={props.type === "file"}
         />
