@@ -2427,7 +2427,7 @@ export const glCreditAccount: IField = {
     {
       conditions: [
         { when: "provisionType", is: ["o71"] },
-        { when: "subType", is: ["27"] },
+        { when: "subType", is: ["y27"] },
       ],
       options: [
         {
@@ -2439,7 +2439,7 @@ export const glCreditAccount: IField = {
     {
       conditions: [
         { when: "provisionType", is: ["o71"] },
-        { when: "subType", is: ["28"] },
+        { when: "subType", is: ["y28"] },
       ],
       options: [
         {
@@ -2909,7 +2909,7 @@ export const glDebitAccount: IField = {
     {
       conditions: [
         { when: "provisionType", is: ["o71"] },
-        { when: "subType", is: ["27c"] },
+        { when: "subType", is: ["y27c"] },
       ],
       options: [
         {
@@ -2921,7 +2921,7 @@ export const glDebitAccount: IField = {
     {
       conditions: [
         { when: "provisionType", is: ["o71"] },
-        { when: "subType", is: ["28c"] },
+        { when: "subType", is: ["y28c"] },
       ],
       options: [
         {
