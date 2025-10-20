@@ -69,6 +69,11 @@ function validatePattern({
           ) > maximum
         : false;
     },
+    decimals: () => {
+      const maximum = Number(pattern.split("_")[1]);
+      const regex = new RegExp("^\\d+(\\.\\d{1," + maximum + "})?$");
+      return value && !regex.test(value);
+    },
     lt: () => {
       const fieldName = pattern.split("_")[1];
       const fieldValue = formValues[fieldName];

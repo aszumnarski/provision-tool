@@ -42,6 +42,13 @@ export const maxSize = (maxVal: number, optionalmessage?: string) => {
   };
 };
 
+export const decimals = (max: number) => {
+  return {
+    reg: `decimals_${max}`,
+    message: `There can't be more than ${max} decimal places!`,
+  };
+};
+
 export const inGetState = [
   {
     conditions: [

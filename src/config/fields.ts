@@ -1146,6 +1146,7 @@ export const _2lReleaseUpdate: IField = {
   patterns: [
     h.required("Not a proper number!"),
     h.empty("2lUsageUpdate,2lCreationAdditionUpdate", "LOCAL GAAP"),
+    h.decimals(2),
   ],
   conditionalDisabled: [
     ...h.inGetState,
@@ -1233,6 +1234,7 @@ export const _2lUsageUpdate: IField = {
   patterns: [
     h.required("Not a proper number!"),
     h.empty("2lCreationAdditionUpdate,2lReleaseUpdate", "LOCAL GAAP"),
+    h.decimals(2),
   ],
   conditionalDisabled: [
     ...h.inGetState,
@@ -1323,6 +1325,7 @@ export const _2lCreationAdditionUpdate: IField = {
   patterns: [
     h.required("Not a proper number!"),
     h.empty("2lUsageUpdate,2lReleaseUpdate", "LOCAL GAAP"),
+    h.decimals(2),
   ],
   conditionalDisabled: [
     ...h.inGetState,
@@ -1459,6 +1462,7 @@ export const _0lReleaseUpdate: IField = {
   patterns: [
     h.required("Not a proper number!"),
     h.empty("0lUsageUpdate,0lCreationAdditionUpdate", "IFRS"),
+    h.decimals(2),
   ],
   conditionalDisabled: [
     ...h.inGetState,
@@ -1535,6 +1539,7 @@ export const _0lUsageUpdate: IField = {
   patterns: [
     h.required("Not a proper number!"),
     h.empty("0lCreationAdditionUpdate,0lReleaseUpdate", "IFRS"),
+    h.decimals(2),
   ],
   conditionalDisabled: [
     ...h.inGetState,
@@ -1611,6 +1616,7 @@ export const _0lCreationAdditionUpdate: IField = {
   patterns: [
     h.required("Not a proper number!"),
     h.empty("0lUsageUpdate,0lReleaseUpdate", "IFRS"),
+    h.decimals(2),
   ],
   conditionalDisabled: [
     ...h.inGetState,
