@@ -2965,14 +2965,6 @@ export const ledgerGroup: IField = {
       conditions: [{ when: "companyCode", is: ["pl10"] }],
       options: [
         {
-          label: "0L = IFRS",
-          value: "0l",
-        },
-        {
-          label: "2L = Local",
-          value: "2l",
-        },
-        {
           label: "IL = IFRS + Local",
           value: "il",
         },
@@ -2984,22 +2976,6 @@ export const ledgerGroup: IField = {
         {
           label: "AL = IFRS + Local + Tax",
           value: "al",
-        },
-        {
-          label: "0L = IFRS",
-          value: "0l",
-        },
-        {
-          label: "2L = Local",
-          value: "2l",
-        },
-        {
-          label: "IL = IFRS + Local",
-          value: "il",
-        },
-        {
-          label: "0L, LT = Diff. values IFRS + Local/Tax",
-          value: "0l,lt",
         },
       ],
     },
