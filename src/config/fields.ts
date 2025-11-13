@@ -2977,6 +2977,10 @@ export const ledgerGroup: IField = {
           label: "AL = IFRS + Local + Tax",
           value: "al",
         },
+        {
+          label: "0L, LT = Diff. values IFRS + Local/Tax",
+          value: "0l,lt",
+        },
       ],
     },
   ],
