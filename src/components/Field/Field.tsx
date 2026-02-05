@@ -202,7 +202,7 @@ export const Field = (props: IField) => {
     };
 
     const getSum = () => {
-        if (!props.calculatedValue) return "a";
+        if (!props.calculatedValue) return "";
         if (props.calculatedValue.expression) return evalExpression();
         if (props.calculatedValue.date) return monthAddition();
         return "";
