@@ -1741,6 +1741,200 @@ export const description1: IField = {
   conditionalDisabled: h.inModifyState,
 };
 
+export const internalOrder: IField = {
+  name: "internalOrder",
+  label: "Internal Order",
+  type: "text",
+  patterns: [
+    h.required(
+      "This field is required when WBS Element or Sales Document or Sales Document Item are empty",
+    ),
+  ],
+  conditionalDisabled: [
+    ...h.inGetState,
+    {
+      conditions: [
+        {
+          when: "wbs",
+          is: true,
+        },
+      ],
+    },
+    {
+      conditions: [
+        {
+          when: "salesDocument",
+          is: true,
+        },
+      ],
+    },
+    {
+      conditions: [
+        {
+          when: "salesDocumentItem",
+          is: true,
+        },
+      ],
+    },
+    {
+      conditions: [
+        {
+          when: "mode",
+          is: "modify",
+        },
+        {
+          when: "subType",
+          is: "y07",
+        },
+      ],
+    },
+    {
+      conditions: [
+        {
+          when: "mode",
+          is: "modify",
+        },
+        {
+          when: "subType",
+          is: "y07c",
+        },
+      ],
+    },
+    {
+      conditions: [
+        {
+          when: "mode",
+          is: "modify",
+        },
+        {
+          when: "subType",
+          is: "y08",
+        },
+      ],
+    },
+    {
+      conditions: [
+        {
+          when: "mode",
+          is: "modify",
+        },
+        {
+          when: "subType",
+          is: "y08c",
+        },
+      ],
+    },
+    {
+      conditions: [
+        {
+          when: "mode",
+          is: "modify",
+        },
+        {
+          when: "subType",
+          is: "y09",
+        },
+      ],
+    },
+    {
+      conditions: [
+        {
+          when: "mode",
+          is: "modify",
+        },
+        {
+          when: "subType",
+          is: "y09c",
+        },
+      ],
+    },
+    {
+      conditions: [
+        {
+          when: "mode",
+          is: "modify",
+        },
+        {
+          when: "subType",
+          is: "y27",
+        },
+      ],
+    },
+    {
+      conditions: [
+        {
+          when: "mode",
+          is: "modify",
+        },
+        {
+          when: "subType",
+          is: "y27c",
+        },
+      ],
+    },
+    {
+      conditions: [
+        {
+          when: "mode",
+          is: "modify",
+        },
+        {
+          when: "subType",
+          is: "y28",
+        },
+      ],
+    },
+    {
+      conditions: [
+        {
+          when: "mode",
+          is: "modify",
+        },
+        {
+          when: "subType",
+          is: "y28c",
+        },
+      ],
+    },
+    {
+      conditions: [
+        {
+          when: "mode",
+          is: "modify",
+        },
+        {
+          when: "subType",
+          is: "aed",
+        },
+      ],
+    },
+    {
+      conditions: [
+        {
+          when: "mode",
+          is: "modify",
+        },
+        {
+          when: "subType",
+          is: "con",
+        },
+      ],
+    },
+    {
+      conditions: [
+        {
+          when: "mode",
+          is: "modify",
+        },
+        {
+          when: "subType",
+          is: "cwe",
+        },
+      ],
+    },
+  ],
+};
+
 export const localCurrency: IField = {
   name: "localCurrency",
   label: "Local Currency",
