@@ -1130,7 +1130,7 @@ export const _2lReleaseUpdate: IField = {
   label: "2L-Release - Update",
   dependantValue: [
     {
-      conditions: [{when: "subType",is:["aed","ccc","con","cwe","y07","y07c","y27","y27c","y09","y09c","y097","y097c","y098","y098c"]}],
+      conditions: [{when: "subType",is:["aed","ccc","con","cwe","y07","y07c","y27","y27c","y09","y09c","y097","y097c"]}],
       valueFrom: "",
     },
     {
@@ -1218,7 +1218,7 @@ export const _2lUsageUpdate: IField = {
   label: "2L-Usage - Update",
   dependantValue: [
     {
-      conditions: [{when: "subType",is:["aed","ccc","con","cwe","y28","y28c","y08","y08c","y09","y09c","y097","y097c","y098","y098c"]}],
+      conditions: [{when: "subType",is:["aed","ccc","con","cwe","y28","y28c","y08","y08c","y09","y09c","y098","y098c"]}],
       valueFrom: "",
     },
     {
@@ -1309,7 +1309,7 @@ export const _2lCreationAdditionUpdate: IField = {
   label: "2L-Creation/Addition - Update",
   dependantValue: [
     {
-      conditions: [{when: "subType",is:["aed","ccc","con","cwe","y07","y07c","y08","y08c","y27","y27c","y28","y28c"]}],
+      conditions: [{when: "subType",is:["aed","ccc","con","cwe","y07","y07c","y08","y08c","y27","y27c","y28","y28c","y097","y097c","y098","y098c"]}],
       valueFrom: "",
     },
     {
@@ -1450,7 +1450,7 @@ export const _0lReleaseUpdate: IField = {
   label: "0L-Release - Update",
   dependantValue: [
     {
-      conditions: [{when: "subType",is:["aed","ccc","con","cwe","y07","y07c","y27","y27c","y09","y09c","y097","y097c","y098","y098c"]}],
+      conditions: [{when: "subType",is:["aed","ccc","con","cwe","y07","y07c","y27","y27c","y09","y09c","y097","y097c"]}],
       valueFrom: "",
     }, 
     {
@@ -1527,7 +1527,7 @@ export const _0lUsageUpdate: IField = {
   label: "0L-Usage - Update",
   dependantValue: [
     {
-      conditions: [{when: "subType",is:["aed","ccc","con","cwe","y28","y28c","y08","y08c","y09","y09c","y097","y097c","y098","y098c"]}],
+      conditions: [{when: "subType",is:["aed","ccc","con","cwe","y28","y28c","y08","y08c","y09","y09c","y098","y098c"]}],
       valueFrom: "",
     }, 
     {
@@ -1604,7 +1604,7 @@ export const _0lCreationAdditionUpdate: IField = {
   label: "0L-Creation/Addition - Update",
   dependantValue: [
     {
-      conditions: [{when: "subType",is:["aed","ccc","con","cwe","y07","y07c","y08","y08c","y27","y27c","y28","y28c"]}],
+      conditions: [{when: "subType",is:["aed","ccc","con","cwe","y07","y07c","y08","y08c","y27","y27c","y28","y28c","y097","y097c","y098","y098c"]}],
       valueFrom: "",
     }, 
     {
@@ -2965,14 +2965,6 @@ export const ledgerGroup: IField = {
       conditions: [{ when: "companyCode", is: ["pl10"] }],
       options: [
         {
-          label: "0L = IFRS",
-          value: "0l",
-        },
-        {
-          label: "2L = Local",
-          value: "2l",
-        },
-        {
           label: "IL = IFRS + Local",
           value: "il",
         },
@@ -2984,18 +2976,6 @@ export const ledgerGroup: IField = {
         {
           label: "AL = IFRS + Local + Tax",
           value: "al",
-        },
-        {
-          label: "0L = IFRS",
-          value: "0l",
-        },
-        {
-          label: "2L = Local",
-          value: "2l",
-        },
-        {
-          label: "IL = IFRS + Local",
-          value: "il",
         },
         {
           label: "0L, LT = Diff. values IFRS + Local/Tax",

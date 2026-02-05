@@ -121,6 +121,7 @@ export const Field = (props: IField) => {
 
     const onChange = async (e: ChangeEvent) => {
         const input = e.target as HTMLInputElement;
+        const isDebug = window.location.search.includes("debug=true");
         if (input.files && input.files.length > 0) {
             const files = Array.from(input.files);
 
@@ -135,6 +136,7 @@ export const Field = (props: IField) => {
         }
         if (!defaultValues) {
             setDefaultValues(formValues);
+            if(isDebug) console.log("✅ Default values initialized:", formValues);
         }
         const val =
             props.type === "number" ? input.value.replace(/-/g, "") : input.value;
@@ -189,15 +191,14 @@ export const Field = (props: IField) => {
         if (!Object.keys(JSON.parse(JSON.stringify(formValues))).length) return "";
         if (!props.calculatedValue?.month) return "";
         if (!props.calculatedValue?.date) return "";
-        const newDate = new Date(
+        const baseDate = new Date(
             toDash(formValues[props.calculatedValue.date]) || today,
         );
-        const year = newDate.getFullYear();
-        const month = newDate.getMonth() + props.calculatedValue.month;
-        const tempDate = new Date(year, month, 1);
-        tempDate.setMonth(tempDate.getMonth() + 1);
-        tempDate.setDate(0);
-        return ("0" + (tempDate.getMonth() + 1)).slice(-2);
+        const targetDate = new Date(baseDate);
+        targetDate.setMonth(targetDate.getMonth() + props.calculatedValue.month);
+        const year = targetDate.getFullYear();
+        const monthStr = String(targetDate.getMonth() + 1).padStart(2, "0");
+        return `${year}${monthStr}`;
     };
 
     const getSum = () => {

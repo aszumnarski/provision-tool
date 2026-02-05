@@ -15,10 +15,11 @@ export const preventArrowKeyIncrement = (e: React.KeyboardEvent<HTMLInputElement
   
   export const handleWheel = (e: React.WheelEvent<HTMLInputElement>) => {
   if (document.activeElement === e.currentTarget) {
-    e.preventDefault();
-    e.currentTarget.blur();
+    //e.preventDefault();
+    const target = e.currentTarget;
+    target.blur();
     setTimeout(() => {
-      e.currentTarget.focus();
+      target.focus?.();
     }, 0);
   }
 };
