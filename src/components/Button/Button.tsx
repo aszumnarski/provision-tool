@@ -38,6 +38,8 @@ export const Button = (props: IField) => {
     dataset: { url: "/", query: "appno", init: "init" },
   };
 
+  const isDebug = window.location.search.includes("debug=true");
+
   const { url, query } = dataset;
 
   const post = async () => {
@@ -69,7 +71,9 @@ export const Button = (props: IField) => {
     if (res.data) {
       await resetForm();
       await setFormValues({ ...res.data });
-      setFormErrors({});
+      setFormErrors(isDebug? (formErrors: any) => {
+        return { ...formErrors, ...res.errors };
+      }:{});
       
       if (res.data.status) {
         const content = {
