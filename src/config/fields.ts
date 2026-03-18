@@ -66,6 +66,7 @@ export const subType: IField = {
         pSubTypes.ccc,
         pSubTypes.con,
         pSubTypes.cwe,
+        pSubTypes.cio,
       ],
     },
     {
@@ -89,6 +90,7 @@ export const subType: IField = {
         pSubTypes.ccc,
         pSubTypes.con,
         pSubTypes.cwe,
+        pSubTypes.cio,
       ],
     },
   ],
@@ -127,7 +129,7 @@ export const costCenter: IField = {
   type: "text",
   patterns: [
     h.required(
-      "This field is required when WBS Element or Sales Document or Sales Document Item are empty",
+      "This field is required when WBS Element or Sales Document or Sales Document Item or Internal Order are empty",
     ),
   ],
   conditionalDisabled: [
@@ -152,6 +154,14 @@ export const costCenter: IField = {
       conditions: [
         {
           when: "salesDocumentItem",
+          is: true,
+        },
+      ],
+    },
+    {
+      conditions: [
+        {
+          when: "internalOrder",
           is: true,
         },
       ],
@@ -309,6 +319,18 @@ export const costCenter: IField = {
         {
           when: "subType",
           is: "cwe",
+        },
+      ],
+    },
+    {
+      conditions: [
+        {
+          when: "mode",
+          is: "modify",
+        },
+        {
+          when: "subType",
+          is: "cio",
         },
       ],
     },
@@ -321,7 +343,7 @@ export const wbs: IField = {
   type: "text",
   patterns: [
     h.required(
-      "This field is required when Cost Center or Sales Document or Sales Document Item are empty",
+      "This field is required when Cost Center or Sales Document or Sales Document Item or Internal Order are empty",
     ),
   ],
   conditionalDisabled: [
@@ -346,6 +368,14 @@ export const wbs: IField = {
       conditions: [
         {
           when: "salesDocumentItem",
+          is: true,
+        },
+      ],
+    },
+    {
+      conditions: [
+        {
+          when: "internalOrder",
           is: true,
         },
       ],
@@ -506,6 +536,18 @@ export const wbs: IField = {
         },
       ],
     },
+    {
+      conditions: [
+        {
+          when: "mode",
+          is: "modify",
+        },
+        {
+          when: "subType",
+          is: "cio",
+        },
+      ],
+    },
   ],
 };
 
@@ -515,7 +557,7 @@ export const salesDocument: IField = {
   type: "text",
   patterns: [
     h.required(
-      "This field is required when Cost Center or WBS Element are empty",
+      "This field is required when Cost Center or WBS Element or Internal Order are empty",
     ),
   ],
   conditionalDisabled: [
@@ -532,6 +574,14 @@ export const salesDocument: IField = {
       conditions: [
         {
           when: "costCenter",
+          is: true,
+        },
+      ],
+    },
+    {
+      conditions: [
+        {
+          when: "internalOrder",
           is: true,
         },
       ],
@@ -689,6 +739,18 @@ export const salesDocument: IField = {
         {
           when: "subType",
           is: "cwe",
+        },
+      ],
+    },
+    {
+      conditions: [
+        {
+          when: "mode",
+          is: "modify",
+        },
+        {
+          when: "subType",
+          is: "cio",
         },
       ],
     },
@@ -701,7 +763,7 @@ export const salesDocumentItem: IField = {
   type: "text",
   patterns: [
     h.required(
-      "This field is required when Cost Center or WBS Element are empty",
+      "This field is required when Cost Center or WBS Element or Internal Order are empty",
     ),
   ],
   conditionalDisabled: [
@@ -718,6 +780,14 @@ export const salesDocumentItem: IField = {
       conditions: [
         {
           when: "costCenter",
+          is: true,
+        },
+      ],
+    },
+    {
+      conditions: [
+        {
+          when: "internalOrder",
           is: true,
         },
       ],
@@ -875,6 +945,18 @@ export const salesDocumentItem: IField = {
         {
           when: "subType",
           is: "cwe",
+        },
+      ],
+    },
+    {
+      conditions: [
+        {
+          when: "mode",
+          is: "modify",
+        },
+        {
+          when: "subType",
+          is: "cio",
         },
       ],
     },
@@ -1747,11 +1829,19 @@ export const internalOrder: IField = {
   type: "text",
   patterns: [
     h.required(
-      "This field is required when WBS Element or Sales Document or Sales Document Item are empty",
+      "This field is required when Cost Center or WBS Element or Sales Document or Sales Document Item are empty",
     ),
   ],
   conditionalDisabled: [
     ...h.inGetState,
+    {
+      conditions: [
+        {
+          when: "costCenter",
+          is: true,
+        },
+      ],
+    },
     {
       conditions: [
         {
@@ -1905,6 +1995,18 @@ export const internalOrder: IField = {
         {
           when: "subType",
           is: "aed",
+        },
+      ],
+    },
+    {
+      conditions: [
+        {
+          when: "mode",
+          is: "modify",
+        },
+        {
+          when: "subType",
+          is: "ccc",
         },
       ],
     },
