@@ -79,6 +79,6 @@ export const y09 = {
     value: "cwe",
   }
   export const cio = {
-    label: "Change in Internal Order",
+    label: "Change in Order",
     value: "cio",
   }
