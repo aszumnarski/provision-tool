@@ -1825,7 +1825,7 @@ export const description1: IField = {
 
 export const internalOrder: IField = {
   name: "internalOrder",
-  label: "Internal Order",
+  label: "Order",
   type: "text",
   patterns: [
     h.required(
