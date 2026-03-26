@@ -2291,6 +2291,18 @@ export const appEndDate: IField = {
         },
       ],
     },
+    {
+      conditions: [
+        {
+          when: "mode",
+          is: "modify",
+        },
+        {
+          when: "subType",
+          is: "cio",
+        },
+      ],
+    },
   ],
 };
 
