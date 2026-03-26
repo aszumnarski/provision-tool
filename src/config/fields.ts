@@ -1023,7 +1023,7 @@ export const tlReleaseUpdate: IField = {
   label: "TL-Release - Update",
   dependantValue: [
     {
-      conditions: [{when: "subType",is:["aed","ccc","con","cwe"]}],
+      conditions: [{when: "subType",is:["aed","ccc","con","cwe","cio"]}],
       valueFrom: "",
     },   
     {
@@ -1071,7 +1071,7 @@ export const tlUsageUpdate: IField = {
   label: "TL-Usage - Update",
   dependantValue: [
     {
-      conditions: [{when: "subType",is:["aed","ccc","con","cwe"]}],
+      conditions: [{when: "subType",is:["aed","ccc","con","cwe","cio"]}],
       valueFrom: "",
     },   
     {
@@ -1119,7 +1119,7 @@ export const tlCreationAdditionUpdate: IField = {
   label: "TL-Creation/Addition - Update",
   dependantValue: [
     {
-      conditions: [{when: "subType",is:["aed","ccc","con","cwe"]}],
+      conditions: [{when: "subType",is:["aed","ccc","con","cwe","cio"]}],
       valueFrom: "",
     },   
     {
@@ -1212,7 +1212,7 @@ export const _2lReleaseUpdate: IField = {
   label: "2L-Release - Update",
   dependantValue: [
     {
-      conditions: [{when: "subType",is:["aed","ccc","con","cwe","y07","y07c","y27","y27c","y09","y09c","y097","y097c"]}],
+      conditions: [{when: "subType",is:["aed","ccc","con","cwe","cio","y07","y07c","y27","y27c","y09","y09c","y097","y097c"]}],
       valueFrom: "",
     },
     {
@@ -1274,6 +1274,9 @@ export const _2lReleaseUpdate: IField = {
     {
       conditions: [{ when: "subType", is: "cwe" }],
     },
+    {
+      conditions: [{ when: "subType", is: "cio" }],
+    },
   ],
 };
 
@@ -1300,7 +1303,7 @@ export const _2lUsageUpdate: IField = {
   label: "2L-Usage - Update",
   dependantValue: [
     {
-      conditions: [{when: "subType",is:["aed","ccc","con","cwe","y28","y28c","y08","y08c","y09","y09c","y098","y098c"]}],
+      conditions: [{when: "subType",is:["aed","ccc","con","cwe","cio","y28","y28c","y08","y08c","y09","y09c","y098","y098c"]}],
       valueFrom: "",
     },
     {
@@ -1365,6 +1368,9 @@ export const _2lUsageUpdate: IField = {
     {
       conditions: [{ when: "subType", is: "cwe" }],
     },
+    {
+      conditions: [{ when: "subType", is: "cio" }],
+    },
   ],
 };
 
@@ -1391,7 +1397,7 @@ export const _2lCreationAdditionUpdate: IField = {
   label: "2L-Creation/Addition - Update",
   dependantValue: [
     {
-      conditions: [{when: "subType",is:["aed","ccc","con","cwe","y07","y07c","y08","y08c","y27","y27c","y28","y28c","y097","y097c","y098","y098c"]}],
+      conditions: [{when: "subType",is:["aed","ccc","con","cwe","cio","y07","y07c","y08","y08c","y27","y27c","y28","y28c","y097","y097c","y098","y098c"]}],
       valueFrom: "",
     },
     {
@@ -1465,6 +1471,9 @@ export const _2lCreationAdditionUpdate: IField = {
     {
       conditions: [{ when: "subType", is: "cwe" }],
     },
+    {
+      conditions: [{ when: "subType", is: "cio" }],
+    },
   ],
 };
 
@@ -1532,7 +1541,7 @@ export const _0lReleaseUpdate: IField = {
   label: "0L-Release - Update",
   dependantValue: [
     {
-      conditions: [{when: "subType",is:["aed","ccc","con","cwe","y07","y07c","y27","y27c","y09","y09c","y097","y097c"]}],
+      conditions: [{when: "subType",is:["aed","ccc","con","cwe","cio","y07","y07c","y27","y27c","y09","y09c","y097","y097c"]}],
       valueFrom: "",
     }, 
     {
@@ -1587,6 +1596,9 @@ export const _0lReleaseUpdate: IField = {
     {
       conditions: [{ when: "subType", is: "cwe" }],
     },
+    {
+      conditions: [{ when: "subType", is: "cio" }],
+    },
   ],
 };
 
@@ -1609,7 +1621,7 @@ export const _0lUsageUpdate: IField = {
   label: "0L-Usage - Update",
   dependantValue: [
     {
-      conditions: [{when: "subType",is:["aed","ccc","con","cwe","y28","y28c","y08","y08c","y09","y09c","y098","y098c"]}],
+      conditions: [{when: "subType",is:["aed","ccc","con","cwe","cio","y28","y28c","y08","y08c","y09","y09c","y098","y098c"]}],
       valueFrom: "",
     }, 
     {
@@ -1664,6 +1676,9 @@ export const _0lUsageUpdate: IField = {
     {
       conditions: [{ when: "subType", is: "cwe" }],
     },
+    {
+      conditions: [{ when: "subType", is: "cio" }],
+    },
   ],
 };
 
@@ -1686,7 +1701,7 @@ export const _0lCreationAdditionUpdate: IField = {
   label: "0L-Creation/Addition - Update",
   dependantValue: [
     {
-      conditions: [{when: "subType",is:["aed","ccc","con","cwe","y07","y07c","y08","y08c","y27","y27c","y28","y28c","y097","y097c","y098","y098c"]}],
+      conditions: [{when: "subType",is:["aed","ccc","con","cwe","cio","y07","y07c","y08","y08c","y27","y27c","y28","y28c","y097","y097c","y098","y098c"]}],
       valueFrom: "",
     }, 
     {
@@ -1752,6 +1767,9 @@ export const _0lCreationAdditionUpdate: IField = {
     },
     {
       conditions: [{ when: "subType", is: "cwe" }],
+    },
+    {
+      conditions: [{ when: "subType", is: "cio" }],
     },
   ],
 };
