@@ -16,6 +16,7 @@ export const left = {
     f.glCreditAccount,
     f.appStartDate,
     f.appEndDate,
+    f.localCurrency,
   ],
 };
 
@@ -25,10 +26,10 @@ export const middle = {
     f.wbs,
     f.salesDocument,
     f.salesDocumentItem,
+    f.internalOrder,
     f.postingDate,
     f.postingPeriod,
     f.documentDate,
-    f.localCurrency,
   ],
 };
 

@@ -66,6 +66,7 @@ export const subType: IField = {
         pSubTypes.ccc,
         pSubTypes.con,
         pSubTypes.cwe,
+        pSubTypes.cio,
       ],
     },
     {
@@ -89,6 +90,7 @@ export const subType: IField = {
         pSubTypes.ccc,
         pSubTypes.con,
         pSubTypes.cwe,
+        pSubTypes.cio,
       ],
     },
   ],
@@ -127,7 +129,7 @@ export const costCenter: IField = {
   type: "text",
   patterns: [
     h.required(
-      "This field is required when WBS Element or Sales Document or Sales Document Item are empty",
+      "This field is required when WBS Element or Sales Document or Sales Document Item or Internal Order are empty",
     ),
   ],
   conditionalDisabled: [
@@ -152,6 +154,14 @@ export const costCenter: IField = {
       conditions: [
         {
           when: "salesDocumentItem",
+          is: true,
+        },
+      ],
+    },
+    {
+      conditions: [
+        {
+          when: "internalOrder",
           is: true,
         },
       ],
@@ -309,6 +319,18 @@ export const costCenter: IField = {
         {
           when: "subType",
           is: "cwe",
+        },
+      ],
+    },
+    {
+      conditions: [
+        {
+          when: "mode",
+          is: "modify",
+        },
+        {
+          when: "subType",
+          is: "cio",
         },
       ],
     },
@@ -321,7 +343,7 @@ export const wbs: IField = {
   type: "text",
   patterns: [
     h.required(
-      "This field is required when Cost Center or Sales Document or Sales Document Item are empty",
+      "This field is required when Cost Center or Sales Document or Sales Document Item or Internal Order are empty",
     ),
   ],
   conditionalDisabled: [
@@ -346,6 +368,14 @@ export const wbs: IField = {
       conditions: [
         {
           when: "salesDocumentItem",
+          is: true,
+        },
+      ],
+    },
+    {
+      conditions: [
+        {
+          when: "internalOrder",
           is: true,
         },
       ],
@@ -506,6 +536,18 @@ export const wbs: IField = {
         },
       ],
     },
+    {
+      conditions: [
+        {
+          when: "mode",
+          is: "modify",
+        },
+        {
+          when: "subType",
+          is: "cio",
+        },
+      ],
+    },
   ],
 };
 
@@ -515,7 +557,7 @@ export const salesDocument: IField = {
   type: "text",
   patterns: [
     h.required(
-      "This field is required when Cost Center or WBS Element are empty",
+      "This field is required when Cost Center or WBS Element or Internal Order are empty",
     ),
   ],
   conditionalDisabled: [
@@ -532,6 +574,14 @@ export const salesDocument: IField = {
       conditions: [
         {
           when: "costCenter",
+          is: true,
+        },
+      ],
+    },
+    {
+      conditions: [
+        {
+          when: "internalOrder",
           is: true,
         },
       ],
@@ -689,6 +739,18 @@ export const salesDocument: IField = {
         {
           when: "subType",
           is: "cwe",
+        },
+      ],
+    },
+    {
+      conditions: [
+        {
+          when: "mode",
+          is: "modify",
+        },
+        {
+          when: "subType",
+          is: "cio",
         },
       ],
     },
@@ -701,7 +763,7 @@ export const salesDocumentItem: IField = {
   type: "text",
   patterns: [
     h.required(
-      "This field is required when Cost Center or WBS Element are empty",
+      "This field is required when Cost Center or WBS Element or Internal Order are empty",
     ),
   ],
   conditionalDisabled: [
@@ -718,6 +780,14 @@ export const salesDocumentItem: IField = {
       conditions: [
         {
           when: "costCenter",
+          is: true,
+        },
+      ],
+    },
+    {
+      conditions: [
+        {
+          when: "internalOrder",
           is: true,
         },
       ],
@@ -875,6 +945,18 @@ export const salesDocumentItem: IField = {
         {
           when: "subType",
           is: "cwe",
+        },
+      ],
+    },
+    {
+      conditions: [
+        {
+          when: "mode",
+          is: "modify",
+        },
+        {
+          when: "subType",
+          is: "cio",
         },
       ],
     },
@@ -941,7 +1023,7 @@ export const tlReleaseUpdate: IField = {
   label: "TL-Release - Update",
   dependantValue: [
     {
-      conditions: [{when: "subType",is:["aed","ccc","con","cwe"]}],
+      conditions: [{when: "subType",is:["aed","ccc","con","cwe","cio"]}],
       valueFrom: "",
     },   
     {
@@ -989,7 +1071,7 @@ export const tlUsageUpdate: IField = {
   label: "TL-Usage - Update",
   dependantValue: [
     {
-      conditions: [{when: "subType",is:["aed","ccc","con","cwe"]}],
+      conditions: [{when: "subType",is:["aed","ccc","con","cwe","cio"]}],
       valueFrom: "",
     },   
     {
@@ -1037,7 +1119,7 @@ export const tlCreationAdditionUpdate: IField = {
   label: "TL-Creation/Addition - Update",
   dependantValue: [
     {
-      conditions: [{when: "subType",is:["aed","ccc","con","cwe"]}],
+      conditions: [{when: "subType",is:["aed","ccc","con","cwe","cio"]}],
       valueFrom: "",
     },   
     {
@@ -1130,7 +1212,7 @@ export const _2lReleaseUpdate: IField = {
   label: "2L-Release - Update",
   dependantValue: [
     {
-      conditions: [{when: "subType",is:["aed","ccc","con","cwe","y07","y07c","y27","y27c","y09","y09c","y097","y097c"]}],
+      conditions: [{when: "subType",is:["aed","ccc","con","cwe","cio","y07","y07c","y27","y27c","y09","y09c","y097","y097c"]}],
       valueFrom: "",
     },
     {
@@ -1192,6 +1274,9 @@ export const _2lReleaseUpdate: IField = {
     {
       conditions: [{ when: "subType", is: "cwe" }],
     },
+    {
+      conditions: [{ when: "subType", is: "cio" }],
+    },
   ],
 };
 
@@ -1218,7 +1303,7 @@ export const _2lUsageUpdate: IField = {
   label: "2L-Usage - Update",
   dependantValue: [
     {
-      conditions: [{when: "subType",is:["aed","ccc","con","cwe","y28","y28c","y08","y08c","y09","y09c","y098","y098c"]}],
+      conditions: [{when: "subType",is:["aed","ccc","con","cwe","cio","y28","y28c","y08","y08c","y09","y09c","y098","y098c"]}],
       valueFrom: "",
     },
     {
@@ -1283,6 +1368,9 @@ export const _2lUsageUpdate: IField = {
     {
       conditions: [{ when: "subType", is: "cwe" }],
     },
+    {
+      conditions: [{ when: "subType", is: "cio" }],
+    },
   ],
 };
 
@@ -1309,7 +1397,7 @@ export const _2lCreationAdditionUpdate: IField = {
   label: "2L-Creation/Addition - Update",
   dependantValue: [
     {
-      conditions: [{when: "subType",is:["aed","ccc","con","cwe","y07","y07c","y08","y08c","y27","y27c","y28","y28c","y097","y097c","y098","y098c"]}],
+      conditions: [{when: "subType",is:["aed","ccc","con","cwe","cio","y07","y07c","y08","y08c","y27","y27c","y28","y28c","y097","y097c","y098","y098c"]}],
       valueFrom: "",
     },
     {
@@ -1383,6 +1471,9 @@ export const _2lCreationAdditionUpdate: IField = {
     {
       conditions: [{ when: "subType", is: "cwe" }],
     },
+    {
+      conditions: [{ when: "subType", is: "cio" }],
+    },
   ],
 };
 
@@ -1450,7 +1541,7 @@ export const _0lReleaseUpdate: IField = {
   label: "0L-Release - Update",
   dependantValue: [
     {
-      conditions: [{when: "subType",is:["aed","ccc","con","cwe","y07","y07c","y27","y27c","y09","y09c","y097","y097c"]}],
+      conditions: [{when: "subType",is:["aed","ccc","con","cwe","cio","y07","y07c","y27","y27c","y09","y09c","y097","y097c"]}],
       valueFrom: "",
     }, 
     {
@@ -1505,6 +1596,9 @@ export const _0lReleaseUpdate: IField = {
     {
       conditions: [{ when: "subType", is: "cwe" }],
     },
+    {
+      conditions: [{ when: "subType", is: "cio" }],
+    },
   ],
 };
 
@@ -1527,7 +1621,7 @@ export const _0lUsageUpdate: IField = {
   label: "0L-Usage - Update",
   dependantValue: [
     {
-      conditions: [{when: "subType",is:["aed","ccc","con","cwe","y28","y28c","y08","y08c","y09","y09c","y098","y098c"]}],
+      conditions: [{when: "subType",is:["aed","ccc","con","cwe","cio","y28","y28c","y08","y08c","y09","y09c","y098","y098c"]}],
       valueFrom: "",
     }, 
     {
@@ -1582,6 +1676,9 @@ export const _0lUsageUpdate: IField = {
     {
       conditions: [{ when: "subType", is: "cwe" }],
     },
+    {
+      conditions: [{ when: "subType", is: "cio" }],
+    },
   ],
 };
 
@@ -1604,7 +1701,7 @@ export const _0lCreationAdditionUpdate: IField = {
   label: "0L-Creation/Addition - Update",
   dependantValue: [
     {
-      conditions: [{when: "subType",is:["aed","ccc","con","cwe","y07","y07c","y08","y08c","y27","y27c","y28","y28c","y097","y097c","y098","y098c"]}],
+      conditions: [{when: "subType",is:["aed","ccc","con","cwe","cio","y07","y07c","y08","y08c","y27","y27c","y28","y28c","y097","y097c","y098","y098c"]}],
       valueFrom: "",
     }, 
     {
@@ -1670,6 +1767,9 @@ export const _0lCreationAdditionUpdate: IField = {
     },
     {
       conditions: [{ when: "subType", is: "cwe" }],
+    },
+    {
+      conditions: [{ when: "subType", is: "cio" }],
     },
   ],
 };
@@ -1739,6 +1839,220 @@ export const description1: IField = {
   maxlength: "25",
   patterns: [h.required()],
   conditionalDisabled: h.inModifyState,
+};
+
+export const internalOrder: IField = {
+  name: "internalOrder",
+  label: "Order",
+  type: "text",
+  patterns: [
+    h.required(
+      "This field is required when Cost Center or WBS Element or Sales Document or Sales Document Item are empty",
+    ),
+  ],
+  conditionalDisabled: [
+    ...h.inGetState,
+    {
+      conditions: [
+        {
+          when: "costCenter",
+          is: true,
+        },
+      ],
+    },
+    {
+      conditions: [
+        {
+          when: "wbs",
+          is: true,
+        },
+      ],
+    },
+    {
+      conditions: [
+        {
+          when: "salesDocument",
+          is: true,
+        },
+      ],
+    },
+    {
+      conditions: [
+        {
+          when: "salesDocumentItem",
+          is: true,
+        },
+      ],
+    },
+    {
+      conditions: [
+        {
+          when: "mode",
+          is: "modify",
+        },
+        {
+          when: "subType",
+          is: "y07",
+        },
+      ],
+    },
+    {
+      conditions: [
+        {
+          when: "mode",
+          is: "modify",
+        },
+        {
+          when: "subType",
+          is: "y07c",
+        },
+      ],
+    },
+    {
+      conditions: [
+        {
+          when: "mode",
+          is: "modify",
+        },
+        {
+          when: "subType",
+          is: "y08",
+        },
+      ],
+    },
+    {
+      conditions: [
+        {
+          when: "mode",
+          is: "modify",
+        },
+        {
+          when: "subType",
+          is: "y08c",
+        },
+      ],
+    },
+    {
+      conditions: [
+        {
+          when: "mode",
+          is: "modify",
+        },
+        {
+          when: "subType",
+          is: "y09",
+        },
+      ],
+    },
+    {
+      conditions: [
+        {
+          when: "mode",
+          is: "modify",
+        },
+        {
+          when: "subType",
+          is: "y09c",
+        },
+      ],
+    },
+    {
+      conditions: [
+        {
+          when: "mode",
+          is: "modify",
+        },
+        {
+          when: "subType",
+          is: "y27",
+        },
+      ],
+    },
+    {
+      conditions: [
+        {
+          when: "mode",
+          is: "modify",
+        },
+        {
+          when: "subType",
+          is: "y27c",
+        },
+      ],
+    },
+    {
+      conditions: [
+        {
+          when: "mode",
+          is: "modify",
+        },
+        {
+          when: "subType",
+          is: "y28",
+        },
+      ],
+    },
+    {
+      conditions: [
+        {
+          when: "mode",
+          is: "modify",
+        },
+        {
+          when: "subType",
+          is: "y28c",
+        },
+      ],
+    },
+    {
+      conditions: [
+        {
+          when: "mode",
+          is: "modify",
+        },
+        {
+          when: "subType",
+          is: "aed",
+        },
+      ],
+    },
+    {
+      conditions: [
+        {
+          when: "mode",
+          is: "modify",
+        },
+        {
+          when: "subType",
+          is: "ccc",
+        },
+      ],
+    },
+    {
+      conditions: [
+        {
+          when: "mode",
+          is: "modify",
+        },
+        {
+          when: "subType",
+          is: "con",
+        },
+      ],
+    },
+    {
+      conditions: [
+        {
+          when: "mode",
+          is: "modify",
+        },
+        {
+          when: "subType",
+          is: "cwe",
+        },
+      ],
+    },
+  ],
 };
 
 export const localCurrency: IField = {
@@ -1974,6 +2288,18 @@ export const appEndDate: IField = {
         {
           when: "subType",
           is: "cwe",
+        },
+      ],
+    },
+    {
+      conditions: [
+        {
+          when: "mode",
+          is: "modify",
+        },
+        {
+          when: "subType",
+          is: "cio",
         },
       ],
     },
