@@ -47,6 +47,17 @@ export const Button = (props: IField) => {
     if (res.errors) {
       return setFormErrors(res.errors);
     }
+    const defaultMessage = `Application <strong>${res.data.appNumber}</strong> is waiting for approval`;
+    const message = res.data.message || defaultMessage;
+    if (res.data.locked) {
+      const content = {
+        message,
+        type: "error",
+      };
+      setModalContent(content);
+      await resetForm();
+      return;
+    }
     if (res.data) {
       const content = {
         message: `Application <strong>${res.data.appNumber}</strong> was ${
@@ -59,43 +70,30 @@ export const Button = (props: IField) => {
     }
   };
 
-  const handleGet = async (
-    e: React.MouseEvent<HTMLButtonElement>,
-    appNumberOverride?: string
-  ) => {
+  const handleGet = async (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
-
-    const appNumber = appNumberOverride ?? formValues.appNumberImport;
-    const res = await getData(`${url}&${query}=${appNumber}`);
+    const appNumberImport = formValues.appNumberImport;
+    const res = await getData(`${url}&${query}=${appNumberImport}`);
 
     if (res.data) {
       await resetForm();
-      await setFormValues({ ...res.data });
+
+      const { locked } = res.data;
+
+      await setFormValues({
+        ...res.data,
+        appNumberImport: `${locked ? appNumberImport : ""}`,
+      });
       if (res.errors && isDebug) {
         return setFormErrors(res.errors);
       } else {
         setFormErrors({});
-      }
-
-      if (res.data.status) {
-        const content = {
-          message: `Application <strong>${res.data.appNumber}</strong> is ${res.data.status}`,
-          type: "info",
-        };
-        setModalContent(content);
-        await resetForm();
       }
     } else {
       setFormErrors((formErrors: any) => {
         return { ...formErrors, ...res.errors };
       });
     }
-  };
-
-  const handleRefresh: MouseEventHandler<HTMLButtonElement> = async (e) => {
-    e.preventDefault();
-
-    handleGet(e, formValues.appNumber.split("-")[0]);
   };
 
   const handlePost: MouseEventHandler<HTMLButtonElement> = async (e) => {
@@ -126,7 +124,6 @@ export const Button = (props: IField) => {
     CREATE: { label: "CREATE", onClick: handlePost },
     UPDATE: { label: "UPDATE", onClick: handlePost },
     GET: { label: "GET", onClick: handleGet },
-    REFRESH: { label: "REFRESH", onClick: handleRefresh },
   };
 
   const getState = () => {
@@ -135,17 +132,9 @@ export const Button = (props: IField) => {
     if (
       formValues.mode === "modify" &&
       !formValues.appNumberImport &&
-      formValues.appNumber &&
-      !formValues.appNumber.includes("-")
+      formValues.appNumber
     )
       return states.UPDATE;
-    if (
-      formValues.mode === "modify" &&
-      !formValues.appNumberImport &&
-      formValues.appNumber &&
-      formValues.appNumber.includes("-")
-    )
-      return states.REFRESH;
     return states.GET;
   };
 
@@ -154,11 +143,13 @@ export const Button = (props: IField) => {
     try {
       const response = await fetch(url);
       if (!response.ok) {
-        throw new Error(`Response status: ${response.status}`);
+        throw new Error(`Response failed`);
       }
 
       const data = await response.json();
-      return { ...data, mode: "modify" };
+      return {
+        ...data,
+      };
     } catch (error: any) {
       console.error(error.message);
       setModalContent({

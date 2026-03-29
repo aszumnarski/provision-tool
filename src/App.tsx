@@ -33,6 +33,10 @@ function App() {
 
   const body = document.querySelector("body");
   const imgSource = body && body.dataset?.logo;
+  //@ts-ignore
+  const { appNumber, message, locked } = formValues;
+  const defaultMessage = `Application ${appNumber} is waiting for approval.`;
+  const headerMessage = message || defaultMessage;
   return (
     <FormContext.Provider
       value={{
@@ -55,13 +59,16 @@ function App() {
       }}
     >
       <div className="app" inert={isLoading || !!modalContent}>
-        {imgSource ? (
-          <div className="logo">
-            <img className="logo__pic" src={imgSource || ""} alt="logo" />
-          </div>
-        ) : (
-          ""
-        )}
+        <div className="app-header">
+          {imgSource ? (
+            <div className="logo">
+              <img className="logo__pic" src={imgSource || ""} alt="logo" />
+            </div>
+          ) : (
+            ""
+          )}
+          <div className="header-alert">{locked ? headerMessage : ""}</div>
+        </div>
         <Form rows={config.rows} />
         <footer>Client version: {APP_VERSION}</footer>
       </div>
