@@ -33,6 +33,10 @@ function App() {
 
   const body = document.querySelector("body");
   const imgSource = body && body.dataset?.logo;
+  //@ts-ignore
+  const { appNumber, message, locked } = formValues;
+  const defaultMessage = `Application ${appNumber} is waiting for approval.`;
+  const headerMessage = message || defaultMessage;
   return (
     <FormContext.Provider
       value={{
@@ -63,9 +67,7 @@ function App() {
           ) : (
             ""
           )}
-          <div className="header-alert">
-            This "THINGY" is waiting for approval. Try again later, ma nigga.
-          </div>
+          <div className="header-alert">{locked ? headerMessage : ""}</div>
         </div>
         <Form rows={config.rows} />
         <footer>Client version: {APP_VERSION}</footer>

@@ -63,6 +63,8 @@ export function Form({ rows }: IForm) {
       ...createFormState(rows, "initValue"),
       user: res.data.user,
       appCreator: res.data.user,
+      locked: false,
+      message: "",
     };
     await setFormValues(initialState);
     setPatterns(createFormState(rows, "patterns"));

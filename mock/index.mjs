@@ -19,7 +19,7 @@ const DELAY_IN_SECONDS = 0;
 const LOCKED_GET_RESPONSE = {
   data: {
     locked: true,
-    message: "waiting for approval!",
+    message: "Application 666 is waiting for approval!!!",
     mode: "modify",
     appNumberImport: "",
     submitButton: "",
@@ -81,7 +81,7 @@ const LOCKED_GET_RESPONSE = {
 const LOCKED_POST_RESPONSE = {
   data: {
     locked: true,
-    message: "waiting for approval!",
+    message: "Application <strong>10</strong> is waiting for approval!!!",
     appNumber: "10",
   },
 };
