@@ -61,7 +61,7 @@ export const Button = (props: IField) => {
 
   const handleGet = async (
     e: React.MouseEvent<HTMLButtonElement>,
-    appNumberOverride?: string
+    appNumberOverride?: string,
   ) => {
     e.preventDefault();
 
@@ -135,8 +135,7 @@ export const Button = (props: IField) => {
     if (
       formValues.mode === "modify" &&
       !formValues.appNumberImport &&
-      formValues.appNumber &&
-      !formValues.appNumber.includes("-")
+      formValues.appNumber
     )
       return states.UPDATE;
     if (
@@ -158,7 +157,8 @@ export const Button = (props: IField) => {
       }
 
       const data = await response.json();
-      return { ...data, mode: "modify" };
+      console.log({ data }, "k");
+      return { ...data, mode: "locked" };
     } catch (error: any) {
       console.error(error.message);
       setModalContent({

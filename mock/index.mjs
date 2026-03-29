@@ -16,9 +16,10 @@ const data = () => {
   };
 };
 const DELAY_IN_SECONDS = 0;
-const RESPONSE_WITH_STATUS = {
+const LOCKED_GET_RESPONSE = {
   data: {
-    status: "waiting for approval!",
+    locked: true,
+    message: "waiting for approval!",
     mode: "modify",
     appNumberImport: "",
     submitButton: "",
@@ -76,6 +77,15 @@ const RESPONSE_WITH_STATUS = {
     attachment: "",
   },
 };
+
+const LOCKED_POST_RESPONSE = {
+  data: {
+    locked: true,
+    message: "waiting for approval!",
+    appNumber: "10",
+  },
+};
+
 const app = express();
 const port = 6060;
 app.use(cors());
@@ -91,7 +101,7 @@ app.get("/protool", (req, res) => {
 
   if (appno === "init") return res.json(data()[appno]);
 
-  if (appno === "666") return res.json(RESPONSE_WITH_STATUS);
+  if (appno === "666") return res.json(LOCKED_GET_RESPONSE);
 
   const record = getRecordFor(appno);
   const response = record
@@ -162,6 +172,8 @@ function validate(data) {
 
 app.post("/protool", multer().none(), (req, res) => {
   const data = JSON.parse(req.body.json);
+  const { appNumber } = data;
+  if (appNumber === "10") return res.json(LOCKED_POST_RESPONSE);
   const errors = validate(data);
   if (Object.keys(errors).length) return res.json({ errors });
   const response = mutateDb(data);

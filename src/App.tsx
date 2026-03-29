@@ -55,13 +55,18 @@ function App() {
       }}
     >
       <div className="app" inert={isLoading || !!modalContent}>
-        {imgSource ? (
-          <div className="logo">
-            <img className="logo__pic" src={imgSource || ""} alt="logo" />
+        <div className="app-header">
+          {imgSource ? (
+            <div className="logo">
+              <img className="logo__pic" src={imgSource || ""} alt="logo" />
+            </div>
+          ) : (
+            ""
+          )}
+          <div className="header-alert">
+            This "THINGY" is waiting for approval. Try again later, ma nigga.
           </div>
-        ) : (
-          ""
-        )}
+        </div>
         <Form rows={config.rows} />
         <footer>Client version: {APP_VERSION}</footer>
       </div>
