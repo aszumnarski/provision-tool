@@ -13,6 +13,16 @@ img.logo__pic {
   height: 50px;
   margin-bottom: 20px;
 }
-footer{
-    text-align: right;
+footer {
+  text-align: right;
+}
+.app-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.header-alert {
+  color: tomato;
+  font-weight: bold;
+  font-size: 20px;
 }
