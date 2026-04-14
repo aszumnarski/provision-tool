@@ -2000,6 +2000,18 @@ export const internalOrder: IField = {
         },
         {
           when: "subType",
+          is: "y09c",
+        },
+      ],
+    },
+    {
+      conditions: [
+        {
+          when: "mode",
+          is: "modify",
+        },
+        {
+          when: "subType",
           is: "y27",
         },
       ],
