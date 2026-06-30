@@ -12,22 +12,9 @@ export const Column = (column: IColumn) => {
   return (
     <div className="column">
       {header ? <h3 className="column-header">{header}</h3> : ""}
+
       {fields.map((f) => (
-        <Field
-          name={f.name}
-          type={f.type}
-          key={f.name}
-          label={f.label}
-          maxlength={f.maxlength}
-          initValue={f.initValue}
-          patterns={f.patterns}
-          disabled={f.disabled}
-          options={f.options}
-          calculatedValue={f.calculatedValue}
-          conditionalDisabled={f.conditionalDisabled}
-          dependentOptions={f.dependentOptions}
-          dependantValue={f.dependantValue}
-        />
+        <Field key={f.name} {...f} />
       ))}
     </div>
   );

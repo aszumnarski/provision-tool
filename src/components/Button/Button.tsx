@@ -21,83 +21,49 @@ export const Button = (props: IField) => {
     //@ts-ignore
     patterns,
     //@ts-ignore
-    setPatterns,
-    //@ts-ignore
     att,
     //@ts-ignore
     setAtt,
     //@ts-ignore
     setLoading,
     //@ts-ignore
-    setUserCompanyCodes,
-    //@ts-ignore
     setModalContent,
   } = useContext(FormContext);
-  const className = `field ${props.error ? "field--error" : ""}`;
+
   const { dataset } = document.querySelector("body") || {
     dataset: { url: "/", query: "appno", init: "init" },
   };
 
   const isDebug = window.location.search.includes("debug=true");
-
   const { url, query } = dataset;
+
+  const resetForm = async () => {
+    await setFormValues(defaultValues, true);
+    setAtt(null);
+    setFormErrors({});
+  };
 
   const post = async () => {
     const res = await postData(url || "/protool", formValues);
+
     if (res.errors) {
       return setFormErrors(res.errors);
     }
-    const defaultMessage = `Application <strong>${res.data.appNumber}</strong> is waiting for approval`;
-    const message = res.data.message || defaultMessage;
-    if (res.data.locked) {
-      const content = {
-        message,
-        type: "error",
-      };
-      setModalContent(content);
-      await resetForm();
-      return;
-    }
-    if (res.data) {
-      const content = {
-        message: `Application <strong>${res.data.appNumber}</strong> was ${
-          getState() === states.CREATE ? "created" : "updated"
-        } successfully.`,
-        type: "success",
-      };
-      setModalContent(content);
-      await resetForm();
-    }
-  };
 
-  const handleGet = async (e: React.MouseEvent<HTMLButtonElement>) => {
-    e.preventDefault();
-    const appNumberImport = formValues.appNumberImport;
-    const res = await getData(`${url}&${query}=${appNumberImport}`);
+    const content = {
+      message: `Application <strong>${res.data.appNumber}</strong> was ${
+        getState().label === "CREATE" ? "created" : "updated"
+      } successfully.`,
+      type: "success",
+    };
 
-    if (res.data) {
-      await resetForm();
-
-      const { locked } = res.data;
-
-      await setFormValues({
-        ...res.data,
-        appNumberImport: `${locked ? appNumberImport : ""}`,
-      });
-      if (res.errors && isDebug) {
-        return setFormErrors(res.errors);
-      } else {
-        setFormErrors({});
-      }
-    } else {
-      setFormErrors((formErrors: any) => {
-        return { ...formErrors, ...res.errors };
-      });
-    }
+    setModalContent(content);
+    await resetForm();
   };
 
   const handlePost: MouseEventHandler<HTMLButtonElement> = async (e) => {
     e.preventDefault();
+
     const isAllOk = validateAll({
       patterns,
       setFormErrors,
@@ -110,10 +76,27 @@ export const Button = (props: IField) => {
     }
   };
 
-  const resetForm = async () => {
-    await setFormValues(defaultValues, true);
-    setAtt(null);
-    setFormErrors({});
+  const handleGet: MouseEventHandler<HTMLButtonElement> = async (e) => {
+    e.preventDefault();
+
+    const appNumberImport = formValues.appNumberImport;
+    const res = await getData(`${url}&${query}=${appNumberImport}`);
+
+    if (res.data) {
+      await resetForm();
+
+      await setFormValues({
+        ...res.data,
+        appNumberImport: res.data.locked ? appNumberImport : "",
+      });
+
+      setFormErrors(res.errors || {});
+    } else {
+      setFormErrors((prev: any) => ({
+        ...prev,
+        ...res.errors,
+      }));
+    }
   };
 
   useEffect(() => {
@@ -135,6 +118,7 @@ export const Button = (props: IField) => {
       formValues.appNumber
     )
       return states.UPDATE;
+
     return states.GET;
   };
 
@@ -142,16 +126,9 @@ export const Button = (props: IField) => {
     setLoading(true);
     try {
       const response = await fetch(url);
-      if (!response.ok) {
-        throw new Error(`Response failed`);
-      }
-
-      const data = await response.json();
-      return {
-        ...data,
-      };
+      if (!response.ok) throw new Error("Response failed");
+      return await response.json();
     } catch (error: any) {
-      console.error(error.message);
       setModalContent({
         message: "Ups something went wrong...",
         type: "error",
@@ -164,23 +141,24 @@ export const Button = (props: IField) => {
 
   async function postData(url: string, body: Record<string, any>) {
     setLoading(true);
-    var formData = new FormData();
+    const formData = new FormData();
     formData.append("json", JSON.stringify(body));
+
     if (att && Array.isArray(att)) {
       att.forEach((file) => {
         formData.append(file.fileName, file.fileData);
       });
     }
+
     try {
       const response = await fetch(url, {
         method: "POST",
         body: formData,
       });
-      if (!response.ok) {
-        throw new Error(`Response status: ${response.status}`);
-      }
-      const data = await response.json();
-      return data;
+
+      if (!response.ok) throw new Error("Failed");
+
+      return await response.json();
     } catch (error: any) {
       setModalContent({
         message: "Ups something went wrong...",
@@ -194,11 +172,10 @@ export const Button = (props: IField) => {
   }
 
   return (
-    <div className={className}>
+    <div className="button-wrapper">
       <button className="magic-btn" onClick={getState().onClick}>
         {getState().label}
       </button>
-      <p className="error-message">{props.error}</p>
     </div>
   );
 };

@@ -1,10 +1,27 @@
 import * as c from "./columns";
 
-export const controls = {
-  columns: [c.modes, c.appNumbers, c.stateControllerButton],
+export const general = { title: "GENERAL INFORMATION", columns: [c.generalLeft,c.generalMiddle,c.generalRight] };
+
+export const datesAndPeriod = {
+  title: "POSTING DATES & VALIDITY PERIOD",
+  columns: [c.dpLeft,c.dpMiddle,c.dpRight],
 };
-export const appInfo = { columns: [c.left, c.middle, c.right] };
 
-export const appValues = { columns: [c.ifrs, c.localGaap, c.tax] };
+export const classification = {
+  title: "ACCOUNTING CLASSIFICATION",
+  columns: [c.classificationLeft,c.classificationMiddle,c.classificationRight],
+};
 
-export const attachements = { columns: [c.attach, c.empty, c.empty] };
+export const costObjects = {
+  title: "PROJECT & DOCUMENT REFERENCE",
+  columns: [c.coLeft,c.coMiddle,c.coRight],
+};
+
+export const values = {
+  title: "VALUATION MATRIX",
+  columns: [c.ifrs, c.localGaap, c.tax],
+};
+
+export const controls = {
+  columns: [c.attach, c.stateControllerButton, c.empty],
+};

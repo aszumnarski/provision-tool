@@ -2,7 +2,7 @@ import "./Select.css";
 import { type IField } from "../Field/Field";
 
 export const Select = (props: IField) => {
-  const className = `field ${props.error ? "field--error" : ""}`;
+  const selectClass = `input ${props.error ? "input--error" : ""}`;
 
   const renderOptions = () => {
     return (
@@ -15,21 +15,17 @@ export const Select = (props: IField) => {
   };
 
   return (
-    <div className={className}>
-      <label>
-        <span>{props.label}</span>
-        <select
-          className="field-input"
-          name={props.name}
-          value={props.value}
-          onChange={props.onChange}
-          disabled={props.disabled}
-          onBlur={props.onBlur}
-        >
-          {renderOptions()}
-        </select>
-      </label>
-      <p className="error-message">{props.error}</p>
+    <div className="select-wrapper">
+      <select
+        className={selectClass}
+        name={props.name}
+        value={props.value}
+        onChange={props.onChange}
+        disabled={props.disabled}
+        onBlur={props.onBlur}
+      >
+        {renderOptions()}
+      </select>
     </div>
   );
 };

@@ -6,7 +6,23 @@
 
 .row {
   display: flex;
+  flex-direction: column;
   gap: 20px;
   /* border-top: 1px solid lightgray; */
   /* padding-top: 20px; */
+}
+
+
+
+.row-columns {
+  display: flex;
+  gap: 16px;
+  align-items: flex-start;
+}
+
+
+.row-title {
+  font-size: 15px;
+  font-weight: 600;
+  margin-bottom: 10px;
 }

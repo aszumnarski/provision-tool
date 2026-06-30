@@ -1,5 +1,7 @@
 import * as r from "./rows";
 
 export const config = {
-  rows: [r.controls, r.appInfo, r.appValues, r.attachements],
+  rows: [r.general, r.datesAndPeriod,r.classification,r.costObjects,r.values,r.controls]
 };
+
+export const layout = "horizontal";

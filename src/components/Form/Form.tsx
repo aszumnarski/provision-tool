@@ -97,11 +97,12 @@ export function Form({ rows }: IForm) {
   const onSubmit: FormEventHandler<HTMLFormElement> = (e) => {
     e.preventDefault();
   };
+  //console.log("ROWS FINAL:", rows);
   return formValues ? (
     <form onSubmit={onSubmit} className="form">
       <div className="row-wrapper">
         {rows.map((r, i) => (
-          <Row key={i} columns={r.columns} />
+          <Row key={i} title={r.title} columns={r.columns} />
         ))}
       </div>
 

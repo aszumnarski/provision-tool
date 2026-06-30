@@ -1,40 +1,90 @@
+
+
+:root {
+  --label-width: 180px;
+}
+
+/* ===== Base container (NO layout here!) ===== */
 .field {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
+  min-width: 0;
 }
-.field > label {
-  font-weight: 700;
+
+
+/* ===== Layout modes ===== */
+
+/* Vertical layout (label on top) */
+.field--vertical {
   display: flex;
   flex-direction: column;
-  align-items: center;
-  gap: 6px;
+  gap: 4px;
+}
+
+/* Horizontal layout (label left, input right) */
+.field--horizontal {
+  display: grid;
+  grid-template-columns: var(--label-width) 1fr;
+  gap: 8px;
+  align-items: start;
+}
+
+
+/* Ensure input + error stack in horizontal mode */
+.field--horizontal .field-input {
+  display: flex;
+  flex-direction: column;
+}
+
+
+/* ===== Label ===== */
+.field-label {
+  font-size: 14px;
+  font-weight: 500;
+  color: #333;
+
+  min-height: 18px;  /* ✅ reserves space even when empty */
+
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
 }
-.field > label > span {
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
+
+
+.field--horizontal.field--no-label {
+  grid-template-columns: 1fr;  /* ✅ remove label column */
 }
-.field > label > * {
-  width: 100%;
+
+
+
+/* ===== Input wrapper ===== */
+.field-input {
+  min-width: 0;   /* ✅ prevents overflow issues */
 }
-.field--error > * {
+
+
+/* ===== Error state ===== */
+.field--error .field-label {
   color: red;
 }
-.field--error > * > .field-input {
+
+.field--error .input {
   border-color: red;
-  border-width: 2px;
-  color: red;
 }
+
+
+/* ===== Error message ===== */
 .error-message {
-  min-height: 18px;
-  font-size: 12px;
-  text-align: left;
-  margin: 0;
+  min-height: 16px;   /* ✅ reserve space → no jumping */
+  font-size: 11px;
+  color: red;
+  margin: 4px 0 0 0;
+
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
 }
+
+/* Tooltip behavior only when error exists */
+.error-message--active {
+  cursor: help;
+}
+
