@@ -5,7 +5,7 @@ import { Form } from "./components/Form/Form";
 import { FormContext } from "./context";
 import { Loader } from "./components/Loader/Loader";
 import { Modal } from "./components/Modal/Modal";
-import type { IOption, TAttachment } from "./components/Field/Field";
+import type { IAppConfig, IAttachment } from "./types";
 import { useFormValues } from "./utils/session-storage";
 
 declare const APP_VERSION: string;
@@ -16,8 +16,8 @@ function App() {
   );
   const [formErrors, setFormErrors] = useState<Record<string, string> | {}>({});
   const [patterns, setPatterns] = useState<Record<string, string> | {}>({});
-  const [att, setAtt] = useState<TAttachment[] | null>(null);
-  const [userCompanyCodes, setUserCompanyCodes] = useState<IOption[]>([]);
+  const [att, setAtt] = useState<IAttachment[] | null>(null);
+  const [appConfig, setAppConfig] =useState<IAppConfig | null>(null);
   const [isLoading, setLoading] = useState(true);
   const [defaultValues, setDefaultValues] = useState(null);
   const [modalContent, setModalContent] = useState<Record<
@@ -50,8 +50,8 @@ function App() {
         setPatterns,
         att,
         setAtt,
-        userCompanyCodes,
-        setUserCompanyCodes,
+        appConfig,
+        setAppConfig,
         isLoading,
         setLoading,
         modalContent,

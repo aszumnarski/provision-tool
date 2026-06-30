@@ -9,7 +9,6 @@ export interface IRow {
 
 export function Row(row: IRow) {
   const { title, columns } = row;
-  //console.log("ROW COLUMNS:", columns);
   return (
     <div className="row">
       {title && <div className="row-title">{title}</div>}

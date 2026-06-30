@@ -1,5 +1,5 @@
 import "./Select.css";
-import { type IField } from "../Field/Field";
+import { type IField } from "../../types";
 
 export const Select = (props: IField) => {
   const selectClass = `input ${props.error ? "input--error" : ""}`;

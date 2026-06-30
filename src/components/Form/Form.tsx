@@ -1,9 +1,9 @@
-import { useContext, useEffect, type FormEventHandler } from "react";
-import { FormContext } from "../../context";
+import { useEffect, type FormEventHandler } from "react";
 import "./Form.css";
 import type { IRow } from "../Row/Row";
 import { Row } from "../Row/Row";
-import type { IField, IPattern } from "../Field/Field";
+import type { IField, IPattern } from "../../types";
+import { useFormContext } from "../../context/useFormContext";
 
 export interface IForm {
   rows: IRow[];
@@ -15,26 +15,18 @@ export function Form({ rows }: IForm) {
     dataset: { url: "/", query: "appno", init: "init" },
   };
   const { url, query, init } = dataset;
+
   const {
-    //@ts-ignore
     formValues,
-    //@ts-ignore
     setFormValues,
-    //@ts-ignore
     formErrors,
-    //@ts-ignore
     setFormErrors,
-    //@ts-ignore
     patterns,
-    //@ts-ignore
     setPatterns,
-    //@ts-ignore
-    setUserCompanyCodes,
-    //@ts-ignore
+    setAppConfig,
     setLoading,
-    //@ts-ignore
     setModalContent,
-  } = useContext(FormContext);
+  } = useFormContext();
 
   async function getData(url: string) {
     setLoading(true);
@@ -58,7 +50,7 @@ export function Form({ rows }: IForm) {
   }
   const initializeValues = async () => {
     const res = await getData(`${url}&${query}=${init}`);
-    setUserCompanyCodes(res.config.companyCodes);
+    setAppConfig(res.config);
     const initialState = {
       ...createFormState(rows, "initValue"),
       user: res.data.user,
@@ -83,21 +75,20 @@ export function Form({ rows }: IForm) {
             key === "patterns"
               ? []
               : f.type === "number"
-                ? ""
-                : f.type === "select"
-                  ? f.options && f.options[0].value
-                  : "";
+              ? ""
+              : f.type === "select"
+              ? f.options && f.options[0].value
+              : "";
           //@ts-ignore
           values[f.name] = f[key as keyof typeof f] || defaultVal;
-        }),
-      ),
+        })
+      )
     );
     return values;
   }
   const onSubmit: FormEventHandler<HTMLFormElement> = (e) => {
     e.preventDefault();
   };
-  //console.log("ROWS FINAL:", rows);
   return formValues ? (
     <form onSubmit={onSubmit} className="form">
       <div className="row-wrapper">

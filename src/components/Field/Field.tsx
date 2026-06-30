@@ -1,7 +1,7 @@
 import "./Field.css";
 
-import { useContext, useEffect } from "react";
-import { FormContext } from "../../context";
+import { useFormContext } from "../../context/useFormContext";
+import { useEffect } from "react";
 import { toDash, validate } from "../../utils/validation";
 import { type ChangeEvent } from "react";
 import { Select } from "../Select/Select";
@@ -12,103 +12,22 @@ import * as expressions from "../../utils/big-evals";
 
 import { layout } from "../../config";
 
-console.log({ expressions });
-
-export type TAttachment = {
-  fileName: string;
-  fileData: File;
-  fileSize: number;
-};
-
-export interface IField {
-  name: string;
-  type: "text" | "select" | "number" | "date" | "button" | "file";
-  calculatedValue?: ICalculatedValue;
-  conditionalDisabled?: IConditionalDisabled[];
-  dependentOptions?: IDependentOptions[];
-  dependantValue?: IDependentValue[];
-  disabled?: boolean;
-  error?: string;
-  hidden?: boolean;
-  initValue?: string;
-  label?: string;
-  maxlength?: string;
-  onBlur?: (e: ChangeEvent) => void;
-  onChange?: (e: ChangeEvent) => void;
-  options?: IOption[];
-  patterns?: IPattern[];
-  value?: string;
-  layout?: "vertical" | "horizontal";
-  showLabel?: boolean;
-}
-
-export interface ICalculatedValue {
-  expression?: string;
-  date?: string;
-  month?: number;
-}
-
-export interface ICondition {
-  when: string;
-  is: string | boolean;
-}
-
-export interface IConditionMulti {
-  when: string;
-  is: (string | boolean)[];
-}
-
-export interface IDependentOptions {
-  conditions: IConditionMulti[];
-  options: IOption[];
-  isFromValue?: boolean;
-}
-
-export interface IDependentValue {
-  conditions: IConditionMulti[];
-  valueFrom: string;
-}
-
-export interface IConditionalDisabled {
-  conditions: ICondition[];
-}
-
-export interface IOption {
-  label: string;
-  value: string;
-}
-
-export interface IPattern {
-  reg: string;
-  message: string;
-}
+import { type IField, type IOption, type IAttachment } from "../../types";
 
 export const Field = (props: IField) => {
-  //@ts-ignore
   const {
-    //@ts-ignore
     formValues,
-    //@ts-ignore
     setFormValues,
-    //@ts-ignore
     defaultValues,
-    //@ts-ignore
     setDefaultValues,
-    //@ts-ignore
     formErrors,
-    //@ts-ignore
     setFormErrors,
-    //@ts-ignore
     patterns,
-    //@ts-ignore
     setPatterns,
-    //@ts-ignore
     setAtt,
-    //@ts-ignore
     att,
-    //@ts-ignore
-    userCompanyCodes,
-  } = useContext(FormContext);
+    appConfig,
+  } = useFormContext();
 
   const onBlur = () => {
     validate({
@@ -127,8 +46,8 @@ export const Field = (props: IField) => {
     if (input.files && input.files.length > 0) {
       const files = Array.from(input.files);
 
-      const attachments: TAttachment[] = files.map(
-        (file: File): TAttachment => ({
+      const attachments: IAttachment[] = files.map(
+        (file: File): IAttachment => ({
           fileName: file.name,
           fileData: file,
           fileSize: file.size,
@@ -148,8 +67,12 @@ export const Field = (props: IField) => {
   };
 
   const options = (): IOption[] => {
-    if (props.name === "companyCode" && userCompanyCodes.length) {
-      return userCompanyCodes;
+    if (props.name === "companyCode" && appConfig) {
+      return appConfig.companyCodes;
+    }
+
+    if (props.name === "ledgerGroup" && formValues.companyCode && appConfig) {
+      return appConfig.ledgerGroups[formValues.companyCode] || [];
     }
 
     if (!props.dependentOptions) return props.options || [];
@@ -235,6 +158,10 @@ export const Field = (props: IField) => {
   };
 
   const getValue = () => {
+    if (props.name === "localCurrency" && appConfig && formValues.companyCode) {
+      return appConfig.currencies[formValues.companyCode] || "";
+    }
+
     if (!Object.keys(JSON.parse(JSON.stringify(formValues))).length) return "";
     if (props.dependantValue) return copyValue();
     if (sum) return sum;
@@ -308,13 +235,11 @@ export const Field = (props: IField) => {
       });
     }
   });
-  //return props.type ? typeMap[props.type](enhancedProps) : "";
 
   const fieldLayout = props.layout || layout || "vertical";
   const Component = typeMap[props.type];
 
   if (!Component) return "";
-  //console.log(props.name, props.showLabel);
 
   return (
     <div
@@ -326,10 +251,10 @@ export const Field = (props: IField) => {
       {props.showLabel !== false && (
         <div className="field-label">{props.label || ""}</div>
       )}
-  
+
       <div className="field-input">
         <Component {...enhancedProps} />
-  
+
         <p
           className={`error-message ${
             enhancedProps.error ? "error-message--active" : ""
@@ -341,5 +266,4 @@ export const Field = (props: IField) => {
       </div>
     </div>
   );
-  
 };

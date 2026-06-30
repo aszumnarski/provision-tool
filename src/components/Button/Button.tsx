@@ -1,7 +1,7 @@
 import "./Button.css";
 import { useContext, useEffect } from "react";
 import { FormContext } from "../../context";
-import { type IField } from "../Field/Field";
+import { type IField } from "../../types";
 import type { MouseEventHandler } from "react";
 import { validateAll } from "../../utils/validation";
 
