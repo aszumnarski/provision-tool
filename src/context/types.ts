@@ -3,7 +3,12 @@ import { type IAppConfig } from "../types";
 
 export interface IFormContext {
   formValues: any;
-  setFormValues: (v: any) => void;
+  
+setFormValues: (
+  values: Record<string, unknown>,
+  shouldOverwrite?: boolean
+) => Promise<void>;
+
   defaultValues: any;
   setDefaultValues: (v: any) => void;
   formErrors: any;

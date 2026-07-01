@@ -11,7 +11,7 @@ import { useFormValues } from "./utils/session-storage";
 declare const APP_VERSION: string;
 
 function App() {
-  const [formValues, _setFormValues] = useState<Record<string, string> | {}>(
+  const [formValues, _setFormValues] = useState<Record<string, string>>(
     {},
   );
   const [formErrors, setFormErrors] = useState<Record<string, string> | {}>({});
@@ -27,13 +27,11 @@ function App() {
 
   const setFormValues = async (values: any, shouldOverwrite?: boolean) => {
     const syncFormValues = useFormValues(values, shouldOverwrite);
-    //@ts-ignore
-    await _setFormValues(syncFormValues);
+    _setFormValues(syncFormValues);
   };
 
   const body = document.querySelector("body");
   const imgSource = body && body.dataset?.logo;
-  //@ts-ignore
   const { appNumber, message, locked } = formValues;
   const defaultMessage = `Application ${appNumber} is waiting for approval.`;
   const headerMessage = message || defaultMessage;

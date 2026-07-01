@@ -1,5 +1,5 @@
 import "./Input.css";
-import { type IField } from "../Field/Field";
+import { type IField } from "../../types";
 import { preventEnterSubmit } from "../../utils/keyboard-utils";
 import { preventArrowKeyIncrement } from "../../utils/keyboard-utils";
 import { handleWheel } from "../../utils/keyboard-utils";

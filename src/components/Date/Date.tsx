@@ -1,14 +1,13 @@
 import "./Date.css";
-import { useContext, useEffect } from "react";
-import { FormContext } from "../../context";
-import { type IField, type IPattern } from "../Field/Field";
+import { useEffect } from "react";
+import { type IField, type IPattern } from "../../types";
 import type { ChangeEvent } from "react";
 import { preventEnterSubmit } from "../../utils/keyboard-utils";
 import { toDash } from "../../utils/validation";
+import { useFormContext } from "../../context/useFormContext";
 
 export const DateInput = (props: IField) => {
-  //@ts-ignore
-  const { formValues, setFormValues, patterns } = useContext(FormContext);
+  const { formValues, setFormValues, patterns } = useFormContext();
 
   const noDash = (dashedDate?: string) =>
     dashedDate ? dashedDate.split("-").join("") : "";

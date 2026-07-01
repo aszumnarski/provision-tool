@@ -2,8 +2,9 @@ import { useEffect, type FormEventHandler } from "react";
 import "./Form.css";
 import type { IRow } from "../Row/Row";
 import { Row } from "../Row/Row";
-import type { IField, IPattern } from "../../types";
+import type { IInitResponse, IPattern } from "../../types";
 import { useFormContext } from "../../context/useFormContext";
+
 
 export interface IForm {
   rows: IRow[];
@@ -28,7 +29,7 @@ export function Form({ rows }: IForm) {
     setModalContent,
   } = useFormContext();
 
-  async function getData(url: string) {
+  async function getInitData(url: string): Promise<IInitResponse | undefined> {
     setLoading(true);
     try {
       const response = await fetch(url);
@@ -49,46 +50,45 @@ export function Form({ rows }: IForm) {
     }
   }
   const initializeValues = async () => {
-    const res = await getData(`${url}&${query}=${init}`);
+    const res = await getInitData(`${url}&${query}=${init}`);
+
+    if (!res) {
+      return;
+    }
+
     setAppConfig(res.config);
+
     const initialState = {
-      ...createFormState(rows, "initValue"),
-      user: res.data.user,
+      ...res.data,
       appCreator: res.data.user,
       locked: false,
       message: "",
     };
-    await setFormValues(initialState);
-    setPatterns(createFormState(rows, "patterns"));
+
+    setFormValues(initialState);
+    setPatterns(createPatternState(rows));
   };
 
   useEffect(() => {
     initializeValues();
   }, []);
 
-  function createFormState(rows: IRow[], key: keyof IField) {
-    let values: Record<string, string | IPattern[]> = {};
-    rows.forEach((r) =>
-      r.columns.forEach((c) =>
-        c.fields.forEach((f) => {
-          const defaultVal =
-            key === "patterns"
-              ? []
-              : f.type === "number"
-              ? ""
-              : f.type === "select"
-              ? f.options && f.options[0].value
-              : "";
-          //@ts-ignore
-          values[f.name] = f[key as keyof typeof f] || defaultVal;
+  function createPatternState(rows: IRow[]): Record<string, IPattern[]> {
+    let values: Record<string, IPattern[]> = {};
+    rows.forEach((row) =>
+      row.columns.forEach((column) =>
+        column.fields.forEach((field) => {
+          values[field.name] = field.patterns || [];
         })
       )
     );
     return values;
   }
+
   const onSubmit: FormEventHandler<HTMLFormElement> = (e) => {
     e.preventDefault();
   };
+
   return formValues ? (
     <form onSubmit={onSubmit} className="form">
       <div className="row-wrapper">

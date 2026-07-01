@@ -1,9 +1,8 @@
 import "./Modal.css";
-import { FormContext } from "../../context";
-import { useContext } from "react";
+import { useFormContext } from "../../context/useFormContext";
 export const Modal = () => {
-  //@ts-ignore
-  const { modalContent, setModalContent } = useContext(FormContext);
+
+  const { modalContent, setModalContent } = useFormContext();
 
   const icons = {
     success: <SuccessAnim />,

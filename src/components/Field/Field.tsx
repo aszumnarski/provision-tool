@@ -9,6 +9,10 @@ import { Input } from "../Input/Input";
 import { DateInput } from "../Date/Date";
 import { Button } from "../Button/Button";
 import * as expressions from "../../utils/big-evals";
+import {
+  getAccountingRule,
+  getOptions,getFieldValue
+} from "../../utils/config-resolver";
 
 import { layout } from "../../config";
 
@@ -66,44 +70,22 @@ export const Field = (props: IField) => {
     });
   };
 
-  const options = (): IOption[] => {
-    if (props.name === "companyCode" && appConfig) {
-      return appConfig.companyCodes;
+const options = (): IOption[] => {
+  if (appConfig) {
+    const configOptions = getOptions(
+      props.name,
+      formValues,
+      appConfig
+    );
+
+    if (configOptions) {
+      return configOptions;
     }
+  }
 
-    if (props.name === "ledgerGroup" && formValues.companyCode && appConfig) {
-      return appConfig.ledgerGroups[formValues.companyCode] || [];
-    }
+  return props.options || [];
+};
 
-    if (!props.dependentOptions) return props.options || [];
-
-    const valuedOptions = (opts: IOption[]) => {
-      return opts.map((o) => {
-        return {
-          label: formValues[o.label],
-          value: formValues[o.value],
-        };
-      });
-    };
-
-    const result: IOption[] =
-      props.dependentOptions
-        .map(
-          (scenario) =>
-            scenario.conditions
-              .map(
-                (c) =>
-                  c.is.includes(formValues[c.when]) ||
-                  c.is.includes(!!formValues[c.when])
-              )
-              .filter(Boolean).length === scenario.conditions.length &&
-            (scenario.isFromValue
-              ? valuedOptions(scenario.options)
-              : scenario.options)
-        )
-        .filter(Boolean)[0] || [];
-    return result.length ? result : props.options || [];
-  };
 
   const evalExpression = () =>
     props.calculatedValue?.expression
@@ -158,9 +140,19 @@ export const Field = (props: IField) => {
   };
 
   const getValue = () => {
-    if (props.name === "localCurrency" && appConfig && formValues.companyCode) {
-      return appConfig.currencies[formValues.companyCode] || "";
+
+    if (appConfig) {
+      const resolvedValue = getFieldValue(
+        props.name,
+        formValues,
+        appConfig
+      );
+  
+      if (resolvedValue) {
+        return resolvedValue;
+      }
     }
+  
 
     if (!Object.keys(JSON.parse(JSON.stringify(formValues))).length) return "";
     if (props.dependantValue) return copyValue();
@@ -172,6 +164,7 @@ export const Field = (props: IField) => {
     return "";
   };
 
+  const opts = options();
   const value = getValue();
   const error = formErrors[props.name];
   const enhancedProps = {
@@ -181,11 +174,13 @@ export const Field = (props: IField) => {
     error,
     onBlur,
     disabled,
-    options: options(),
+    options: opts,
     value,
   };
 
-  const opts = options();
+  
+
+
   useEffect(() => {
     const currentValue = formValues?.[props.name];
     const firstOptionValue = opts?.[0]?.value;

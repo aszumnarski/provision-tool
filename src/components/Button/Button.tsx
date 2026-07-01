@@ -1,34 +1,27 @@
 import "./Button.css";
-import { useContext, useEffect } from "react";
-import { FormContext } from "../../context";
-import { type IField } from "../../types";
+import { useEffect } from "react";
+import {
+  type IApplicationResponse,
+  type IField,
+  type IPostResponse,
+} from "../../types";
 import type { MouseEventHandler } from "react";
 import { validateAll } from "../../utils/validation";
+import { useFormContext } from "../../context/useFormContext";
 
 export const Button = (props: IField) => {
-  //@ts-ignore
   const {
-    //@ts-ignore
     formValues,
-    //@ts-ignore
     defaultValues,
-    //@ts-ignore
     setFormValues,
-    //@ts-ignore
     formErrors,
-    //@ts-ignore
     setFormErrors,
-    //@ts-ignore
     patterns,
-    //@ts-ignore
     att,
-    //@ts-ignore
     setAtt,
-    //@ts-ignore
     setLoading,
-    //@ts-ignore
     setModalContent,
-  } = useContext(FormContext);
+  } = useFormContext();
 
   const { dataset } = document.querySelector("body") || {
     dataset: { url: "/", query: "appno", init: "init" },
@@ -38,7 +31,7 @@ export const Button = (props: IField) => {
   const { url, query } = dataset;
 
   const resetForm = async () => {
-    await setFormValues(defaultValues, true);
+    setFormValues(defaultValues, true);
     setAtt(null);
     setFormErrors({});
   };
@@ -46,8 +39,16 @@ export const Button = (props: IField) => {
   const post = async () => {
     const res = await postData(url || "/protool", formValues);
 
+    if (!res) {
+      return;
+    }
+
     if (res.errors) {
       return setFormErrors(res.errors);
+    }
+
+    if (!res.data) {
+      return;
     }
 
     const content = {
@@ -80,7 +81,11 @@ export const Button = (props: IField) => {
     e.preventDefault();
 
     const appNumberImport = formValues.appNumberImport;
-    const res = await getData(`${url}&${query}=${appNumberImport}`);
+    const res = await getApplicationData(`${url}&${query}=${appNumberImport}`);
+
+    if (!res) {
+      return;
+    }
 
     if (res.data) {
       await resetForm();
@@ -122,7 +127,9 @@ export const Button = (props: IField) => {
     return states.GET;
   };
 
-  async function getData(url: string) {
+  async function getApplicationData(
+    url: string
+  ): Promise<IApplicationResponse | undefined> {
     setLoading(true);
     try {
       const response = await fetch(url);
@@ -139,7 +146,10 @@ export const Button = (props: IField) => {
     }
   }
 
-  async function postData(url: string, body: Record<string, any>) {
+  async function postData(
+    url: string,
+    body: Record<string, any>
+  ): Promise<IPostResponse | undefined> {
     setLoading(true);
     const formData = new FormData();
     formData.append("json", JSON.stringify(body));
@@ -165,7 +175,8 @@ export const Button = (props: IField) => {
         type: "error",
       });
       await resetForm();
-      return { error };
+      //return { error };
+      return undefined;
     } finally {
       setLoading(false);
     }

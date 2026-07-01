@@ -15,12 +15,10 @@ export interface IField {
   type: "text" | "select" | "number" | "date" | "button" | "file";
   calculatedValue?: ICalculatedValue;
   conditionalDisabled?: IConditionalDisabled[];
-  dependentOptions?: IDependentOptions[];
   dependantValue?: IDependentValue[];
   disabled?: boolean;
   error?: string;
   hidden?: boolean;
-  initValue?: string;
   label?: string;
   maxlength?: string;
   onBlur?: (e: ChangeEvent) => void;
@@ -39,12 +37,6 @@ export interface ICondition {
 
 export interface IConditionalDisabled {
   conditions: ICondition[];
-}
-
-export interface IDependentOptions {
-  conditions: IConditionMulti[];
-  options: IOption[];
-  isFromValue?: boolean;
 }
 
 export interface IDependentValue {
