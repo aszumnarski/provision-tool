@@ -1,4 +1,4 @@
-import type { TAttachment, IPattern } from "../components/Field/Field";
+import type { IAttachment, IPattern } from "../types";
 
 export interface IValidatePattern {
   pattern: string;
@@ -62,7 +62,7 @@ function validatePattern({
       return att
         ? Number(
             att.reduce(
-              (sum: number, file: TAttachment) => sum + file.fileSize,
+              (sum: number, file: IAttachment) => sum + file.fileSize,
               0,
             ) /
               (1024 * 1024),

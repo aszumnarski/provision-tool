@@ -10,7 +10,6 @@ import { DateInput } from "../Date/Date";
 import { Button } from "../Button/Button";
 import * as expressions from "../../utils/big-evals";
 import {
-  getAccountingRule,
   getOptions,getFieldValue
 } from "../../utils/config-resolver";
 
@@ -27,7 +26,6 @@ export const Field = (props: IField) => {
     formErrors,
     setFormErrors,
     patterns,
-    setPatterns,
     setAtt,
     att,
     appConfig,
@@ -61,7 +59,7 @@ export const Field = (props: IField) => {
     }
     if (!defaultValues) {
       setDefaultValues(formValues);
-      if (isDebug) console.log("✅ Default values initialized:", formValues);
+      if (isDebug) console.log("✅ Default values initialized:", formValues, expressions);
     }
     const val =
       props.type === "number" ? input.value.replace(/-/g, "") : input.value;

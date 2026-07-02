@@ -27,6 +27,7 @@ export const appNumberImport: IField = {
   name: "appNumberImport",
   label: "Application Number to Import",
   type: "text",
+  patterns: [h.required()],
   conditionalDisabled: h.inCreateState,
 };
 

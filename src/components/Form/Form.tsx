@@ -21,7 +21,6 @@ export function Form({ rows }: IForm) {
     formValues,
     setFormValues,
     formErrors,
-    setFormErrors,
     patterns,
     setPatterns,
     setAppConfig,

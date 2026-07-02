@@ -2,19 +2,17 @@ import "./Button.css";
 import { useEffect } from "react";
 import {
   type IApplicationResponse,
-  type IField,
   type IPostResponse,
 } from "../../types";
 import type { MouseEventHandler } from "react";
 import { validateAll } from "../../utils/validation";
 import { useFormContext } from "../../context/useFormContext";
 
-export const Button = (props: IField) => {
+export const Button = () => {
   const {
     formValues,
     defaultValues,
     setFormValues,
-    formErrors,
     setFormErrors,
     patterns,
     att,
@@ -28,6 +26,7 @@ export const Button = (props: IField) => {
   };
 
   const isDebug = window.location.search.includes("debug=true");
+  if(isDebug) console.log("debug on");
   const { url, query } = dataset;
 
   const resetForm = async () => {
@@ -81,6 +80,16 @@ export const Button = (props: IField) => {
     e.preventDefault();
 
     const appNumberImport = formValues.appNumberImport;
+
+    
+  if (!appNumberImport?.trim()) {
+    setFormErrors({
+      appNumberImport: "Application number is required",
+    });
+
+    return;
+  }
+
     const res = await getApplicationData(`${url}&${query}=${appNumberImport}`);
 
     if (!res) {

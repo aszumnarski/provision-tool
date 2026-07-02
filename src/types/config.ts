@@ -18,7 +18,7 @@ export interface IAppConfig {
 
 
 export interface IAccountingRule {
-  sign: number;
+  sign: string;
 
   reference: string;
 

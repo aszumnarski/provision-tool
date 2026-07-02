@@ -13,7 +13,7 @@ export const Column = (column: IColumn) => {
     <div className="column">
       {header ? <h3 className="column-header">{header}</h3> : ""}
 
-      {fields.map((f,index) => (
+      {fields.map((f) => (
         <Field key={f.name} {...f} />))} 
     </div>
   );
