@@ -7,11 +7,13 @@ export interface IAppConfig {
 
   localCurrency: Record<string, string>;
 
+  fiscalYear: Record<string, string>;
+
   ledgerGroup: Record<string, IOption[]>;
 
   provisionType: IProvisionType[];
 
-  subType: Record<string, ISubtype>;
+  subType: Record<string, ISubType>;
 
   accountingRule: Record<string, IAccountingRule>;
 }
@@ -47,6 +49,29 @@ export interface IProvisionType {
 }
 
 
-export interface ISubtype {
+
+export interface ISubType {
   label: string;
+  amountCategory:AmountCategory;
 }
+
+
+
+export enum AmountCategory {
+  CREATION_ADDITION = "CREATION_ADDITION",
+  USAGE_PY = "USAGE_PY",
+  USAGE_CY = "USAGE_CY",
+  RELEASE_PY = "RELEASE_PY",
+  RELEASE_CY = "RELEASE_CY",
+}
+
+
+
+  export const isAmountCategory = (
+    subType: string | undefined,
+    subTypes: Record<string, ISubType>,
+    category: AmountCategory
+  ) =>
+    subTypes[subType?.toLowerCase() ?? ""]
+      ?.amountCategory === category;
+  

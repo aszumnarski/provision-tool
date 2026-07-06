@@ -1,7 +1,7 @@
 import "./Button.css";
 import { useEffect } from "react";
 import {
-  type IApplicationResponse,
+  type IApiResponse,
   type IPostResponse,
 } from "../../types";
 import type { MouseEventHandler } from "react";
@@ -13,6 +13,7 @@ export const Button = () => {
     formValues,
     defaultValues,
     setFormValues,
+    setApplicationData,
     setFormErrors,
     patterns,
     att,
@@ -98,10 +99,10 @@ export const Button = () => {
 
     if (res.data) {
       await resetForm();
-
+      setApplicationData(res.data);
       await setFormValues({
-        ...res.data,
-        appNumberImport: res.data.locked ? appNumberImport : "",
+        ...res.data.fields,
+        appNumberImport: res.data.fields.locked ? appNumberImport : "",
       });
 
       setFormErrors(res.errors || {});
@@ -138,7 +139,7 @@ export const Button = () => {
 
   async function getApplicationData(
     url: string
-  ): Promise<IApplicationResponse | undefined> {
+  ): Promise<IApiResponse | undefined> {
     setLoading(true);
     try {
       const response = await fetch(url);

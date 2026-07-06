@@ -288,72 +288,91 @@ const data = () => {
         subType: {
           y09: {
             label: "Creation/Addition of other provisions/accruals/adjustments",
+            amountCategory: "CREATION_ADDITION",
           },
           y097: {
             label: "Usage of other provisions/accruals/adjustments",
+            amountCategory: "USAGE_CY",
           },
           y098: {
             label:
               "Release, no longer needed of other provisions/accruals/adjustments",
+              amountCategory: "RELEASE_CY",  
           },
           y27: {
             label:
               "Usage of other provisions/accruals/adjustments - Current Yr",
+              amountCategory: "USAGE_CY",
           },
           y28: {
             label:
               "Release, no longer needed of other provisions/accruals/adjustments - Current Yr",
+              amountCategory: "RELEASE_CY",
           },
           y07: {
             label:
               "Usage of other provisions/accruals/adjustments - Previous Yr",
+              amountCategory: "USAGE_PY",
           },
           y08: {
             label:
               "Release, no longer needed of other provisions/accruals/adjustments - Previous Yr",
+              amountCategory: "RELEASE_PY",
           },
           y09c: {
             label:
               "Correction - Creation/Addition of other provisions/accruals/adjustments",
+              amountCategory: "CREATION_ADDITION",
           },
           y27c: {
             label:
               "Correction - Usage of other provisions/accruals/adjustments - Current Yr",
+              amountCategory: "USAGE_CY",
           },
           y28c: {
             label:
               "Correction - Release, no longer needed of other provisions/accruals/adjustments - Current Yr",
+              amountCategory: "RELEASE_CY",
           },
           y07c: {
             label:
               "Correction - Usage of other provisions/accruals/adjustments - Previous Yr",
+              amountCategory: "USAGE_PY",
           },
           y08c: {
             label:
               "Correction - Release, no longer needed of other provisions/accruals/adjustments - Previous Yr",
+              amountCategory: "RELEASE_PY",
           },
           y097c: {
             label:
               "Correction - Usage of other provisions/accruals/adjustments",
+              amountCategory: "USAGE_CY",
           },
           y098c: {
             label:
               "Correction - Release, no longer needed of other provisions/accruals/adjustments",
+              amountCategory: "RELEASE_CY",
           },
           aed: {
             label: "Change in Application End Date",
+            amountCategory: "NA",
           },
           ccc: {
             label: "Change in Cost Center",
+            amountCategory: "NA",
           },
           con: {
             label: "Change in Sales Document",
+            amountCategory: "NA",
           },
           cwe: {
             label: "Change in WBS Element",
+            amountCategory: "NA",
           },
           cio: {
             label: "Change in Order",
+            amountCategory: "NA",
           },
         },
 
@@ -526,6 +545,7 @@ const data = () => {
             docType: "SA",
           },
         },
+        fiscalYear:{pl10: "2026",de10:"2025"}
       },
     },
   };
@@ -593,6 +613,46 @@ const LOCKED_GET_RESPONSE = {
   },
 };
 
+const NEW_ONE = {
+  data: {
+    fields: {
+      companyCode: "de10",
+      documentDate: "",
+      salesDocumentItem: "",
+      appNumber: "0000033888",
+      appCreator: "AHNE_AIL",
+      appCreationDate: "20170509",
+      appEndDate: "20261231",
+      costCenter: "DEDXN390",
+      postingDate: "",
+      description2: "UL: 63T€ / gemäß UK-Antrag - Erhöhung",
+      changedOn: "20251229",
+      description1: "Mod. Bln Infrasignal 2016",
+      appStartDate: "20170509",
+      appNumberImport: "",
+      mode: "modify",
+      ledgerGroup: "2l",
+      appNumberOld: "0000033888",
+      provisionType: "o30",
+      postingPeriod: "0202607",
+      subType: "y07",
+      user: "ADSZU",
+    },
+    amounts: {
+      "0L": {
+        carryForward: 104000.0,
+        creationAddition: { postedBooked: 2000.0, update: 0 },
+        usagePy: { postedBooked: -10000.0, update: 0 },
+        usageCy: { postedBooked: 0.0, update: 0 },
+        releasePy: { postedBooked: 0.0, update: 0 },
+        releaseCy: { postedBooked: 0.0, update: 0 },
+        closingBalance: { postedBooked: 96000.0, update: 0 },
+      },
+    },
+  },
+  errors: {},
+};
+
 const LOCKED_POST_RESPONSE = {
   data: {
     locked: true,
@@ -617,6 +677,8 @@ app.get("/protool", (req, res) => {
   if (appno === "init") return res.json(data()[appno]);
 
   if (appno === "666") return res.json(LOCKED_GET_RESPONSE);
+
+  if (appno === "ny") return res.json(NEW_ONE);
 
   const record = getRecordFor(appno);
   const response = record

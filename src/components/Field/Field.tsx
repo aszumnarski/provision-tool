@@ -8,18 +8,22 @@ import { Select } from "../Select/Select";
 import { Input } from "../Input/Input";
 import { DateInput } from "../Date/Date";
 import { Button } from "../Button/Button";
-import * as expressions from "../../utils/big-evals";
-import {
-  getOptions,getFieldValue
-} from "../../utils/config-resolver";
+import { getOptions, getFieldValue } from "../../utils/config-resolver";
 
 import { layout } from "../../config";
 
-import { type IField, type IOption, type IAttachment } from "../../types";
+import {
+  type IField,
+  type IOption,
+  type IAttachment,
+  type ICondition,
+} from "../../types";
+import { resolveAmount } from "../../utils/resolveAmount";
 
 export const Field = (props: IField) => {
   const {
     formValues,
+    applicationData,
     setFormValues,
     defaultValues,
     setDefaultValues,
@@ -59,7 +63,7 @@ export const Field = (props: IField) => {
     }
     if (!defaultValues) {
       setDefaultValues(formValues);
-      if (isDebug) console.log("✅ Default values initialized:", formValues, expressions);
+      if (isDebug) console.log("✅ Default values initialized:", formValues);
     }
     const val =
       props.type === "number" ? input.value.replace(/-/g, "") : input.value;
@@ -68,29 +72,28 @@ export const Field = (props: IField) => {
     });
   };
 
-const options = (): IOption[] => {
-  if (appConfig) {
-    const configOptions = getOptions(
-      props.name,
-      formValues,
-      appConfig
-    );
+  const options = (): IOption[] => {
+    if (appConfig) {
+      const configOptions = getOptions(props.name, formValues, appConfig);
 
-    if (configOptions) {
-      return configOptions;
+      if (configOptions) {
+        return configOptions;
+      }
     }
-  }
 
-  return props.options || [];
-};
+    return props.options || [];
+  };
 
+  const evaluateCalculation = () => {
+    const calculator = props.calculatedValue?.calculator;
 
-  const evalExpression = () =>
-    props.calculatedValue?.expression
-      ? eval(props.calculatedValue.expression)
-          .toLocaleString("en-US")
-          .replace(/\,/g, "")
-      : "";
+    if (!calculator) {
+      return "";
+    }
+
+    return calculator(formValues).toLocaleString("en-US").replace(/\,/g, "");
+  };
+
   const today = new Date().toISOString().substring(0, 10);
   const monthAddition = () => {
     if (!Object.keys(JSON.parse(JSON.stringify(formValues))).length) return "";
@@ -108,53 +111,92 @@ const options = (): IOption[] => {
 
   const getSum = () => {
     if (!props.calculatedValue) return "";
-    if (props.calculatedValue.expression) return evalExpression();
+    if (props.calculatedValue.calculator) return evaluateCalculation();
     if (props.calculatedValue.date) return monthAddition();
     return "";
   };
   const sum = getSum();
+
+  const conditionMatches = (c: ICondition) => {
+
+    console.log("condition", c);
+
+    if (c.category) {
+      const subType =
+        appConfig?.subType?.[
+          formValues.subType?.toLowerCase()
+        ];
+  
+console.log(
+  "selected",
+  formValues.subType,
+  "amountCategory",
+  subType?.amountCategory,
+  "expected",
+  c.category
+);
+
+
+console.log("applicationData", applicationData);
+console.log("selected subtype", formValues.subType);
+
+
+      return subType?.amountCategory === c.category;
+    }
+  
+
+    if (!c.when || c.is === undefined) {
+      return false;
+    }
+
+    const value = formValues[c.when];
+
+    if (Array.isArray(c.is)) {
+      return c.is.includes(value);
+    }
+
+    return value == c.is || !!value == c.is;
+  };
+
   const disabled = props.conditionalDisabled
     ? props.conditionalDisabled
         ?.map(
           (or) =>
-            or.conditions
-              .map(
-                (c) =>
-                  formValues[c.when] == c.is || !!formValues[c.when] == c.is
-              )
-              .filter(Boolean).length === or.conditions.length
+            or.conditions.map(conditionMatches).filter(Boolean).length ===
+            or.conditions.length
         )
         .filter(Boolean).length > 0
     : !!props.disabled;
 
-  const copyValue = () => {
-    if (!props.dependantValue) return "";
 
-    const match = props.dependantValue.find((or) =>
-      or.conditions.every((c) => c.is.includes(formValues[c.when]))
+  const copyValue = () => {
+    if (!props.dependentValue) return "";
+
+    const match = props.dependentValue.find((or) =>
+      or.conditions.every(conditionMatches)
     );
 
     return match ? formValues[match.valueFrom] : formValues[props.name];
   };
 
   const getValue = () => {
-
     if (appConfig) {
-      const resolvedValue = getFieldValue(
-        props.name,
-        formValues,
-        appConfig
-      );
-  
+      const resolvedValue = getFieldValue(props.name, formValues, appConfig);
+
       if (resolvedValue) {
         return resolvedValue;
       }
     }
-  
 
     if (!Object.keys(JSON.parse(JSON.stringify(formValues))).length) return "";
-    if (props.dependantValue) return copyValue();
+    if (props.dependentValue) return copyValue();
     if (sum) return sum;
+
+    const amountValue = resolveAmount(props.name, applicationData);
+
+    if (amountValue !== undefined) {
+      return amountValue;
+    }
 
     if (formValues[props.name]) return formValues[props.name];
     if (props.type === "select" && options().length) return options()[0].value;
@@ -175,9 +217,6 @@ const options = (): IOption[] => {
     options: opts,
     value,
   };
-
-  
-
 
   useEffect(() => {
     const currentValue = formValues?.[props.name];

@@ -1,5 +1,7 @@
 import * as h from "./helpers";
 import { type IField } from "../types";
+import * as expressions from "../utils/calculations";
+import { AmountCategory } from "../types";
 
 export const mode: IField = {
   name: "mode",
@@ -908,7 +910,7 @@ export const appCreator: IField = {
 export const tlClosingBalanceUpdate: IField = {
   name: "tlClosingBalanceUpdate",
   label: "TL-Closing Balance - Update",
-  dependantValue: [
+  dependentValue: [
     {
       conditions: [{ when: "subType", is: ["aed", "ccc", "con", "cwe"] }],
       valueFrom: "",
@@ -935,7 +937,7 @@ export const tlClosingBalanceUpdate: IField = {
 export const tlClosingBalance: IField = {
   name: "tlClosingBalance",
   label: "TL-Closing Balance - Posted & Booked",
-  dependantValue: [
+  dependentValue: [
     {
       conditions: [{ when: "ledgerGroup", is: ["0l", "2l", "il"] }],
       valueFrom: "",
@@ -958,7 +960,7 @@ export const tlClosingBalance: IField = {
 export const tlReleaseUpdatePY: IField = {
   name: "tlReleaseUpdatePY",
   label: "TL-Release PY - Update",
-  dependantValue: [
+  dependentValue: [
     {
       conditions: [
         { when: "subType", is: ["aed", "ccc", "con", "cwe", "cio"] },
@@ -987,7 +989,7 @@ export const tlReleaseUpdatePY: IField = {
 export const tlReleasePY: IField = {
   name: "tlReleasePY",
   label: "TL-Release PY - Posted & Booked",
-  dependantValue: [
+  dependentValue: [
     {
       conditions: [{ when: "ledgerGroup", is: ["0l", "2l", "il"] }],
       valueFrom: "",
@@ -1010,7 +1012,7 @@ export const tlReleasePY: IField = {
 export const tlUsageUpdatePY: IField = {
   name: "tlUsageUpdatePY",
   label: "TL-Usage PY - Update",
-  dependantValue: [
+  dependentValue: [
     {
       conditions: [
         { when: "subType", is: ["aed", "ccc", "con", "cwe", "cio"] },
@@ -1039,7 +1041,7 @@ export const tlUsageUpdatePY: IField = {
 export const tlUsagePY: IField = {
   name: "tlUsagePY",
   label: "TL-Usage PY - Posted & Booked",
-  dependantValue: [
+  dependentValue: [
     {
       conditions: [{ when: "ledgerGroup", is: ["0l", "2l", "il"] }],
       valueFrom: "",
@@ -1062,7 +1064,7 @@ export const tlUsagePY: IField = {
 export const tlReleaseUpdateCY: IField = {
   name: "tlReleaseUpdateCY",
   label: "TL-Release CY - Update",
-  dependantValue: [
+  dependentValue: [
     {
       conditions: [
         { when: "subType", is: ["aed", "ccc", "con", "cwe", "cio"] },
@@ -1091,7 +1093,7 @@ export const tlReleaseUpdateCY: IField = {
 export const tlReleaseCY: IField = {
   name: "tlReleaseCY",
   label: "TL-Release CY - Posted & Booked",
-  dependantValue: [
+  dependentValue: [
     {
       conditions: [{ when: "ledgerGroup", is: ["0l", "2l", "il"] }],
       valueFrom: "",
@@ -1114,7 +1116,7 @@ export const tlReleaseCY: IField = {
 export const tlUsageUpdateCY: IField = {
   name: "tlUsageUpdateCY",
   label: "TL-Usage CY - Update",
-  dependantValue: [
+  dependentValue: [
     {
       conditions: [
         { when: "subType", is: ["aed", "ccc", "con", "cwe", "cio"] },
@@ -1143,7 +1145,7 @@ export const tlUsageUpdateCY: IField = {
 export const tlUsageCY: IField = {
   name: "tlUsageCY",
   label: "TL-Usage CY - Posted & Booked",
-  dependantValue: [
+  dependentValue: [
     {
       conditions: [{ when: "ledgerGroup", is: ["0l", "2l", "il"] }],
       valueFrom: "",
@@ -1166,7 +1168,7 @@ export const tlUsageCY: IField = {
 export const tlCreationAdditionUpdate: IField = {
   name: "tlCreationAdditionUpdate",
   label: "TL-Creation/Addition - Update",
-  dependantValue: [
+  dependentValue: [
     {
       conditions: [
         { when: "subType", is: ["aed", "ccc", "con", "cwe", "cio"] },
@@ -1195,7 +1197,7 @@ export const tlCreationAdditionUpdate: IField = {
 export const tlCreationAddition: IField = {
   name: "tlCreationAddition",
   label: "TL-Creation/Addition - Posted & Booked",
-  dependantValue: [
+  dependentValue: [
     {
       conditions: [{ when: "ledgerGroup", is: ["0l", "2l", "il"] }],
       valueFrom: "",
@@ -1218,7 +1220,7 @@ export const tlCreationAddition: IField = {
 export const tlCarryFwd: IField = {
   name: "tlCarryFwd",
   label: "TL-Carry Fwd from Last Year",
-  dependantValue: [
+  dependentValue: [
     {
       conditions: [{ when: "ledgerGroup", is: ["0l", "2l", "il"] }],
       valueFrom: "",
@@ -1242,7 +1244,7 @@ export const _2lClosingBalanceUpdate: IField = {
   name: "2lClosingBalanceUpdate",
   label: "2L-Closing Balance - Update",
   calculatedValue: {
-    expression: "expressions.calculate2lClosingBalance(formValues)",
+    calculator: expressions.calculate2lClosingBalanceUpdate,
   },
   type: "number",
   patterns: [h.required()],
@@ -1254,8 +1256,7 @@ export const _2lClosingBalance: IField = {
   name: "2lClosingBalance",
   label: "2L-Closing Balance - Posted & Booked",
   calculatedValue: {
-    expression:
-      "Number(formValues['2lCarryFwd'] ?? 0) + Number(formValues['2lCreationAddition'] ?? 0) - Number(formValues['2lUsage'] ?? 0) - Number(formValues['2lRelease'] ?? 0)",
+    calculator: expressions.calculate2lClosingBalanceTotal,
   },
   type: "number",
   patterns: [h.required()],
@@ -1266,33 +1267,11 @@ export const _2lClosingBalance: IField = {
 export const _2lReleaseUpdatePY: IField = {
   name: "2lReleaseUpdatePY",
   label: "2L-Release PY - Update",
-  dependantValue: [
-    {
-      conditions: [
-        {
-          when: "subType",
-          is: [
-            "aed",
-            "ccc",
-            "con",
-            "cwe",
-            "cio",
-            "y07",
-            "y07c",
-            "y27",
-            "y27c",
-            "y09",
-            "y09c",
-            "y097",
-            "y097c",
-          ],
-        },
-      ],
-      valueFrom: "",
-    },
+  dependentValue: [
+    ...h.clearValueForOtherCategories(AmountCategory.RELEASE_PY),
     {
       conditions: [{ when: "ledgerGroup", is: ["al", "il"] }],
-      valueFrom: "0lReleaseUpdate",
+      valueFrom: "0lReleaseUpdatePY",
     },
     {
       conditions: [{ when: "ledgerGroup", is: ["0l"] }],
@@ -1302,7 +1281,7 @@ export const _2lReleaseUpdatePY: IField = {
   type: "number",
   patterns: [
     h.required("Not a proper number!"),
-    h.empty("2lUsageUpdate,2lCreationAdditionUpdate", "LOCAL GAAP"),
+    h.empty("2lUsageUpdatePY,2lCreationAdditionUpdate", "LOCAL GAAP"),
     h.decimals(2),
   ],
   conditionalDisabled: [
@@ -1316,42 +1295,8 @@ export const _2lReleaseUpdatePY: IField = {
     {
       conditions: [{ when: "ledgerGroup", is: "il" }],
     },
-    {
-      conditions: [{ when: "subType", is: "y07" }],
-    },
-    {
-      conditions: [{ when: "subType", is: "y27c" }],
-    },
-    {
-      conditions: [{ when: "subType", is: "y07c" }],
-    },
-    {
-      conditions: [{ when: "subType", is: "y097" }],
-    },
-    {
-      conditions: [{ when: "subType", is: "y097c" }],
-    },
-    {
-      conditions: [{ when: "subType", is: "y09" }],
-    },
-    {
-      conditions: [{ when: "subType", is: "y09c" }],
-    },
-    {
-      conditions: [{ when: "subType", is: "aed" }],
-    },
-    {
-      conditions: [{ when: "subType", is: "ccc" }],
-    },
-    {
-      conditions: [{ when: "subType", is: "con" }],
-    },
-    {
-      conditions: [{ when: "subType", is: "cwe" }],
-    },
-    {
-      conditions: [{ when: "subType", is: "cio" }],
-    },
+
+    ...h.editableOnlyForCategory(AmountCategory.RELEASE_PY),
   ],
   showLabel: false,
 };
@@ -1359,7 +1304,7 @@ export const _2lReleaseUpdatePY: IField = {
 export const _2lReleasePY: IField = {
   name: "2lReleasePY",
   label: "2L-Release PY - Posted & Booked",
-  dependantValue: [
+  dependentValue: [
     {
       conditions: [{ when: "ledgerGroup", is: ["al", "il"] }],
       valueFrom: "0lRelease",
@@ -1378,33 +1323,11 @@ export const _2lReleasePY: IField = {
 export const _2lReleaseUpdateCY: IField = {
   name: "2lReleaseUpdateCY",
   label: "2L-Release CY - Update",
-  dependantValue: [
-    {
-      conditions: [
-        {
-          when: "subType",
-          is: [
-            "aed",
-            "ccc",
-            "con",
-            "cwe",
-            "cio",
-            "y07",
-            "y07c",
-            "y27",
-            "y27c",
-            "y09",
-            "y09c",
-            "y097",
-            "y097c",
-          ],
-        },
-      ],
-      valueFrom: "",
-    },
+  dependentValue: [
+    ...h.clearValueForOtherCategories(AmountCategory.RELEASE_CY),
     {
       conditions: [{ when: "ledgerGroup", is: ["al", "il"] }],
-      valueFrom: "0lReleaseUpdate",
+      valueFrom: "0lReleaseUpdateCY",
     },
     {
       conditions: [{ when: "ledgerGroup", is: ["0l"] }],
@@ -1428,42 +1351,7 @@ export const _2lReleaseUpdateCY: IField = {
     {
       conditions: [{ when: "ledgerGroup", is: "il" }],
     },
-    {
-      conditions: [{ when: "subType", is: "y07" }],
-    },
-    {
-      conditions: [{ when: "subType", is: "y27c" }],
-    },
-    {
-      conditions: [{ when: "subType", is: "y07c" }],
-    },
-    {
-      conditions: [{ when: "subType", is: "y097" }],
-    },
-    {
-      conditions: [{ when: "subType", is: "y097c" }],
-    },
-    {
-      conditions: [{ when: "subType", is: "y09" }],
-    },
-    {
-      conditions: [{ when: "subType", is: "y09c" }],
-    },
-    {
-      conditions: [{ when: "subType", is: "aed" }],
-    },
-    {
-      conditions: [{ when: "subType", is: "ccc" }],
-    },
-    {
-      conditions: [{ when: "subType", is: "con" }],
-    },
-    {
-      conditions: [{ when: "subType", is: "cwe" }],
-    },
-    {
-      conditions: [{ when: "subType", is: "cio" }],
-    },
+    ...h.editableOnlyForCategory(AmountCategory.RELEASE_CY),
   ],
   showLabel: false,
 };
@@ -1471,7 +1359,7 @@ export const _2lReleaseUpdateCY: IField = {
 export const _2lReleaseCY: IField = {
   name: "2lReleaseCY",
   label: "2L-Release CY - Posted & Booked",
-  dependantValue: [
+  dependentValue: [
     {
       conditions: [{ when: "ledgerGroup", is: ["al", "il"] }],
       valueFrom: "0lRelease",
@@ -1490,33 +1378,11 @@ export const _2lReleaseCY: IField = {
 export const _2lUsageUpdatePY: IField = {
   name: "2lUsageUpdatePY",
   label: "2L-Usage PY - Update",
-  dependantValue: [
-    {
-      conditions: [
-        {
-          when: "subType",
-          is: [
-            "aed",
-            "ccc",
-            "con",
-            "cwe",
-            "cio",
-            "y28",
-            "y28c",
-            "y08",
-            "y08c",
-            "y09",
-            "y09c",
-            "y098",
-            "y098c",
-          ],
-        },
-      ],
-      valueFrom: "",
-    },
+  dependentValue: [
+    ...h.clearValueForOtherCategories(AmountCategory.USAGE_PY),
     {
       conditions: [{ when: "ledgerGroup", is: ["al", "il"] }],
-      valueFrom: "0lUsageUpdate",
+      valueFrom: "0lUsageUpdatePY",
     },
     {
       conditions: [{ when: "ledgerGroup", is: ["0l"] }],
@@ -1540,45 +1406,7 @@ export const _2lUsageUpdatePY: IField = {
     {
       conditions: [{ when: "ledgerGroup", is: "il" }],
     },
-    {
-      conditions: [{ when: "subType", is: "y09" }],
-    },
-    {
-      conditions: [{ when: "subType", is: "y09c" }],
-    },
-    {
-      conditions: [{ when: "subType", is: "y28" }],
-    },
-    {
-      conditions: [{ when: "subType", is: "y08" }],
-    },
-    {
-      conditions: [{ when: "subType", is: "y28c" }],
-    },
-    {
-      conditions: [{ when: "subType", is: "y08c" }],
-    },
-    {
-      conditions: [{ when: "subType", is: "y098" }],
-    },
-    {
-      conditions: [{ when: "subType", is: "y098c" }],
-    },
-    {
-      conditions: [{ when: "subType", is: "aed" }],
-    },
-    {
-      conditions: [{ when: "subType", is: "ccc" }],
-    },
-    {
-      conditions: [{ when: "subType", is: "con" }],
-    },
-    {
-      conditions: [{ when: "subType", is: "cwe" }],
-    },
-    {
-      conditions: [{ when: "subType", is: "cio" }],
-    },
+    ...h.editableOnlyForCategory(AmountCategory.USAGE_PY),
   ],
   showLabel: false,
 };
@@ -1586,7 +1414,7 @@ export const _2lUsageUpdatePY: IField = {
 export const _2lUsagePY: IField = {
   name: "2lUsagePY",
   label: "2L-Usage PY - Posted & Booked",
-  dependantValue: [
+  dependentValue: [
     {
       conditions: [{ when: "ledgerGroup", is: ["al", "il"] }],
       valueFrom: "0lUsage",
@@ -1605,33 +1433,11 @@ export const _2lUsagePY: IField = {
 export const _2lUsageUpdateCY: IField = {
   name: "2lUsageUpdateCY",
   label: "2L-Usage CY - Update",
-  dependantValue: [
-    {
-      conditions: [
-        {
-          when: "subType",
-          is: [
-            "aed",
-            "ccc",
-            "con",
-            "cwe",
-            "cio",
-            "y28",
-            "y28c",
-            "y08",
-            "y08c",
-            "y09",
-            "y09c",
-            "y098",
-            "y098c",
-          ],
-        },
-      ],
-      valueFrom: "",
-    },
+  dependentValue: [
+    ...h.clearValueForOtherCategories(AmountCategory.USAGE_CY),
     {
       conditions: [{ when: "ledgerGroup", is: ["al", "il"] }],
-      valueFrom: "0lUsageUpdate",
+      valueFrom: "0lUsageUpdateCY",
     },
     {
       conditions: [{ when: "ledgerGroup", is: ["0l"] }],
@@ -1655,45 +1461,7 @@ export const _2lUsageUpdateCY: IField = {
     {
       conditions: [{ when: "ledgerGroup", is: "il" }],
     },
-    {
-      conditions: [{ when: "subType", is: "y09" }],
-    },
-    {
-      conditions: [{ when: "subType", is: "y09c" }],
-    },
-    {
-      conditions: [{ when: "subType", is: "y28" }],
-    },
-    {
-      conditions: [{ when: "subType", is: "y08" }],
-    },
-    {
-      conditions: [{ when: "subType", is: "y28c" }],
-    },
-    {
-      conditions: [{ when: "subType", is: "y08c" }],
-    },
-    {
-      conditions: [{ when: "subType", is: "y098" }],
-    },
-    {
-      conditions: [{ when: "subType", is: "y098c" }],
-    },
-    {
-      conditions: [{ when: "subType", is: "aed" }],
-    },
-    {
-      conditions: [{ when: "subType", is: "ccc" }],
-    },
-    {
-      conditions: [{ when: "subType", is: "con" }],
-    },
-    {
-      conditions: [{ when: "subType", is: "cwe" }],
-    },
-    {
-      conditions: [{ when: "subType", is: "cio" }],
-    },
+    ...h.editableOnlyForCategory(AmountCategory.USAGE_CY),
   ],
   showLabel: false,
 };
@@ -1701,7 +1469,7 @@ export const _2lUsageUpdateCY: IField = {
 export const _2lUsageCY: IField = {
   name: "2lUsageCY",
   label: "2L-Usage CY - Posted & Booked",
-  dependantValue: [
+  dependentValue: [
     {
       conditions: [{ when: "ledgerGroup", is: ["al", "il"] }],
       valueFrom: "0lUsage",
@@ -1720,34 +1488,8 @@ export const _2lUsageCY: IField = {
 export const _2lCreationAdditionUpdate: IField = {
   name: "2lCreationAdditionUpdate",
   label: "2L-Creation/Addition - Update",
-  dependantValue: [
-    {
-      conditions: [
-        {
-          when: "subType",
-          is: [
-            "aed",
-            "ccc",
-            "con",
-            "cwe",
-            "cio",
-            "y07",
-            "y07c",
-            "y08",
-            "y08c",
-            "y27",
-            "y27c",
-            "y28",
-            "y28c",
-            "y097",
-            "y097c",
-            "y098",
-            "y098c",
-          ],
-        },
-      ],
-      valueFrom: "",
-    },
+  dependentValue: [
+    ...h.clearValueForOtherCategories(AmountCategory.CREATION_ADDITION),
     {
       conditions: [{ when: "ledgerGroup", is: ["al", "il"] }],
       valueFrom: "0lCreationAdditionUpdate",
@@ -1774,54 +1516,7 @@ export const _2lCreationAdditionUpdate: IField = {
     {
       conditions: [{ when: "ledgerGroup", is: "il" }],
     },
-    {
-      conditions: [{ when: "subType", is: "y07" }],
-    },
-    {
-      conditions: [{ when: "subType", is: "y27c" }],
-    },
-    {
-      conditions: [{ when: "subType", is: "y07c" }],
-    },
-    {
-      conditions: [{ when: "subType", is: "y097" }],
-    },
-    {
-      conditions: [{ when: "subType", is: "y097c" }],
-    },
-    {
-      conditions: [{ when: "subType", is: "y28" }],
-    },
-    {
-      conditions: [{ when: "subType", is: "y08" }],
-    },
-    {
-      conditions: [{ when: "subType", is: "y28c" }],
-    },
-    {
-      conditions: [{ when: "subType", is: "y08c" }],
-    },
-    {
-      conditions: [{ when: "subType", is: "y098" }],
-    },
-    {
-      conditions: [{ when: "subType", is: "y098c" }],
-    },
-    {
-      conditions: [{ when: "subType", is: "aed" }],
-    },
-    {
-      conditions: [{ when: "subType", is: "ccc" }],
-    },
-    {
-      conditions: [{ when: "subType", is: "con" }],
-    },
-    {
-      conditions: [{ when: "subType", is: "cwe" }],
-    },
-    {
-      conditions: [{ when: "subType", is: "cio" }],
-    },
+    ...h.editableOnlyForCategory(AmountCategory.CREATION_ADDITION),
   ],
   showLabel: false,
 };
@@ -1829,7 +1524,7 @@ export const _2lCreationAdditionUpdate: IField = {
 export const _2lCreationAddition: IField = {
   name: "2lCreationAddition",
   label: "2L-Creation/Addition - Posted & Booked",
-  dependantValue: [
+  dependentValue: [
     {
       conditions: [{ when: "ledgerGroup", is: ["al", "il"] }],
       valueFrom: "0lCreationAddition",
@@ -1848,7 +1543,7 @@ export const _2lCreationAddition: IField = {
 export const _2lCarryFwd: IField = {
   name: "2lCarryFwd",
   label: "2L-Carry Fwd from Last Year",
-  dependantValue: [
+  dependentValue: [
     {
       conditions: [{ when: "ledgerGroup", is: ["al", "il"] }],
       valueFrom: "0lCarryFwd",
@@ -1868,7 +1563,7 @@ export const _0lClosingBalanceUpdate: IField = {
   name: "0lClosingBalanceUpdate",
   label: "Closing Balance - Update",
   calculatedValue: {
-    expression: "expressions.calculate0lClosingBalance(formValues)",
+    calculator: expressions.calculate0lClosingBalanceUpdate,
   },
   type: "number",
   patterns: [h.required()],
@@ -1879,8 +1574,7 @@ export const _0lClosingBalance: IField = {
   name: "0lClosingBalance",
   label: "Closing Balance - Posted & Booked",
   calculatedValue: {
-    expression:
-      "Number(formValues['0lCarryFwd'] ?? 0) + Number(formValues['0lCreationAddition'] ?? 0) - Number(formValues['0lUsage'] ?? 0) - Number(formValues['0lRelease'] ?? 0)",
+    calculator: expressions.calculate0lClosingBalanceTotal,
   },
   type: "number",
   patterns: [h.required()],
@@ -1890,30 +1584,8 @@ export const _0lClosingBalance: IField = {
 export const _0lReleaseUpdatePY: IField = {
   name: "0lReleaseUpdatePY",
   label: "Release PY - Update",
-  dependantValue: [
-    {
-      conditions: [
-        {
-          when: "subType",
-          is: [
-            "aed",
-            "ccc",
-            "con",
-            "cwe",
-            "cio",
-            "y07",
-            "y07c",
-            "y27",
-            "y27c",
-            "y09",
-            "y09c",
-            "y097",
-            "y097c",
-          ],
-        },
-      ],
-      valueFrom: "",
-    },
+  dependentValue: [
+    ...h.clearValueForOtherCategories(AmountCategory.RELEASE_PY),
     {
       conditions: [{ when: "ledgerGroup", is: ["2l"] }],
       valueFrom: "",
@@ -1928,54 +1600,16 @@ export const _0lReleaseUpdatePY: IField = {
   conditionalDisabled: [
     ...h.inGetState,
     {
-      conditions: [{ when: "subType", is: "y09" }],
-    },
-    {
-      conditions: [{ when: "subType", is: "y09c" }],
-    },
-    {
-      conditions: [{ when: "subType", is: "y27" }],
-    },
-    {
-      conditions: [{ when: "subType", is: "y07" }],
-    },
-    {
-      conditions: [{ when: "subType", is: "y27c" }],
-    },
-    {
-      conditions: [{ when: "subType", is: "y07c" }],
-    },
-    {
-      conditions: [{ when: "subType", is: "y097" }],
-    },
-    {
-      conditions: [{ when: "subType", is: "y097c" }],
-    },
-    {
       conditions: [{ when: "ledgerGroup", is: "2l" }],
     },
-    {
-      conditions: [{ when: "subType", is: "aed" }],
-    },
-    {
-      conditions: [{ when: "subType", is: "ccc" }],
-    },
-    {
-      conditions: [{ when: "subType", is: "con" }],
-    },
-    {
-      conditions: [{ when: "subType", is: "cwe" }],
-    },
-    {
-      conditions: [{ when: "subType", is: "cio" }],
-    },
+    ...h.editableOnlyForCategory(AmountCategory.RELEASE_PY),
   ],
 };
 
 export const _0lReleasePY: IField = {
   name: "0lReleasePY",
   label: "Release PY - Posted & Booked",
-  dependantValue: [
+  dependentValue: [
     {
       conditions: [{ when: "ledgerGroup", is: ["2l"] }],
       valueFrom: "",
@@ -1989,30 +1623,8 @@ export const _0lReleasePY: IField = {
 export const _0lReleaseUpdateCY: IField = {
   name: "0lReleaseUpdateCY",
   label: "Release CY - Update",
-  dependantValue: [
-    {
-      conditions: [
-        {
-          when: "subType",
-          is: [
-            "aed",
-            "ccc",
-            "con",
-            "cwe",
-            "cio",
-            "y07",
-            "y07c",
-            "y27",
-            "y27c",
-            "y09",
-            "y09c",
-            "y097",
-            "y097c",
-          ],
-        },
-      ],
-      valueFrom: "",
-    },
+  dependentValue: [
+    ...h.clearValueForOtherCategories(AmountCategory.RELEASE_CY),
     {
       conditions: [{ when: "ledgerGroup", is: ["2l"] }],
       valueFrom: "",
@@ -2027,54 +1639,16 @@ export const _0lReleaseUpdateCY: IField = {
   conditionalDisabled: [
     ...h.inGetState,
     {
-      conditions: [{ when: "subType", is: "y09" }],
-    },
-    {
-      conditions: [{ when: "subType", is: "y09c" }],
-    },
-    {
-      conditions: [{ when: "subType", is: "y27" }],
-    },
-    {
-      conditions: [{ when: "subType", is: "y07" }],
-    },
-    {
-      conditions: [{ when: "subType", is: "y27c" }],
-    },
-    {
-      conditions: [{ when: "subType", is: "y07c" }],
-    },
-    {
-      conditions: [{ when: "subType", is: "y097" }],
-    },
-    {
-      conditions: [{ when: "subType", is: "y097c" }],
-    },
-    {
       conditions: [{ when: "ledgerGroup", is: "2l" }],
     },
-    {
-      conditions: [{ when: "subType", is: "aed" }],
-    },
-    {
-      conditions: [{ when: "subType", is: "ccc" }],
-    },
-    {
-      conditions: [{ when: "subType", is: "con" }],
-    },
-    {
-      conditions: [{ when: "subType", is: "cwe" }],
-    },
-    {
-      conditions: [{ when: "subType", is: "cio" }],
-    },
+    ...h.editableOnlyForCategory(AmountCategory.RELEASE_CY),
   ],
 };
 
 export const _0lReleaseCY: IField = {
   name: "0lReleaseCY",
   label: "Release CY - Posted & Booked",
-  dependantValue: [
+  dependentValue: [
     {
       conditions: [{ when: "ledgerGroup", is: ["2l"] }],
       valueFrom: "",
@@ -2088,30 +1662,8 @@ export const _0lReleaseCY: IField = {
 export const _0lUsageUpdatePY: IField = {
   name: "0lUsageUpdatePY",
   label: "Usage PY - Update",
-  dependantValue: [
-    {
-      conditions: [
-        {
-          when: "subType",
-          is: [
-            "aed",
-            "ccc",
-            "con",
-            "cwe",
-            "cio",
-            "y28",
-            "y28c",
-            "y08",
-            "y08c",
-            "y09",
-            "y09c",
-            "y098",
-            "y098c",
-          ],
-        },
-      ],
-      valueFrom: "",
-    },
+  dependentValue: [
+    ...h.clearValueForOtherCategories(AmountCategory.USAGE_PY),
     {
       conditions: [{ when: "ledgerGroup", is: ["2l"] }],
       valueFrom: "",
@@ -2126,54 +1678,16 @@ export const _0lUsageUpdatePY: IField = {
   conditionalDisabled: [
     ...h.inGetState,
     {
-      conditions: [{ when: "subType", is: "y09" }],
-    },
-    {
-      conditions: [{ when: "subType", is: "y09c" }],
-    },
-    {
       conditions: [{ when: "ledgerGroup", is: "2l" }],
     },
-    {
-      conditions: [{ when: "subType", is: "y28" }],
-    },
-    {
-      conditions: [{ when: "subType", is: "y08" }],
-    },
-    {
-      conditions: [{ when: "subType", is: "y28c" }],
-    },
-    {
-      conditions: [{ when: "subType", is: "y08c" }],
-    },
-    {
-      conditions: [{ when: "subType", is: "y098" }],
-    },
-    {
-      conditions: [{ when: "subType", is: "y098c" }],
-    },
-    {
-      conditions: [{ when: "subType", is: "aed" }],
-    },
-    {
-      conditions: [{ when: "subType", is: "ccc" }],
-    },
-    {
-      conditions: [{ when: "subType", is: "con" }],
-    },
-    {
-      conditions: [{ when: "subType", is: "cwe" }],
-    },
-    {
-      conditions: [{ when: "subType", is: "cio" }],
-    },
+    ...h.editableOnlyForCategory(AmountCategory.USAGE_PY),
   ],
 };
 
 export const _0lUsagePY: IField = {
   name: "0lUsagePY",
   label: "Usage PY - Posted & Booked",
-  dependantValue: [
+  dependentValue: [
     {
       conditions: [{ when: "ledgerGroup", is: ["2l"] }],
       valueFrom: "",
@@ -2187,30 +1701,8 @@ export const _0lUsagePY: IField = {
 export const _0lUsageUpdateCY: IField = {
   name: "0lUsageUpdateCY",
   label: "Usage CY - Update",
-  dependantValue: [
-    {
-      conditions: [
-        {
-          when: "subType",
-          is: [
-            "aed",
-            "ccc",
-            "con",
-            "cwe",
-            "cio",
-            "y28",
-            "y28c",
-            "y08",
-            "y08c",
-            "y09",
-            "y09c",
-            "y098",
-            "y098c",
-          ],
-        },
-      ],
-      valueFrom: "",
-    },
+  dependentValue: [
+    ...h.clearValueForOtherCategories(AmountCategory.USAGE_CY),
     {
       conditions: [{ when: "ledgerGroup", is: ["2l"] }],
       valueFrom: "",
@@ -2225,54 +1717,16 @@ export const _0lUsageUpdateCY: IField = {
   conditionalDisabled: [
     ...h.inGetState,
     {
-      conditions: [{ when: "subType", is: "y09" }],
-    },
-    {
-      conditions: [{ when: "subType", is: "y09c" }],
-    },
-    {
       conditions: [{ when: "ledgerGroup", is: "2l" }],
     },
-    {
-      conditions: [{ when: "subType", is: "y28" }],
-    },
-    {
-      conditions: [{ when: "subType", is: "y08" }],
-    },
-    {
-      conditions: [{ when: "subType", is: "y28c" }],
-    },
-    {
-      conditions: [{ when: "subType", is: "y08c" }],
-    },
-    {
-      conditions: [{ when: "subType", is: "y098" }],
-    },
-    {
-      conditions: [{ when: "subType", is: "y098c" }],
-    },
-    {
-      conditions: [{ when: "subType", is: "aed" }],
-    },
-    {
-      conditions: [{ when: "subType", is: "ccc" }],
-    },
-    {
-      conditions: [{ when: "subType", is: "con" }],
-    },
-    {
-      conditions: [{ when: "subType", is: "cwe" }],
-    },
-    {
-      conditions: [{ when: "subType", is: "cio" }],
-    },
+    ...h.editableOnlyForCategory(AmountCategory.USAGE_CY),
   ],
 };
 
 export const _0lUsageCY: IField = {
   name: "0lUsageCY",
   label: "Usage CY - Posted & Booked",
-  dependantValue: [
+  dependentValue: [
     {
       conditions: [{ when: "ledgerGroup", is: ["2l"] }],
       valueFrom: "",
@@ -2286,34 +1740,8 @@ export const _0lUsageCY: IField = {
 export const _0lCreationAdditionUpdate: IField = {
   name: "0lCreationAdditionUpdate",
   label: "Creation/Addition - Update",
-  dependantValue: [
-    {
-      conditions: [
-        {
-          when: "subType",
-          is: [
-            "aed",
-            "ccc",
-            "con",
-            "cwe",
-            "cio",
-            "y07",
-            "y07c",
-            "y08",
-            "y08c",
-            "y27",
-            "y27c",
-            "y28",
-            "y28c",
-            "y097",
-            "y097c",
-            "y098",
-            "y098c",
-          ],
-        },
-      ],
-      valueFrom: "",
-    },
+  dependentValue: [
+    ...h.clearValueForOtherCategories(AmountCategory.CREATION_ADDITION),
     {
       conditions: [{ when: "ledgerGroup", is: ["2l"] }],
       valueFrom: "",
@@ -2330,64 +1758,14 @@ export const _0lCreationAdditionUpdate: IField = {
     {
       conditions: [{ when: "ledgerGroup", is: "2l" }],
     },
-    {
-      conditions: [{ when: "subType", is: "y27" }],
-    },
-    {
-      conditions: [{ when: "subType", is: "y07" }],
-    },
-    {
-      conditions: [{ when: "subType", is: "y27c" }],
-    },
-    {
-      conditions: [{ when: "subType", is: "y07c" }],
-    },
-    {
-      conditions: [{ when: "subType", is: "y097" }],
-    },
-    {
-      conditions: [{ when: "subType", is: "y097c" }],
-    },
-    {
-      conditions: [{ when: "subType", is: "y28" }],
-    },
-    {
-      conditions: [{ when: "subType", is: "y08" }],
-    },
-    {
-      conditions: [{ when: "subType", is: "y28c" }],
-    },
-    {
-      conditions: [{ when: "subType", is: "y08c" }],
-    },
-    {
-      conditions: [{ when: "subType", is: "y098" }],
-    },
-    {
-      conditions: [{ when: "subType", is: "y098c" }],
-    },
-    {
-      conditions: [{ when: "subType", is: "aed" }],
-    },
-    {
-      conditions: [{ when: "subType", is: "ccc" }],
-    },
-    {
-      conditions: [{ when: "subType", is: "con" }],
-    },
-    {
-      conditions: [{ when: "subType", is: "cwe" }],
-    },
-    {
-      conditions: [{ when: "subType", is: "cio" }],
-    },
+    ...h.editableOnlyForCategory(AmountCategory.CREATION_ADDITION),
   ],
 };
 
 export const _0lCreationAddition: IField = {
   name: "0lCreationAddition",
   label: "Creation/Addition - Posted & Booked",
-  dependantValue: [
+  dependentValue: [
     {
       conditions: [{ when: "ledgerGroup", is: ["2l"] }],
       valueFrom: "",

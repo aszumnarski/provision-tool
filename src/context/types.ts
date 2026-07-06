@@ -1,14 +1,15 @@
 import { createContext } from "react";
-import { type IAppConfig } from "../types";
+import { type IAppConfig, type IApplicationData } from "../types";
 
 export interface IFormContext {
   formValues: any;
-  
-setFormValues: (
-  values: Record<string, unknown>,
-  shouldOverwrite?: boolean
-) => Promise<void>;
 
+  setFormValues: (
+    values: Record<string, unknown>,
+    shouldOverwrite?: boolean
+  ) => Promise<void>;
+  applicationData: IApplicationData | null;
+  setApplicationData: (p: IApplicationData | null) => void;
   defaultValues: any;
   setDefaultValues: (v: any) => void;
   formErrors: any;
@@ -25,25 +26,3 @@ setFormValues: (
   setModalContent: (m: any) => void;
 }
 export const FormContext = createContext<IFormContext | null>(null);
-
-/*
-export interface IFormContext {
-    formValues: Record<string, string>;
-  
-    setFormValues: (
-      values: Record<string, string>,
-      shouldOverwrite?: boolean
-    ) => Promise<void>;
-  
-    appConfig: IAppConfig | null;
-  
-    setAppConfig: React.Dispatch<
-      React.SetStateAction<IAppConfig | null>
-    >;
-  
-    isLoading: boolean;
-    setLoading: (loading: boolean) => void;
-  
- 
-  }
-  */

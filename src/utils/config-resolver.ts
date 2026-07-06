@@ -70,6 +70,9 @@ export const getFieldValue = (
     case "localCurrency":
       return appConfig.localCurrency[formValues.companyCode] || "";
 
+    case "fiscalYear":
+      return appConfig.fiscalYear[formValues.companyCode] || "";
+
     case "glDebitAccount":
       return (
         getAccountingRule(

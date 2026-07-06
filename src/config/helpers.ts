@@ -1,3 +1,37 @@
+import { AmountCategory, type IConditionalDisabled, type IDependentValue } from "../types";
+
+export const editableOnlyForCategory = (
+  category: AmountCategory
+): IConditionalDisabled[] =>
+  Object.values(AmountCategory)
+    .filter(
+      (currentCategory) =>
+        currentCategory !== category
+    )
+    .map((currentCategory) => ({
+      conditions: [
+        {
+          category: currentCategory,
+        },
+      ],
+    }));
+
+    
+export const clearValueForOtherCategories = (
+  category: AmountCategory
+): IDependentValue[] =>
+  Object.values(AmountCategory)
+    .filter((c) => c !== category)
+    .map((c) => ({
+      conditions: [
+        {
+          category: c,
+        },
+      ],
+      valueFrom: "",
+    }));
+
+
 export const required = (message?: string) => {
   return {
     reg: "required",

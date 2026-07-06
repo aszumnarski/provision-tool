@@ -5,15 +5,14 @@ import { Form } from "./components/Form/Form";
 import { FormContext } from "./context";
 import { Loader } from "./components/Loader/Loader";
 import { Modal } from "./components/Modal/Modal";
-import type { IAppConfig, IAttachment } from "./types";
+import type { IAppConfig, IApplicationData, IAttachment } from "./types";
 import { useFormValues } from "./utils/session-storage";
 
 declare const APP_VERSION: string;
 
 function App() {
-  const [formValues, _setFormValues] = useState<Record<string, string>>(
-    {},
-  );
+  const [formValues, _setFormValues] = useState<Record<string, string>>({});
+  const [applicationData, setApplicationData] =useState<IApplicationData | null>(null);
   const [formErrors, setFormErrors] = useState<Record<string, string> | {}>({});
   const [patterns, setPatterns] = useState<Record<string, string> | {}>({});
   const [att, setAtt] = useState<IAttachment[] | null>(null);
@@ -40,6 +39,8 @@ function App() {
       value={{
         formValues,
         setFormValues,
+        applicationData,
+        setApplicationData,
         defaultValues,
         setDefaultValues,
         formErrors,

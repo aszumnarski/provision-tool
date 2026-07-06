@@ -1,4 +1,5 @@
 import { type ChangeEvent } from "react";
+import type { AmountCategory } from "./config";
 
 export interface IOption {
   label: string;
@@ -15,7 +16,7 @@ export interface IField {
   type: "text" | "select" | "number" | "date" | "button" | "file";
   calculatedValue?: ICalculatedValue;
   conditionalDisabled?: IConditionalDisabled[];
-  dependantValue?: IDependentValue[];
+  dependentValue?: IDependentValue[];
   disabled?: boolean;
   error?: string;
   hidden?: boolean;
@@ -31,8 +32,9 @@ export interface IField {
 }
 
 export interface ICondition {
-  when: string;
-  is: string | boolean;
+  when?: string;
+  is?: string | boolean | (string | boolean)[];
+  category?: AmountCategory;
 }
 
 export interface IConditionalDisabled {
@@ -40,7 +42,7 @@ export interface IConditionalDisabled {
 }
 
 export interface IDependentValue {
-  conditions: IConditionMulti[];
+  conditions: ICondition[];
   valueFrom: string;
 }
 
@@ -50,13 +52,14 @@ export type IAttachment = {
   fileSize: number;
 };
 
+
 export interface ICalculatedValue {
-  expression?: string;
+  calculator?: Calculator;
   date?: string;
   month?: number;
 }
 
-export interface IConditionMulti {
-  when: string;
-  is: (string | boolean)[];
-}
+export type Calculator = (
+  formValues: Record<string, string>
+) => number | string;
+
