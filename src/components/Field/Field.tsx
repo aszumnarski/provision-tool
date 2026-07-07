@@ -118,32 +118,11 @@ export const Field = (props: IField) => {
   const sum = getSum();
 
   const conditionMatches = (c: ICondition) => {
-
-    console.log("condition", c);
-
     if (c.category) {
-      const subType =
-        appConfig?.subType?.[
-          formValues.subType?.toLowerCase()
-        ];
-  
-console.log(
-  "selected",
-  formValues.subType,
-  "amountCategory",
-  subType?.amountCategory,
-  "expected",
-  c.category
-);
-
-
-console.log("applicationData", applicationData);
-console.log("selected subtype", formValues.subType);
-
+      const subType = appConfig?.subType?.[formValues.subType?.toLowerCase()];
 
       return subType?.amountCategory === c.category;
     }
-  
 
     if (!c.when || c.is === undefined) {
       return false;
@@ -168,7 +147,6 @@ console.log("selected subtype", formValues.subType);
         .filter(Boolean).length > 0
     : !!props.disabled;
 
-
   const copyValue = () => {
     if (!props.dependentValue) return "";
 
@@ -180,6 +158,7 @@ console.log("selected subtype", formValues.subType);
   };
 
   const getValue = () => {
+    console.log("field", props.name);
     if (appConfig) {
       const resolvedValue = getFieldValue(props.name, formValues, appConfig);
 
@@ -189,8 +168,18 @@ console.log("selected subtype", formValues.subType);
     }
 
     if (!Object.keys(JSON.parse(JSON.stringify(formValues))).length) return "";
-    if (props.dependentValue) return copyValue();
+    if (props.dependentValue) {
+      console.log("dependent value shortcut", props.name);
+
+      const copied = copyValue();
+
+      if (copied !== undefined && copied !== "") {
+        return copied;
+      }
+    }
     if (sum) return sum;
+
+    console.log("getting value for", props.name);
 
     const amountValue = resolveAmount(props.name, applicationData);
 

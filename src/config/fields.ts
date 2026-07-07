@@ -29,7 +29,6 @@ export const appNumberImport: IField = {
   name: "appNumberImport",
   label: "Application Number to Import",
   type: "text",
-  patterns: [h.required()],
   conditionalDisabled: h.inCreateState,
 };
 
@@ -973,11 +972,11 @@ export const tlReleaseUpdatePY: IField = {
     },
     {
       conditions: [{ when: "ledgerGroup", is: ["al"] }],
-      valueFrom: "0lReleaseUpdate",
+      valueFrom: "0lReleaseUpdatePY",
     },
     {
       conditions: [{ when: "ledgerGroup", is: ["0l,lt"] }],
-      valueFrom: "2lReleaseUpdate",
+      valueFrom: "2lReleaseUpdatePY",
     },
   ],
   type: "number",
@@ -996,11 +995,11 @@ export const tlReleasePY: IField = {
     },
     {
       conditions: [{ when: "ledgerGroup", is: ["al"] }],
-      valueFrom: "0lRelease",
+      valueFrom: "0lReleasePY",
     },
     {
       conditions: [{ when: "ledgerGroup", is: ["0l,lt"] }],
-      valueFrom: "2lRelease",
+      valueFrom: "2lReleasePY",
     },
   ],
   type: "number",
@@ -1025,11 +1024,11 @@ export const tlUsageUpdatePY: IField = {
     },
     {
       conditions: [{ when: "ledgerGroup", is: ["al"] }],
-      valueFrom: "0lUsageUpdate",
+      valueFrom: "0lUsageUpdatePY",
     },
     {
       conditions: [{ when: "ledgerGroup", is: ["0l,lt"] }],
-      valueFrom: "2lUsageUpdate",
+      valueFrom: "2lUsageUpdatePY",
     },
   ],
   type: "number",
@@ -1048,11 +1047,11 @@ export const tlUsagePY: IField = {
     },
     {
       conditions: [{ when: "ledgerGroup", is: ["al"] }],
-      valueFrom: "0lUsage",
+      valueFrom: "0lUsagePY",
     },
     {
       conditions: [{ when: "ledgerGroup", is: ["0l,lt"] }],
-      valueFrom: "2lUsage",
+      valueFrom: "2lUsagePY",
     },
   ],
   type: "number",
@@ -1077,11 +1076,11 @@ export const tlReleaseUpdateCY: IField = {
     },
     {
       conditions: [{ when: "ledgerGroup", is: ["al"] }],
-      valueFrom: "0lReleaseUpdate",
+      valueFrom: "0lReleaseUpdateCY",
     },
     {
       conditions: [{ when: "ledgerGroup", is: ["0l,lt"] }],
-      valueFrom: "2lReleaseUpdate",
+      valueFrom: "2lReleaseUpdateCY",
     },
   ],
   type: "number",
@@ -1100,11 +1099,11 @@ export const tlReleaseCY: IField = {
     },
     {
       conditions: [{ when: "ledgerGroup", is: ["al"] }],
-      valueFrom: "0lRelease",
+      valueFrom: "0lReleaseCY",
     },
     {
       conditions: [{ when: "ledgerGroup", is: ["0l,lt"] }],
-      valueFrom: "2lRelease",
+      valueFrom: "2lReleaseCY",
     },
   ],
   type: "number",
@@ -1129,11 +1128,11 @@ export const tlUsageUpdateCY: IField = {
     },
     {
       conditions: [{ when: "ledgerGroup", is: ["al"] }],
-      valueFrom: "0lUsageUpdate",
+      valueFrom: "0lUsageUpdateCY",
     },
     {
       conditions: [{ when: "ledgerGroup", is: ["0l,lt"] }],
-      valueFrom: "2lUsageUpdate",
+      valueFrom: "2lUsageUpdateCY",
     },
   ],
   type: "number",
@@ -1152,11 +1151,11 @@ export const tlUsageCY: IField = {
     },
     {
       conditions: [{ when: "ledgerGroup", is: ["al"] }],
-      valueFrom: "0lUsage",
+      valueFrom: "0lUsageCY",
     },
     {
       conditions: [{ when: "ledgerGroup", is: ["0l,lt"] }],
-      valueFrom: "2lUsage",
+      valueFrom: "2lUsageCY",
     },
   ],
   type: "number",
@@ -1307,7 +1306,7 @@ export const _2lReleasePY: IField = {
   dependentValue: [
     {
       conditions: [{ when: "ledgerGroup", is: ["al", "il"] }],
-      valueFrom: "0lRelease",
+      valueFrom: "0lReleasePY",
     },
     {
       conditions: [{ when: "ledgerGroup", is: ["0l"] }],
@@ -1362,7 +1361,7 @@ export const _2lReleaseCY: IField = {
   dependentValue: [
     {
       conditions: [{ when: "ledgerGroup", is: ["al", "il"] }],
-      valueFrom: "0lRelease",
+      valueFrom: "0lReleaseCY",
     },
     {
       conditions: [{ when: "ledgerGroup", is: ["0l"] }],
@@ -1417,7 +1416,7 @@ export const _2lUsagePY: IField = {
   dependentValue: [
     {
       conditions: [{ when: "ledgerGroup", is: ["al", "il"] }],
-      valueFrom: "0lUsage",
+      valueFrom: "0lUsagePY",
     },
     {
       conditions: [{ when: "ledgerGroup", is: ["0l"] }],
@@ -1472,7 +1471,7 @@ export const _2lUsageCY: IField = {
   dependentValue: [
     {
       conditions: [{ when: "ledgerGroup", is: ["al", "il"] }],
-      valueFrom: "0lUsage",
+      valueFrom: "0lUsageCY",
     },
     {
       conditions: [{ when: "ledgerGroup", is: ["0l"] }],
@@ -1594,7 +1593,7 @@ export const _0lReleaseUpdatePY: IField = {
   type: "number",
   patterns: [
     h.required("Not a proper number!"),
-    h.empty("0lUsageUpdate,0lCreationAdditionUpdate", "IFRS"),
+    h.empty("0lUsageUpdatePY,0lUsageUpdateCY,0lCreationAdditionUpdate", "IFRS"),
     h.decimals(2),
   ],
   conditionalDisabled: [
@@ -1633,7 +1632,7 @@ export const _0lReleaseUpdateCY: IField = {
   type: "number",
   patterns: [
     h.required("Not a proper number!"),
-    h.empty("0lUsageUpdate,0lCreationAdditionUpdate", "IFRS"),
+    h.empty("0lUsageUpdatePY,0lUsageUpdateCY,0lCreationAdditionUpdate", "IFRS"),
     h.decimals(2),
   ],
   conditionalDisabled: [
@@ -1672,7 +1671,7 @@ export const _0lUsageUpdatePY: IField = {
   type: "number",
   patterns: [
     h.required("Not a proper number!"),
-    h.empty("0lCreationAdditionUpdate,0lReleaseUpdate", "IFRS"),
+    h.empty("0lCreationAdditionUpdate,0lReleaseUpdateCY,0lReleaseUpdatePY", "IFRS"),
     h.decimals(2),
   ],
   conditionalDisabled: [
@@ -1711,7 +1710,7 @@ export const _0lUsageUpdateCY: IField = {
   type: "number",
   patterns: [
     h.required("Not a proper number!"),
-    h.empty("0lCreationAdditionUpdate,0lReleaseUpdate", "IFRS"),
+    h.empty("0lCreationAdditionUpdate,0lReleaseUpdateCY,0lReleaseUpdatePY", "IFRS"),
     h.decimals(2),
   ],
   conditionalDisabled: [
@@ -1750,7 +1749,7 @@ export const _0lCreationAdditionUpdate: IField = {
   type: "number",
   patterns: [
     h.required("Not a proper number!"),
-    h.empty("0lUsageUpdate,0lReleaseUpdate", "IFRS"),
+    h.empty("0lUsageUpdateCY,0lReleaseUpdateCY,0lUsageUpdatePY,0lReleaseUpdatePY", "IFRS"),
     h.decimals(2),
   ],
   conditionalDisabled: [

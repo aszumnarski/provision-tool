@@ -631,7 +631,7 @@ const NEW_ONE = {
       appStartDate: "20170509",
       appNumberImport: "",
       mode: "modify",
-      ledgerGroup: "2l",
+      ledgerGroup: "0l",
       appNumberOld: "0000033888",
       provisionType: "o30",
       postingPeriod: "0202607",
