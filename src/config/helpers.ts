@@ -1,7 +1,7 @@
-import { AmountCategory, type IConditionalDisabled, type IDependentValue } from "../types";
+import { AmountCategory, type TAmountCategory, type IConditionalDisabled, type IDependentValue } from "../types";
 
 export const editableOnlyForCategory = (
-  category: AmountCategory
+  category: TAmountCategory
 ): IConditionalDisabled[] =>
   Object.values(AmountCategory)
     .filter(
@@ -18,7 +18,7 @@ export const editableOnlyForCategory = (
 
     
 export const clearValueForOtherCategories = (
-  category: AmountCategory
+  category: TAmountCategory
 ): IDependentValue[] =>
   Object.values(AmountCategory)
     .filter((c) => c !== category)

@@ -18,7 +18,6 @@ export interface IAppConfig {
   accountingRule: Record<string, IAccountingRule>;
 }
 
-
 export interface IAccountingRule {
   sign: string;
 
@@ -37,7 +36,6 @@ export interface IAccountingRule {
   docType: string;
 }
 
-
 export interface IProvisionType {
   code: string;
   description: string;
@@ -48,30 +46,25 @@ export interface IProvisionType {
   subTypes: string[];
 }
 
-
-
 export interface ISubType {
   label: string;
-  amountCategory:AmountCategory;
+  amountCategory: TAmountCategory;
 }
 
+export const AmountCategory = {
+  NA: "NA",
+  CREATION_ADDITION: "CREATION_ADDITION",
+  USAGE_PY: "USAGE_PY",
+  USAGE_CY: "USAGE_CY",
+  RELEASE_PY: "RELEASE_PY",
+  RELEASE_CY: "RELEASE_CY",
+} as const;
 
+export type TAmountCategory =
+  (typeof AmountCategory)[keyof typeof AmountCategory];
 
-export enum AmountCategory {
-  CREATION_ADDITION = "CREATION_ADDITION",
-  USAGE_PY = "USAGE_PY",
-  USAGE_CY = "USAGE_CY",
-  RELEASE_PY = "RELEASE_PY",
-  RELEASE_CY = "RELEASE_CY",
-}
-
-
-
-  export const isAmountCategory = (
-    subType: string | undefined,
-    subTypes: Record<string, ISubType>,
-    category: AmountCategory
-  ) =>
-    subTypes[subType?.toLowerCase() ?? ""]
-      ?.amountCategory === category;
-  
+export const isAmountCategory = (
+  subType: string | undefined,
+  subTypes: Record<string, ISubType>,
+  category: TAmountCategory
+) => subTypes[subType?.toLowerCase() ?? ""]?.amountCategory === category;

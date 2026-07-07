@@ -1,5 +1,5 @@
 import { type ChangeEvent } from "react";
-import type { AmountCategory } from "./config";
+import type { TAmountCategory } from "./config";
 
 export interface IOption {
   label: string;
@@ -34,7 +34,7 @@ export interface IField {
 export interface ICondition {
   when?: string;
   is?: string | boolean | (string | boolean)[];
-  category?: AmountCategory;
+  category?: TAmountCategory;
 }
 
 export interface IConditionalDisabled {
