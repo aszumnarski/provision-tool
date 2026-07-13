@@ -20,6 +20,7 @@ export const costObjects = {
 export const values = {
   title: "VALUATION MATRIX",
   columns: [c.ifrs, c.localGaap, c.tax],
+  isMatrix: true
 };
 
 export const controls = {

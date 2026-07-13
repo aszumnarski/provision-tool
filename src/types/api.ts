@@ -10,14 +10,6 @@ export interface IApiResponse {
   errors?: Record<string, string>;
 }
 
-export interface IPostResponse {
-  data?: {
-    appNumber: string;
-  };
-
-  errors?: Record<string, string>;
-}
-
 export interface IInitData {
   user: string;
   mode: string;

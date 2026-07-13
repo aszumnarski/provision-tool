@@ -92,7 +92,7 @@ export function Form({ rows }: IForm) {
     <form onSubmit={onSubmit} className="form">
       <div className="row-wrapper">
         {rows.map((r, i) => (
-          <Row key={i} title={r.title} columns={r.columns} />
+          <Row key={i} title={r.title} columns={r.columns} isMatrix={r.isMatrix} />
         ))}
       </div>
 

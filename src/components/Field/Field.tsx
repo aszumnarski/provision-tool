@@ -67,6 +67,7 @@ export const Field = (props: IField) => {
     }
     const val =
       props.type === "number" ? input.value.replace(/-/g, "") : input.value;
+    console.log("onChange", props.name, val);
     await setFormValues({
       [props.name]: val,
     });
@@ -148,17 +149,24 @@ export const Field = (props: IField) => {
     : !!props.disabled;
 
   const copyValue = () => {
-    if (!props.dependentValue) return "";
+    if (!props.dependentValue) return undefined;
 
     const match = props.dependentValue.find((or) =>
       or.conditions.every(conditionMatches)
     );
 
-    return match ? formValues[match.valueFrom] : formValues[props.name];
+    if (!match) {
+      return undefined;
+    }
+
+    if (match.valueFrom === "") {
+      return "";
+    }
+
+    return formValues[match.valueFrom];
   };
 
   const getValue = () => {
-    console.log("field", props.name);
     if (appConfig) {
       const resolvedValue = getFieldValue(props.name, formValues, appConfig);
 
@@ -169,21 +177,24 @@ export const Field = (props: IField) => {
 
     if (!Object.keys(JSON.parse(JSON.stringify(formValues))).length) return "";
     if (props.dependentValue) {
-      console.log("dependent value shortcut", props.name);
-
       const copied = copyValue();
 
-      if (copied !== undefined && copied !== "") {
+      if (copied !== undefined) {
         return copied;
       }
     }
     if (sum) return sum;
 
-    console.log("getting value for", props.name);
-
     const amountValue = resolveAmount(props.name, applicationData);
 
-    if (amountValue !== undefined) {
+    console.log(
+      "resolveAmount",
+      props.name,
+      amountValue,
+      formValues[props.name]
+    );
+
+    if (amountValue !== undefined && formValues[props.name] === undefined) {
       return amountValue;
     }
 
@@ -250,6 +261,15 @@ export const Field = (props: IField) => {
   };
 
   useEffect(() => {
+    console.log(
+      "sync effect",
+      props.name,
+      "enhanced:",
+      enhancedProps.value,
+      "form:",
+      formValues[props.name]
+    );
+
     if (enhancedProps.value !== formValues[props.name]) {
       setFormValues({
         [props.name]: enhancedProps.value,

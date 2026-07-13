@@ -7,6 +7,7 @@
 .app {
   max-width: 1800px;
   margin: 0 auto;
+  background-color: rgb(249, 249, 249);
 }
 
 img.logo__pic {

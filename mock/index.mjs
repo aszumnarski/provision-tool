@@ -722,22 +722,36 @@ function updateRecordInDb(db, data) {
   return data.appNumber;
 }
 
+
 function mutateDb(data) {
   let db = readDb();
+
   const appNumber = !!data.appNumber
     ? updateRecordInDb(db, data)
     : addNewRecordToDb(db, data);
+
   const e = { errors: { error: "Database error!" } };
+
   if (!appNumber) return e;
 
   try {
     fs.writeFileSync("./db.json", JSON.stringify(db, null, 2));
-    return { data: { appNumber } };
+
+    return {
+      data: {
+        fields: {
+          appNumber,
+        },
+        amounts: {},
+      },
+
+    };
   } catch (error) {
     console.error(error);
     return e;
   }
 }
+
 
 function validate(data) {
   const copy = { ...data };

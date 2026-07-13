@@ -5,3 +5,11 @@
   min-width: 0;
   gap: 10px;
 }
+
+.matrix .column {
+  flex: unset;
+}
+
+.matrix .column-header{
+  text-align: right;
+}

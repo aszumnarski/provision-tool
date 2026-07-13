@@ -1,15 +1,20 @@
 .row-wrapper {
   display: flex;
   flex-direction: column;
-  gap: 30px;
+  gap: 20px;
 }
 
 .row {
   display: flex;
   flex-direction: column;
   gap: 20px;
-  /* border-top: 1px solid lightgray; */
-  /* padding-top: 20px; */
+  border: 1px solid lightgray;
+  border-radius: 10px;
+  background-color: white;
+  padding: 20px;
+  margin: 20px;
+  margin-bottom: 0;
+  margin-top: 0;
 }
 
 

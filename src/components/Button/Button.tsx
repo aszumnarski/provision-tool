@@ -1,6 +1,6 @@
 import "./Button.css";
 import { useEffect } from "react";
-import { type IApiResponse, type IPostResponse } from "../../types";
+import { type IApiResponse } from "../../types";
 import type { MouseEventHandler } from "react";
 import { validateAll } from "../../utils/validation";
 import { useFormContext } from "../../context/useFormContext";
@@ -35,12 +35,10 @@ export const Button = () => {
 
   const post = async () => {
     const res = await postData(url || "/protool", formValues);
-
     if (!res) {
       return;
     }
-
-    if (res.errors) {
+    if (res.errors && Object.keys(res.errors).length > 0) {
       return setFormErrors(res.errors);
     }
 
@@ -49,12 +47,11 @@ export const Button = () => {
     }
 
     const content = {
-      message: `Application <strong>${res.data.appNumber}</strong> was ${
+      message: `Application <strong>${res.data.fields.appNumber}</strong> was ${
         getState().label === "CREATE" ? "created" : "updated"
       } successfully.`,
       type: "success",
     };
-
     setModalContent(content);
     await resetForm();
   };
@@ -155,7 +152,7 @@ export const Button = () => {
   async function postData(
     url: string,
     body: Record<string, any>
-  ): Promise<IPostResponse | undefined> {
+  ): Promise<IApiResponse | undefined> {
     setLoading(true);
     const formData = new FormData();
     formData.append("json", JSON.stringify(body));

@@ -53,7 +53,6 @@ export function resolveAmount(
     case "0lusagepy":
     case "2lusagepy":
     case "tlusagepy":
-      console.log("usagePy", a.usagePy);
       return a.usagePy.postedBooked;
 
     case "0lusageupdatepy":
