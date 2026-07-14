@@ -10,7 +10,7 @@ export interface IRow {
 
 export function Row(row: IRow) {
   const { title, columns, isMatrix } = row;
-  console.log({title,isMatrix});
+  //console.log({title,isMatrix});
   return (
     <div className={`row ${isMatrix ? "matrix" : ""}`}>
       {title && <div className="row-title">{title}</div>}

@@ -67,7 +67,7 @@ export const Field = (props: IField) => {
     }
     const val =
       props.type === "number" ? input.value.replace(/-/g, "") : input.value;
-    console.log("onChange", props.name, val);
+    //console.log("onChange", props.name, val);
     await setFormValues({
       [props.name]: val,
     });
@@ -187,14 +187,16 @@ export const Field = (props: IField) => {
 
     const amountValue = resolveAmount(props.name, applicationData);
 
-    console.log(
-      "resolveAmount",
-      props.name,
-      amountValue,
-      formValues[props.name]
-    );
+    //console.log(
+    //  "resolveAmount",
+    //  props.name,
+    //  amountValue,
+    //  formValues[props.name]
+    //);
 
-    if (amountValue !== undefined && formValues[props.name] === undefined) {
+    const currentValue = formValues[props.name];
+
+    if (amountValue !== undefined && (currentValue == null || currentValue === "")) {
       return amountValue;
     }
 
@@ -261,14 +263,14 @@ export const Field = (props: IField) => {
   };
 
   useEffect(() => {
-    console.log(
-      "sync effect",
-      props.name,
-      "enhanced:",
-      enhancedProps.value,
-      "form:",
-      formValues[props.name]
-    );
+    //console.log(
+    //  "sync effect",
+    //  props.name,
+    //  "enhanced:",
+    //  enhancedProps.value,
+    //  "form:",
+    //  formValues[props.name]
+    //);
 
     if (enhancedProps.value !== formValues[props.name]) {
       setFormValues({
