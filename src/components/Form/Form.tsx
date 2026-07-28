@@ -26,6 +26,7 @@ export function Form({ rows }: IForm) {
     setAppConfig,
     setLoading,
     setModalContent,
+    setDefaultValues,
   } = useFormContext();
 
   async function getInitData(url: string): Promise<IInitResponse | undefined> {
@@ -64,7 +65,9 @@ export function Form({ rows }: IForm) {
       message: "",
     };
 
-    setFormValues(initialState);
+    await setFormValues(initialState);
+    console.log("DEFAULT SNAPSHOT", initialState);
+    setDefaultValues({ ...initialState });
     setPatterns(createPatternState(rows));
   };
 

@@ -935,7 +935,7 @@ export const tlClosingBalanceUpdate: IField = {
 
 export const tlClosingBalance: IField = {
   name: "tlClosingBalance",
-  label: "TL-Closing Balance - Posted & Booked",
+  label: "TL-Closing Balance - Total",
   dependentValue: [
     {
       conditions: [{ when: "ledgerGroup", is: ["0l", "2l", "il"] }],
@@ -1253,7 +1253,7 @@ export const _2lClosingBalanceUpdate: IField = {
 
 export const _2lClosingBalance: IField = {
   name: "2lClosingBalance",
-  label: "2L-Closing Balance - Posted & Booked",
+  label: "2L-Closing Balance - Total",
   calculatedValue: {
     calculator: expressions.calculate2lClosingBalanceTotal,
   },
@@ -1571,7 +1571,7 @@ export const _0lClosingBalanceUpdate: IField = {
 
 export const _0lClosingBalance: IField = {
   name: "0lClosingBalance",
-  label: "Closing Balance - Posted & Booked",
+  label: "Closing Balance - Total",
   calculatedValue: {
     calculator: expressions.calculate0lClosingBalanceTotal,
   },

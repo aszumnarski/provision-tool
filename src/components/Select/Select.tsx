@@ -19,7 +19,13 @@ export const Select = (props: IField) => {
       <select
         className={selectClass}
         name={props.name}
-        value={props.value}
+        value={
+          props.value == null
+            ? ""
+            : typeof props.value === "boolean"
+            ? String(props.value)
+            : props.value
+        }
         onChange={props.onChange}
         disabled={props.disabled}
         onBlur={props.onBlur}

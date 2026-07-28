@@ -5,9 +5,15 @@ import { preventArrowKeyIncrement } from "../../utils/keyboard-utils";
 import { handleWheel } from "../../utils/keyboard-utils";
 export const Input = (props: IField) => {
   const className = `input ${props.error ? "input--error" : ""}`;
+  
+const valueLength =
+typeof props.value === "string"
+  ? props.value.length
+  : 0;
+
   const counter =
-    props.maxlength && props.value?.length
-      ? `(Characters left: ${Number(props.maxlength) - props.value?.length})`
+    props.maxlength && valueLength
+      ? `(Characters left: ${Number(props.maxlength) - valueLength})`
       : "";
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
@@ -34,7 +40,13 @@ export const Input = (props: IField) => {
             : undefined
         }
         onWheel={handleWheel}
-        value={props.value || ""}
+        value={
+          props.value == null
+            ? ""
+            : typeof props.value === "boolean"
+            ? String(props.value)
+            : props.value
+        }
         multiple={props.type === "file"}
       />
       {counter && <span className="input-counter">{counter}</span>}

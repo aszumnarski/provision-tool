@@ -2,7 +2,7 @@ import { useState } from "react";
 import "./App.css";
 import { config } from "./config";
 import { Form } from "./components/Form/Form";
-import { FormContext } from "./context";
+import { FormContext, type FormValues, type ValidationPatterns } from "./context";
 import { Loader } from "./components/Loader/Loader";
 import { Modal } from "./components/Modal/Modal";
 import type { IAppConfig, IApplicationData, IAttachment } from "./types";
@@ -14,11 +14,11 @@ function App() {
   const [formValues, _setFormValues] = useState<Record<string, string>>({});
   const [applicationData, setApplicationData] =useState<IApplicationData | null>(null);
   const [formErrors, setFormErrors] = useState<Record<string, string> | {}>({});
-  const [patterns, setPatterns] = useState<Record<string, string> | {}>({});
+  const [patterns, setPatterns] = useState<ValidationPatterns>({});
   const [att, setAtt] = useState<IAttachment[] | null>(null);
   const [appConfig, setAppConfig] =useState<IAppConfig | null>(null);
   const [isLoading, setLoading] = useState(true);
-  const [defaultValues, setDefaultValues] = useState(null);
+  const [defaultValues, setDefaultValues] = useState<FormValues | null>(null);
   const [modalContent, setModalContent] = useState<Record<
     string,
     string

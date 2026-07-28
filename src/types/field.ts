@@ -1,5 +1,6 @@
 import { type ChangeEvent } from "react";
 import type { TAmountCategory } from "./config";
+import type { FormValue, FormValues } from "../context";
 
 export interface IOption {
   label: string;
@@ -26,7 +27,7 @@ export interface IField {
   onChange?: (e: ChangeEvent) => void;
   options?: IOption[];
   patterns?: IPattern[];
-  value?: string;
+  value?: FormValue;
   layout?: "vertical" | "horizontal";
   showLabel?: boolean;
 }
@@ -60,6 +61,6 @@ export interface ICalculatedValue {
 }
 
 export type Calculator = (
-  formValues: Record<string, string>
+  formValues: FormValues
 ) => number | string;
 

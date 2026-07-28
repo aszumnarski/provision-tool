@@ -1,3 +1,4 @@
+import type { FormValues } from "../context";
 import type { IAppConfig, IOption, IAccountingRule } from "../types";
 
 export const getSubTypeOptions = (
@@ -30,7 +31,7 @@ export const getAccountingRule = (
 
 export const getOptions = (
   fieldName: string,
-  formValues: Record<string, string>,
+  formValues: FormValues,
   appConfig: IAppConfig
 ): IOption[] | null => {
   switch (fieldName) {
@@ -38,7 +39,12 @@ export const getOptions = (
       return appConfig.companyCode;
 
     case "ledgerGroup":
-      return appConfig.ledgerGroup[formValues.companyCode] || [];
+      const companyCode =
+        typeof formValues.companyCode === "string"
+          ? formValues.companyCode
+          : "";
+
+      return appConfig.ledgerGroup[companyCode] || [];
 
     case "mode":
       return appConfig.mode;
@@ -54,7 +60,12 @@ export const getOptions = (
         }));
 
     case "subType":
-      return getSubTypeOptions(formValues.provisionType, appConfig);
+      const provisionType =
+        typeof formValues.provisionType === "string"
+          ? formValues.provisionType
+          : "";
+
+      return getSubTypeOptions(provisionType, appConfig);
 
     default:
       return null;
@@ -63,21 +74,36 @@ export const getOptions = (
 
 export const getFieldValue = (
   fieldName: string,
-  formValues: Record<string, string>,
+  formValues: FormValues,
   appConfig: IAppConfig
 ): string => {
+  const companyCode =
+    typeof formValues.companyCode === "string"
+      ? formValues.companyCode
+      : "";
+
+  const provisionType =
+    typeof formValues.provisionType === "string"
+      ? formValues.provisionType
+      : "";
+
+  const subType =
+    typeof formValues.subType === "string"
+      ? formValues.subType
+      : "";
+
   switch (fieldName) {
     case "localCurrency":
-      return appConfig.localCurrency[formValues.companyCode] || "";
+      return appConfig.localCurrency[companyCode] || "";
 
     case "fiscalYear":
-      return appConfig.fiscalYear[formValues.companyCode] || "";
+      return appConfig.fiscalYear[companyCode] || "";
 
     case "glDebitAccount":
       return (
         getAccountingRule(
-          formValues.provisionType,
-          formValues.subType,
+          provisionType,
+          subType,
           appConfig
         )?.glDebit || ""
       );
@@ -85,8 +111,8 @@ export const getFieldValue = (
     case "glCreditAccount":
       return (
         getAccountingRule(
-          formValues.provisionType,
-          formValues.subType,
+          provisionType,
+          subType,
           appConfig
         )?.glCredit || ""
       );

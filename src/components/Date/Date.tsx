@@ -48,7 +48,10 @@ export const DateInput = (props: IField) => {
         onChange={handleChange}
         onBlur={props.onBlur}
         onKeyDown={preventEnterSubmit}
-        value={toDash(props.value) || today}
+        value={
+          toDash(typeof props.value === "string" ? props.value : undefined) ||
+          today
+        }
         min={min}
         disabled={props.disabled}
       />

@@ -25,8 +25,6 @@ export const Field = (props: IField) => {
     formValues,
     applicationData,
     setFormValues,
-    defaultValues,
-    setDefaultValues,
     formErrors,
     setFormErrors,
     patterns,
@@ -48,7 +46,6 @@ export const Field = (props: IField) => {
 
   const onChange = async (e: ChangeEvent) => {
     const input = e.target as HTMLInputElement;
-    const isDebug = window.location.search.includes("debug=true");
     if (input.files && input.files.length > 0) {
       const files = Array.from(input.files);
 
@@ -60,10 +57,6 @@ export const Field = (props: IField) => {
         })
       );
       setAtt(attachments);
-    }
-    if (!defaultValues) {
-      setDefaultValues(formValues);
-      if (isDebug) console.log("✅ Default values initialized:", formValues);
     }
     const val =
       props.type === "number" ? input.value.replace(/-/g, "") : input.value;
@@ -97,12 +90,17 @@ export const Field = (props: IField) => {
 
   const today = new Date().toISOString().substring(0, 10);
   const monthAddition = () => {
-    if (!Object.keys(JSON.parse(JSON.stringify(formValues))).length) return "";
+    if (!Object.keys(formValues).length) return "";
     if (!props.calculatedValue?.month) return "";
     if (!props.calculatedValue?.date) return "";
+
+    const dateField = props.calculatedValue.date;
+    const dateValue = formValues[dateField];
+
     const baseDate = new Date(
-      toDash(formValues[props.calculatedValue.date]) || today
+      toDash(typeof dateValue === "string" ? dateValue : undefined) || today
     );
+
     const targetDate = new Date(baseDate);
     targetDate.setMonth(targetDate.getMonth() + props.calculatedValue.month);
     const year = targetDate.getFullYear();
@@ -120,7 +118,12 @@ export const Field = (props: IField) => {
 
   const conditionMatches = (c: ICondition) => {
     if (c.category) {
-      const subType = appConfig?.subType?.[formValues.subType?.toLowerCase()];
+      const subTypeKey =
+        typeof formValues.subType === "string"
+          ? formValues.subType.toLowerCase()
+          : "";
+
+      const subType = appConfig?.subType?.[subTypeKey];
 
       return subType?.amountCategory === c.category;
     }
@@ -131,9 +134,18 @@ export const Field = (props: IField) => {
 
     const value = formValues[c.when];
 
+
     if (Array.isArray(c.is)) {
+      if (
+        typeof value !== "string" &&
+        typeof value !== "boolean"
+      ) {
+        return false;
+      }
+    
       return c.is.includes(value);
     }
+    
 
     return value == c.is || !!value == c.is;
   };
@@ -187,20 +199,19 @@ export const Field = (props: IField) => {
 
     const amountValue = resolveAmount(props.name, applicationData);
 
-    //console.log(
-    //  "resolveAmount",
-    //  props.name,
-    //  amountValue,
-    //  formValues[props.name]
-    //);
-
     const currentValue = formValues[props.name];
 
-    if (amountValue !== undefined && (currentValue == null || currentValue === "")) {
+    if (
+      amountValue !== undefined &&
+      (currentValue == null)
+    ) {
       return amountValue;
     }
 
-    if (formValues[props.name]) return formValues[props.name];
+    if (formValues[props.name] != null) {
+      return formValues[props.name];
+    }
+
     if (props.type === "select" && options().length) return options()[0].value;
 
     return "";
@@ -263,15 +274,6 @@ export const Field = (props: IField) => {
   };
 
   useEffect(() => {
-    //console.log(
-    //  "sync effect",
-    //  props.name,
-    //  "enhanced:",
-    //  enhancedProps.value,
-    //  "form:",
-    //  formValues[props.name]
-    //);
-
     if (enhancedProps.value !== formValues[props.name]) {
       setFormValues({
         [props.name]: enhancedProps.value,

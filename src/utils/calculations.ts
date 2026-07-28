@@ -1,4 +1,5 @@
-type FormValues = Record<string, string | number | undefined>;
+import type { FormValues } from "../context";
+
 type Ledger = "0l" | "2l";
 
 function amount(

@@ -28,7 +28,22 @@ export const Button = () => {
   const { url, query } = dataset;
 
   const resetForm = async () => {
-    setFormValues(defaultValues, true);
+    
+  console.log("resetForm", {
+    defaultValues,
+  });
+
+    if (!defaultValues) {
+      console.log("NO DEFAULT VALUES");
+      return;
+    }
+
+    console.log("RESETTING", {
+      defaultValue: defaultValues?.["0lCarryFwd"],
+    });
+    
+    await setFormValues(defaultValues, true);
+    setApplicationData(null);
     setAtt(null);
     setFormErrors({});
   };
@@ -76,7 +91,10 @@ export const Button = () => {
 
     const appNumberImport = formValues.appNumberImport;
 
-    if (!appNumberImport?.trim()) {
+    const appNumber =
+      typeof appNumberImport === "string" ? appNumberImport : "";
+
+    if (!appNumber.trim()) {
       setFormErrors({
         appNumberImport: "Application number is required",
       });
@@ -108,6 +126,16 @@ export const Button = () => {
   };
 
   useEffect(() => {
+
+
+    
+  console.log(
+    "mode changed",
+    formValues.mode,
+    "defaultValues",
+    defaultValues);
+  
+
     if (formValues.mode === "create") resetForm();
   }, [formValues.mode]);
 
