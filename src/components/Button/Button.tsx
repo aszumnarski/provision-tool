@@ -49,7 +49,11 @@ export const Button = () => {
   };
 
   const post = async () => {
-    const res = await postData(url || "/protool", formValues);
+
+    const changedOn = new Date().toISOString().slice(0, 10).replace(/-/g, "");
+    const payload = {...formValues,changedOn,};
+
+    const res = await postData(url || "/protool", payload);
     if (!res) {
       return;
     }
