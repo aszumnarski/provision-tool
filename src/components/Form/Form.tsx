@@ -1,17 +1,17 @@
-import { useEffect, type FormEventHandler } from "react";
+import { useEffect, useState, type FormEventHandler } from "react";
 import "./Form.css";
 import type { IRow } from "../Row/Row";
 import { Row } from "../Row/Row";
 import type { IInitResponse, IPattern } from "../../types";
 import { useFormContext } from "../../context/useFormContext";
+import { buildRows } from "../../utils/layoutBuilder";
 
 
-export interface IForm {
-  rows: IRow[];
-}
+export interface IForm {}
 
-export function Form({ rows }: IForm) {
+export function Form() {
   const isDebug = window.location.search.includes("debug=true");
+  const [rows, setRows] = useState<IRow[]>([]);
   const { dataset } = document.querySelector("body") || {
     dataset: { url: "/", query: "appno", init: "init" },
   };
@@ -56,6 +56,9 @@ export function Form({ rows }: IForm) {
       return;
     }
 
+    const generatedRows = buildRows(res.layout);
+    setRows(generatedRows);
+    console.log(JSON.stringify(generatedRows, null, 2));
     setAppConfig(res.config);
 
     const initialState = {
@@ -68,7 +71,7 @@ export function Form({ rows }: IForm) {
     await setFormValues(initialState);
     console.log("DEFAULT SNAPSHOT", initialState);
     setDefaultValues({ ...initialState });
-    setPatterns(createPatternState(rows));
+    setPatterns(createPatternState(generatedRows));
   };
 
   useEffect(() => {

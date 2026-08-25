@@ -3,6 +3,31 @@ import { type IAppConfig } from "./config";
 export interface IInitResponse {
   data: IInitData;
   config: IAppConfig;
+  layout: ILayout;
+}
+
+export interface ILayout {
+  sections: ISectionConfig[];
+  fields: Record<string, IFieldConfig>;
+}
+
+export interface ISectionConfig {
+  key: string;
+  title: string | null;
+  displayOrder: number;
+  matrix: boolean;
+}
+
+export interface IFieldConfig {
+  key: string;
+  label: string;
+  type: string;
+  description: string;
+  database: string;
+  visible: boolean;
+  section: string;
+  column: number;
+  position: number;
 }
 
 export interface IApiResponse {

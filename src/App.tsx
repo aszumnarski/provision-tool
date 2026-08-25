@@ -68,7 +68,7 @@ function App() {
           )}
           <div className="header-alert">{locked ? headerMessage : ""}</div>
         </div>
-        <Form rows={config.rows} />
+        <Form />
         <footer>Client version: {APP_VERSION}</footer>
       </div>
       <Modal />
