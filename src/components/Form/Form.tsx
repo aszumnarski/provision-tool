@@ -58,7 +58,7 @@ export function Form({ rows }: IForm) {
   }
   const initializeValues = async () => {
     const res = await getData(`${url}&${query}=${init}`);
-    setUserCompanyCodes(res.config.companyCodes);
+    setUserCompanyCodes(res.config.companyCode);
     const initialState = {
       ...createFormState(rows, "initValue"),
       user: res.data.user,
