@@ -72,18 +72,48 @@ export const Button = (props: IField) => {
 
   const handleGet = async (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
+  
     const appNumberImport = formValues.appNumberImport;
     const res = await getData(`${url}&${query}=${appNumberImport}`);
-
+  
     if (res.data) {
       await resetForm();
+  
+      const fields = { ...res.data.fields };
 
-      const { locked } = res.data;
-
+      const locked = fields.locked;
+  
+      Object.entries(res.data.amounts ?? {}).forEach(
+        ([ledger, amounts]: [string, any]) => {
+          const prefix = ledger.toLowerCase();
+  
+          fields[`${prefix}CarryFwd`] =
+            amounts.carryForward?.toString() ?? "0";
+  
+          fields[`${prefix}CreationAddition`] =
+            amounts.creationAddition?.postedBooked?.toString() ?? "0";
+  
+          fields[`${prefix}ClosingBalance`] =
+            amounts.closingBalance?.postedBooked?.toString() ?? "0";
+  
+          const usage =
+            Number(amounts.usagePy?.postedBooked ?? 0) +
+            Number(amounts.usageCy?.postedBooked ?? 0);
+  
+          const release =
+            Number(amounts.releasePy?.postedBooked ?? 0) +
+            Number(amounts.releaseCy?.postedBooked ?? 0);
+  
+          fields[`${prefix}Usage`] = usage.toString();
+          fields[`${prefix}Release`] = release.toString();
+        }
+      );
+  
       await setFormValues({
-        ...res.data,
-        appNumberImport: `${locked ? appNumberImport : ""}`,
+        ...fields,
+        appNumberImport: locked ? appNumberImport : "",
       });
+  
       if (res.errors && isDebug) {
         return setFormErrors(res.errors);
       } else {
