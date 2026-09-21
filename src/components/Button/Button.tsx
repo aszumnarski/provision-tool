@@ -47,7 +47,7 @@ export const Button = (props: IField) => {
     if (res.errors) {
       return setFormErrors(res.errors);
     }
-    const defaultMessage = `Application <strong>${res.data.appNumber}</strong> is waiting for approval`;
+    const defaultMessage = `Application <strong>${res.data.fields.appNumber}</strong> is waiting for approval`;
     const message = res.data.message || defaultMessage;
     if (res.data.locked) {
       const content = {
@@ -60,7 +60,7 @@ export const Button = (props: IField) => {
     }
     if (res.data) {
       const content = {
-        message: `Application <strong>${res.data.appNumber}</strong> was ${
+        message: `Application <strong>${res.data.fields.appNumber}</strong> was ${
           getState() === states.CREATE ? "created" : "updated"
         } successfully.`,
         type: "success",
