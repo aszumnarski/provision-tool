@@ -1,6 +1,5 @@
 import { useState } from "react";
 import "./App.css";
-import { config } from "./config";
 import { Form } from "./components/Form/Form";
 import { FormContext, type FormValues, type ValidationPatterns } from "./context";
 import { Loader } from "./components/Loader/Loader";
